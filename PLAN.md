@@ -352,7 +352,7 @@ Minimal nav · countdown hero · waitlist capture w/ live counter · blurred
 "early preview" frame · launch timeline (reuse fx-stages) · early tweets
 (wall-of-love lite) · mini FAQ · minimal footer. Full loop.
 
-### M4. pricing.html — dedicated pricing page
+### ✅ M4. pricing.html — dedicated pricing page
 H1 + billing toggle · 3 tiers · full feature-comparison table · ROI
 calculator (fx-sliders) · logos · testimonial band · objection FAQ · CTA ·
 footer. Full loop.

@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing — Finix UI</title>
+<meta name="description" content="Simple, transparent pricing. The kit is free forever — Pro adds team tooling. Start free, cancel anytime.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;650;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/finix.css">
+<link rel="stylesheet" href="../../css/finix-widgets.css">
+<link rel="stylesheet" href="../../css/finix-marketing.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="../../js/finix.js"></script>
+<script defer src="../../js/finix-marketing.js"></script>
+</head>
+<body class="fx-site">
+
+<!-- navbar -->
+<header class="fx-mk-nav">
+  <div class="fx-mk-container fx-mk-nav-inner">
+    <a class="fx-mk-logo-lockup" href="home.html"><i>F</i>Finix UI</a>
+    <nav class="fx-mk-links" aria-label="Main">
+      <a href="home.html#features">Product</a>
+      <a href="../index.html">Components</a>
+      <a href="pricing.html" aria-current="page">Pricing</a>
+      <a href="home.html#faq">Docs</a>
+      <a href="launch.html">v0.3 Launch</a>
+    </nav>
+    <div class="fx-mk-nav-actions">
+      <button class="fx-btn fx-btn--ghost fx-btn--icon" data-mk-theme data-fx-tip="Toggle theme" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+      <a class="fx-btn fx-mk-desktop-only" href="#plans">Start free</a>
+      <button class="fx-mk-burger" data-mk-menu aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="fx-mk-mobile" aria-label="Mobile">
+    <a href="home.html#features">Product</a>
+    <a href="../index.html">Components</a>
+    <a href="launch.html">v0.3 Launch</a>
+    <a href="#plans"><b>Start free →</b></a>
+  </nav>
+</header>
+
+<!-- pricing hero -->
+<section class="fx-mk-section" style="padding-bottom:2.5rem" id="plans">
+  <div class="fx-mk-aurora"></div>
+  <div class="fx-mk-container fx-mk-above">
+    <div class="fx-mk-head">
+      <span class="fx-mk-eyebrow">Pricing</span>
+      <h1 class="fx-mk-display" style="font-size:clamp(2rem,4.4vw,3.25rem)">Simple, transparent pricing.</h1>
+      <p class="fx-mk-lede">Start free — the kit is MIT forever. Upgrade when your team needs the tooling. Cancel anytime.</p>
+    </div>
+    <div class="fx-mk-billing" data-mk-billing>
+      <div class="fx-toggle-group fx-toggle-group--outline">
+        <button class="fx-toggle" data-mk-bill="monthly" aria-pressed="false">Monthly</button>
+        <button class="fx-toggle" data-mk-bill="annual" aria-pressed="true">Annual</button>
+      </div>
+      <span class="fx-badge fx-badge--success fx-mk-save-badge">Save 20% — $60/yr per seat</span>
+    </div>
+    <div class="fx-mk-pricing">
+      <div class="fx-mk-plan">
+        <div><div class="fx-mk-plan-name">Open source</div><div class="fx-mk-plan-desc">For everyone, forever</div></div>
+        <div class="fx-mk-price"><b>$0</b><span>MIT license</span></div>
+        <ul class="fx-mk-checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>All 140 components + marketing kit</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Light/dark × 5 brand presets</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>AI-agent manifest &amp; llms.txt</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Community Discord</li>
+        </ul>
+        <a class="fx-btn fx-btn--outline fx-mk-plan-cta" href="../index.html">Start free</a>
+      </div>
+      <div class="fx-mk-plan is-featured">
+        <span class="fx-badge fx-mk-plan-badge">Most popular</span>
+        <div><div class="fx-mk-plan-name">Pro</div><div class="fx-mk-plan-desc">For product teams</div></div>
+        <div class="fx-mk-price" data-price-monthly="$25" data-price-annual="$20"><b>$20</b><span data-mk-period>/mo, billed annually</span></div>
+        <ul class="fx-mk-checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Open source, plus:</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Theme studio &amp; brand exports</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Figma library, kept in sync</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Private component registry</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Priority support (24h)</li>
+        </ul>
+        <a class="fx-btn fx-mk-plan-cta" href="#roi">Start 14-day trial</a>
+      </div>
+      <div class="fx-mk-plan">
+        <div><div class="fx-mk-plan-name">Enterprise</div><div class="fx-mk-plan-desc">For platform orgs</div></div>
+        <div class="fx-mk-price"><b>Custom</b></div>
+        <ul class="fx-mk-checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Pro, plus:</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>SSO/SAML &amp; SCIM for Theme studio</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Design-system consulting</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>99.9% SLA &amp; dedicated CSM</li>
+        </ul>
+        <a class="fx-btn fx-btn--outline fx-mk-plan-cta" href="#faq">Talk to sales</a>
+      </div>
+    </div>
+    <p class="fx-mk-fineprint">Prices per seat · 30-day money-back guarantee · Nonprofit &amp; education discounts available</p>
+  </div>
+</section>
+
+<!-- proof between decision points -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container">
+    <div class="fx-mk-quote fx-mk-reveal">
+      <blockquote>"Pro paid for itself the first week — the Figma sync alone saved our designer <b>a day per sprint</b>."</blockquote>
+      <div class="fx-mk-person">
+        <span class="fx-avatar">JW</span>
+        <div><b>Jenny Wilson</b><span>VP Product, Initech</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- comparison table -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container">
+    <div class="fx-mk-head fx-mk-reveal">
+      <span class="fx-mk-eyebrow">Compare</span>
+      <h2 class="fx-mk-h2">Every feature, side by side.</h2>
+    </div>
+    <div class="fx-mk-compare-wrap fx-mk-reveal">
+      <table class="fx-mk-compare">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Open source</th>
+            <th class="is-featured-col">Pro</th>
+            <th>Enterprise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="fx-mk-compare-group"><td colspan="4">Components</td></tr>
+          <tr>
+            <td>Admin components (140+)</td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+            <td class="is-featured-col"><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+          </tr>
+          <tr>
+            <td>Marketing kit (25 sections)</td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+            <td class="is-featured-col"><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+          </tr>
+          <tr>
+            <td>AI-agent manifest</td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+            <td class="is-featured-col"><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+          </tr>
+          <tr class="fx-mk-compare-group"><td colspan="4">Team tooling</td></tr>
+          <tr>
+            <td>Theme studio &amp; brand exports</td>
+            <td><span class="fx-mk-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></span></td>
+            <td class="is-featured-col"><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+          </tr>
+          <tr>
+            <td>Figma library sync</td>
+            <td><span class="fx-mk-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></span></td>
+            <td class="is-featured-col"><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+          </tr>
+          <tr>
+            <td>Private component registry</td>
+            <td><span class="fx-mk-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></span></td>
+            <td class="is-featured-col"><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+          </tr>
+          <tr class="fx-mk-compare-group"><td colspan="4">Security &amp; support</td></tr>
+          <tr>
+            <td>SSO / SAML &amp; SCIM</td>
+            <td><span class="fx-mk-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></span></td>
+            <td class="is-featured-col"><span class="fx-mk-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></svg></span></td>
+            <td><span class="fx-mk-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td>
+          </tr>
+          <tr>
+            <td>Support</td>
+            <td>Community</td>
+            <td class="is-featured-col">Priority · 24h</td>
+            <td>Dedicated CSM · SLA</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><a class="fx-btn fx-btn--outline fx-btn--sm" href="../index.html">Start free</a></td>
+            <td class="is-featured-col"><a class="fx-btn fx-btn--sm" href="#roi">Start trial</a></td>
+            <td><a class="fx-btn fx-btn--outline fx-btn--sm" href="#faq">Contact</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ROI calculator -->
+<section class="fx-mk-section" id="roi">
+  <div class="fx-mk-container">
+    <div class="fx-mk-head fx-mk-reveal">
+      <span class="fx-mk-eyebrow">Do the math</span>
+      <h2 class="fx-mk-h2">What does hand-built UI cost you?</h2>
+      <p class="fx-mk-lede">Teams report saving hours per engineer every week once screens come from a kit instead of scratch.</p>
+    </div>
+    <div class="fx-mk-roi fx-mk-reveal" data-mk-roi>
+      <div>
+        <div class="fx-mk-roi-row">
+          <span>Engineers building UI</span>
+          <input type="range" class="fx-slider" data-roi-seats min="1" max="50" value="8" aria-label="Engineers">
+          <output data-for="seats"></output>
+        </div>
+        <div class="fx-mk-roi-row">
+          <span>UI hours saved / week each</span>
+          <input type="range" class="fx-slider" data-roi-hours min="1" max="12" value="4" aria-label="Hours saved">
+          <output data-for="hours" data-suffix=" h"></output>
+        </div>
+        <div class="fx-mk-roi-row">
+          <span>Loaded hourly cost</span>
+          <input type="range" class="fx-slider" data-roi-rate min="40" max="200" step="5" value="90" aria-label="Hourly cost">
+          <output data-for="rate" data-suffix=" $/h"></output>
+        </div>
+      </div>
+      <div class="fx-mk-roi-result">
+        <span>Estimated yearly savings</span>
+        <b data-roi-out>$0</b>
+        <span>vs. Pro at $240/seat/yr</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- logos + faq -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container">
+    <p class="fx-mk-logos-label fx-mk-reveal">Trusted by teams at ACME, Globex, Initech, Vandelay, Stark &amp; 2,400 more</p>
+  </div>
+</section>
+
+<section class="fx-mk-section fx-mk-section--tight" id="faq">
+  <div class="fx-mk-container fx-mk-container--narrow">
+    <div class="fx-mk-head fx-mk-reveal">
+      <span class="fx-mk-eyebrow">Billing FAQ</span>
+      <h2 class="fx-mk-h2">The fine print, in plain words.</h2>
+    </div>
+    <div class="fx-mk-faq fx-mk-reveal">
+      <div class="fx-accordion">
+        <details name="pfaq" open>
+          <summary>Can I cancel anytime?</summary>
+          <div class="fx-acc-body">Yes — self-serve, effective at the end of the billing period, and we prorate annual plans on request. The MIT kit keeps working forever either way.</div>
+        </details>
+        <details name="pfaq">
+          <summary>How does per-seat billing work?</summary>
+          <div class="fx-acc-body">A seat is anyone who signs into the Theme studio or private registry. Viewers are free and unlimited. Adding a seat mid-cycle is prorated automatically.</div>
+        </details>
+        <details name="pfaq">
+          <summary>Do you offer invoicing?</summary>
+          <div class="fx-acc-body">Annual Pro plans over 10 seats and all Enterprise plans can pay by invoice (ACH/wire, Net 30).</div>
+        </details>
+        <details name="pfaq">
+          <summary>Is there a discount for nonprofits or education?</summary>
+          <div class="fx-acc-body">Yes — 50% off Pro for registered nonprofits, and free Pro for classroom use. Write to us from your org email.</div>
+        </details>
+        <details name="pfaq">
+          <summary>What happens to my themes if I downgrade?</summary>
+          <div class="fx-acc-body">Everything exports to plain CSS tokens — your themes are yours. Downgrading only pauses the studio tooling, never your shipped product.</div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- final CTA -->
+<section class="fx-mk-section">
+  <div class="fx-mk-container">
+    <div class="fx-mk-band fx-mk-reveal">
+      <h2 class="fx-mk-h2">Start free. Upgrade when it pays for itself.</h2>
+      <div class="fx-mk-cta-row">
+        <a class="fx-btn fx-btn--xl" href="../index.html">Start building free</a>
+        <a class="fx-btn fx-btn--outline fx-btn--xl" href="#plans">Compare plans</a>
+      </div>
+      <span class="fx-text-sm fx-muted">30-day money-back guarantee · No credit card for the free tier</span>
+    </div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer class="fx-mk-footer" style="margin-top:0">
+  <div class="fx-mk-container">
+    <div class="fx-mk-footer-bottom" style="margin-top:0;border-top:0">
+      <a class="fx-mk-logo-lockup" href="home.html" style="font-size:.875rem"><i style="width:1.375rem;height:1.375rem;font-size:.75rem">F</i>Finix UI</a>
+      <span>© 2026 Finix Labs Inc.</span>
+      <a href="#" style="color:inherit;text-decoration:none">Privacy</a>
+      <a href="#" style="color:inherit;text-decoration:none">Terms</a>
+      <span class="fx-status fx-status--online"><i></i>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -864,4 +864,117 @@
     render();
     return { render, stages };
   };
+
+  /* ================= bank reconciliation ================= */
+  window.fxRecon = function (root, opts) {
+    const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const feed = opts.feed || [];
+    let active = feed.find((f) => !f.matched) || feed[0];
+    const fmt = (n) => (n < 0 ? "-" : "") + "$" + Math.abs(n).toLocaleString(undefined, { minimumFractionDigits: 2 });
+    const CHECK = '<svg class="fx-recon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    function totals() {
+      const total = feed.reduce((t, f) => t + Math.abs(f.amount), 0);
+      const matched = feed.filter((f) => f.matched).reduce((t, f) => t + Math.abs(f.amount), 0);
+      return { total, matched };
+    }
+    function render() {
+      const { total, matched } = totals();
+      root.innerHTML = `
+        <div class="fx-recon-meter">
+          <span>Matched</span>
+          <div class="fx-progress"><div style="width:${total ? (matched / total) * 100 : 0}%"></div></div>
+          <b>${fmt(matched)} / ${fmt(total)}</b>
+        </div>
+        <div class="fx-split fx-recon" data-fx-split style="--split:52%;--split-min-a:16rem;--split-min-b:16rem">
+          <div class="fx-split-pane"><div class="fx-recon-feed">
+            ${feed.map((f, i) => `
+              <button class="fx-recon-row ${f === active ? "is-active" : ""} ${f.matched ? "is-matched" : ""}" data-fi="${i}">
+                <span class="fx-recon-date">${esc(f.date)}</span>
+                <span class="fx-recon-desc">${esc(f.desc)}</span>
+                <span class="fx-recon-amt ${f.amount < 0 ? "is-neg" : ""}">${fmt(f.amount)}</span>
+                ${f.matched ? CHECK : ""}
+              </button>`).join("")}
+          </div></div>
+          <div class="fx-split-divider" aria-label="Resize reconciliation panels"></div>
+          <div class="fx-split-pane"><div class="fx-recon-side">${sideHtml()}</div></div>
+        </div>`;
+      if (window.fxSplit) fxSplit(root.querySelector("[data-fx-split]"));
+    }
+    function sideHtml() {
+      if (!active) return "";
+      if (active.matched) return `<p class="fx-text-sm fx-muted" style="margin:0">Matched to <b>${esc(active.matchedTo)}</b>.</p>`;
+      const sugs = active.suggestions || [];
+      return `<span class="fx-label" style="font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted-foreground)">Suggested matches — ${esc(active.desc)}</span>` +
+        (sugs.length ? sugs.map((s, si) => `
+          <div class="fx-recon-suggestion">
+            <div class="fx-recon-sug-head">
+              <b>${esc(s.name)}</b>
+              <span class="fx-badge ${s.confidence >= 90 ? "fx-badge--success fx-badge--dot" : s.confidence >= 60 ? "fx-badge--warning fx-badge--dot" : "fx-badge--outline"}">${s.confidence}%</span>
+            </div>
+            <div class="fx-recon-sug-meta"><code>${esc(s.ref)}</code><span>${esc(s.date)}</span><span class="fx-recon-amt" style="margin-left:auto">${fmt(s.amount)}</span></div>
+            <div class="fx-row" style="gap:.375rem">
+              <button class="fx-btn fx-btn--sm" data-confirm="${si}">Confirm match</button>
+              <button class="fx-btn fx-btn--outline fx-btn--sm" data-split-txn>Split…</button>
+            </div>
+          </div>`).join("")
+        : `<p class="fx-text-sm fx-muted" style="margin:0">No suggestions — create a new entry or split the transaction.</p>`);
+    }
+    root.addEventListener("click", (e) => {
+      const row = e.target.closest("[data-fi]");
+      if (row) { active = feed[+row.dataset.fi]; render(); return; }
+      const c = e.target.closest("[data-confirm]");
+      if (c && active) {
+        const s = active.suggestions[+c.dataset.confirm];
+        active.matched = true;
+        active.matchedTo = s.name;
+        if (window.finix) finix.toast({ title: "Matched", description: `${active.desc} ↔ ${s.name}`, variant: "success" });
+        active = feed.find((f) => !f.matched) || active;
+        render();
+        return;
+      }
+      if (e.target.closest("[data-split-txn]") && window.finix)
+        finix.toast({ title: "Split transaction", description: "The split editor would open here." });
+    });
+    render();
+    return { render, get feed() { return feed; } };
+  };
+
+  /* ================= chart of accounts tree ================= */
+  window.fxAccountsTree = function (root, opts) {
+    const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const fmt = (n) => (n < 0 ? "-" : "") + "$" + Math.abs(n).toLocaleString(undefined, { minimumFractionDigits: 2 });
+    const open = new Set(opts.open || []);
+    function sum(node) {
+      if (node.children) return node.children.reduce((t, c) => t + sum(c), 0);
+      return node.balance || 0;
+    }
+    function rowHtml(node, depth, path) {
+      const isBranch = !!node.children;
+      const expanded = open.has(path);
+      const bal = sum(node);
+      let html = `<button class="fx-coa-row ${isBranch ? "is-branch" : ""}" data-depth="${depth}" data-path="${esc(path)}" ${isBranch ? `aria-expanded="${expanded}"` : ""}>
+        <span class="fx-coa-indent">${'<i></i>'.repeat(depth)}</span>
+        <svg class="fx-coa-caret ${isBranch ? "" : "is-leaf"}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        <span class="fx-coa-name">${esc(node.name)}</span>
+        ${node.code ? `<span class="fx-coa-code">${esc(node.code)}</span>` : ""}
+        <span class="fx-coa-bal ${bal < 0 ? "is-neg" : ""}">${fmt(bal)}</span>
+      </button>`;
+      if (isBranch && expanded)
+        html += node.children.map((c, i) => rowHtml(c, depth + 1, path + "/" + i)).join("");
+      return html;
+    }
+    function render() {
+      root.classList.add("fx-coa");
+      root.innerHTML = (opts.tree || []).map((n, i) => rowHtml(n, 0, String(i))).join("");
+    }
+    root.addEventListener("click", (e) => {
+      const row = e.target.closest(".fx-coa-row.is-branch");
+      if (!row) return;
+      const p = row.dataset.path;
+      open.has(p) ? open.delete(p) : open.add(p);
+      render();
+    });
+    render();
+    return { render };
+  };
 })();

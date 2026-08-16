@@ -364,6 +364,30 @@
         </div>
       </div>
 
+      <div class="fx-grid" style="grid-template-columns:1.4fr 1fr;align-items:start">
+        <!-- bank reconciliation -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Bank reconciliation</div>
+            <div class="fx-card-desc">Bank feed on the left, suggested ledger matches with confidence on the right — confirm to tick off the running matched meter.</div>
+          </div>
+          <div class="fx-card-content">
+            <div id="recon"></div>
+          </div>
+        </div>
+
+        <!-- chart of accounts -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Chart of accounts</div>
+            <div class="fx-card-desc">Expandable hierarchy with live rollup sums — parent balances are computed from their children.</div>
+          </div>
+          <div class="fx-card-content">
+            <div id="coa"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- printable invoice -->
       <div class="fx-card" style="background:var(--well);border-style:dashed">
         <div class="fx-card-header">
@@ -437,6 +461,53 @@ window.addEventListener("DOMContentLoaded", () => {
     data.forEach((d, i) => (d.t = i < 12 ? "Jul " + (i + 20) : "Aug " + (i - 11)));
     fxCharts.candles(document.getElementById("c-candles"), { data, height: 300 });
   })();
+
+  // ---- bank reconciliation ----
+  fxRecon(document.getElementById("recon"), {
+    feed: [
+      { date: "Aug 15", desc: "STRIPE PAYOUT 8842", amount: 12480.55, suggestions: [
+        { name: "Stripe payout — Aug 14 batch", ref: "PO-8842", date: "Aug 15", amount: 12480.55, confidence: 98 },
+        { name: "Stripe payout — Aug 13 batch", ref: "PO-8836", date: "Aug 14", amount: 11902.10, confidence: 41 },
+      ]},
+      { date: "Aug 15", desc: "AWS EMEA 4421-8", amount: -2311.08, suggestions: [
+        { name: "AWS invoice — July usage", ref: "INV-77120", date: "Aug 12", amount: -2311.08, confidence: 95 },
+      ]},
+      { date: "Aug 14", desc: "GUSTO PAYROLL", amount: -48200.00, suggestions: [
+        { name: "Payroll run — Aug 1-15", ref: "PR-2026-15", date: "Aug 14", amount: -48200.00, confidence: 92 },
+      ]},
+      { date: "Aug 13", desc: "WIRE ACME CORP", amount: 9180.00, suggestions: [
+        { name: "Invoice INV-2026-1204 — Acme", ref: "INV-1204", date: "Aug 12", amount: 9180.00, confidence: 88 },
+        { name: "Invoice INV-2026-1188 — Acme", ref: "INV-1188", date: "Jul 30", amount: 9180.00, confidence: 62 },
+      ]},
+      { date: "Aug 12", desc: "CHECK #1204", amount: -450.00, suggestions: [] },
+    ],
+  });
+
+  // ---- chart of accounts ----
+  fxAccountsTree(document.getElementById("coa"), {
+    open: ["0", "0/0"],
+    tree: [
+      { name: "Assets", children: [
+        { name: "Current assets", children: [
+          { name: "Cash & equivalents", code: "1010", balance: 184220.14 },
+          { name: "Accounts receivable", code: "1200", balance: 42180.00 },
+          { name: "Prepaid expenses", code: "1400", balance: 9310.50 },
+        ]},
+        { name: "Fixed assets", children: [
+          { name: "Equipment", code: "1600", balance: 38400.00 },
+          { name: "Accumulated depreciation", code: "1690", balance: -12960.00 },
+        ]},
+      ]},
+      { name: "Liabilities", children: [
+        { name: "Accounts payable", code: "2000", balance: -18240.33 },
+        { name: "Deferred revenue", code: "2300", balance: -96200.00 },
+      ]},
+      { name: "Equity", children: [
+        { name: "Common stock", code: "3000", balance: -10000.00 },
+        { name: "Retained earnings", code: "3900", balance: -136710.31 },
+      ]},
+    ],
+  });
 
   // ---- SKU matrix ----
   fxSkuMatrix(document.getElementById("sku-matrix"), {

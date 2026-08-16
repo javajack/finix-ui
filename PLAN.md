@@ -236,7 +236,7 @@ The biggest structural gap; unlocks automation, journeys, lineage, service maps.
 - Kanban swimlanes: `fx-kanban--lanes` modifier — horizontal lane rows
   (e.g. by assignee) × status columns; lane headers sticky-left.
 
-### T18. Accounting set → business.html
+### ✅ T18. Accounting set → business.html
 - Bank reconciliation split-pane (compose fx-split): bank feed rows left,
   suggested matches right w/ confidence badges, confirm/split actions,
   running matched-total meter.

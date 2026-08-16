@@ -1634,6 +1634,36 @@
    ],
    "markup": "<div class=\"fx-kanban--lanes\" style=\"--lane-cols:3\">(corner + col heads, then per lane: .fx-lane-head + .fx-lane-cell cells of .fx-kanban-card)</div>",
    "js": null
+  },
+  {
+   "name": "bank-reconciliation",
+   "category": "finance",
+   "classes": [
+    "fx-recon",
+    "fx-recon-meter",
+    "fx-recon-feed",
+    "fx-recon-row",
+    "fx-recon-suggestion",
+    "fx-recon-sug-head",
+    "fx-recon-sug-meta"
+   ],
+   "markup": "<div id=\"recon\"></div>",
+   "js": "fxRecon(el, {feed:[{date,desc,amount,suggestions:[{name,ref,date,amount,confidence}]}]}) in js/finix-domains.js \u2014 fx-split pane: bank feed rows (signed mono amounts, matched check + fade) vs suggested matches with confidence badges (>=90 success, >=60 warning), confirm advances to next unmatched, running matched-total progress meter."
+  },
+  {
+   "name": "accounts-tree",
+   "category": "finance",
+   "classes": [
+    "fx-coa",
+    "fx-coa-row",
+    "fx-coa-indent",
+    "fx-coa-caret",
+    "fx-coa-name",
+    "fx-coa-code",
+    "fx-coa-bal"
+   ],
+   "markup": "<div id=\"coa\"></div>",
+   "js": "fxAccountsTree(el, {tree:[{name,code,balance,children}], open}) \u2014 expandable hierarchy table with indent guides, animated carets, recursive rollup sums in mono (negatives destructive)."
   }
  ]
 }

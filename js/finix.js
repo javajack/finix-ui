@@ -1309,6 +1309,149 @@
     };
   };
 
+
+  /* ---------- product tour (fxTour) ---------- */
+  window.fxTour = function (steps, opts = {}) {
+    let i = -1, overlay = null, pop = null, hole = null;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function build() {
+      overlay = doc.createElement("div");
+      overlay.className = "fx-tour-overlay";
+      overlay.innerHTML =
+        `<svg width="100%" height="100%">
+          <defs><mask id="fx-tour-mask">
+            <rect width="100%" height="100%" fill="white"/>
+            <rect class="fx-tour-hole" fill="black" rx="10" x="0" y="0" width="0" height="0"/>
+          </mask></defs>
+          <rect width="100%" height="100%" class="fx-tour-dim" mask="url(#fx-tour-mask)"/>
+        </svg>`;
+      pop = doc.createElement("div");
+      pop.className = "fx-tour-pop";
+      doc.body.append(overlay, pop);
+      hole = overlay.querySelector(".fx-tour-hole");
+      requestAnimationFrame(() => overlay.classList.add("is-on"));
+      doc.addEventListener("keydown", onKey);
+      addEventListener("resize", place2, { passive: true });
+      addEventListener("scroll", place2, { passive: true, capture: true });
+    }
+    function onKey(e) {
+      if (e.key === "Escape") end();
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    }
+    function targetEl() {
+      const t = steps[i].el;
+      return typeof t === "string" ? doc.querySelector(t) : t;
+    }
+    function place2() {
+      if (i < 0) return;
+      const el2 = targetEl();
+      if (!el2) return;
+      const r = el2.getBoundingClientRect(), PAD = 6;
+      hole.setAttribute("x", r.left - PAD); hole.setAttribute("y", r.top - PAD);
+      hole.setAttribute("width", r.width + PAD * 2); hole.setAttribute("height", r.height + PAD * 2);
+      const pw = pop.offsetWidth, ph = pop.offsetHeight, GAP = 12;
+      let top = r.bottom + PAD + GAP;
+      if (top + ph > innerHeight - 8) top = Math.max(8, r.top - PAD - GAP - ph);
+      let left = Math.min(Math.max(8, r.left), innerWidth - pw - 8);
+      pop.style.top = top + "px"; pop.style.left = left + "px";
+    }
+    function render() {
+      const st = steps[i];
+      pop.innerHTML =
+        `<div class="fx-tour-count">${i + 1} of ${steps.length}</div>
+         <div class="fx-tour-title">${st.title}</div>
+         <div class="fx-tour-body">${st.body}</div>
+         <div class="fx-tour-foot">
+           <div class="fx-tour-dots">${steps.map((_, d) => `<i class="${d === i ? "is-on" : ""}"></i>`).join("")}</div>
+           <div class="fx-row" style="gap:.375rem">
+             <button class="fx-btn fx-btn--ghost fx-btn--sm" data-tour="skip">Skip</button>
+             ${i > 0 ? '<button class="fx-btn fx-btn--outline fx-btn--sm" data-tour="prev">Back</button>' : ""}
+             <button class="fx-btn fx-btn--sm" data-tour="next">${i === steps.length - 1 ? "Done" : "Next"}</button>
+           </div>
+         </div>`;
+      const el2 = targetEl();
+      if (el2) el2.scrollIntoView({ block: "center", behavior: reduced ? "auto" : "smooth" });
+      pop.classList.remove("is-in");
+      void pop.offsetWidth;
+      pop.classList.add("is-in");
+      setTimeout(place2, reduced ? 0 : 260);
+      place2();
+    }
+    function go(n) {
+      i = n;
+      if (i < 0 || i >= steps.length) return end();
+      render();
+    }
+    const next = () => go(i + 1);
+    const prev = () => go(i - 1);
+    function start(n = 0) {
+      if (!overlay) build();
+      go(n);
+      overlay.addEventListener("click", (e) => { if (e.target.closest("svg")) end(); });
+      pop.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-tour]");
+        if (!b) return;
+        if (b.dataset.tour === "next") next();
+        if (b.dataset.tour === "prev") prev();
+        if (b.dataset.tour === "skip") end();
+      });
+      return api;
+    }
+    function end() {
+      if (!overlay) return;
+      overlay.classList.remove("is-on");
+      pop.classList.remove("is-in");
+      setTimeout(() => { overlay.remove(); pop.remove(); overlay = pop = null; }, reduced ? 0 : 200);
+      doc.removeEventListener("keydown", onKey);
+      removeEventListener("resize", place2);
+      removeEventListener("scroll", place2, { capture: true });
+      i = -1;
+      opts.onEnd?.();
+    }
+    const api = { start, end, next, prev, get step() { return i; } };
+    return api;
+  };
+
+  /* ---------- NPS survey ---------- */
+  $$("[data-fx-nps]").forEach((box) => {
+    box.classList.add("fx-nps");
+    const q = box.dataset.question || "How likely are you to recommend us to a colleague?";
+    box.innerHTML =
+      `<div class="fx-nps-q">${q}</div>
+       <div class="fx-nps-scale" role="radiogroup" aria-label="Score from 0 to 10">
+         ${Array.from({ length: 11 }, (_, n) =>
+           `<button class="fx-nps-score" role="radio" aria-checked="false" data-score="${n}" data-band="${n <= 6 ? "d" : n <= 8 ? "p" : "pr"}">${n}</button>`).join("")}
+       </div>
+       <div class="fx-row fx-nps-legend"><span>Not at all likely</span><span>Extremely likely</span></div>
+       <div class="fx-nps-follow" hidden>
+         <textarea class="fx-textarea" rows="2" placeholder="What is the main reason for your score?"></textarea>
+         <button class="fx-btn fx-btn--sm" data-nps-submit>Send feedback</button>
+       </div>
+       <div class="fx-nps-thanks" hidden>
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+         Thanks — your feedback helps us improve.
+       </div>`;
+    box.addEventListener("click", (e) => {
+      const sc = e.target.closest(".fx-nps-score");
+      if (sc) {
+        $$(".fx-nps-score", box).forEach((b) => { b.classList.remove("is-sel"); b.setAttribute("aria-checked", "false"); });
+        sc.classList.add("is-sel");
+        sc.setAttribute("aria-checked", "true");
+        const follow = $(".fx-nps-follow", box);
+        follow.hidden = false;
+        $(".fx-nps-thanks", box).hidden = true;
+        return;
+      }
+      if (e.target.closest("[data-nps-submit]")) {
+        $(".fx-nps-follow", box).hidden = true;
+        $(".fx-nps-scale", box).style.pointerEvents = "none";
+        $(".fx-nps-scale", box).style.opacity = ".55";
+        $(".fx-nps-thanks", box).hidden = false;
+      }
+    });
+  });
+
   /* ---------- notification center ---------- */
   doc.addEventListener("click", (e) => {
     const mark = e.target.closest("[data-fx-notif-readall]");

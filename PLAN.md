@@ -146,7 +146,7 @@ console clean, README component count updated.
 - Experiment result card: variant rows w/ lift %, CI bar (catbar variant),
   significance badge.
 
-### T8. Product tour + NPS → feedback.html
+### ✅ T8. Product tour + NPS → feedback.html
 - `fxTour(steps)`: coachmark engine — dims page via overlay w/ SVG mask
   spotlight cutout on target element, step popover (uses fx-popover styles +
   finix.place), next/back/skip, progress dots. Demo: "Tour this page" button

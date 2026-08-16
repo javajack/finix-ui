@@ -25,6 +25,10 @@
           <h1 class="fx-page-title">Feedback &amp; Status</h1>
           <p class="fx-page-sub">Alerts, toasts, progress, skeletons, empty states and status indicators.</p>
         </div>
+        <button class="fx-btn fx-btn--outline" id="start-tour">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+          Tour this page
+        </button>
       </div>
 
       <div class="fx-banner" id="demo-banner">
@@ -286,6 +290,17 @@
           </div>
         </div>
 
+        <!-- nps survey -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">NPS survey</div>
+            <div class="fx-card-desc">0–10 scale with detractor / passive / promoter color bands, follow-up question and thanks state.</div>
+          </div>
+          <div class="fx-card-content">
+            <div data-fx-nps></div>
+          </div>
+        </div>
+
         <!-- staged status -->
         <div class="fx-card fx-card--stages-demo" style="grid-column:1/-1">
           <div class="fx-card-header">
@@ -364,6 +379,15 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("act-add").addEventListener("click", () => {
     activity.add({ ...SIM[simI++ % SIM.length], time: Date.now() });
   });
+
+  /* ---- product tour ---- */
+  const tour = fxTour([
+    { el: ".fx-banner", title: "Announcements", body: "Product-wide banners live at the top of the page and can be dismissed." },
+    { el: "#activity-demo", title: "Activity timeline", body: "Interleaved comments, status changes and system events with type filters — hit Simulate to watch a live insert." },
+    { el: "[data-fx-nps]", title: "NPS survey", body: "The 0\u201310 scale color-bands detractors, passives and promoters, then asks a follow-up." },
+    { el: ".fx-stages", title: "Staged status", body: "Checkpoint chains cover fulfillment, disputes and signing flows \u2014 the pulsing ring marks the active stage." },
+  ]);
+  document.getElementById("start-tour").addEventListener("click", () => tour.start());
 
   document.getElementById("ob-list").addEventListener("click", (e) => {
     const btn = e.target.closest("[data-ob]");

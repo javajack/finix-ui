@@ -1283,6 +1283,33 @@
    ],
    "markup": "<div class=\"fx-exp\"><div class=\"fx-exp-row\"><span class=\"fx-exp-name\">Variant A<small>12,187 users</small></span><span class=\"fx-exp-conv\">4.87%</span><span class=\"fx-ci\"><span class=\"fx-ci-zero\" style=\"left:30%\"></span><span class=\"fx-ci-range\" style=\"left:38%;width:26%\"></span><span class=\"fx-ci-mid\" style=\"left:51%\"></span></span><span class=\"fx-exp-lift\"><span class=\"fx-badge fx-badge--success\">+15.7%</span></span></div></div>",
    "js": null
+  },
+  {
+   "name": "product-tour",
+   "category": "overlay",
+   "classes": [
+    "fx-tour-overlay",
+    "fx-tour-pop",
+    "fx-tour-title",
+    "fx-tour-body",
+    "fx-tour-foot",
+    "fx-tour-dots"
+   ],
+   "markup": "(created dynamically)",
+   "js": "fxTour([{el:'#selector', title, body}], {onEnd}).start() \u2014 coachmark engine: SVG-mask spotlight cutout that animates between targets, popover with step count/dots/back-next-skip, Esc + arrow keys, scroll-into-view, viewport-clamped placement. In js/finix.js."
+  },
+  {
+   "name": "nps",
+   "category": "feedback",
+   "classes": [
+    "fx-nps",
+    "fx-nps-scale",
+    "fx-nps-score",
+    "fx-nps-follow",
+    "fx-nps-thanks"
+   ],
+   "markup": "<div data-fx-nps data-question=\"How likely...\"></div>",
+   "js": "Auto-rendered 0-10 NPS scale: detractor/passive/promoter color bands on hover+selection, follow-up textarea state, thanks state."
   }
  ]
 }

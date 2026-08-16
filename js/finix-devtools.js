@@ -152,4 +152,157 @@
     render();
     return { setMode: (m) => { mode = m; render(); }, stats };
   };
+
+  /* ---------- JSON tree viewer ---------- */
+  window.fxJsonTree = function (root, data, opts = {}) {
+    const depth = opts.open ?? 2;
+    function node(key, val, lvl) {
+      const keyHtml = key != null ? `<span class="fx-jt-key">${esc(key)}</span><span class="fx-jt-colon">: </span>` : "";
+      if (val !== null && typeof val === "object") {
+        const isArr = Array.isArray(val);
+        const entries = isArr ? val.map((v, i) => [null, v]) : Object.entries(val);
+        const count = entries.length;
+        const open = lvl < depth;
+        return `<div class="fx-jt-node${open ? " is-open" : ""}">
+          <button class="fx-jt-row" type="button" aria-expanded="${open}">
+            <svg class="fx-jt-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            ${keyHtml}<span class="fx-jt-brace">${isArr ? "[" : "{"}</span>
+            <span class="fx-jt-count">${count} ${isArr ? (count === 1 ? "item" : "items") : (count === 1 ? "key" : "keys")}</span>
+            <span class="fx-jt-brace fx-jt-brace-close">${isArr ? "]" : "}"}</span>
+          </button>
+          <div class="fx-jt-children">${entries.map(([k, v]) => node(k, v, lvl + 1)).join("")}</div>
+        </div>`;
+      }
+      let cls = "fx-jt-null", body = "null";
+      if (typeof val === "string") { cls = "fx-jt-str"; body = `"${esc(val)}"`; }
+      else if (typeof val === "number") { cls = "fx-jt-num"; body = String(val); }
+      else if (typeof val === "boolean") { cls = "fx-jt-bool"; body = String(val); }
+      return `<div class="fx-jt-leaf">${keyHtml}<span class="${cls}">${body}</span></div>`;
+    }
+    root.classList.add("fx-jsontree");
+    root.innerHTML = node(null, data, 0);
+    if (!root.__fxJtWired) {
+      root.__fxJtWired = true;
+      root.addEventListener("click", (e) => {
+        const row = e.target.closest(".fx-jt-row");
+        if (!row) return;
+        const n = row.parentElement;
+        n.classList.toggle("is-open");
+        row.setAttribute("aria-expanded", n.classList.contains("is-open"));
+      });
+    }
+    return { set: (d) => fxJsonTree(root, d, opts) };
+  };
+
+  /* ---------- API keys: press-and-hold reveal ---------- */
+  document.addEventListener("pointerdown", (e) => {
+    const btn = e.target.closest(".fx-apikey-reveal");
+    if (!btn) return;
+    e.preventDefault();
+    const rowEl = btn.closest(".fx-apikey");
+    const valEl = rowEl?.querySelector(".fx-apikey-value");
+    if (!valEl) return;
+    btn.classList.add("is-holding");
+    const timer = setTimeout(() => {
+      valEl.dataset.mask = valEl.textContent;
+      valEl.textContent = rowEl.dataset.key || valEl.textContent;
+      valEl.classList.add("is-revealed");
+      btn.classList.add("is-revealed");
+    }, 550);
+    const end = () => {
+      clearTimeout(timer);
+      btn.classList.remove("is-holding", "is-revealed");
+      if (valEl.classList.contains("is-revealed")) {
+        valEl.textContent = valEl.dataset.mask;
+        valEl.classList.remove("is-revealed");
+      }
+      window.removeEventListener("pointerup", end);
+      window.removeEventListener("pointercancel", end);
+    };
+    window.addEventListener("pointerup", end);
+    window.addEventListener("pointercancel", end);
+  });
+
+  /* ---------- env vars editor ---------- */
+  const envRow = (k = "", v = "") =>
+    `<div class="fx-envvar">
+      <input class="fx-input fx-envvar-k" placeholder="KEY" value="${esc(k)}" spellcheck="false" autocomplete="off">
+      <div class="fx-input-group fx-envvar-vwrap">
+        <input class="fx-input fx-envvar-v" type="password" placeholder="value" value="${esc(v)}" spellcheck="false" autocomplete="off">
+        <button class="fx-input-addon fx-envvar-eye" type="button" aria-label="Reveal value" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm fx-envvar-del" type="button" aria-label="Remove variable">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>`;
+  document.querySelectorAll("[data-fx-envvars]").forEach((box) => {
+    const vars = JSON.parse(box.dataset.fxEnvvars || "[]");
+    box.classList.add("fx-envvars");
+    box.innerHTML = vars.map(([k, v]) => envRow(k, v)).join("") +
+      `<button class="fx-btn fx-btn--outline fx-btn--sm fx-envvar-add" type="button">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+        Add variable
+      </button>`;
+  });
+  document.addEventListener("click", (e) => {
+    const eye = e.target.closest(".fx-envvar-eye");
+    if (eye) {
+      const inp = eye.closest(".fx-envvar-vwrap").querySelector(".fx-envvar-v");
+      const show = inp.type === "password";
+      inp.type = show ? "text" : "password";
+      eye.setAttribute("aria-pressed", show);
+      return;
+    }
+    const del = e.target.closest(".fx-envvar-del");
+    if (del) {
+      const row = del.closest(".fx-envvar");
+      row.classList.add("is-leaving");
+      setTimeout(() => row.remove(), matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 160);
+      return;
+    }
+    const add = e.target.closest(".fx-envvar-add");
+    if (add) {
+      add.insertAdjacentHTML("beforebegin", envRow());
+      const row = add.previousElementSibling;
+      row.classList.add("is-entering");
+      row.querySelector(".fx-envvar-k").focus();
+      setTimeout(() => row.classList.remove("is-entering"), 200);
+    }
+  });
+
+  /* ---------- webhook delivery log ---------- */
+  window.fxWebhookLog = function (root, opts = {}) {
+    const deliveries = opts.deliveries || [];
+    root.classList.add("fx-webhooks");
+    const chip = (code) => {
+      const cls = code === "pending" ? "is-pending" : code < 300 ? "is-ok" : "is-fail";
+      const label = code === "pending" ? "Pending" : code;
+      return `<span class="fx-wh-chip ${cls}">${label}</span>`;
+    };
+    root.innerHTML = `
+      <div class="fx-wh-head">
+        <span style="width:3.5rem">Status</span><span style="flex:1">Event</span>
+        <span style="width:4.5rem;text-align:right">Attempts</span>
+        <span style="width:4.5rem;text-align:right">Duration</span>
+        <span style="width:5.5rem;text-align:right">Delivered</span>
+      </div>` +
+      deliveries.map((d, i) => `
+      <button class="fx-wh-row" type="button" data-i="${i}">
+        ${chip(d.status)}
+        <span class="fx-wh-event"><b>${esc(d.event)}</b><small>${esc(d.id)}</small></span>
+        <span class="fx-wh-cell">${d.attempts}</span>
+        <span class="fx-wh-cell">${d.status === "pending" ? "—" : d.duration + " ms"}</span>
+        <span class="fx-wh-cell">${esc(d.time)}</span>
+      </button>`).join("");
+    root.addEventListener("click", (e) => {
+      const row = e.target.closest(".fx-wh-row");
+      if (!row) return;
+      root.querySelectorAll(".fx-wh-row.is-sel").forEach((r) => r.classList.remove("is-sel"));
+      row.classList.add("is-sel");
+      opts.onSelect?.(deliveries[+row.dataset.i]);
+    });
+    return { deliveries };
+  };
 })();

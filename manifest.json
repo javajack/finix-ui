@@ -1148,6 +1148,68 @@
    ],
    "markup": "<div id=\"diff\"></div>",
    "js": "fxDiff(el, {before, after, file, mode:'unified'|'split', context:3}) -> {setMode, stats}. Line-level LCS diff: add/remove tints (success/destructive mixes), line numbers on --well gutters, mode toggle, collapsed unchanged regions with expand affordance. Include css/finix-devtools.css + js/finix-devtools.js."
+  },
+  {
+   "name": "api-keys",
+   "category": "devtools",
+   "classes": [
+    "fx-apikeys",
+    "fx-apikey",
+    "fx-apikey-main",
+    "fx-apikey-name",
+    "fx-apikey-value",
+    "fx-apikey-meta",
+    "fx-apikey-actions",
+    "fx-apikey-reveal"
+   ],
+   "markup": "<div class=\"fx-apikeys\"><div class=\"fx-apikey\" data-key=\"FULL_KEY\"><div class=\"fx-apikey-main\"><span class=\"fx-apikey-name\">Production</span><span class=\"fx-badge fx-badge--outline\">read</span></div><code class=\"fx-apikey-value\">fnx_live_****4f2a</code><span class=\"fx-apikey-meta\">Last used 2h ago</span><div class=\"fx-apikey-actions\">(reveal/copy/rotate buttons)</div></div></div>",
+   "js": "Press-and-hold .fx-apikey-reveal (550ms fill animation) swaps the masked value for data-key while held; re-masks on release. Copy via data-fx-copy. Delegated in finix-devtools.js."
+  },
+  {
+   "name": "env-vars",
+   "category": "devtools",
+   "classes": [
+    "fx-envvars",
+    "fx-envvar",
+    "fx-envvar-k",
+    "fx-envvar-v",
+    "fx-envvar-eye",
+    "fx-envvar-del",
+    "fx-envvar-add"
+   ],
+   "markup": "<div data-fx-envvars='[[\"KEY\",\"value\"]]'></div>",
+   "js": "Auto-rendered masked KV editor: per-value reveal eye, animated add/remove rows, mono inputs."
+  },
+  {
+   "name": "webhook-log",
+   "category": "devtools",
+   "classes": [
+    "fx-webhooks",
+    "fx-wh-head",
+    "fx-wh-row",
+    "fx-wh-chip",
+    "fx-wh-event",
+    "fx-wh-cell"
+   ],
+   "markup": "<div id=\"wh\"></div>",
+   "js": "fxWebhookLog(el, {deliveries:[{id,event,status,attempts,duration,time,...}], onSelect}). Status chips (2xx/err/pending), mono cells, selected-row rail; pair onSelect with a fx-sheet drawer + fxJsonTree payload inspector."
+  },
+  {
+   "name": "json-tree",
+   "category": "devtools",
+   "classes": [
+    "fx-jsontree",
+    "fx-jt-node",
+    "fx-jt-row",
+    "fx-jt-key",
+    "fx-jt-str",
+    "fx-jt-num",
+    "fx-jt-bool",
+    "fx-jt-null",
+    "fx-jt-count"
+   ],
+   "markup": "<div id=\"jt\"></div>",
+   "js": "fxJsonTree(el, data, {open:2}) \u2014 collapsible JSON viewer: caret toggles, item/key counts when collapsed, type-colored values, indent guides on --border-soft."
   }
  ]
 }

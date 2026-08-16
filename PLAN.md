@@ -107,7 +107,7 @@ Powers support inbox, CRM records, reconciliation, comms later.
   collapsed unchanged regions with "expand 12 lines" affordances, mono font.
 - Also create `devtools.html` skeleton + NAV entry this task.
 
-### T4. Dev/API trio → devtools.html
+### ✅ T4. Dev/API trio → devtools.html
 - `fx-apikey` rows: masked key, reveal/copy/rotate buttons, scope badges,
   last-used relative time. Reveal = press-and-hold (motion detail).
 - `fx-envvars`: masked KV editor rows (add/remove, reveal toggle).

@@ -630,7 +630,7 @@ Module `css/finix-travel.css` + `js/finix-travel.js`, `fx-tv-*`.
 - Hotel variant: hotel card (stars, amenity icons, per-night price) + room
   rate rows (refundable vs non chips).
 
-### E2. Clinic & healthcare → new page `clinic.html` ("Clinic", Industries)
+### ✅ E2. Clinic & healthcare → new page `clinic.html` ("Clinic", Industries)
 Module `css/finix-health.css` + `js/finix-health.js`, `fx-hc-*`.
 - Provider day grid — 15-min slot columns per provider (calendar reuse),
   booked blocks w/ visit-type hue, click-to-book popover.

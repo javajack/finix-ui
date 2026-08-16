@@ -1,0 +1,86 @@
+/*!
+ * finix-ui · finix-health.css — clinic & healthcare components (fx-hc-*)
+ * Provider day grid, patient chart header w/ allergy alerts, problem/med
+ * lists w/ interaction warnings, prescription composer, queue board.
+ */
+
+/* ============ provider day grid ============ */
+.fx-hc-grid-wrap { overflow-x: auto; }
+.fx-hc-grid { display: grid; grid-template-columns: 3.5rem repeat(var(--_prov, 3), minmax(9rem, 1fr)); gap: 2px; min-width: 34rem; }
+.fx-hc-prov {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.625rem;
+  background: var(--well); border-radius: var(--radius-md); font-size: 0.75rem; font-weight: 550;
+  position: sticky; top: 0;
+}
+.fx-hc-prov small { color: var(--muted-foreground); font-weight: 400; font-size: 0.625rem; }
+.fx-hc-time { font-size: 0.625rem; font-family: var(--font-mono); color: var(--muted-foreground); display: flex; align-items: start; justify-content: flex-end; padding: 0.125rem 0.5rem 0 0; }
+.fx-hc-slot {
+  min-height: 2.125rem; border: 1px dashed var(--border-soft); border-radius: var(--radius-sm);
+  background: transparent; cursor: pointer; transition: all 0.12s var(--ease-out); font: inherit;
+  color: transparent; font-size: 0.625rem;
+}
+.fx-hc-slot:hover { border-color: var(--primary); background: color-mix(in oklab, var(--primary) 5%, transparent); color: var(--primary); }
+.fx-hc-appt {
+  border-radius: var(--radius-sm); padding: 0.3125rem 0.5rem; font-size: 0.6875rem;
+  background: color-mix(in oklab, var(--_c, var(--primary)) 13%, var(--card));
+  border-left: 3px solid var(--_c, var(--primary));
+  display: flex; flex-direction: column; gap: 0.0625rem; overflow: hidden;
+}
+.fx-hc-appt b { font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fx-hc-appt small { color: var(--muted-foreground); font-size: 0.5625rem; white-space: nowrap; }
+
+/* ============ patient chart ============ */
+.fx-hc-patient { display: flex; align-items: center; gap: 0.875rem; flex-wrap: wrap; }
+.fx-hc-patient-id { display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
+.fx-hc-patient-id b { font-size: 1rem; font-weight: 650; letter-spacing: -0.01em; }
+.fx-hc-patient-id span { font-size: 0.75rem; color: var(--muted-foreground); }
+.fx-hc-mrn { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted-foreground); }
+.fx-hc-allergy {
+  display: inline-flex; align-items: center; gap: 0.3125rem; font-size: 0.6875rem; font-weight: 600;
+  background: color-mix(in oklab, var(--destructive) 13%, transparent); color: var(--destructive);
+  border: 1px solid color-mix(in oklab, var(--destructive) 35%, transparent);
+  border-radius: 999px; padding: 0.1875rem 0.5625rem;
+}
+.fx-hc-vitrow { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.fx-hc-vital { display: flex; flex-direction: column; gap: 0.0625rem; }
+.fx-hc-vital span { font-size: 0.625rem; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; }
+.fx-hc-vital b { font-family: var(--font-mono); font-size: 0.9375rem; font-weight: 550; }
+.fx-hc-vital b i { font-style: normal; font-size: 0.625rem; color: var(--muted-foreground); }
+.fx-hc-vital.is-flag b { color: var(--warning); }
+
+/* ============ problems & meds ============ */
+.fx-hc-list { display: flex; flex-direction: column; }
+.fx-hc-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 0.75rem; align-items: center; padding: 0.5rem 0.125rem; border-bottom: 1px solid var(--border-soft); font-size: 0.8125rem; }
+.fx-hc-row:last-child { border-bottom: none; }
+.fx-hc-row small { display: block; font-size: 0.6875rem; color: var(--muted-foreground); }
+.fx-hc-interact {
+  display: flex; gap: 0.625rem; align-items: flex-start; padding: 0.625rem 0.75rem;
+  border-radius: var(--radius-md); border: 1px solid color-mix(in oklab, var(--warning) 45%, var(--border));
+  background: color-mix(in oklab, var(--warning) 8%, var(--card)); font-size: 0.75rem; margin-top: 0.625rem;
+}
+.fx-hc-interact svg { width: 0.9375rem; height: 0.9375rem; color: var(--warning); flex-shrink: 0; margin-top: 0.0625rem; }
+
+/* ============ prescription composer ============ */
+.fx-hc-rx { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)) auto; gap: 0.5rem; align-items: end; }
+@media (max-width: 760px) { .fx-hc-rx { grid-template-columns: 1fr 1fr; } }
+.fx-hc-sig {
+  margin-top: 0.625rem; background: var(--well); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md); padding: 0.5625rem 0.75rem; font-size: 0.75rem;
+  font-style: italic; color: var(--muted-foreground);
+}
+.fx-hc-sig b { font-style: normal; color: var(--foreground); font-weight: 550; }
+
+/* ============ queue board ============ */
+.fx-hc-queue { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
+@media (max-width: 720px) { .fx-hc-queue { grid-template-columns: 1fr; } }
+.fx-hc-qcol { background: var(--well); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 0.625rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.fx-hc-qhead { display: flex; align-items: center; gap: 0.4375rem; font-size: 0.75rem; font-weight: 600; padding: 0 0.125rem; }
+.fx-hc-qhead .fx-badge { margin-left: auto; font-family: var(--font-mono); }
+.fx-hc-qcard { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.5625rem 0.6875rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.fx-hc-qcard-top { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; font-weight: 550; }
+.fx-hc-wait { margin-left: auto; font-size: 0.625rem; font-family: var(--font-mono); border-radius: 999px; padding: 0.125rem 0.4375rem; background: var(--well); color: var(--muted-foreground); }
+.fx-hc-wait.is-warn { background: color-mix(in oklab, var(--warning) 15%, transparent); color: var(--warning); }
+.fx-hc-wait.is-late { background: color-mix(in oklab, var(--destructive) 14%, transparent); color: var(--destructive); }
+.fx-hc-qcard small { font-size: 0.6875rem; color: var(--muted-foreground); }
+
+@media (prefers-reduced-motion: reduce) { .fx-hc-slot { transition: none; } }

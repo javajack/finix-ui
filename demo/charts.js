@@ -109,6 +109,22 @@
       return { color: c, tops, name: sr.name };
     });
 
+    // optional reference band (normal ranges: vitals, SLOs)
+    if (opts.band && opts.band.from != null && opts.band.to != null) {
+      const by1 = y(Math.min(opts.band.to, max));
+      const by2 = y(Math.max(opts.band.from, 0));
+      const rect = el("rect", { x: PL, width: W - PL - PR, y: by1, height: Math.max(0, by2 - by1), rx: 2 });
+      rect.style.fill = "color-mix(in oklab, var(--success) 9%, transparent)";
+      rect.style.stroke = "color-mix(in oklab, var(--success) 30%, transparent)";
+      rect.style.strokeDasharray = "4 4";
+      svg.insertBefore(rect, svg.querySelector("path"));
+      if (opts.band.label) {
+        const bt = el("text", { x: PL + 5, y: by1 + 11, style: "font-size:9px;font-weight:600", fill: "var(--success)" });
+        bt.textContent = opts.band.label;
+        svg.appendChild(bt);
+      }
+    }
+
     // optional threshold line (alert rules)
     if (opts.threshold && opts.threshold.value != null) {
       const tv = opts.threshold.value;

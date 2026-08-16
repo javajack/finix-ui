@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clinic · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-flows.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<link rel="stylesheet" href="../css/finix-health.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-flows.js"></script>
+<script defer src="../js/finix-editor.js"></script>
+<script defer src="../js/finix-health.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Clinic</h1>
+          <p class="fx-page-sub">Healthcare screens — a patient chart with allergy alerts and vitals inside their normal band, a prescription composer that catches interactions, click-to-book scheduling, digital intake, and the waiting-room queue.</p>
+        </div>
+      </div>
+
+      <!-- patient chart -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-hc-patient">
+            <span class="fx-avatar fx-avatar--lg">PN</span>
+            <div class="fx-hc-patient-id">
+              <b>Priya Nair</b>
+              <span>F · 34y · B+ &nbsp;<span class="fx-hc-mrn">MRN FNX-88214</span></span>
+            </div>
+            <span class="fx-hc-allergy">⚠ Penicillin</span>
+            <span class="fx-hc-allergy">⚠ Sulfa drugs</span>
+            <span class="fx-badge fx-badge--secondary" style="margin-left:auto">Follow-up · Dr. Rao</span>
+          </div>
+        </div>
+        <div class="fx-card-content fx-stack" style="gap:1.25rem">
+          <div class="fx-hc-vitrow">
+            <div class="fx-hc-vital"><span>BP</span><b>118/76 <i>mmHg</i></b></div>
+            <div class="fx-hc-vital"><span>Pulse</span><b>72 <i>bpm</i></b></div>
+            <div class="fx-hc-vital is-flag"><span>Temp</span><b>99.1 <i>°F</i></b></div>
+            <div class="fx-hc-vital"><span>SpO₂</span><b>98 <i>%</i></b></div>
+            <div class="fx-hc-vital"><span>Weight</span><b>61.4 <i>kg</i></b></div>
+            <div class="fx-hc-vital"><span>HbA1c</span><b>5.6 <i>%</i></b></div>
+          </div>
+          <div>
+            <div class="fx-row" style="justify-content:space-between;margin-bottom:.5rem">
+              <b class="fx-text-sm">Fasting glucose — last 12 visits</b>
+              <span class="fx-text-xs fx-muted">Green band = normal range (70–100 mg/dL)</span>
+            </div>
+            <div id="vitals-chart" style="max-width:46rem"></div>
+          </div>
+          <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:1.25rem">
+            <div>
+              <b class="fx-text-sm" style="display:block;margin-bottom:.375rem">Problem list</b>
+              <div class="fx-hc-list">
+                <div class="fx-hc-row"><span>Migraine without aura<small>Since 2021 · episodic</small></span><span class="fx-badge fx-badge--warning" style="font-size:.5625rem">Active</span><span></span></div>
+                <div class="fx-hc-row"><span>Iron-deficiency anemia<small>Dx Mar 2026 · on supplements</small></span><span class="fx-badge fx-badge--warning" style="font-size:.5625rem">Active</span><span></span></div>
+                <div class="fx-hc-row"><span>Vitamin D deficiency<small>Resolved Jun 2026</small></span><span class="fx-badge fx-badge--outline" style="font-size:.5625rem">Resolved</span><span></span></div>
+              </div>
+            </div>
+            <div>
+              <b class="fx-text-sm" style="display:block;margin-bottom:.375rem">Current medication</b>
+              <div class="fx-hc-list" id="meds">
+                <div class="fx-hc-row"><span>Ferrous sulfate 325mg<small>OD · ongoing</small></span><span></span><span></span></div>
+                <div class="fx-hc-row"><span>Sumatriptan 50mg<small>SOS · max 2/day</small></span><span></span><span></span></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <b class="fx-text-sm" style="display:block;margin-bottom:.5rem">Prescribe</b>
+            <div id="rx"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- scheduler -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Today's schedule</div>
+          <div class="fx-card-desc">Three providers, 30-minute slots — <b>click any empty slot</b> to book it.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-hc-grid-wrap"><div id="daygrid"></div></div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(24rem,1fr))">
+        <!-- intake wizard -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Digital intake</div>
+            <div class="fx-card-desc">The fxWizard engine again — details, history, then a signed consent (draw it).</div>
+          </div>
+          <div class="fx-card-content">
+            <div id="intake">
+              <section data-step="who" data-title="Details" data-desc="Who's visiting">
+                <h3>Patient details</h3>
+                <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:.875rem">
+                  <div class="fx-field"><label class="fx-label">Full name</label><input class="fx-input" name="pname" required placeholder="Priya Nair"></div>
+                  <div class="fx-field"><label class="fx-label">Date of birth</label><input class="fx-input" name="dob" required placeholder="12/04/1992" data-fx-mask="99/99/9999"></div>
+                  <div class="fx-field" style="grid-column:1/-1"><label class="fx-label">Phone</label><input class="fx-input" name="phone" required placeholder="+91 98450 12345"></div>
+                </div>
+              </section>
+              <section data-step="history" data-title="History" data-desc="The important bits">
+                <h3>Medical history</h3>
+                <p>Tick everything that applies — it saves the doctor ten minutes.</p>
+                <div class="fx-stack" style="gap:.5rem">
+                  <label class="fx-row" style="gap:.5rem;font-size:.8125rem"><input type="checkbox" class="fx-checkbox" name="h_diabetes" data-label="Diabetes">Diabetes</label>
+                  <label class="fx-row" style="gap:.5rem;font-size:.8125rem"><input type="checkbox" class="fx-checkbox" name="h_bp" data-label="Hypertension">Hypertension</label>
+                  <label class="fx-row" style="gap:.5rem;font-size:.8125rem"><input type="checkbox" class="fx-checkbox" name="h_asthma" data-label="Asthma">Asthma</label>
+                  <label class="fx-row" style="gap:.5rem;font-size:.8125rem"><input type="checkbox" class="fx-checkbox" name="h_surgery" data-label="Past surgery">Surgery in the last 5 years</label>
+                </div>
+              </section>
+              <section data-step="consent" data-title="Consent" data-desc="Sign to proceed">
+                <h3>Consent for treatment</h3>
+                <p>I consent to examination and treatment, and to my records being shared with my referring physician.</p>
+                <input type="hidden" name="consent_sig" data-label="Consent">
+                <div id="consent-sig"></div>
+              </section>
+              <section data-step="review" data-title="Review" data-next-label="Submit intake">
+                <h3>Check &amp; submit</h3>
+                <div data-review></div>
+              </section>
+              <section data-step="done" data-title="Done">
+                <div class="fx-wiz-done">
+                  <span class="fx-wiz-done-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                  <h3 style="margin:0">You're checked in</h3>
+                  <p class="fx-text-sm fx-muted" style="margin:0">Take a seat — you're next after two patients. We'll call you.</p>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <!-- queue board -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Waiting room</div>
+            <div class="fx-card-desc">Wait chips ramp from calm to please-apologise.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-hc-queue">
+              <div class="fx-hc-qcol">
+                <div class="fx-hc-qhead">🪑 Waiting<span class="fx-badge fx-badge--secondary">3</span></div>
+                <div class="fx-hc-qcard"><div class="fx-hc-qcard-top"><span class="fx-avatar fx-avatar--sm">AK</span>Arun K.<span class="fx-hc-wait">8m</span></div><small>Dr. Rao · consult</small></div>
+                <div class="fx-hc-qcard"><div class="fx-hc-qcard-top"><span class="fx-avatar fx-avatar--sm">SM</span>Sana M.<span class="fx-hc-wait is-warn">22m</span></div><small>Dr. Iyer · follow-up</small></div>
+                <div class="fx-hc-qcard"><div class="fx-hc-qcard-top"><span class="fx-avatar fx-avatar--sm">VJ</span>Vikram J.<span class="fx-hc-wait is-late">41m</span></div><small>Dr. Rao · reports</small></div>
+              </div>
+              <div class="fx-hc-qcol">
+                <div class="fx-hc-qhead">🩺 In room<span class="fx-badge fx-badge--secondary">2</span></div>
+                <div class="fx-hc-qcard"><div class="fx-hc-qcard-top"><span class="fx-avatar fx-avatar--sm">PN</span>Priya N.<span class="fx-hc-wait">Room 2</span></div><small>Dr. Rao · follow-up</small></div>
+                <div class="fx-hc-qcard"><div class="fx-hc-qcard-top"><span class="fx-avatar fx-avatar--sm">DP</span>Dev P.<span class="fx-hc-wait">Room 1</span></div><small>Dr. Iyer · new patient</small></div>
+              </div>
+              <div class="fx-hc-qcol">
+                <div class="fx-hc-qhead">✅ Done<span class="fx-badge fx-badge--secondary">5</span></div>
+                <div class="fx-hc-qcard"><div class="fx-hc-qcard-top"><span class="fx-avatar fx-avatar--sm">RG</span>Rhea G.<span class="fx-hc-wait">10:40</span></div><small>Billing pending</small></div>
+                <div class="fx-hc-qcard"><div class="fx-hc-qcard-top"><span class="fx-avatar fx-avatar--sm">MT</span>Manav T.<span class="fx-hc-wait">10:15</span></div><small>Pharmacy pickup</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* vitals chart with normal band */
+  fxCharts.area(document.getElementById("vitals-chart"), {
+    labels: ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    height: 200, fill: false,
+    series: [{ name: "Fasting glucose (mg/dL)", data: [96, 92, 104, 98, 110, 95, 92, 88, 94, 90, 86, 91] }],
+    band: { from: 70, to: 100, label: "normal 70–100" },
+  });
+
+  /* prescription composer */
+  const rx = fxRx(document.getElementById("rx"), {
+    currentMeds: ["Ferrous sulfate 325mg", "Sumatriptan 50mg"],
+    drugs: [
+      { name: "Paracetamol", doses: ["500mg", "650mg"] },
+      { name: "Naproxen", doses: ["250mg", "500mg"], interactsWith: "Sumatriptan", note: "both are migraine agents — risk of medication-overuse headache" },
+      { name: "Amoxicillin", doses: ["250mg", "500mg"], interactsWith: "PENICILLIN-ALLERGY", note: "cross-reactive" },
+      { name: "Pantoprazole", doses: ["20mg", "40mg"] },
+    ],
+    onAdd: (drug) => finix.toast({ title: "Added to prescription", description: drug, variant: "success" }),
+  });
+  window.__rx = rx;
+
+  /* day grid */
+  window.__grid = fxDayGrid(document.getElementById("daygrid"), {
+    providers: [
+      { ini: "RR", name: "Dr. Rao", role: "General" },
+      { ini: "AI", name: "Dr. Iyer", role: "Internal med" },
+      { ini: "LF", name: "Dr. Fernandes", role: "Pediatrics" },
+    ],
+    start: 9, end: 13,
+    appts: [
+      { prov: 0, slot: 0, len: 1, name: "Arun K.", type: "Consult", color: "var(--chart-1)" },
+      { prov: 0, slot: 2, len: 2, name: "Priya Nair", type: "Follow-up", color: "var(--chart-2)" },
+      { prov: 1, slot: 1, len: 1, name: "Dev P.", type: "New patient", color: "var(--chart-4)" },
+      { prov: 1, slot: 4, len: 1, name: "Sana M.", type: "Follow-up", color: "var(--chart-2)" },
+      { prov: 2, slot: 0, len: 2, name: "Baby Aarav", type: "Vaccination", color: "var(--chart-5)" },
+      { prov: 2, slot: 5, len: 1, name: "Ishaan V.", type: "Consult", color: "var(--chart-1)" },
+    ],
+    bookAs: "Walk-in",
+    onBook: (appt, prov, time) => finix.toast({ title: "Slot booked", description: prov.name + " · " + time + " · walk-in", variant: "success" }),
+  });
+
+  /* intake wizard + signature consent */
+  let sigDone = false;
+  fxSignature(document.getElementById("consent-sig"), {
+    onApply: () => {
+      sigDone = true;
+      document.querySelector('#intake [name="consent_sig"]').value = "signed";
+      finix.toast({ title: "Consent captured", description: "Signature attached to the intake.", variant: "success" });
+    },
+  });
+  window.__intake = fxWizard(document.getElementById("intake"), {
+    validate: { consent: () => (sigDone ? null : "Draw your signature and press Apply first.") },
+    onFinish: () => finix.toast({ title: "Intake submitted", description: "Priya is in the queue.", variant: "success" }),
+  });
+});
+</script>
+</body>
+</html>

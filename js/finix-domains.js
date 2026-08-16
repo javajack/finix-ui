@@ -814,4 +814,54 @@
     render();
     return { render, get edits() { return edits; } };
   };
+
+  /* ================= approval chain ================= */
+  window.fxApprovals = function (root, opts) {
+    const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const stages = opts.stages || [];
+    const ini = (n) => n.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+    const CHIP = {
+      approved: '<span class="fx-badge fx-badge--success fx-badge--dot">Approved</span>',
+      rejected: '<span class="fx-badge fx-badge--destructive">Rejected</span>',
+      current: '<span class="fx-badge fx-badge--warning fx-badge--dot">Awaiting review</span>',
+      pending: '<span class="fx-badge fx-badge--outline">Pending</span>',
+      skipped: '<span class="fx-badge fx-badge--secondary">Skipped</span>',
+    };
+    function render() {
+      root.classList.add("fx-approvals");
+      root.innerHTML = stages.map((st, i) => `
+        <div class="fx-approval-stage" data-state="${st.state}">
+          <span class="fx-avatar">${ini(st.name)}</span>
+          <div class="fx-approval-body">
+            <div class="fx-approval-head">
+              <b>${esc(st.name)}</b><small>${esc(st.role)}</small>
+              ${CHIP[st.state] || ""}
+              ${st.time ? `<span class="fx-approval-time">${esc(st.time)}</span>` : ""}
+            </div>
+            ${st.note ? `<div class="fx-approval-note">${esc(st.note)}</div>` : ""}
+            ${st.state === "current" && opts.actionable !== false ? `
+              <div class="fx-approval-actions">
+                <button class="fx-btn fx-btn--sm" data-approve="${i}">Approve</button>
+                <button class="fx-btn fx-btn--outline fx-btn--sm" data-reject="${i}">Reject</button>
+              </div>` : ""}
+          </div>
+        </div>`).join("");
+    }
+    root.addEventListener("click", (e) => {
+      const ap = e.target.closest("[data-approve]"), rj = e.target.closest("[data-reject]");
+      if (!ap && !rj) return;
+      const i = +(ap || rj).dataset[ap ? "approve" : "reject"];
+      stages[i].state = ap ? "approved" : "rejected";
+      stages[i].time = "just now";
+      if (ap && stages[i + 1]) stages[i + 1].state = "current";
+      if (rj) stages.slice(i + 1).forEach((st) => (st.state = "skipped"));
+      render();
+      if (window.finix) finix.toast(ap
+        ? { title: "Stage approved", description: stages[i].name + " signed off.", variant: "success" }
+        : { title: "Request rejected", description: "Requester will be notified.", variant: "destructive" });
+      opts.onChange?.(stages);
+    });
+    render();
+    return { render, stages };
+  };
 })();

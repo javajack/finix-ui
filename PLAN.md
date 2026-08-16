@@ -199,7 +199,7 @@ Composes T1 + T2. Zendesk/Intercom-grade split-pane:
   generate cartesian SKU table rows w/ price/stock inline edits.
 - Order detail card w/ fulfillment `fx-stages` (from T1) + items + totals.
 
-### T14. Approval chain + signature + slot picker → people.html / editor.html / scheduling.html
+### ✅ T14. Approval chain + signature + slot picker → people.html / editor.html / scheduling.html
 - `fx-approvals` (people.html): multi-stage approver chain — avatars, state
   chips, acted timestamps, current-stage glow; approve/reject demo actions.
 - `fxSignature` (editor.html): canvas draw pad + type-it tab (script-ish font

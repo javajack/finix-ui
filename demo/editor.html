@@ -72,6 +72,16 @@
 
       <div class="fx-card">
         <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Signature</div>
+          <div class="fx-card-desc">Draw with the pointer or type it — undo per stroke, PNG output for e-sign flows.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="signature"></div>
+        </div>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
           <div class="fx-card-title fx-card-title--lg">Code &amp; snippets</div>
           <div class="fx-card-desc">Copyable command with feedback toast, and a code block.</div>
         </div>
@@ -98,6 +108,9 @@
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
+  /* ---- signature pad ---- */
+  fxSignature(document.getElementById("signature"));
+
   /* ---- editor with starter content ---- */
   fxEditor(document.getElementById("editor"), {
     html: `<h1>Q3 planning notes</h1>

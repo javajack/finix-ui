@@ -104,12 +104,81 @@
         </div>
       </div>
 
+
+      <!-- slot picker -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Book a meeting</div>
+          <div class="fx-card-desc">Calendly-style slot picker with timezone switching, plus the weekly availability editor that drives it.</div>
+        </div>
+        <div class="fx-card-content fx-stack" style="gap:1.5rem">
+          <div id="slotpicker"></div>
+          <hr class="fx-separator">
+          <div class="fx-stack" style="gap:.625rem;max-width:30rem">
+            <div class="fx-row" style="justify-content:space-between">
+              <span class="fx-label">Weekly availability (ET)</span>
+              <button class="fx-btn fx-btn--outline fx-btn--sm" id="avail-copy">Copy Monday to all</button>
+            </div>
+            <div class="fx-avail" id="avail"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
+  /* ---- slot picker + availability editor ---- */
+  const AVAIL = { 1: [14, 20], 2: [14, 20], 3: [14, 20], 4: [14, 20], 5: [14, 17] };
+  const picker = fxSlotPicker(document.getElementById("slotpicker"), {
+    title: "Product walkthrough",
+    duration: 30,
+    availability: { ...AVAIL },
+  });
+  const DAYN = { 1: "Mon", 2: "Tue", 3: "Wed", 4: "Thu", 5: "Fri" };
+  const hourOpts = (selv) => Array.from({ length: 11 }, (_, k) => {
+    const utc = 13 + k; const et = utc - 4;
+    const ap = et >= 12 ? "pm" : "am";
+    return `<option value="${utc}" ${utc === selv ? "selected" : ""}>${((et + 11) % 12) + 1}:00${ap}</option>`;
+  }).join("");
+  const availBox = document.getElementById("avail");
+  function renderAvail() {
+    availBox.innerHTML = Object.keys(DAYN).map((d) => {
+      const range = AVAIL[d] || [14, 20];
+      const on = !!AVAIL[d];
+      return `<div class="fx-avail-row ${on ? "" : "is-off"}" data-day="${d}">
+        <span>${DAYN[d]}</span>
+        <input type="checkbox" class="fx-switch" ${on ? "checked" : ""} data-avail-on>
+        <select class="fx-select" data-avail-from>${hourOpts(range[0])}</select>
+        <span class="fx-muted-sep">–</span>
+        <select class="fx-select" data-avail-to>${hourOpts(range[1])}</select>
+        <span></span>
+      </div>`;
+    }).join("");
+  }
+  function pushDay(d) {
+    const row = availBox.querySelector(`[data-day="${d}"]`);
+    const on = row.querySelector("[data-avail-on]").checked;
+    const from = +row.querySelector("[data-avail-from]").value;
+    const to = +row.querySelector("[data-avail-to]").value;
+    if (on) { AVAIL[d] = [from, Math.max(from + 1, to)]; picker.setAvailability(+d, AVAIL[d], true); }
+    else { delete AVAIL[d]; picker.setAvailability(+d, null, false); }
+    row.classList.toggle("is-off", !on);
+  }
+  availBox.addEventListener("change", (e) => {
+    const row = e.target.closest("[data-day]");
+    if (row) pushDay(row.dataset.day);
+  });
+  document.getElementById("avail-copy").addEventListener("click", () => {
+    const mon = AVAIL[1] || [14, 20];
+    for (const d of [2, 3, 4, 5]) { AVAIL[d] = [...mon]; picker.setAvailability(d, [...mon], true); }
+    renderAvail();
+    finix.toast({ title: "Availability copied", description: "Monday hours applied to Tue-Fri." });
+  });
+  renderAvail();
+
   const y = 2026, m = "08";
   fxEventCalendar(document.getElementById("evcal"), {
     events: [

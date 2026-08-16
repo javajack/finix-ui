@@ -1491,6 +1491,50 @@
    ],
    "markup": "<div class=\"fx-order-items\">(items)</div><div class=\"fx-order-totals\">(totals)</div> + fx-stages fulfillment chain",
    "js": null
+  },
+  {
+   "name": "approval-chain",
+   "category": "hr",
+   "classes": [
+    "fx-approvals",
+    "fx-approval-stage",
+    "fx-approval-body",
+    "fx-approval-head",
+    "fx-approval-note",
+    "fx-approval-actions",
+    "fx-approval-time"
+   ],
+   "markup": "<div id=\"approvals\"></div>",
+   "js": "fxApprovals(el, {stages:[{name,role,state:approved|rejected|current|pending|skipped,time,note}], onChange}) \u2014 vertical approver chain with avatars, state chips, glow on the current stage, approve/reject actions that advance or cascade-skip. In js/finix-domains.js."
+  },
+  {
+   "name": "signature-pad",
+   "category": "content",
+   "classes": [
+    "fx-sig",
+    "fx-sig-canvas-wrap",
+    "fx-sig-line",
+    "fx-sig-hint",
+    "fx-sig-type-input",
+    "fx-sig-preview"
+   ],
+   "markup": "<div id=\"signature\"></div>",
+   "js": "fxSignature(el, {onApply}) in js/finix-editor.js \u2014 Draw tab (pointer canvas, per-stroke undo, DPR-aware) + Type tab (system cursive), Apply -> PNG dataURL preview + callback."
+  },
+  {
+   "name": "slot-picker",
+   "category": "widget",
+   "classes": [
+    "fx-slots",
+    "fx-slots-days",
+    "fx-slots-day",
+    "fx-slot",
+    "fx-slots-confirm",
+    "fx-avail",
+    "fx-avail-row"
+   ],
+   "markup": "<div id=\"slotpicker\"></div>",
+   "js": "fxSlotPicker(el, {title,duration,availability:{weekday:[startUTC,endUTC]},timezones,onBook}) in js/finix-apps.js \u2014 Calendly-style 5-day slot columns, timezone-shifted labels, selected-slot confirm card, api.setAvailability(day,range,on) for a weekly availability editor."
   }
  ]
 }

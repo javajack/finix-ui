@@ -124,6 +124,16 @@
       <!-- timesheet -->
       <div class="fx-card">
         <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Approval chain — expense report #EXP-441</div>
+          <div class="fx-card-desc">Multi-stage approver flow — $2,840 team offsite. The glowing stage is waiting on you: approve or reject.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="approvals" style="max-width:34rem"></div>
+        </div>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
           <div class="fx-card-title fx-card-title--lg">Timesheet — week 34</div>
           <div class="fx-card-desc">Editable hours grid with live totals. The timer logs into today's first project on stop.</div>
           <div class="fx-card-action">
@@ -159,6 +169,16 @@
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
+  // ---- approval chain ----
+  fxApprovals(document.getElementById("approvals"), {
+    stages: [
+      { name: "Sofia Davis", role: "Manager", state: "approved", time: "Aug 14 · 11:02", note: "Within team budget — approved." },
+      { name: "William Kim", role: "Department head", state: "approved", time: "Aug 15 · 09:36" },
+      { name: "Rakesh K.", role: "Finance", state: "current" },
+      { name: "Olivia Martin", role: "CFO (>$2,500)", state: "pending" },
+    ],
+  });
+
   // KPI sparks
   fxCharts.spark(document.getElementById("spark-hc"),   { data: [128,131,135,138,140,142,148], width: 84, height: 26 });
   fxCharts.spark(document.getElementById("spark-attr"), { data: [11,10.2,9.4,8.8,8.1,7.7,7.4], width: 84, height: 26 });

@@ -365,3 +365,47 @@ input.fx-fb-ctl { min-width: 8rem; }
 .fx-imp-check svg { width: 1.375rem; height: 1.375rem; }
 @keyframes fx-imp-pop { from { transform: scale(0.6); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .fx-imp-check { animation: none; } }
+
+/* ============ signature pad (fxSignature) ============ */
+.fx-sig { display: flex; flex-direction: column; gap: 0.75rem; max-width: 26rem; }
+.fx-sig-canvas-wrap { position: relative; }
+.fx-sig canvas {
+  width: 100%; height: 9rem; display: block; touch-action: none; cursor: crosshair;
+  background: var(--well); border: 1px dashed var(--border); border-radius: var(--radius-lg);
+}
+.fx-sig-line { position: absolute; left: 1.25rem; right: 1.25rem; bottom: 2rem; border-bottom: 1px solid var(--border); pointer-events: none; }
+.fx-sig-hint { position: absolute; left: 0; right: 0; bottom: 0.625rem; text-align: center; font-size: 0.6875rem; color: var(--muted-foreground); pointer-events: none; }
+.fx-sig-type-input { font-size: 1.5rem; height: 3.25rem; font-family: "Segoe Script", "Bradley Hand", "Snell Roundhand", cursive; }
+.fx-sig-preview { display: flex; align-items: center; gap: 0.75rem; }
+.fx-sig-preview img { height: 3.5rem; border: 1px solid var(--border-soft); border-radius: var(--radius-md); background: #fff; }
+
+/* ============ slot picker (fxSlotPicker) ============ */
+.fx-slots { display: grid; grid-template-columns: minmax(0, 1fr) 15rem; gap: 1.25rem; align-items: start; }
+@media (max-width: 900px) { .fx-slots { grid-template-columns: 1fr; } }
+.fx-slots-days { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.625rem; }
+.fx-slots-day { display: flex; flex-direction: column; gap: 0.375rem; min-width: 0; }
+.fx-slots-dayhead { text-align: center; padding-bottom: 0.25rem; }
+.fx-slots-dayhead b { display: block; font-size: 0.8125rem; font-weight: 600; }
+.fx-slots-dayhead span { font-size: 0.6875rem; color: var(--muted-foreground); }
+.fx-slot {
+  height: 2rem; border: 1px solid var(--border); border-radius: var(--radius-md);
+  background: var(--card); color: var(--primary); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+  cursor: pointer; transition: background-color .12s, border-color .12s, transform .1s;
+}
+.fx-slot:hover { border-color: var(--primary); background: color-mix(in oklab, var(--primary) 7%, var(--card)); }
+.fx-slot:active { transform: scale(0.97); }
+.fx-slot.is-sel { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); }
+.fx-slot-none { font-size: 0.75rem; color: var(--muted-foreground); text-align: center; padding: 0.5rem 0; }
+.fx-slots-confirm {
+  border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--well);
+  padding: 1rem; display: flex; flex-direction: column; gap: 0.625rem; position: sticky; top: 1rem;
+}
+.fx-slots-confirm-title { font-weight: 600; font-size: 0.875rem; }
+.fx-slots-confirm-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; }
+.fx-slots-confirm-row svg { width: 0.875rem; height: 0.875rem; color: var(--muted-foreground); flex-shrink: 0; }
+.fx-slots-confirm-row b { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; }
+.fx-avail { display: flex; flex-direction: column; gap: 0.375rem; }
+.fx-avail-row { display: grid; grid-template-columns: 3.5rem auto 1fr auto 1fr auto; gap: 0.5rem; align-items: center; font-size: 0.8125rem; }
+.fx-avail-row select { height: 1.75rem; padding-block: 0; font-size: 0.75rem; font-family: var(--font-mono); }
+.fx-avail-row.is-off select { opacity: 0.4; pointer-events: none; }
+.fx-avail-row .fx-muted-sep { font-size: 0.75rem; color: var(--muted-foreground); text-align: center; }

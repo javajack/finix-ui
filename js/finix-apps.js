@@ -477,6 +477,116 @@
     return { refilter };
   };
 
+  /* ================= slot picker ================= */
+  window.fxSlotPicker = function (root, opts = {}) {
+    const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const TZS = opts.timezones || [
+      { id: "PT", label: "Pacific (PT)", off: -7 },
+      { id: "ET", label: "Eastern (ET)", off: -4 },
+      { id: "UTC", label: "UTC", off: 0 },
+      { id: "IST", label: "India (IST)", off: 5.5 },
+    ];
+    // availability: per weekday 1-5, [startUTC, endUTC) hours
+    const avail = opts.availability || { 1: [14, 20], 2: [14, 20], 3: [14, 20], 4: [14, 20], 5: [14, 17] };
+    const enabled = {};
+    Object.keys(avail).forEach((d) => (enabled[d] = true));
+    let tz = TZS[1], sel = null;
+    const duration = opts.duration || 30;
+
+    function nextDays() {
+      const out = [];
+      const d = new Date();
+      while (out.length < 5) {
+        d.setDate(d.getDate() + 1);
+        if (avail[d.getDay()]) out.push(new Date(d));
+      }
+      return out;
+    }
+    const fmtH = (utcH) => {
+      let h = utcH + tz.off;
+      h = ((h % 24) + 24) % 24;
+      const m = Math.round((h % 1) * 60);
+      const hh = Math.floor(h);
+      const ap = hh >= 12 ? "pm" : "am";
+      return `${((hh + 11) % 12) + 1}:${String(m).padStart(2, "0")}${ap}`;
+    };
+    function render() {
+      const days = nextDays();
+      root.classList.add("fx-slots");
+      root.innerHTML = `
+        <div class="fx-stack" style="gap:.875rem;min-width:0">
+          <div class="fx-row" style="justify-content:space-between">
+            <span class="fx-label">Pick a time — ${duration} min</span>
+            <select class="fx-select" data-slot-tz style="width:10rem;height:1.75rem;padding-block:0;font-size:.75rem">
+              ${TZS.map((t) => `<option value="${t.id}" ${t === tz ? "selected" : ""}>${t.label}</option>`).join("")}
+            </select>
+          </div>
+          <div class="fx-slots-days">
+            ${days.map((d) => {
+              const wd = d.getDay();
+              const [a, b] = avail[wd] || [0, 0];
+              const on = enabled[wd];
+              let slots = "";
+              if (on) for (let h = a; h < b; h += duration / 60) {
+                const key = `${d.getMonth() + 1}/${d.getDate()}@${h}`;
+                slots += `<button class="fx-slot ${sel === key ? "is-sel" : ""}" data-slot="${key}" data-label="${DAYS[wd]}, ${MONTHS[d.getMonth()]} ${d.getDate()} · ${fmtH(h)}">${fmtH(h)}</button>`;
+              }
+              return `<div class="fx-slots-day">
+                <div class="fx-slots-dayhead"><b>${DAYS[wd]}</b><span>${MONTHS[d.getMonth()]} ${d.getDate()}</span></div>
+                ${slots || '<div class="fx-slot-none">—</div>'}
+              </div>`;
+            }).join("")}
+          </div>
+        </div>
+        <div class="fx-slots-confirm">
+          <div class="fx-slots-confirm-title">${opts.title || "Intro call"}</div>
+          <div class="fx-slots-confirm-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <b data-slot-label>${sel ? root.querySelector(`[data-slot="${sel}"]`)?.dataset.label || "" : "Select a slot"}</b>
+          </div>
+          <div class="fx-slots-confirm-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            <span class="fx-text-sm">${tz.label}</span>
+          </div>
+          <button class="fx-btn" data-slot-confirm ${sel ? "" : "disabled"} style="width:100%">Confirm booking</button>
+          <span class="fx-text-xs fx-muted">A calendar invite goes out on confirm.</span>
+        </div>`;
+      const lab = root.querySelector("[data-slot-label]");
+      if (sel) {
+        const btn = root.querySelector(`[data-slot="${sel}"]`);
+        if (btn) lab.textContent = btn.dataset.label;
+        else { sel = null; lab.textContent = "Select a slot"; root.querySelector("[data-slot-confirm]").disabled = true; }
+      }
+    }
+    root.addEventListener("click", (e) => {
+      const slot = e.target.closest("[data-slot]");
+      if (slot) { sel = slot.dataset.slot; render(); return; }
+      if (e.target.closest("[data-slot-confirm]") && sel) {
+        const label = root.querySelector("[data-slot-label]").textContent;
+        if (window.finix) finix.toast({ title: "Booked!", description: label + " — invite sent.", variant: "success" });
+        opts.onBook?.(sel, label);
+      }
+    });
+    root.addEventListener("change", (e) => {
+      if (e.target.matches("[data-slot-tz]")) {
+        tz = TZS.find((t) => t.id === e.target.value);
+        render();
+      }
+    });
+    render();
+    return {
+      render,
+      setAvailability(day, range, on) {
+        if (range) avail[day] = range;
+        if (on !== undefined) enabled[day] = on;
+        if (on === false) delete avail[day];
+        render();
+      },
+      get selection() { return sel; },
+    };
+  };
+
   /* ================= CSV import wizard (fxImporter) ================= */
   window.fxImporter = function (root, opts = {}) {
     const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));

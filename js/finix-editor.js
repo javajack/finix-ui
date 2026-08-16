@@ -298,4 +298,109 @@
       get crop() { return { ...crop }; },
     };
   };
+
+  /* ================= signature pad ================= */
+  window.fxSignature = function (root, opts = {}) {
+    root.classList.add("fx-sig");
+    root.innerHTML = `
+      <div class="fx-toggle-group fx-toggle-group--outline" style="align-self:flex-start">
+        <button class="fx-toggle" aria-pressed="true" data-sig-tab="draw">Draw</button>
+        <button class="fx-toggle" aria-pressed="false" data-sig-tab="type">Type</button>
+      </div>
+      <div data-sig-pane="draw">
+        <div class="fx-sig-canvas-wrap">
+          <canvas></canvas>
+          <span class="fx-sig-line"></span>
+          <span class="fx-sig-hint">Sign above the line</span>
+        </div>
+      </div>
+      <div data-sig-pane="type" hidden>
+        <input class="fx-input fx-sig-type-input" placeholder="Type your name" autocomplete="off">
+      </div>
+      <div class="fx-row" style="gap:.375rem">
+        <button class="fx-btn fx-btn--outline fx-btn--sm" data-sig="undo">Undo</button>
+        <button class="fx-btn fx-btn--outline fx-btn--sm" data-sig="clear">Clear</button>
+        <span style="flex:1"></span>
+        <button class="fx-btn fx-btn--sm" data-sig="apply">Apply signature</button>
+      </div>
+      <div class="fx-sig-preview" hidden>
+        <img alt="Signature preview">
+        <span class="fx-text-sm fx-muted">PNG output — ready to attach.</span>
+      </div>`;
+    const canvas = root.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+    let strokes = [], cur = null, mode = "draw";
+    function fit() {
+      const r = canvas.getBoundingClientRect();
+      canvas.width = r.width * devicePixelRatio;
+      canvas.height = r.height * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      redraw();
+    }
+    function ink() { return getComputedStyle(document.documentElement).getPropertyValue("--foreground").trim(); }
+    function redraw() {
+      const r = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, r.width, r.height);
+      ctx.strokeStyle = ink(); ctx.lineWidth = 2; ctx.lineCap = "round"; ctx.lineJoin = "round";
+      for (const st of strokes) {
+        ctx.beginPath();
+        st.forEach(([x, y], i2) => (i2 ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+        ctx.stroke();
+      }
+    }
+    const pos = (e) => {
+      const r = canvas.getBoundingClientRect();
+      return [e.clientX - r.left, e.clientY - r.top];
+    };
+    canvas.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+      cur = [pos(e)];
+      strokes.push(cur);
+    });
+    canvas.addEventListener("pointermove", (e) => {
+      if (!cur) return;
+      cur.push(pos(e));
+      redraw();
+    });
+    ["pointerup", "pointercancel"].forEach((ev) => canvas.addEventListener(ev, () => (cur = null)));
+    requestAnimationFrame(fit);
+    addEventListener("resize", fit, { passive: true });
+    root.addEventListener("click", (e) => {
+      const tab = e.target.closest("[data-sig-tab]");
+      if (tab) {
+        mode = tab.dataset.sigTab;
+        root.querySelectorAll("[data-sig-tab]").forEach((b) => b.setAttribute("aria-pressed", b === tab));
+        root.querySelectorAll("[data-sig-pane]").forEach((p2) => (p2.hidden = p2.dataset.sigPane !== mode));
+        if (mode === "draw") requestAnimationFrame(fit);
+        return;
+      }
+      const act = e.target.closest("[data-sig]");
+      if (!act) return;
+      if (act.dataset.sig === "undo") { strokes.pop(); redraw(); }
+      if (act.dataset.sig === "clear") { strokes = []; redraw(); root.querySelector("[data-sig-pane=type] input").value = ""; }
+      if (act.dataset.sig === "apply") {
+        let url;
+        if (mode === "draw") {
+          url = canvas.toDataURL("image/png");
+        } else {
+          const name = root.querySelector("[data-sig-pane=type] input").value.trim() || "Signature";
+          const c2 = document.createElement("canvas");
+          c2.width = 480; c2.height = 140;
+          const x2 = c2.getContext("2d");
+          x2.fillStyle = "#111";
+          x2.font = 'italic 52px "Segoe Script", "Bradley Hand", "Snell Roundhand", cursive';
+          x2.textBaseline = "middle";
+          x2.fillText(name, 24, 74);
+          url = c2.toDataURL("image/png");
+        }
+        const prev = root.querySelector(".fx-sig-preview");
+        prev.hidden = false;
+        prev.querySelector("img").src = url;
+        opts.onApply?.(url);
+        if (window.finix) finix.toast({ title: "Signature captured", description: "PNG generated below.", variant: "success" });
+      }
+    });
+    return { get strokes() { return strokes; } };
+  };
 })();

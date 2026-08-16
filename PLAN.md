@@ -270,3 +270,97 @@ The biggest structural gap; unlocks automation, journeys, lineage, service maps.
   its loop completes.
 - If context is compacted mid-wave: read this file + `git log --oneline` +
   memory, then resume at the first un-checked task.
+
+---
+
+## WAVE M — Public web: marketing, launch & landing pages (v0.3)
+
+New arena: PUBLIC pages (no admin shell). Standalone layout with own navbar +
+footer, still token-driven, still Geist-only, still light/dark × brands.
+New module: `css/finix-marketing.css` + `js/finix-marketing.js`, namespace
+`fx-mk-*` (avoids app-component collisions — lesson from .fx-msg-actions).
+Pages live in `demo/site/`. Marketing visuals use LIVE finix components as the
+"product screenshots" (real markup in a browser frame) — we are the product.
+
+### Section taxonomy (the full enumeration)
+
+**Above the fold**
+1. Announcement bar — launch/promo strip w/ link, dismissible
+2. Navbar — logo, links, (mega)menu, theme toggle, primary CTA; sticky w/
+   scroll-shrink + blur; mobile hamburger panel
+3. Hero variants: centered copy+CTA · split copy/visual · screenshot-in-
+   browser-frame · video · background fx (aurora/grid/dots) · eyebrow badge
+   ("v0.3 is out →") · gradient headline span · inline email-capture ·
+   CTA pair (primary + secondary) · social-proof strip under CTA
+   (avatar stack + stars + "Trusted by N teams")
+4. Logo cloud — static grid or infinite marquee, muted wordmarks
+
+**Value communication**
+5. Feature grid — icon cards 3/4-up
+6. Bento grid — asymmetric showcase, cells host live mini-components
+7. Zig-zag feature rows — alternating text/visual deep dives
+8. Tabbed/interactive showcase
+9. How-it-works steps (1-2-3)
+10. Use-case / persona cards ("For support teams…")
+11. Integrations wall + count CTA
+12. Stats band — counter-up metrics (uptime, requests, teams)
+13. Comparison table — us vs them (✓ / ✕ / partial)
+14. Code/install snippet section (dev products)
+
+**Trust & social proof**
+15. Testimonial patterns: spotlight quote · card carousel · wall of love
+    (tweet-card masonry) · case-study cards w/ result metrics
+16. Ratings badges (G2-style stars), press mentions
+17. Security/compliance badges (SOC2, GDPR, SSO)
+
+**Conversion**
+18. Pricing — tiers, monthly/annual toggle (animated price swap), featured
+    plan, per-feature comparison table
+19. ROI mini-calculator (sliders → computed savings)
+20. Newsletter / waitlist capture — email + button → success state + live
+    "join N others" counter
+21. Countdown timer (launch)
+22. FAQ accordion (objection handling)
+23. Final CTA band — gradient/aurora, restated value prop, one action
+
+**Closing**
+24. Footer — multi-column links, newsletter, socials, status dot, legal bar
+
+**Conversion craft (applies everywhere):** one primary CTA repeated down the
+page; social proof adjacent to every CTA; benefit-first headline + specific
+subhead; scannable sections (eyebrow → h2 → lede rhythm); scroll-reveal
+animation (IO, reduced-motion guarded); sticky nav CTA; mobile-first stacking.
+
+### Tasks
+
+### ✅ M1. Marketing module scaffold
+`finix-marketing.css`: container/rhythm/display-type/eyebrow/lede tokens,
+reveal system, browser-frame, aurora/grid backdrops, navbar, footer.
+`finix-marketing.js`: sticky-nav state, mobile menu, IO scroll-reveal,
+counter-up, carousel, pricing billing toggle, countdown, waitlist form,
+theme toggle hook.
+
+### ✅ M2. home.html — SaaS homepage (flagship, many sections)
+Announcement bar · navbar · hero (badge, gradient headline, CTA pair, social
+strip, LIVE dashboard in browser frame + aurora) · logo marquee · bento (live
+mini-components in cells) · zig-zag rows ×2 · stats band (counter-up) ·
+testimonial spotlight + carousel · integrations · pricing (toggle) · FAQ ·
+final CTA · footer. Full loop.
+
+### M3. launch.html — launch/waitlist page
+Minimal nav · countdown hero · waitlist capture w/ live counter · blurred
+"early preview" frame · launch timeline (reuse fx-stages) · early tweets
+(wall-of-love lite) · mini FAQ · minimal footer. Full loop.
+
+### M4. pricing.html — dedicated pricing page
+H1 + billing toggle · 3 tiers · full feature-comparison table · ROI
+calculator (fx-sliders) · logos · testimonial band · objection FAQ · CTA ·
+footer. Full loop.
+
+### M5. Integration & release
+Admin NAV group "Marketing site" → the three pages; manifest (category
+"marketing") + llms.txt; research.html credits from the free-sources sweep
+(Tailark, HyperUI, Magic UI, …); 3-page light+dark+console+overflow sweep;
+commit; tag v0.3.0.
+
+Sequencing: M1→M5, one commit per task, quality loop on every task.

@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finix UI — The admin framework for every stack</title>
+<meta name="description" content="140 production-grade components in plain HTML/CSS/JS. No React, no build step. Ship a beautiful admin in any server-rendered stack.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;650;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/finix.css">
+<link rel="stylesheet" href="../../css/finix-widgets.css">
+<link rel="stylesheet" href="../../css/finix-marketing.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="../charts.js"></script>
+<script defer src="../../js/finix.js"></script>
+<script defer src="../../js/finix-marketing.js"></script>
+</head>
+<body class="fx-site">
+
+<!-- announcement bar -->
+<div class="fx-mk-announce" id="announce">
+  <span>🎉 <b>v0.2 is here</b> — 140 components, workflow canvas, ticket inbox &amp; more.</span>
+  <a href="#features">See what's new
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  </a>
+  <button class="fx-mk-announce-x" aria-label="Dismiss" onclick="document.getElementById('announce').remove()">
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+</div>
+
+<!-- navbar -->
+<header class="fx-mk-nav">
+  <div class="fx-mk-container fx-mk-nav-inner">
+    <a class="fx-mk-logo-lockup" href="home.html"><i>F</i>Finix UI</a>
+    <nav class="fx-mk-links" aria-label="Main">
+      <a href="#features">Product</a>
+      <a href="../index.html">Components</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="#faq">Docs</a>
+      <a href="launch.html">v0.3 Launch</a>
+    </nav>
+    <div class="fx-mk-nav-actions">
+      <button class="fx-btn fx-btn--ghost fx-btn--icon" data-mk-theme data-fx-tip="Toggle theme" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+      <a class="fx-btn fx-btn--ghost fx-mk-desktop-only" href="../index.html">Live demo</a>
+      <a class="fx-btn fx-mk-desktop-only" href="#cta">Get started</a>
+      <button class="fx-mk-burger" data-mk-menu aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="fx-mk-mobile" aria-label="Mobile">
+    <a href="#features">Product</a>
+    <a href="../index.html">Components</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="launch.html">v0.3 Launch</a>
+    <a href="#cta"><b>Get started →</b></a>
+  </nav>
+</header>
+
+<!-- hero -->
+<section class="fx-mk-section fx-mk-section--hero">
+  <div class="fx-mk-aurora"></div>
+  <div class="fx-mk-gridbg"></div>
+  <div class="fx-mk-container fx-mk-above">
+    <div class="fx-mk-hero">
+      <a class="fx-mk-pill" href="launch.html">
+        <span class="fx-badge fx-badge--success fx-badge--dot">New</span>
+        v0.3 marketing kit is coming
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <h1 class="fx-mk-display">The admin framework<br>for <span class="fx-mk-grad">every stack</span>.</h1>
+      <p class="fx-mk-lede">140 production-grade components in plain HTML/CSS/JS — data grids, ticket inboxes, workflow canvases, charts. No React. No build step. Drop it into Rails, Django, Laravel, Go, or a single .html file.</p>
+      <div class="fx-mk-cta-row">
+        <a class="fx-btn fx-btn--xl" href="#cta">Start building free
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a class="fx-btn fx-btn--outline fx-btn--xl" href="../index.html">Browse the live demo</a>
+      </div>
+      <div class="fx-mk-social-strip">
+        <span class="fx-avatar-stack">
+          <span class="fx-avatar fx-avatar--sm">OM</span><span class="fx-avatar fx-avatar--sm">JL</span><span class="fx-avatar fx-avatar--sm">IN</span><span class="fx-avatar fx-avatar--sm">SD</span>
+        </span>
+        <span class="fx-mk-stars" aria-label="5 stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+        </span>
+        <span>Loved by <b>2,400+</b> developers · Free forever · No credit card</span>
+      </div>
+    </div>
+
+    <!-- live product frame -->
+    <div class="fx-mk-browser fx-mk-reveal" style="margin-top:3.5rem">
+      <div class="fx-mk-browser-bar">
+        <span class="fx-mk-browser-dots"><i></i><i></i><i></i></span>
+        <span class="fx-mk-browser-url">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          app.yourproduct.com/dashboard
+        </span>
+        <span style="width:3rem"></span>
+      </div>
+      <div class="fx-mk-browser-body is-static fx-mk-fade-bottom" style="padding:1.25rem">
+        <div class="fx-stats" style="margin-bottom:1rem">
+          <div class="fx-card fx-stat"><div class="fx-card-content">
+            <div class="fx-stat-label">Total Revenue <span class="fx-badge fx-badge--outline fx-delta--up" style="gap:.25rem"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>+20.1%</span></div>
+            <div class="fx-stat-value">$45,231.89</div>
+            <div class="fx-stat-meta">Trending up this month</div>
+          </div></div>
+          <div class="fx-card fx-stat"><div class="fx-card-content">
+            <div class="fx-stat-label">Active teams <span class="fx-badge fx-badge--outline fx-delta--up" style="gap:.25rem">+180</span></div>
+            <div class="fx-stat-value">2,350</div>
+            <div class="fx-stat-meta">vs. last month</div>
+          </div></div>
+          <div class="fx-card fx-stat"><div class="fx-card-content">
+            <div class="fx-stat-label">Open tickets <span class="fx-badge fx-badge--warning fx-badge--dot">SLA 38m</span></div>
+            <div class="fx-stat-value">12</div>
+            <div class="fx-stat-meta">4 waiting on you</div>
+          </div></div>
+        </div>
+        <div class="fx-grid" style="grid-template-columns:1.5fr 1fr;gap:1rem">
+          <div class="fx-card">
+            <div class="fx-card-header"><div class="fx-card-title">Revenue</div></div>
+            <div class="fx-card-content"><div id="hero-chart"></div></div>
+          </div>
+          <div class="fx-card">
+            <div class="fx-card-header"><div class="fx-card-title">Recent orders</div></div>
+            <div class="fx-card-content" style="padding-top:0">
+              <table class="fx-table">
+                <tbody>
+                  <tr><td class="fx-medium">#4092</td><td><span class="fx-badge fx-badge--warning fx-badge--dot">Delivery</span></td><td style="text-align:right" class="fx-tabular">$231.66</td></tr>
+                  <tr><td class="fx-medium">#4091</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Paid</span></td><td style="text-align:right" class="fx-tabular">$1,890.00</td></tr>
+                  <tr><td class="fx-medium">#4090</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Paid</span></td><td style="text-align:right" class="fx-tabular">$68.00</td></tr>
+                  <tr><td class="fx-medium">#4089</td><td><span class="fx-badge fx-badge--outline">Refund</span></td><td style="text-align:right" class="fx-tabular">−$129.00</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- logo cloud directly under hero -->
+    <div style="margin-top:3.25rem" class="fx-mk-reveal">
+      <p class="fx-mk-logos-label">Powering internal tools at</p>
+      <div class="fx-mk-marquee">
+        <div class="fx-mk-marquee-track">
+          <span class="fx-mk-wordmark"><i>◆</i>ACME</span>
+          <span class="fx-mk-wordmark" style="letter-spacing:.14em">GLOBEX</span>
+          <span class="fx-mk-wordmark"><i>●</i>initech</span>
+          <span class="fx-mk-wordmark" style="font-weight:500;font-family:var(--font-mono)">vandelay_</span>
+          <span class="fx-mk-wordmark"><i>▲</i>Stark</span>
+          <span class="fx-mk-wordmark" style="letter-spacing:-.04em">umbrella&amp;co</span>
+          <span class="fx-mk-wordmark"><i>❖</i>Hooli</span>
+          <span class="fx-mk-wordmark" style="font-weight:600;font-style:italic">wayne</span>
+          <span class="fx-mk-wordmark"><i>◆</i>ACME</span>
+          <span class="fx-mk-wordmark" style="letter-spacing:.14em">GLOBEX</span>
+          <span class="fx-mk-wordmark"><i>●</i>initech</span>
+          <span class="fx-mk-wordmark" style="font-weight:500;font-family:var(--font-mono)">vandelay_</span>
+          <span class="fx-mk-wordmark"><i>▲</i>Stark</span>
+          <span class="fx-mk-wordmark" style="letter-spacing:-.04em">umbrella&amp;co</span>
+          <span class="fx-mk-wordmark"><i>❖</i>Hooli</span>
+          <span class="fx-mk-wordmark" style="font-weight:600;font-style:italic">wayne</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- bento features -->
+<section class="fx-mk-section" id="features">
+  <div class="fx-mk-container">
+    <div class="fx-mk-head fx-mk-reveal">
+      <span class="fx-mk-eyebrow">Everything included</span>
+      <h2 class="fx-mk-h2">One kit. Every admin surface.</h2>
+      <p class="fx-mk-lede">Data grids, ticket inboxes, workflow canvases, diff viewers, payment forms — the components other kits sell, distilled from the best of the shadcn ecosystem and rebuilt for the open web.</p>
+    </div>
+    <div class="fx-mk-bento">
+      <div class="fx-mk-cell fx-mk-cell--8 fx-mk-reveal">
+        <div class="fx-mk-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+        <h3 class="fx-mk-h3">140 components, one token contract</h3>
+        <p class="fx-mk-cell-desc">Every color, radius and shadow resolves from CSS custom properties — re-theme the whole product by changing one attribute.</p>
+        <div class="fx-mk-cell-media">
+          <div class="fx-row" style="gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem">
+            <button class="fx-btn fx-btn--sm">Primary</button>
+            <button class="fx-btn fx-btn--outline fx-btn--sm">Outline</button>
+            <span class="fx-badge fx-badge--success fx-badge--dot">Active</span>
+            <span class="fx-badge fx-badge--warning fx-badge--dot">Pending</span>
+            <span class="fx-sla" data-state="warn" style="display:inline-block">38m</span>
+            <span class="fx-kbd">⌘</span><span class="fx-kbd">K</span>
+          </div>
+          <ol class="fx-stages" style="min-width:24rem;margin-bottom:.5rem">
+            <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Ordered</span></li>
+            <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Packed</span></li>
+            <li data-state="active"><span class="fx-stage-dot"></span><span class="fx-stage-label">Shipped</span></li>
+            <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Delivered</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="fx-mk-cell fx-mk-reveal" data-mk-delay="60">
+        <div class="fx-mk-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></div>
+        <h3 class="fx-mk-h3">Dark mode &amp; 5 brands</h3>
+        <p class="fx-mk-cell-desc">Light × dark across five brand presets. OKLCH tokens keep every pairing readable.</p>
+        <div class="fx-mk-cell-media" style="display:flex;align-items:center;gap:.625rem;padding-bottom:1.25rem">
+          <span style="width:1.75rem;height:1.75rem;border-radius:999px;background:oklch(0.46 0.062 165);border:2px solid var(--card);box-shadow:var(--shadow-xs)"></span>
+          <span style="width:1.75rem;height:1.75rem;border-radius:999px;background:oklch(0.55 0.18 255);border:2px solid var(--card);box-shadow:var(--shadow-xs)"></span>
+          <span style="width:1.75rem;height:1.75rem;border-radius:999px;background:oklch(0.5 0.12 150);border:2px solid var(--card);box-shadow:var(--shadow-xs)"></span>
+          <span style="width:1.75rem;height:1.75rem;border-radius:999px;background:oklch(0.62 0.16 45);border:2px solid var(--card);box-shadow:var(--shadow-xs)"></span>
+          <span style="width:1.75rem;height:1.75rem;border-radius:999px;background:oklch(0.37 0.01 260);border:2px solid var(--card);box-shadow:var(--shadow-xs)"></span>
+        </div>
+      </div>
+      <div class="fx-mk-cell fx-mk-reveal">
+        <div class="fx-mk-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-6 6 6 6"/><path d="m16 6 6 6-6 6"/></svg></div>
+        <h3 class="fx-mk-h3">No build step</h3>
+        <p class="fx-mk-cell-desc">Two stylesheets and a script tag. View-source friendly, CDN-cacheable, zero dependencies.</p>
+        <div class="fx-mk-cell-media" style="padding-bottom:1.25rem">
+          <pre class="fx-code" style="font-size:.6875rem;margin:0">&lt;link rel="stylesheet"
+  href="finix.css"&gt;
+&lt;script defer
+  src="finix.js"&gt;&lt;/script&gt;</pre>
+        </div>
+      </div>
+      <div class="fx-mk-cell fx-mk-reveal" data-mk-delay="60">
+        <div class="fx-mk-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></div>
+        <h3 class="fx-mk-h3">AI-agent ready</h3>
+        <p class="fx-mk-cell-desc">A machine-readable registry maps every component to markup, classes and JS hooks.</p>
+        <div class="fx-mk-cell-media" style="padding-bottom:1.25rem">
+          <pre class="fx-code" style="font-size:.6875rem;margin:0">manifest.json  → 140 entries
+llms.txt       → agent guide
+semantic class → fx-btn</pre>
+        </div>
+      </div>
+      <div class="fx-mk-cell fx-mk-reveal" data-mk-delay="120">
+        <div class="fx-mk-cell-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3 class="fx-mk-h3">Native platform behavior</h3>
+        <p class="fx-mk-cell-desc">Dialogs trap focus with <code class="fx-inline-code">&lt;dialog&gt;</code>, menus float on the Popover API, accordions are <code class="fx-inline-code">&lt;details&gt;</code>. Accessibility comes from the browser.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- zig-zag deep dives -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container">
+    <div class="fx-mk-zig fx-mk-reveal">
+      <div class="fx-mk-zig-copy">
+        <span class="fx-mk-eyebrow">Data density</span>
+        <h2 class="fx-mk-h2">Tables your ops team will actually love.</h2>
+        <p class="fx-mk-lede">A full data grid with pinning, inline editing and Linear-style filter chips — plus a master-detail peek panel and a CSV import wizard nobody else ships for free.</p>
+        <ul class="fx-mk-checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sort, resize, reorder, pin and hide columns</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Virtualized log table streams 50,000 rows</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>CSV importer with auto-mapped columns and inline fixes</li>
+        </ul>
+        <a class="fx-btn fx-btn--outline" href="../data.html">Explore the data grid →</a>
+      </div>
+      <div class="fx-mk-visual">
+        <table class="fx-table" style="background:var(--card);border-radius:var(--radius-lg);overflow:hidden">
+          <thead><tr><th>Product</th><th>Status</th><th style="text-align:right">Price</th><th style="text-align:right">Stock</th></tr></thead>
+          <tbody>
+            <tr><td class="fx-medium">Aurora Desk Lamp</td><td><span class="fx-badge fx-badge--dot" style="background:color-mix(in oklab,var(--destructive) 12%,transparent);color:var(--destructive)">Out of stock</span></td><td style="text-align:right" class="fx-tabular">$9.99</td><td style="text-align:right" class="fx-tabular">0</td></tr>
+            <tr style="background:color-mix(in oklab,var(--primary) 9%,var(--card))"><td class="fx-medium">Nimbus Hoodie</td><td><span class="fx-badge fx-badge--success fx-badge--dot">In stock</span></td><td style="text-align:right" class="fx-tabular">$23.69</td><td style="text-align:right" class="fx-tabular">17</td></tr>
+            <tr><td class="fx-medium">Terra Ceramic Mug</td><td><span class="fx-badge fx-badge--success fx-badge--dot">In stock</span></td><td style="text-align:right" class="fx-tabular">$42.50</td><td style="text-align:right" class="fx-tabular">34</td></tr>
+            <tr><td class="fx-medium">Zephyr Running Shoes</td><td><span class="fx-badge fx-badge--warning fx-badge--dot">Low stock</span></td><td style="text-align:right" class="fx-tabular">$51.09</td><td style="text-align:right" class="fx-tabular">51</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="fx-mk-zig fx-mk-zig--flip fx-mk-reveal">
+      <div class="fx-mk-zig-copy">
+        <span class="fx-mk-eyebrow">Whole-product patterns</span>
+        <h2 class="fx-mk-h2">From ticket inbox to workflow canvas.</h2>
+        <p class="fx-mk-lede">Not just buttons and inputs — finix ships the big rocks: a Zendesk-grade support inbox, a pannable automation canvas, bank reconciliation, trace waterfalls, approval chains.</p>
+        <ul class="fx-mk-checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Three-pane inbox with live SLA countdowns</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Node canvas with pan, zoom and animated runs</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Diff viewer, audit logs, permission matrices</li>
+        </ul>
+        <a class="fx-btn fx-btn--outline" href="../support.html">See the inbox →</a>
+      </div>
+      <div class="fx-mk-visual">
+        <div class="fx-stack" style="gap:.75rem">
+          <div class="fx-row" style="gap:.5rem">
+            <span class="fx-badge fx-badge--warning fx-badge--dot">SLA 38m</span>
+            <span class="fx-badge fx-badge--success fx-badge--dot">Resolved</span>
+            <span class="fx-badge fx-badge--outline">TKT-1055</span>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:.75rem;font-size:.8125rem">
+            <b>Priya Sharma</b> <span class="fx-muted">· 09:14</span><br>
+            <span class="fx-muted">Since 6am every webhook delivery returns a 500 — can you check?</span>
+          </div>
+          <div style="background:color-mix(in oklab,var(--warning) 10%,var(--card));border:1px solid color-mix(in oklab,var(--warning) 30%,var(--border));border-radius:var(--radius-lg);padding:.75rem;font-size:.8125rem">
+            <b style="font-size:.625rem;text-transform:uppercase;letter-spacing:.05em;color:color-mix(in oklab,var(--warning) 65%,var(--foreground))">Internal note</b><br>
+            <span class="fx-muted">Risk-service timeout — see INC-88. Waiting on infra.</span>
+          </div>
+          <ol class="fx-stages" style="min-width:20rem">
+            <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Triaged</span></li>
+            <li data-state="active"><span class="fx-stage-dot"></span><span class="fx-stage-label">Fix rolling out</span></li>
+            <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Resolved</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- how it works -->
+<section class="fx-mk-section">
+  <div class="fx-mk-container">
+    <div class="fx-mk-head fx-mk-reveal">
+      <span class="fx-mk-eyebrow">How it works</span>
+      <h2 class="fx-mk-h2">Shipping in three steps.</h2>
+    </div>
+    <div class="fx-mk-steps fx-mk-reveal">
+      <div class="fx-mk-step">
+        <h3 class="fx-mk-h3">Include</h3>
+        <p class="fx-mk-cell-desc">Add two stylesheets and one script to your layout — any stack, any templating language.</p>
+        <div class="fx-snippet" style="margin-top:.375rem"><span>npx finix-ui init</span>
+          <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-copy="npx finix-ui init" data-fx-tip="Copy" aria-label="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+        </div>
+      </div>
+      <div class="fx-mk-step">
+        <h3 class="fx-mk-h3">Compose</h3>
+        <p class="fx-mk-cell-desc">Write semantic classes — <code class="fx-inline-code">fx-btn</code>, <code class="fx-inline-code">fx-card</code> — or let your AI agent read the manifest and do it for you.</p>
+      </div>
+      <div class="fx-mk-step">
+        <h3 class="fx-mk-h3">Theme</h3>
+        <p class="fx-mk-cell-desc">Flip <code class="fx-inline-code">data-theme</code> and <code class="fx-inline-code">data-brand</code> on <code class="fx-inline-code">&lt;html&gt;</code>. The whole product follows, charts included.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- stats band -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container">
+    <div class="fx-mk-stats fx-mk-reveal">
+      <div class="fx-mk-stat"><b data-mk-count="140" data-mk-suffix="+">0</b><span>Components</span></div>
+      <div class="fx-mk-stat"><b data-mk-count="18">0</b><span>Demo pages</span></div>
+      <div class="fx-mk-stat"><b data-mk-count="0">0</b><span>Dependencies</span></div>
+      <div class="fx-mk-stat"><b data-mk-count="100" data-mk-suffix="%">0</b><span>Free &amp; open source</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- testimonials -->
+<section class="fx-mk-section">
+  <div class="fx-mk-container">
+    <div class="fx-mk-quote fx-mk-reveal">
+      <span class="fx-mk-stars">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.12 2.12 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16z"/></svg>
+      </span>
+      <blockquote>"We replaced a React admin we'd been fighting for two years with finix in <b>one sprint</b>. The Django team ships UI now without touching a bundler."</blockquote>
+      <div class="fx-mk-person">
+        <span class="fx-avatar">MK</span>
+        <div><b>Maya Krishnan</b><span>Head of Platform, Globex</span></div>
+      </div>
+    </div>
+
+    <div class="fx-mk-carousel fx-mk-reveal" data-mk-carousel style="margin-top:3.5rem">
+      <div class="fx-mk-carousel-mask">
+        <div class="fx-mk-carousel-track">
+          <div class="fx-mk-tcard">
+            <p>"The ticket inbox alone would have taken us a month. It took an afternoon, and it matched our theme out of the box."</p>
+            <div class="fx-mk-person"><span class="fx-avatar fx-avatar--sm">TB</span><div><b>Tom Baker</b><span>CTO, Hooli</span></div></div>
+          </div>
+          <div class="fx-mk-tcard">
+            <p>"Our AI agent reads manifest.json and scaffolds working screens. First component kit that treats agents as users."</p>
+            <div class="fx-mk-person"><span class="fx-avatar fx-avatar--sm">AS</span><div><b>Ana Silva</b><span>Staff Engineer, Vandelay</span></div></div>
+          </div>
+          <div class="fx-mk-tcard">
+            <p>"Dark mode, five brands, and the charts re-theme themselves. Our white-label story went from roadmap to demo in a week."</p>
+            <div class="fx-mk-person"><span class="fx-avatar fx-avatar--sm">JW</span><div><b>Jenny Wilson</b><span>VP Product, Initech</span></div></div>
+          </div>
+          <div class="fx-mk-tcard">
+            <p>"View-source and it's just… HTML. Our Rails devs cried actual tears of joy. No webpack, no hydration errors, nothing."</p>
+            <div class="fx-mk-person"><span class="fx-avatar fx-avatar--sm">MR</span><div><b>Marco Ruiz</b><span>Lead Dev, Umbrella</span></div></div>
+          </div>
+          <div class="fx-mk-tcard">
+            <p>"The workflow canvas is unfairly good for a free kit. Pan, zoom, animated runs — our automation product demos on it."</p>
+            <div class="fx-mk-person"><span class="fx-avatar fx-avatar--sm">LC</span><div><b>Liam Chen</b><span>Founder, Stark Labs</span></div></div>
+          </div>
+          <div class="fx-mk-tcard">
+            <p>"We audited it for a11y and kept finding native &lt;dialog&gt; and Popover API where other kits ship div soup. Passed first try."</p>
+            <div class="fx-mk-person"><span class="fx-avatar fx-avatar--sm">AP</span><div><b>Ava Patel</b><span>Accessibility Lead, ACME</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="fx-mk-carousel-nav">
+        <button class="fx-btn fx-btn--outline fx-btn--icon fx-btn--sm" data-mk-prev aria-label="Previous"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <div class="fx-mk-dots"></div>
+        <button class="fx-btn fx-btn--outline fx-btn--icon fx-btn--sm" data-mk-next aria-label="Next"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- integrations -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container">
+    <div class="fx-mk-head fx-mk-reveal">
+      <span class="fx-mk-eyebrow">Bring your stack</span>
+      <h2 class="fx-mk-h2">If it renders HTML, it runs finix.</h2>
+    </div>
+    <div class="fx-mk-ints fx-mk-reveal">
+      <span class="fx-mk-int"><i>Rb</i>Rails</span>
+      <span class="fx-mk-int"><i>Dj</i>Django</span>
+      <span class="fx-mk-int"><i>La</i>Laravel</span>
+      <span class="fx-mk-int"><i>Go</i>Go templ</span>
+      <span class="fx-mk-int"><i>Sp</i>Spring</span>
+      <span class="fx-mk-int"><i>Fl</i>Flask</span>
+      <span class="fx-mk-int"><i>Ph</i>Phoenix</span>
+      <span class="fx-mk-int"><i>Hx</i>HTMX</span>
+      <span class="fx-mk-int"><i>As</i>Astro</span>
+      <span class="fx-mk-int"><i>Nx</i>Next.js</span>
+      <span class="fx-mk-int"><i>.N</i>.NET</span>
+      <span class="fx-mk-int"><i>‹›</i>Plain HTML</span>
+    </div>
+  </div>
+</section>
+
+<!-- pricing teaser -->
+<section class="fx-mk-section" id="pricing">
+  <div class="fx-mk-container">
+    <div class="fx-mk-head fx-mk-reveal">
+      <span class="fx-mk-eyebrow">Pricing</span>
+      <h2 class="fx-mk-h2">Free forever. Pro when you scale.</h2>
+      <p class="fx-mk-lede">The entire component kit is MIT-licensed. Pro adds team tooling around it.</p>
+    </div>
+    <div class="fx-mk-billing fx-mk-reveal" data-mk-billing>
+      <div class="fx-toggle-group fx-toggle-group--outline">
+        <button class="fx-toggle" data-mk-bill="monthly" aria-pressed="false">Monthly</button>
+        <button class="fx-toggle" data-mk-bill="annual" aria-pressed="true">Annual</button>
+      </div>
+      <span class="fx-badge fx-badge--success fx-mk-save-badge">Save 20% — $48/yr</span>
+    </div>
+    <div class="fx-mk-pricing fx-mk-reveal">
+      <div class="fx-mk-plan">
+        <div><div class="fx-mk-plan-name">Open source</div><div class="fx-mk-plan-desc">For everyone, forever</div></div>
+        <div class="fx-mk-price"><b>$0</b><span>MIT license</span></div>
+        <ul class="fx-mk-checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>All 140 components</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Light/dark × 5 brands</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>AI-agent manifest</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Community support</li>
+        </ul>
+        <a class="fx-btn fx-btn--outline fx-mk-plan-cta" href="#cta">Start free</a>
+      </div>
+      <div class="fx-mk-plan is-featured">
+        <span class="fx-badge fx-mk-plan-badge">Most popular</span>
+        <div><div class="fx-mk-plan-name">Pro</div><div class="fx-mk-plan-desc">For product teams</div></div>
+        <div class="fx-mk-price" data-price-monthly="$25" data-price-annual="$20"><b>$20</b><span data-mk-period>/mo, billed annually</span></div>
+        <ul class="fx-mk-checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Open source</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Theme studio &amp; brand exports</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Figma library, kept in sync</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Priority support</li>
+        </ul>
+        <a class="fx-btn fx-mk-plan-cta" href="#cta">Start 14-day trial</a>
+      </div>
+      <div class="fx-mk-plan">
+        <div><div class="fx-mk-plan-name">Enterprise</div><div class="fx-mk-plan-desc">For platform orgs</div></div>
+        <div class="fx-mk-price"><b>Custom</b></div>
+        <ul class="fx-mk-checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Pro</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Design-system consulting</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>SSO &amp; audit for Theme studio</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>SLA'd support</li>
+        </ul>
+        <a class="fx-btn fx-btn--outline fx-mk-plan-cta" href="#cta">Talk to sales</a>
+      </div>
+    </div>
+    <p class="fx-mk-fineprint fx-mk-reveal">All plans include the full MIT-licensed kit · <a href="pricing.html" style="color:var(--primary)">Compare every feature →</a></p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="fx-mk-section fx-mk-section--tight" id="faq">
+  <div class="fx-mk-container fx-mk-container--narrow">
+    <div class="fx-mk-head fx-mk-reveal">
+      <span class="fx-mk-eyebrow">FAQ</span>
+      <h2 class="fx-mk-h2">Questions, answered.</h2>
+    </div>
+    <div class="fx-mk-faq fx-mk-reveal">
+      <div class="fx-accordion">
+        <details name="mkfaq" open>
+          <summary>Is it really free? What's the catch?</summary>
+          <div class="fx-acc-body">The component kit — all 140 components, every theme, the agent manifest — is MIT-licensed with no strings. Paid tiers are team tooling built around the kit, never the kit itself.</div>
+        </details>
+        <details name="mkfaq">
+          <summary>Does it work without JavaScript frameworks?</summary>
+          <div class="fx-acc-body">That's the whole point. It's semantic HTML, one CSS token contract, and a small vanilla JS file for behaviors. It works in Rails, Django, Laravel, Go templates, PHP — or a static .html file on a USB stick.</div>
+        </details>
+        <details name="mkfaq">
+          <summary>How is it different from shadcn/ui?</summary>
+          <div class="fx-acc-body">shadcn/ui is superb — for React. Finix distills the same visual language and the strongest free patterns from its ecosystem into framework-agnostic HTML/CSS/JS, and adds whole-product components (inbox, canvas, reconciliation) that no free kit ships.</div>
+        </details>
+        <details name="mkfaq">
+          <summary>Can my AI coding agent use it?</summary>
+          <div class="fx-acc-body">Yes — that's a first-class use case. <code class="fx-inline-code">manifest.json</code> maps every component to its markup, classes and JS hooks, and <code class="fx-inline-code">llms.txt</code> gives agents a condensed usage guide.</div>
+        </details>
+        <details name="mkfaq">
+          <summary>What about accessibility?</summary>
+          <div class="fx-acc-body">Dialogs are native <code class="fx-inline-code">&lt;dialog&gt;</code> (focus trapping for free), menus use the Popover API, accordions are <code class="fx-inline-code">&lt;details&gt;</code>, and every interactive component keeps keyboard and screen-reader semantics.</div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- final CTA -->
+<section class="fx-mk-section" id="cta">
+  <div class="fx-mk-container">
+    <div class="fx-mk-band fx-mk-reveal">
+      <h2 class="fx-mk-h2">Ship your admin this week,<br>not this quarter.</h2>
+      <p class="fx-mk-lede">Clone the repo, open the demo, copy what you need. You'll have real screens before your standup ends.</p>
+      <div class="fx-mk-cta-row">
+        <a class="fx-btn fx-btn--xl" href="../index.html">Start building free
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a class="fx-btn fx-btn--outline fx-btn--xl" href="launch.html">Join the v0.3 waitlist</a>
+      </div>
+      <span class="fx-text-sm fx-muted">MIT licensed · No credit card · 2,400+ developers already building</span>
+    </div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer class="fx-mk-footer">
+  <div class="fx-mk-container">
+    <div class="fx-mk-footer-grid">
+      <div class="fx-mk-footer-brand">
+        <a class="fx-mk-logo-lockup" href="home.html"><i>F</i>Finix UI</a>
+        <p>The admin framework for every stack. 140 components, no build step, MIT forever.</p>
+        <form class="fx-mk-newsletter" data-mk-waitlist>
+          <input class="fx-input" type="email" placeholder="you@company.com" aria-label="Email for updates">
+          <button class="fx-btn" type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div class="fx-mk-footer-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="../index.html">Live demo</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="launch.html">Roadmap</a>
+      </div>
+      <div class="fx-mk-footer-col">
+        <h4>Components</h4>
+        <a href="../data.html">Data grid</a>
+        <a href="../support.html">Ticket inbox</a>
+        <a href="../workflow.html">Workflow canvas</a>
+        <a href="../charts.html">Charts</a>
+      </div>
+      <div class="fx-mk-footer-col">
+        <h4>Resources</h4>
+        <a href="../research.html">Research &amp; credits</a>
+        <a href="#faq">Docs</a>
+        <a href="#">Changelog</a>
+        <a href="#">GitHub</a>
+      </div>
+      <div class="fx-mk-footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+        <a href="#">Brand</a>
+      </div>
+    </div>
+    <div class="fx-mk-footer-bottom">
+      <span>© 2026 Finix Labs Inc.</span>
+      <a href="#" style="color:inherit;text-decoration:none">Privacy</a>
+      <a href="#" style="color:inherit;text-decoration:none">Terms</a>
+      <span class="fx-status fx-status--online"><i></i>All systems operational</span>
+      <div class="fx-mk-socials">
+        <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.4l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.6l5.24 6.93ZM17.6 20.65h2.04L6.49 3.24H4.3Z"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-1.94c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.67.41.36.78 1.05.78 2.13v3.16c0 .3.2.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg></a>
+        <a href="#" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 13.78 13.78 0 0 0-.64 1.28 18.27 18.27 0 0 0-5.5 0 12.64 12.64 0 0 0-.64-1.28h-.05A19.74 19.74 0 0 0 3.64 4.4 20.26 20.26 0 0 0 .13 18.06a19.9 19.9 0 0 0 6.07 3.03 14.09 14.09 0 0 0 1.23-1.99 12.29 12.29 0 0 1-1.97-.95c.17-.12.33-.25.48-.38a14.05 14.05 0 0 0 12.1 0c.16.13.32.26.48.38-.63.37-1.29.69-1.98.95a14.08 14.08 0 0 0 1.22 2 19.84 19.84 0 0 0 6.08-3.04 20.15 20.15 0 0 0-3.52-13.69ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.95-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.95-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42Z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  fxCharts.area(document.getElementById("hero-chart"), {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+    height: 190, showLegend: false,
+    series: [{ name: "Revenue", data: [2800, 3100, 2950, 3600, 3900, 4300, 4150, 4800] }],
+  });
+});
+</script>
+</body>
+</html>

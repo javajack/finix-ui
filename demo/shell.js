@@ -72,6 +72,7 @@
         { href: "workflow.html", icon: "workflow", label: "Workflows" },
         { href: "editor.html", icon: "pen", label: "Editor & Media" },
         { href: "mobile.html", icon: "phone", label: "Mobile" },
+        { href: "settings.html", icon: "settings", label: "Settings" },
         { href: "motion.html", icon: "wand", label: "Motion Lab" },
       ],
     },

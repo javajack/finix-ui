@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/finix.css">
 <link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
 <script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
 <script defer src="../js/finix.js"></script>
 <style>
@@ -132,5 +133,98 @@
   </div>
 
 </div>
+
+<div style="text-align:center;padding:2.5rem 1.5rem 1.5rem">
+  <h2 style="margin:0;font-size:1.125rem;font-weight:650;letter-spacing:-.01em">Account security (v0.5)</h2>
+  <p class="fx-page-sub" style="margin-top:.25rem">2FA enrollment, backup codes, passkeys, SSO and live sessions.</p>
+</div>
+
+<div class="auth-grid">
+
+  <!-- 2FA setup -->
+  <div class="fx-card auth-card">
+    <div class="fx-card-header" style="text-align:center;display:block">
+      <div class="fx-card-title fx-card-title--lg">Set up authenticator</div>
+      <div class="fx-card-desc">Scan with any TOTP app, then confirm a code.</div>
+    </div>
+    <div class="fx-card-content fx-stack" style="gap:1rem;align-items:center">
+      <div aria-label="TOTP QR code" style="width:7rem;height:7rem;border-radius:var(--radius-lg);border:1px solid var(--border-soft);opacity:.85;background:repeating-linear-gradient(0deg,var(--foreground) 0 3px,transparent 3px 8px),repeating-linear-gradient(90deg,var(--foreground) 0 3px,var(--card) 3px 8px)"></div>
+      <div class="fx-snippet" style="width:100%"><span style="font-size:.6875rem">FNX4 K7Q2 9XLB TR8M</span>
+        <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-copy="FNX4K7Q29XLBTR8M" data-fx-tip="Copy secret" aria-label="Copy secret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+      </div>
+      <div class="fx-otp" id="setup-otp">
+        <input aria-label="Digit 1"><input aria-label="Digit 2"><input aria-label="Digit 3">
+        <span class="fx-otp-sep">–</span>
+        <input aria-label="Digit 4"><input aria-label="Digit 5"><input aria-label="Digit 6">
+      </div>
+      <button class="fx-btn" style="width:100%" onclick="finix.toast({title:'2FA enabled',description:'Backup codes generated — store them safely.',variant:'success'})">Enable 2FA</button>
+    </div>
+  </div>
+
+  <!-- backup codes -->
+  <div class="fx-card auth-card">
+    <div class="fx-card-header" style="text-align:center;display:block">
+      <div class="fx-card-title fx-card-title--lg">Backup codes</div>
+      <div class="fx-card-desc">One-time use. Two are already spent.</div>
+    </div>
+    <div class="fx-card-content fx-stack" style="gap:1rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.375rem;font-family:var(--font-mono);font-size:.75rem">
+        <span style="padding:.375rem .625rem;background:var(--well);border-radius:var(--radius-sm);text-decoration:line-through;color:var(--muted-foreground)">8fk2-p91x</span>
+        <span style="padding:.375rem .625rem;background:var(--well);border-radius:var(--radius-sm)">m3qz-77ab</span>
+        <span style="padding:.375rem .625rem;background:var(--well);border-radius:var(--radius-sm)">tt4c-r0e8</span>
+        <span style="padding:.375rem .625rem;background:var(--well);border-radius:var(--radius-sm);text-decoration:line-through;color:var(--muted-foreground)">jd8n-2wq4</span>
+        <span style="padding:.375rem .625rem;background:var(--well);border-radius:var(--radius-sm)">xy5v-hh31</span>
+        <span style="padding:.375rem .625rem;background:var(--well);border-radius:var(--radius-sm)">qa9s-6kmp</span>
+      </div>
+      <div class="fx-row" style="gap:.5rem">
+        <button class="fx-btn fx-btn--outline fx-btn--sm" style="flex:1" data-fx-copy="m3qz-77ab tt4c-r0e8 xy5v-hh31 qa9s-6kmp">Copy all</button>
+        <button class="fx-btn fx-btn--outline fx-btn--sm" style="flex:1" onclick="finix.toast({title:'New codes generated',description:'Old codes are now void.',variant:'warning'})">Regenerate</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- passkeys + SSO -->
+  <div class="fx-card auth-card">
+    <div class="fx-card-header" style="text-align:center;display:block">
+      <div class="fx-card-title fx-card-title--lg">Passkeys &amp; SSO</div>
+      <div class="fx-card-desc">Passwordless where possible.</div>
+    </div>
+    <div class="fx-card-content fx-stack" style="gap:.875rem">
+      <div class="fx-set-member" style="border-bottom:1px solid var(--border-soft)"><span style="font-size:1.125rem">💻</span><span><b style="font-weight:550">MacBook Pro · Touch ID</b><small>Added Mar 2026 · last used today</small></span><span></span><button class="fx-btn fx-btn--ghost fx-btn--sm">Revoke</button></div>
+      <div class="fx-set-member" style="border-bottom:1px solid var(--border-soft)"><span style="font-size:1.125rem">📱</span><span><b style="font-weight:550">Pixel 9 · fingerprint</b><small>Added Jun 2026 · last used 2d ago</small></span><span></span><button class="fx-btn fx-btn--ghost fx-btn--sm">Revoke</button></div>
+      <button class="fx-btn fx-btn--outline" onclick="finix.toast({title:'Passkey added',description:'This device can now sign you in.',variant:'success'})">＋ Add a passkey</button>
+      <div class="fx-pay-divider">or single sign-on</div>
+      <div class="fx-row" style="gap:.5rem">
+        <button class="fx-btn fx-btn--outline fx-btn--sm" style="flex:1">Google</button>
+        <button class="fx-btn fx-btn--outline fx-btn--sm" style="flex:1">GitHub</button>
+        <button class="fx-btn fx-btn--outline fx-btn--sm" style="flex:1">Okta</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- sessions -->
+  <div class="fx-card auth-card">
+    <div class="fx-card-header" style="text-align:center;display:block">
+      <div class="fx-card-title fx-card-title--lg">Active sessions</div>
+      <div class="fx-card-desc">Somewhere you don't recognise? Revoke it.</div>
+    </div>
+    <div class="fx-card-content fx-stack" style="gap:.25rem" id="sessions">
+      <div class="fx-set-member"><span style="font-size:1.125rem">🖥️</span><span><b style="font-weight:550">Chrome · Linux</b> <span class="fx-badge fx-badge--success" style="font-size:.5625rem;margin-left:.25rem">This device</span><small>Bengaluru, IN · active now</small></span><span></span><span></span></div>
+      <div class="fx-set-member"><span style="font-size:1.125rem">📱</span><span><b style="font-weight:550">Safari · iPhone</b><small>Bengaluru, IN · 2h ago</small></span><span></span><button class="fx-btn fx-btn--ghost fx-btn--sm" data-revoke>Revoke</button></div>
+      <div class="fx-set-member"><span style="font-size:1.125rem">💼</span><span><b style="font-weight:550">Firefox · Windows</b><small>Mumbai, IN · 3d ago</small></span><span></span><button class="fx-btn fx-btn--ghost fx-btn--sm" data-revoke>Revoke</button></div>
+      <button class="fx-btn fx-btn--destructive fx-btn--sm" style="margin-top:.625rem" onclick="finix.toast({title:'Signed out everywhere else',description:'2 sessions revoked.',variant:'success'})">Sign out all other sessions</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.getElementById("sessions").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-revoke]");
+  if (!b) return;
+  b.closest(".fx-set-member").remove();
+  finix.toast({ title: "Session revoked", variant: "success" });
+});
+</script>
 </body>
 </html>

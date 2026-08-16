@@ -462,3 +462,26 @@
 .fx-cohort-cell:hover { transform: scale(1.06); box-shadow: var(--shadow-sm); position: relative; z-index: 1; }
 .fx-cohort-void { background: var(--well); border-radius: var(--radius-sm); opacity: 0.45; }
 @media (prefers-reduced-motion: reduce) { .fx-cohort-cell:hover { transform: none; } }
+
+/* ============ settings shell (fx-set-*) ============ */
+.fx-set { display: grid; grid-template-columns: 12.5rem minmax(0, 1fr); gap: 1.75rem; align-items: start; }
+@media (max-width: 820px) { .fx-set { grid-template-columns: 1fr; } }
+.fx-set-nav { display: flex; flex-direction: column; gap: 2px; position: sticky; top: 1rem; }
+@media (max-width: 820px) { .fx-set-nav { flex-direction: row; overflow-x: auto; position: static; } }
+.fx-set-nav a {
+  display: flex; align-items: center; gap: 0.5625rem; padding: 0.4375rem 0.625rem;
+  border-radius: var(--radius-md); font-size: 0.8125rem; color: var(--muted-foreground);
+  text-decoration: none; white-space: nowrap; transition: background-color 0.12s var(--ease-out);
+}
+.fx-set-nav a svg { width: 0.9375rem; height: 0.9375rem; }
+.fx-set-nav a:hover { background: var(--hover); color: var(--foreground); }
+.fx-set-nav a[aria-current="true"] { background: var(--hover); color: var(--foreground); font-weight: 550; }
+.fx-set-nav a.danger { color: var(--destructive); }
+.fx-set-pane { max-width: 46rem; }
+.fx-set-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.25rem; align-items: center; padding: 0.875rem 0; border-bottom: 1px solid var(--border-soft); }
+.fx-set-row:last-child { border-bottom: none; }
+.fx-set-row-main b { display: block; font-size: 0.8125rem; font-weight: 550; }
+.fx-set-row-main small { font-size: 0.75rem; color: var(--muted-foreground); }
+.fx-set-member { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 0.75rem; align-items: center; padding: 0.5625rem 0; border-bottom: 1px solid var(--border-soft); font-size: 0.8125rem; }
+.fx-set-member:last-child { border-bottom: none; }
+.fx-set-member small { display: block; font-size: 0.6875rem; color: var(--muted-foreground); }

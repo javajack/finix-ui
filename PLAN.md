@@ -693,7 +693,7 @@ Module `css/finix-pos.css` + `js/finix-pos.js`, `fx-pos-*`.
   (clean/dirty/inspected chips); rate calendar w/ inline per-night price edit
   (dg pattern).
 
-### E6. Settings IA + extended auth → new page `settings.html` (Apps) + `auth.html` additions
+### ✅ E6. Settings IA + extended auth → new page `settings.html` (Apps) + `auth.html` additions
 No new module — primitives exist; this is composition + a few `fx-set-*` bits.
 - Settings shell — left settings nav (Profile/Workspace/Members/Notifications/
   Billing/API/Danger), content panes swap (hash-routed, deep-linkable).

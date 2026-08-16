@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Incidents · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-devtools.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Incidents &amp; on-call</h1>
+          <p class="fx-page-sub">PagerDuty-shaped ops — incident queue with severities, a live timeline you can post updates to, the on-call rotation with a now marker, and the escalation path. The public face lives at <a href="site/status.html">status page</a>.</p>
+        </div>
+        <button class="fx-btn" style="align-self:center" id="declare">Declare incident</button>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)">
+        <!-- incident queue -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Open incidents</div>
+            <div class="fx-card-desc">Click one to load its timeline below.</div>
+          </div>
+          <div class="fx-card-content" id="inc-list" style="display:flex;flex-direction:column;gap:.125rem">
+            <div class="fx-ops-inc" data-inc="0" tabindex="0" aria-current="true">
+              <span class="fx-ops-sev s1">SEV1</span>
+              <span class="fx-ops-inc-main"><b>Webhook deliveries failing for EU region</b><small>webhooks/prod · started 08:41 IST</small></span>
+              <span class="fx-badge fx-badge--warning" style="font-size:.5625rem">Monitoring</span>
+              <span class="fx-ops-age">42m</span>
+              <span></span>
+            </div>
+            <div class="fx-ops-inc" data-inc="1" tabindex="0">
+              <span class="fx-ops-sev s2">SEV2</span>
+              <span class="fx-ops-inc-main"><b>Elevated p99 latency on /v2/search</b><small>api-search · started 09:02 IST</small></span>
+              <span class="fx-badge fx-badge--destructive" style="font-size:.5625rem">Open</span>
+              <span class="fx-ops-age">21m</span>
+              <span></span>
+            </div>
+            <div class="fx-ops-inc" data-inc="2" tabindex="0">
+              <span class="fx-ops-sev s3">SEV3</span>
+              <span class="fx-ops-inc-main"><b>Export CSVs missing UTF-8 BOM</b><small>exports · reported yesterday</small></span>
+              <span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">Triage</span>
+              <span class="fx-ops-age">1d</span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- on-call + escalation -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">On-call today</div>
+            <div class="fx-card-desc">Platform rotation, IST. The rail marks now.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.125rem">
+            <div>
+              <div class="fx-ops-rota" id="rota">
+                <div class="fx-ops-shift" style="flex:8">Noah G.</div>
+                <div class="fx-ops-shift is-now" style="flex:8" id="shift-now">Sofia D.</div>
+                <div class="fx-ops-shift" style="flex:8">Jackson L.</div>
+              </div>
+              <div class="fx-ops-rota-scale"><span>00:00</span><span>08:00</span><span>16:00</span><span>24:00</span></div>
+              <div class="fx-row" style="gap:.625rem;margin-top:.75rem;align-items:center">
+                <span class="fx-avatar fx-avatar--sm">SD</span>
+                <div style="flex:1"><b class="fx-text-sm" id="oncall-name">Sofia Davis</b><div class="fx-text-xs fx-muted">Primary · until 16:00</div></div>
+                <button class="fx-btn fx-btn--outline fx-btn--sm" id="override">Override</button>
+              </div>
+            </div>
+            <div>
+              <div class="fx-text-sm" style="font-weight:550;margin-bottom:.625rem">Escalation policy</div>
+              <ol class="fx-stages fx-stages--vertical">
+                <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Page primary on-call</span><span class="fx-stage-time">0 min</span></li>
+                <li data-state="active"><span class="fx-stage-dot"></span><span class="fx-stage-label">Page secondary</span><span class="fx-stage-time">+10 min unacked</span></li>
+                <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Eng manager</span><span class="fx-stage-time">+25 min</span></li>
+                <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">CTO + status page</span><span class="fx-stage-time">+45 min</span></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- incident detail -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div style="display:flex;gap:.625rem;align-items:center;flex-wrap:wrap">
+            <span class="fx-ops-sev s1" id="det-sev">SEV1</span>
+            <div class="fx-card-title fx-card-title--lg" id="det-title" style="margin:0">Webhook deliveries failing for EU region</div>
+            <span class="fx-badge fx-badge--warning" id="det-status" style="margin-left:auto">Monitoring</span>
+          </div>
+          <div class="fx-card-desc">Post an update — it lands on the timeline and (for SEV1) mirrors to the public status page.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-grid" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);align-items:start">
+            <div id="det-activity"></div>
+            <div class="fx-stack" style="gap:.625rem">
+              <textarea class="fx-textarea" id="upd-text" rows="3" placeholder="What changed? Keep it public-safe…"></textarea>
+              <div class="fx-row" style="gap:.5rem">
+                <select class="fx-select" id="upd-status" style="width:auto">
+                  <option>Investigating</option>
+                  <option selected>Monitoring</option>
+                  <option>Identified</option>
+                  <option>Resolved</option>
+                </select>
+                <button class="fx-btn" id="upd-post" style="flex:1">Post update</button>
+              </div>
+              <div class="fx-well" style="background:var(--well);border:1px solid var(--border-soft);border-radius:var(--radius-lg);padding:.875rem;font-size:.75rem;color:var(--muted-foreground)">
+                <b style="color:var(--foreground)">Postmortem checklist</b>
+                <label class="fx-row" style="gap:.5rem;margin-top:.5rem"><input type="checkbox" class="fx-checkbox" checked>Timeline reconstructed</label>
+                <label class="fx-row" style="gap:.5rem;margin-top:.375rem"><input type="checkbox" class="fx-checkbox" checked>Customer impact quantified</label>
+                <label class="fx-row" style="gap:.5rem;margin-top:.375rem"><input type="checkbox" class="fx-checkbox">Root cause (5 whys)</label>
+                <label class="fx-row" style="gap:.5rem;margin-top:.375rem"><input type="checkbox" class="fx-checkbox">Action items filed</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const now = Date.now(), MIN = 6e4, HR = 36e5;
+
+  /* now marker position on the rotation (IST hours) */
+  const rota = document.getElementById("rota");
+  const istHour = (new Date(now + (330 + new Date().getTimezoneOffset()) * MIN)).getHours();
+  const marker = document.createElement("div");
+  marker.className = "fx-ops-now";
+  marker.style.left = (istHour / 24) * 100 + "%";
+  rota.appendChild(marker);
+
+  const INCIDENTS = [
+    { sev: "SEV1", cls: "s1", title: "Webhook deliveries failing for EU region", status: "Monitoring", badge: "fx-badge--warning",
+      events: [
+        { type: "status", actor: "Sofia Davis", action: "changed status of", target: "INC-241", icon: "flag", tone: "warning", from: "Investigating", to: { label: "Monitoring", tone: "warning" }, time: now - 12 * MIN },
+        { type: "comment", actor: "Sofia Davis", action: "posted an update on", target: "INC-241", body: "Rolled back the 08:30 deploy of webhook-dispatcher. EU delivery success back to 99.7% and climbing. Watching for 30 more minutes.", time: now - 14 * MIN },
+        { type: "system", actor: "Alertmanager", action: "auto-escalated", target: "webhooks.eu error rate > 5%", time: now - 39 * MIN },
+        { type: "comment", actor: "Noah Garcia", action: "acknowledged", target: "INC-241", body: "On it. Error spike correlates exactly with the dispatcher deploy. Preparing rollback.", time: now - 40 * MIN },
+        { type: "system", actor: "PagerDuty", action: "paged", target: "platform on-call (Sofia D.)", time: now - 42 * MIN },
+      ] },
+    { sev: "SEV2", cls: "s2", title: "Elevated p99 latency on /v2/search", status: "Open", badge: "fx-badge--destructive",
+      events: [
+        { type: "comment", actor: "Jackson Lee", action: "commented on", target: "INC-242", body: "p99 at 2.4s vs 380ms baseline. Suspecting the new synonym expansion — profiling now.", time: now - 6 * MIN },
+        { type: "system", actor: "Grafana", action: "alerted", target: "search-p99 breach (3 windows)", time: now - 21 * MIN },
+      ] },
+    { sev: "SEV3", cls: "s3", title: "Export CSVs missing UTF-8 BOM", status: "Triage", badge: "fx-badge--secondary",
+      events: [
+        { type: "comment", actor: "Support", action: "escalated from ticket", target: "TKT-1088", body: "Excel shows mojibake for accented names. Classic missing-BOM. Two enterprise customers affected.", time: now - 26 * HR },
+      ] },
+  ];
+
+  let activity = null, current = 0;
+  function loadIncident(i) {
+    current = i;
+    const inc = INCIDENTS[i];
+    document.querySelectorAll(".fx-ops-inc").forEach((r, j) => r.setAttribute("aria-current", j === i));
+    document.getElementById("det-sev").className = "fx-ops-sev " + inc.cls;
+    document.getElementById("det-sev").textContent = inc.sev;
+    document.getElementById("det-title").textContent = inc.title;
+    const st = document.getElementById("det-status");
+    st.className = "fx-badge " + inc.badge;
+    st.style.marginLeft = "auto";
+    st.textContent = inc.status;
+    document.getElementById("det-activity").innerHTML = "";
+    activity = fxActivity(document.getElementById("det-activity"), { events: inc.events });
+  }
+  document.getElementById("inc-list").addEventListener("click", (e) => {
+    const row = e.target.closest("[data-inc]");
+    if (row) loadIncident(+row.dataset.inc);
+  });
+  loadIncident(0);
+
+  /* post update */
+  document.getElementById("upd-post").addEventListener("click", () => {
+    const text = document.getElementById("upd-text").value.trim();
+    if (!text) return;
+    const status = document.getElementById("upd-status").value;
+    activity.add({ type: "comment", actor: "You", action: "posted an update on", target: "INC-24" + (current + 1), body: text, time: Date.now() });
+    if (status === "Resolved") {
+      activity.add({ type: "status", actor: "You", action: "resolved", target: "INC-24" + (current + 1), icon: "check", tone: "success", from: INCIDENTS[current].status, to: { label: "Resolved", tone: "success" }, time: Date.now() });
+      const st = document.getElementById("det-status");
+      st.className = "fx-badge fx-badge--success";
+      st.style.marginLeft = "auto";
+      st.textContent = "Resolved";
+    }
+    document.getElementById("upd-text").value = "";
+    finix.toast({ title: "Update posted", description: INCIDENTS[current].sev === "SEV1" ? "Mirrored to the public status page." : "Timeline updated.", variant: "success" });
+  });
+
+  /* override + declare */
+  document.getElementById("override").addEventListener("click", () => {
+    document.getElementById("shift-now").textContent = "Rakesh K.";
+    document.getElementById("oncall-name").textContent = "Rakesh K.";
+    document.querySelector("#oncall-name").previousElementSibling;
+    finix.toast({ title: "Override active", description: "You take the pager until 16:00. Sofia has been told — kindly.", variant: "warning" });
+  });
+  document.getElementById("declare").addEventListener("click", () => {
+    finix.toast({ title: "Incident declared", description: "INC-244 created · SEV2 · paging platform on-call.", variant: "warning" });
+  });
+});
+</script>
+</body>
+</html>

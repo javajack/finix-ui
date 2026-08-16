@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finix Status</title>
+<meta name="description" content="Live status for finix services — uptime history, active incidents, and subscription updates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;650;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/finix.css">
+<link rel="stylesheet" href="../../css/finix-widgets.css">
+<link rel="stylesheet" href="../../css/finix-marketing.css">
+<link rel="stylesheet" href="../../css/finix-devtools.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="../../js/finix.js"></script>
+<script defer src="../../js/finix-marketing.js"></script>
+</head>
+<body class="fx-site">
+
+<header class="fx-mk-nav">
+  <div class="fx-mk-container fx-mk-nav-inner">
+    <a class="fx-mk-logo-lockup" href="home.html"><i>F</i>Finix Status</a>
+    <div class="fx-mk-nav-actions">
+      <a class="fx-btn fx-btn--outline fx-mk-desktop-only" href="../ops.html">Ops console</a>
+      <button class="fx-btn fx-btn--ghost fx-btn--icon" data-mk-theme data-fx-tip="Toggle theme" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="fx-mk-section" style="padding-block:3rem 1.5rem">
+  <div class="fx-mk-container fx-mk-container--narrow">
+    <div class="fx-ops-banner is-degraded" id="banner">
+      <span class="fx-ops-banner-dot"></span>
+      <div>
+        <b>Partially degraded — webhooks (EU)</b>
+        <span>Rollback complete, monitoring recovery. Everything else is healthy. Updated 12 min ago.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fx-mk-section fx-mk-section--tight" style="padding-top:0">
+  <div class="fx-mk-container fx-mk-container--narrow">
+    <div class="fx-card">
+      <div class="fx-card-content" id="services" style="padding-block:.5rem"></div>
+    </div>
+    <p class="fx-text-xs fx-muted" style="text-align:right;margin-top:.5rem">90 days · <span style="color:var(--success)">■</span> operational <span style="color:var(--warning)">■</span> degraded <span style="color:var(--destructive)">■</span> outage</p>
+  </div>
+</section>
+
+<!-- active incident -->
+<section class="fx-mk-section fx-mk-section--tight" style="padding-top:.5rem">
+  <div class="fx-mk-container fx-mk-container--narrow">
+    <div class="fx-mk-head" style="text-align:left;margin-bottom:.875rem">
+      <h2 class="fx-mk-h2" style="font-size:1.125rem">Active incident</h2>
+    </div>
+    <div class="fx-card">
+      <div class="fx-card-content" style="padding-block:1rem">
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:.75rem">
+          <span class="fx-ops-sev s1">SEV1</span>
+          <b class="fx-text-sm">Webhook deliveries failing for EU region</b>
+          <span class="fx-badge fx-badge--warning" style="margin-left:auto;font-size:.5625rem">Monitoring</span>
+        </div>
+        <div class="fx-stack" style="gap:.625rem;font-size:.75rem">
+          <div><b style="font-family:var(--font-mono);color:var(--muted-foreground);font-weight:500">10:11 IST</b> — Rolled back the faulty dispatcher deploy. EU delivery success back to 99.7% and climbing; we'll monitor for 30 minutes before resolving.</div>
+          <div><b style="font-family:var(--font-mono);color:var(--muted-foreground);font-weight:500">09:44 IST</b> — Root cause identified: this morning's webhook-dispatcher deploy. Rollback in progress. US/APAC deliveries unaffected.</div>
+          <div><b style="font-family:var(--font-mono);color:var(--muted-foreground);font-weight:500">08:47 IST</b> — We're investigating elevated webhook delivery failures in the EU region. Retries are queued, no events are lost.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- past incidents -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container fx-mk-container--narrow">
+    <div class="fx-mk-head" style="text-align:left;margin-bottom:.875rem">
+      <h2 class="fx-mk-h2" style="font-size:1.125rem">Past incidents</h2>
+    </div>
+    <div class="fx-card"><div class="fx-card-content" style="padding-block:.375rem">
+      <div class="fx-ops-past"><time>Aug 09</time><div><b class="fx-text-sm" style="font-weight:550">API elevated error rates</b><div><small>SEV2 · resolved in 38 minutes · deploy rollback</small></div></div><span class="fx-badge fx-badge--outline" style="font-size:.5625rem">Postmortem</span></div>
+      <div class="fx-ops-past"><time>Jul 28</time><div><b class="fx-text-sm" style="font-weight:550">Dashboard login loop for SSO users</b><div><small>SEV2 · resolved in 1h 12m · IdP certificate rotation</small></div></div><span class="fx-badge fx-badge--outline" style="font-size:.5625rem">Postmortem</span></div>
+      <div class="fx-ops-past"><time>Jul 14</time><div><b class="fx-text-sm" style="font-weight:550">Exports delayed up to 20 minutes</b><div><small>SEV3 · resolved in 3h · queue backpressure</small></div></div><span></span></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- subscribe -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container fx-mk-container--narrow">
+    <div class="fx-mk-band" style="padding:2rem 1.5rem">
+      <h2 class="fx-mk-h2" style="font-size:1.125rem">Get incident updates</h2>
+      <div class="fx-mk-waitlist" style="margin-top:.25rem">
+        <form class="fx-mk-waitlist-form" data-mk-waitlist>
+          <input class="fx-input" type="email" placeholder="you@company.com" aria-label="Email address">
+          <button class="fx-btn" type="submit">Subscribe</button>
+        </form>
+        <p class="fx-mk-error">That doesn't look like an email — mind checking it?</p>
+        <div class="fx-mk-waitlist-social" style="justify-content:center"><span>Email on new incidents and resolutions. Nothing else, ever.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="fx-mk-footer" style="margin-top:0">
+  <div class="fx-mk-container">
+    <div class="fx-mk-footer-bottom" style="margin-top:0;border-top:0">
+      <a class="fx-mk-logo-lockup" href="home.html" style="font-size:.875rem"><i style="width:1.375rem;height:1.375rem;font-size:.75rem">F</i>Finix UI</a>
+      <span>© 2026 Finix Labs Inc.</span>
+      <a href="home.html" style="color:inherit;text-decoration:none">finix.dev</a>
+      <span class="fx-text-xs fx-muted">Powered by the finix status kit</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const SERVICES = [
+    { name: "API", incidents: {} },
+    { name: "Dashboard", incidents: { 22: "degraded" } },
+    { name: "Webhooks", incidents: { 89: "degraded", 61: "down", 22: "degraded" } },
+    { name: "Docs & CDN", incidents: {} },
+    { name: "Exports", incidents: { 47: "down" } },
+  ];
+  const DAYS = 90;
+  const el = document.getElementById("services");
+  el.innerHTML = SERVICES.map((s, si) => {
+    let downWeight = 0;
+    const bars = Array.from({ length: DAYS }, (_, i) => {
+      const state = s.incidents[i];
+      if (state === "down") downWeight += 1;
+      if (state === "degraded") downWeight += 0.25;
+      return `<span${state ? ` data-state="${state}"` : ""} data-fx-tip="${state ? state[0].toUpperCase() + state.slice(1) : "Operational"} · day ${DAYS - i}"></span>`;
+    }).join("");
+    const uptime = (100 - (downWeight / DAYS) * 100).toFixed(2);
+    return `<div class="fx-ops-svc">
+      <div class="fx-ops-svc-top">${s.name}${si === 2 ? ' <span class="fx-badge fx-badge--warning" style="font-size:.5625rem">degraded</span>' : ""}<span class="pct" data-uptime="${uptime}">${uptime}% uptime</span></div>
+      <div class="fx-tracker">${bars}</div>
+    </div>`;
+  }).join("");
+});
+</script>
+</body>
+</html>

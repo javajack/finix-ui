@@ -276,3 +276,57 @@ tr + tr .fx-diff-cell-del + .fx-diff-num { border-left: 1px solid var(--border-s
 }
 .fx-tw-row:hover .fx-tw-bar { opacity: 1; }
 .fx-tw-dur { position: absolute; top: 50%; transform: translateY(-50%); font-size: 0.625rem; font-family: var(--font-mono); color: var(--muted-foreground); white-space: nowrap; }
+
+/* ============ incidents & status (fx-ops-*) ============ */
+.fx-ops-inc {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto auto; gap: 0.75rem;
+  align-items: center; padding: 0.5625rem 0.75rem; border-radius: var(--radius-md);
+  cursor: pointer; transition: background-color 0.12s var(--ease-out);
+}
+.fx-ops-inc:hover { background: var(--hover); }
+.fx-ops-inc[aria-current="true"] { background: color-mix(in oklab, var(--primary) 8%, transparent); box-shadow: inset 2px 0 0 var(--primary); }
+.fx-ops-inc-main { display: flex; flex-direction: column; gap: 0.0625rem; min-width: 0; }
+.fx-ops-inc-main b { font-size: 0.8125rem; font-weight: 550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fx-ops-inc-main small { font-size: 0.6875rem; color: var(--muted-foreground); }
+.fx-ops-sev {
+  font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; border-radius: 0.3125rem;
+  padding: 0.125rem 0.375rem; letter-spacing: 0.03em;
+}
+.fx-ops-sev.s1 { background: color-mix(in oklab, var(--destructive) 15%, transparent); color: var(--destructive); }
+.fx-ops-sev.s2 { background: color-mix(in oklab, var(--warning) 16%, transparent); color: var(--warning); }
+.fx-ops-sev.s3 { background: var(--well); color: var(--muted-foreground); }
+.fx-ops-age { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted-foreground); }
+
+/* on-call rotation strip */
+.fx-ops-rota { position: relative; display: flex; gap: 2px; height: 2.25rem; border-radius: var(--radius-md); overflow: hidden; }
+.fx-ops-shift {
+  display: grid; place-items: center; font-size: 0.625rem; font-weight: 550;
+  background: var(--well); color: var(--muted-foreground); position: relative; min-width: 0;
+}
+.fx-ops-shift.is-now { background: color-mix(in oklab, var(--primary) 14%, var(--well)); color: var(--foreground); box-shadow: inset 0 -2px 0 var(--primary); }
+.fx-ops-now {
+  position: absolute; top: -0.25rem; bottom: -0.25rem; width: 2px; background: var(--primary);
+  border-radius: 2px; z-index: 2; pointer-events: none;
+}
+.fx-ops-rota-scale { display: flex; justify-content: space-between; font-size: 0.5625rem; color: var(--muted-foreground); font-family: var(--font-mono); margin-top: 0.25rem; }
+
+/* status page */
+.fx-ops-banner {
+  display: flex; align-items: center; gap: 0.875rem; border-radius: var(--radius-xl);
+  border: 1px solid color-mix(in oklab, var(--success) 35%, var(--border));
+  background: color-mix(in oklab, var(--success) 7%, var(--card)); padding: 1.125rem 1.375rem;
+}
+.fx-ops-banner.is-degraded { border-color: color-mix(in oklab, var(--warning) 40%, var(--border)); background: color-mix(in oklab, var(--warning) 8%, var(--card)); }
+.fx-ops-banner-dot { width: 0.875rem; height: 0.875rem; border-radius: 999px; background: var(--success); box-shadow: 0 0 0 4px color-mix(in oklab, var(--success) 22%, transparent); flex-shrink: 0; }
+.fx-ops-banner.is-degraded .fx-ops-banner-dot { background: var(--warning); box-shadow: 0 0 0 4px color-mix(in oklab, var(--warning) 24%, transparent); }
+.fx-ops-banner b { font-size: 1rem; font-weight: 650; letter-spacing: -0.01em; }
+.fx-ops-banner span { font-size: 0.75rem; color: var(--muted-foreground); display: block; margin-top: 0.125rem; }
+.fx-ops-svc { display: flex; flex-direction: column; gap: 0.4375rem; padding: 0.875rem 0; border-bottom: 1px solid var(--border-soft); }
+.fx-ops-svc:last-child { border-bottom: none; }
+.fx-ops-svc-top { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.8125rem; font-weight: 550; }
+.fx-ops-svc-top .pct { margin-left: auto; font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500; color: var(--muted-foreground); }
+.fx-ops-svc .fx-tracker { height: 1.5rem; }
+.fx-ops-past { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) auto; gap: 0.875rem; padding: 0.625rem 0; border-bottom: 1px solid var(--border-soft); font-size: 0.8125rem; align-items: baseline; }
+.fx-ops-past:last-child { border-bottom: none; }
+.fx-ops-past time { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted-foreground); }
+.fx-ops-past small { color: var(--muted-foreground); font-size: 0.6875rem; }

@@ -572,7 +572,7 @@ container-query story).
 - Research: Ghostfolio/Firefly III (inspiration) · Revolut/Monzo/CRED
   (inspiration-only).
 
-### V7. Incidents & status → new page `ops.html` ("Incidents", Industries) + `demo/site/status.html` (Public site)
+### ✅ V7. Incidents & status → new page `ops.html` ("Incidents", Industries) + `demo/site/status.html` (Public site)
 Small lift, big credibility. Extends finix-devtools module (`fx-ops-*` classes).
 - Admin (ops.html): incident list rows (SEV1–3 chips, status open/monitoring/
   resolved, age ticking); incident detail = fxActivity timeline w/ **update

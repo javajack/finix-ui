@@ -185,7 +185,7 @@ Composes T1 + T2. Zendesk/Intercom-grade split-pane:
 
 ## WAVE 4 — Commerce, fintech, HR completion
 
-### T12. Payment sheet + candlestick + printable invoice → business.html
+### ✅ T12. Payment sheet + candlestick + printable invoice → business.html
 - `fx-payment`: card form w/ live brand detect (icon swap on 4/5/3 prefix),
   masked inputs (reuse data-fx-mask), wallet buttons row, processing→success
   states (stateful button + sheet morph).

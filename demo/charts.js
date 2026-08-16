@@ -495,6 +495,78 @@
     container.appendChild(svg);
   }
 
+  /* ---------- candlestick ---------- */
+  function candles(container, opts) {
+    const { data, height = 280 } = opts;
+    container.classList.add("fx-chart");
+    const W = 720, H = height, PL = 44, PR = 8, PT = 10, PB = 24;
+    const iw = W - PL - PR, ih = H - PT - PB;
+    const n = data.length;
+    const lo = Math.min(...data.map((d) => d.l)), hi = Math.max(...data.map((d) => d.h));
+    const pad = (hi - lo) * 0.06;
+    const min = lo - pad, max = hi + pad;
+    const y = (v) => PT + ih - ((v - min) / (max - min)) * ih;
+    const xc = (i) => PL + ((i + 0.5) / n) * iw;
+    const bw = Math.max(3, (iw / n) * 0.62);
+    const cs = getComputedStyle(document.documentElement);
+    const UP = cs.getPropertyValue("--success").trim() || "#22c55e";
+    const DOWN = cs.getPropertyValue("--destructive").trim() || "#ef4444";
+
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+    for (let g = 0; g <= 4; g++) {
+      const gy = PT + (ih * g) / 4;
+      svg.appendChild(el("line", { x1: PL, x2: W - PR, y1: gy, y2: gy, class: "grid-line" }));
+      const lbl = el("text", { x: PL - 8, y: gy + 4, "text-anchor": "end", class: "axis-label" });
+      lbl.textContent = (max - ((max - min) * g) / 4).toFixed(0);
+      svg.appendChild(lbl);
+    }
+    const step = Math.ceil(n / 8);
+    data.forEach((d, i) => {
+      if (i % step !== 0 && i !== n - 1) return;
+      const t = el("text", { x: xc(i), y: H - 6, "text-anchor": "middle", class: "axis-label" });
+      t.textContent = d.t;
+      svg.appendChild(t);
+    });
+    data.forEach((d, i) => {
+      const up = d.c >= d.o;
+      const color = up ? UP : DOWN;
+      svg.appendChild(el("line", { x1: xc(i), x2: xc(i), y1: y(d.h), y2: y(d.l), stroke: color, "stroke-width": 1.25 }));
+      const top = y(Math.max(d.o, d.c)), bot = y(Math.min(d.o, d.c));
+      svg.appendChild(el("rect", {
+        x: xc(i) - bw / 2, y: top, width: bw, height: Math.max(1.5, bot - top), rx: 1.5,
+        fill: up ? color : color, "fill-opacity": up ? 0.9 : 0.9, stroke: color, "stroke-width": 1,
+      }));
+    });
+    // crosshair
+    const vline = el("line", { y1: PT, y2: PT + ih, opacity: 0, "stroke-dasharray": "3 3" });
+    vline.style.stroke = "var(--muted-foreground)";
+    const hline = el("line", { x1: PL, x2: W - PR, opacity: 0, "stroke-dasharray": "3 3" });
+    hline.style.stroke = "var(--muted-foreground)";
+    svg.append(vline, hline);
+    const tip = tipFor(container);
+    svg.addEventListener("pointermove", (e) => {
+      const r = svg.getBoundingClientRect();
+      const px = ((e.clientX - r.left) / r.width) * W;
+      const py = ((e.clientY - r.top) / r.height) * H;
+      const i = Math.min(n - 1, Math.max(0, Math.floor(((px - PL) / iw) * n)));
+      const d = data[i];
+      vline.setAttribute("x1", xc(i)); vline.setAttribute("x2", xc(i)); vline.setAttribute("opacity", 1);
+      hline.setAttribute("y1", py); hline.setAttribute("y2", py); hline.setAttribute("opacity", 1);
+      const up = d.c >= d.o;
+      tip.innerHTML = `<b>${d.t}</b><br>O ${d.o.toLocaleString()} · H ${d.h.toLocaleString()}<br>L ${d.l.toLocaleString()} · C <span style="color:${up ? UP : DOWN}">${d.c.toLocaleString()}</span>`;
+      const cr = container.getBoundingClientRect();
+      tip.style.left = Math.min(e.clientX - cr.left + 12, cr.width - 160) + "px";
+      tip.style.top = e.clientY - cr.top - 10 + "px";
+      tip.style.opacity = 1;
+    });
+    svg.addEventListener("pointerleave", () => {
+      vline.setAttribute("opacity", 0); hline.setAttribute("opacity", 0);
+      tip.style.opacity = 0;
+    });
+    container.innerHTML = "";
+    container.appendChild(svg);
+  }
+
   /* ---------- funnel ---------- */
   function funnel(container, opts) {
     const { steps, height = 240 } = opts;
@@ -613,5 +685,6 @@
     gauge: (elc, o) => register(gauge, elc, o),
     funnel: (elc, o) => register(funnel, elc, o),
     cohort: (elc, o) => register(cohort, elc, o),
+    candles: (elc, o) => register(candles, elc, o),
   };
 })();

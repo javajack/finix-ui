@@ -56,6 +56,60 @@
         </div>
       </div>
 
+      <div class="fx-grid" style="grid-template-columns:1.4fr 1fr;align-items:start">
+        <!-- candlestick -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">BTC-USD — daily candles</div>
+            <div class="fx-card-desc">Candlestick chart with wicks, up/down coloring and a crosshair OHLC tooltip.</div>
+          </div>
+          <div class="fx-card-content"><div id="c-candles"></div></div>
+        </div>
+
+        <!-- payment -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Payment</div>
+            <div class="fx-card-desc">Stripe-grade card form — type a number starting with <b>4</b>, <b>5</b> or <b>3</b> to watch the brand detect.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-payment" id="payment">
+              <div class="fx-pay-wallets">
+                <button class="fx-pay-wallet"> Pay</button>
+                <button class="fx-pay-wallet">G Pay</button>
+              </div>
+              <div class="fx-pay-divider">or pay with card</div>
+              <div class="fx-pay-form fx-stack" style="gap:.75rem">
+                <div class="fx-field">
+                  <label class="fx-label">Card number</label>
+                  <div class="fx-input-group">
+                    <span class="fx-input-addon fx-pay-brand"><svg viewBox="0 0 28 18" fill="none"><rect x=".5" y=".5" width="27" height="17" rx="2.5" stroke="currentColor" opacity=".4"/><rect x="3" y="4" width="7" height="5" rx="1" fill="currentColor" opacity=".35"/></svg></span>
+                    <input class="fx-input" data-fx-mask="9999 9999 9999 9999" data-pay-number placeholder="1234 1234 1234 1234" inputmode="numeric" autocomplete="off">
+                  </div>
+                </div>
+                <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:.75rem">
+                  <div class="fx-field"><label class="fx-label">Expiry</label><input class="fx-input" data-fx-mask="99/99" placeholder="MM/YY" inputmode="numeric" autocomplete="off"></div>
+                  <div class="fx-field"><label class="fx-label">CVC</label><input class="fx-input" data-fx-mask="999" placeholder="123" inputmode="numeric" autocomplete="off"></div>
+                </div>
+                <div class="fx-field"><label class="fx-label">Name on card</label><input class="fx-input" placeholder="Full name" autocomplete="off"></div>
+                <button class="fx-btn" data-pay-submit data-fx-stateful-manual data-loading-text="Processing…" data-success-text="Paid" style="width:100%">Pay $1,890.00</button>
+                <span class="fx-pay-note">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  Card details are encrypted end to end. This is a demo — nothing is charged.
+                </span>
+              </div>
+              <div class="fx-pay-success" hidden>
+                <span class="fx-imp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <b>Payment successful</b>
+                <span class="fx-pay-amount">$1,890.00</span>
+                <span class="fx-text-sm fx-muted">A receipt was sent to billing@acme.com</span>
+                <button class="fx-btn fx-btn--outline fx-btn--sm" data-pay-reset style="margin-top:.375rem">New payment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- pricing -->
       <div class="fx-card">
         <div class="fx-card-header">
@@ -231,12 +285,81 @@
         </div>
       </div>
 
+
+      <!-- printable invoice -->
+      <div class="fx-card" style="background:var(--well);border-style:dashed">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Printable invoice</div>
+          <div class="fx-card-desc">A4-styled document on the card surface — <b>Print</b> isolates just the document via a print stylesheet (receipts and packing labels reuse the same fx-doc frame).</div>
+          <div class="fx-card-action">
+            <button class="fx-btn fx-btn--outline fx-btn--sm" onclick="window.print()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+              Print
+            </button>
+          </div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-doc">
+            <div class="fx-doc-head">
+              <div>
+                <div class="fx-doc-brand"><i>F</i>Finix Labs Inc.</div>
+                <p class="fx-muted" style="margin:.5rem 0 0;font-size:.75rem">548 Market St, Suite 62<br>San Francisco, CA 94104<br>billing@finixlabs.dev</p>
+              </div>
+              <div class="fx-doc-title">
+                <b>INVOICE</b>
+                <span>#INV-2026-1204</span>
+              </div>
+            </div>
+            <div class="fx-doc-meta">
+              <div><h4>Billed to</h4><p><b>Acme Corp</b><br>Priya Sharma<br>1 Infinite Parkway<br>Austin, TX 78701</p></div>
+              <div><h4>Issue date</h4><p>Aug 12, 2026</p><h4 style="margin-top:.875rem">Due date</h4><p>Sep 11, 2026 (Net 30)</p></div>
+              <div><h4>Amount due</h4><p style="font-family:var(--font-mono);font-size:1.125rem;font-weight:700">$9,180.00</p><span class="fx-badge fx-badge--warning fx-badge--dot" style="margin-top:.25rem">Awaiting payment</span></div>
+            </div>
+            <table class="fx-doc-table">
+              <thead><tr><th style="width:50%">Description</th><th class="num">Qty</th><th class="num">Unit price</th><th class="num">Amount</th></tr></thead>
+              <tbody>
+                <tr><td><b>Scale plan</b> — Aug 2026<br><span class="fx-muted">120 seats, annual commitment</span></td><td class="num">120</td><td class="num">$62.00</td><td class="num">$7,440.00</td></tr>
+                <tr><td><b>Additional API volume</b><br><span class="fx-muted">4.2M requests over included quota</span></td><td class="num">42</td><td class="num">$25.00</td><td class="num">$1,050.00</td></tr>
+                <tr><td><b>Priority support</b><br><span class="fx-muted">24/7 with 1h response SLA</span></td><td class="num">1</td><td class="num">$390.00</td><td class="num">$390.00</td></tr>
+              </tbody>
+            </table>
+            <div class="fx-doc-totals">
+              <div class="fx-doc-total"><span class="fx-muted">Subtotal</span><span>$8,880.00</span></div>
+              <div class="fx-doc-total"><span class="fx-muted">Tax (8.25%)</span><span>$732.60</span></div>
+              <div class="fx-doc-total"><span class="fx-muted">Credit applied</span><span>−$432.60</span></div>
+              <div class="fx-doc-total is-grand"><span>Amount due</span><span>$9,180.00</span></div>
+            </div>
+            <div class="fx-doc-foot">
+              <span>Payment via ACH to routing 021000021, account 1234567890 — reference INV-2026-1204.</span>
+              <span>Thank you for your business.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
+  // ---- candlestick data (seeded walk) ----
+  (() => {
+    const data = [];
+    let price = 61250;
+    for (let i = 0; i < 28; i++) {
+      const drift = Math.sin(i * 0.7) * 420 + (i % 5 === 0 ? -380 : 160);
+      const o = price;
+      const c = o + drift + ((i * 137) % 260) - 130;
+      const h = Math.max(o, c) + 180 + ((i * 89) % 240);
+      const l = Math.min(o, c) - 160 - ((i * 53) % 220);
+      data.push({ t: "Jul " + (i + 20 > 31 ? "Aug " + (i - 11) : i + 20).toString().replace("Aug Aug", "Aug "), o: Math.round(o), h: Math.round(h), l: Math.round(l), c: Math.round(c) });
+      price = c;
+    }
+    data.forEach((d, i) => (d.t = i < 12 ? "Jul " + (i + 20) : "Aug " + (i - 11)));
+    fxCharts.candles(document.getElementById("c-candles"), { data, height: 300 });
+  })();
+
   // ticker tape (content doubled for seamless loop)
   const SYMS = [["NIFTY 50","24,812","+0.6%",1],["BTC-USD","64,251","+2.1%",1],["AAPL","232.4","-0.4%",0],["ETH-USD","3,412","+1.2%",1],["TSLA","248.1","-1.8%",0],["NVDA","131.7","+3.4%",1],["GOLD","2,488","+0.2%",1],["EUR/INR","91.44","-0.1%",0]];
   const tape = SYMS.map(([s,p,c,up]) => `<span class="fx-tick"><b>${s}</b> ${p} <span class="${up?"up":"down"}">${c}</span></span>`).join("");

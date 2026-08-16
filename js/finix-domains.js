@@ -693,4 +693,56 @@
     startRotation();
     return { render, get participants() { return parts; } };
   };
+
+  /* ================= payment form behaviors ================= */
+  const PAY_BRANDS = {
+    generic: '<svg viewBox="0 0 28 18" fill="none"><rect x=".5" y=".5" width="27" height="17" rx="2.5" stroke="currentColor" opacity=".4"/><rect x="3" y="4" width="7" height="5" rx="1" fill="currentColor" opacity=".35"/></svg>',
+    visa: '<svg viewBox="0 0 28 18"><rect width="28" height="18" rx="3" fill="#1A1F71"/><text x="14" y="12.5" text-anchor="middle" font-family="Arial" font-style="italic" font-weight="bold" font-size="7.5" fill="#fff">VISA</text></svg>',
+    mastercard: '<svg viewBox="0 0 28 18"><rect width="28" height="18" rx="3" fill="#252525"/><circle cx="11.5" cy="9" r="5" fill="#EB001B"/><circle cx="16.5" cy="9" r="5" fill="#F79E1B" fill-opacity=".9"/></svg>',
+    amex: '<svg viewBox="0 0 28 18"><rect width="28" height="18" rx="3" fill="#2E77BC"/><text x="14" y="11.5" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="6" fill="#fff">AMEX</text></svg>',
+  };
+  document.addEventListener("input", (e) => {
+    const inp = e.target.closest("[data-pay-number]");
+    if (!inp) return;
+    const first = inp.value.replace(/\D/g, "")[0];
+    const brand = first === "4" ? "visa" : first === "5" ? "mastercard" : first === "3" ? "amex" : "generic";
+    const box = inp.closest(".fx-payment");
+    const slot = box?.querySelector(".fx-pay-brand");
+    if (slot && box.dataset.brand !== brand) {
+      box.dataset.brand = brand;
+      slot.innerHTML = PAY_BRANDS[brand];
+      slot.classList.remove("is-pop");
+      void slot.offsetWidth;
+      slot.classList.add("is-pop");
+    }
+  });
+  document.addEventListener("click", (e) => {
+    const pay = e.target.closest("[data-pay-submit]");
+    if (pay && !pay.dataset.state) {
+      const box = pay.closest(".fx-payment");
+      if (window.finix?.buttonState) finix.buttonState(pay, "loading");
+      setTimeout(() => {
+        if (window.finix?.buttonState) finix.buttonState(pay, "success");
+        setTimeout(() => {
+          box.querySelector(".fx-pay-form")?.setAttribute("hidden", "");
+          box.querySelector(".fx-pay-wallets")?.setAttribute("hidden", "");
+          box.querySelector(".fx-pay-divider")?.setAttribute("hidden", "");
+          box.querySelector(".fx-pay-success")?.removeAttribute("hidden");
+        }, 700);
+      }, 1400);
+      return;
+    }
+    const wallet = e.target.closest(".fx-pay-wallet");
+    if (wallet && window.finix) finix.toast({ title: wallet.textContent.trim() + " sheet", description: "The wallet payment sheet would open here." });
+    const reset = e.target.closest("[data-pay-reset]");
+    if (reset) {
+      const box = reset.closest(".fx-payment");
+      box.querySelector(".fx-pay-form")?.removeAttribute("hidden");
+      box.querySelector(".fx-pay-wallets")?.removeAttribute("hidden");
+      box.querySelector(".fx-pay-divider")?.removeAttribute("hidden");
+      box.querySelector(".fx-pay-success")?.setAttribute("hidden", "");
+      const btn = box.querySelector("[data-pay-submit]");
+      if (btn && window.finix?.buttonState) finix.buttonState(btn, "reset");
+    }
+  });
 })();

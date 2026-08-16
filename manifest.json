@@ -1420,6 +1420,49 @@
    ],
    "markup": "<div id=\"call\"></div>",
    "js": "fxCallTiles(el, {participants:[{name,muted,camera,speaking,self}], screenShare:{by,title}}) \u2014 responsive tile grid with rotating speaking ring (ping animation), mic/cam badges, screen-share hero + filmstrip layout, floating self-tile, mute/cam/present/leave control bar with rejoin."
+  },
+  {
+   "name": "payment-form",
+   "category": "finance",
+   "classes": [
+    "fx-payment",
+    "fx-pay-wallets",
+    "fx-pay-wallet",
+    "fx-pay-divider",
+    "fx-pay-brand",
+    "fx-pay-form",
+    "fx-pay-success",
+    "fx-pay-note",
+    "fx-pay-amount"
+   ],
+   "markup": "<div class=\"fx-payment\">(wallet row + divider + .fx-pay-form with [data-pay-number] masked input + [data-pay-submit] + hidden .fx-pay-success)</div>",
+   "js": "Delegated in finix-domains.js: [data-pay-number] live brand detect (4=Visa 5=Mastercard 3=Amex, icon pop animation), [data-pay-submit] processing->success->form morphs to success state, [data-pay-reset] restores. Compose with data-fx-mask inputs."
+  },
+  {
+   "name": "candlestick",
+   "category": "finance",
+   "classes": [
+    "fx-chart"
+   ],
+   "markup": "<div id=\"candles\"></div>",
+   "js": "fxCharts.candles(el, {data:[{t,o,h,l,c}], height}) \u2014 wicks, success/destructive up/down coloring, crosshair + OHLC tooltip; theme re-render registered."
+  },
+  {
+   "name": "printable-doc",
+   "category": "finance",
+   "classes": [
+    "fx-doc",
+    "fx-doc-head",
+    "fx-doc-brand",
+    "fx-doc-title",
+    "fx-doc-meta",
+    "fx-doc-table",
+    "fx-doc-totals",
+    "fx-doc-total",
+    "fx-doc-foot"
+   ],
+   "markup": "<div class=\"fx-doc\">(header + bill-to meta + items table + totals + footer)</div>",
+   "js": "A4-styled document frame; @media print isolates .fx-doc (white, full page, chrome hidden) \u2014 trigger with window.print(). Reuse for receipts and packing labels."
   }
  ]
 }

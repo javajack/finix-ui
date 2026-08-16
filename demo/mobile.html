@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-mobile.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-mobile.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Mobile</h1>
+          <p class="fx-page-sub">App-grade mobile screens in plain HTML — every phone below is live markup in a CSS device frame with <b>container queries</b> (no iframes). Drag the sheet, swipe the mail rows, pull the home feed down to refresh.</p>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(20rem,1fr));gap:2rem 1.25rem">
+
+        <!-- 1 · home -->
+        <div>
+          <div class="fx-phone">
+            <div class="fx-phone-screen">
+              <div class="fx-phone-body" data-m-refresh id="home-body">
+                <div class="fx-m-nav">
+                  <div class="fx-m-nav-bar"><span class="fx-m-nav-title">Home</span>
+                    <span class="fx-m-nav-side right"><span class="fx-avatar fx-avatar--sm">RK</span></span>
+                  </div>
+                </div>
+                <div class="fx-m-large">Home</div>
+                <div class="fx-m-stats">
+                  <div class="fx-m-stat"><span>Balance</span><b>$12,408</b><small>+4.2% this week</small></div>
+                  <div class="fx-m-stat"><span>Spent today</span><b>$86.40</b><small>3 payments</small></div>
+                </div>
+                <div class="fx-m-seg"><button aria-pressed="true">Day</button><button aria-pressed="false">Week</button><button aria-pressed="false">Month</button></div>
+                <div class="fx-m-group-label">Recent activity</div>
+                <div class="fx-m-list" id="home-list">
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg></span><span class="fx-m-row-main"><b>Amazon</b><small>Shopping · 2:41 PM</small></span><span class="fx-m-row-val"><span class="num">−$42.90</span></span></button>
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg></span><span class="fx-m-row-main"><b>Blue Tokai</b><small>Coffee · 11:08 AM</small></span><span class="fx-m-row-val"><span class="num">−$6.50</span></span></button>
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="fx-m-row-main"><b>Salary</b><small>Finix Labs · 9:00 AM</small></span><span class="fx-m-row-val"><span class="num" style="color:var(--success)">+$4,250</span></span></button>
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg></span><span class="fx-m-row-main"><b>Netflix</b><small>Subscription · yesterday</small></span><span class="fx-m-row-val"><span class="num">−$7.99</span></span></button>
+                </div>
+                <div class="fx-m-group-label">Yesterday</div>
+                <div class="fx-m-list">
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"/></svg></span><span class="fx-m-row-main"><b>Uber</b><small>Transport · 8:14 PM</small></span><span class="fx-m-row-val"><span class="num">−$11.20</span></span></button>
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span><span class="fx-m-row-main"><b>Toit Brewpub</b><small>Dining · 7:02 PM</small></span><span class="fx-m-row-val"><span class="num">−$28.60</span></span></button>
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></svg></span><span class="fx-m-row-main"><b>Refund — Flipkart</b><small>Shopping · 3:40 PM</small></span><span class="fx-m-row-val"><span class="num" style="color:var(--success)">+$19.99</span></span></button>
+                </div>
+                <div style="height:6rem;flex-shrink:0"></div>
+              </div>
+              <div class="fx-m-dial" id="home-dial">
+                <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Send money</button>
+                <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>Pay a bill</button>
+                <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="5" y="5" rx="2"/><path d="M5 10h14"/></svg>Scan QR</button>
+              </div>
+              <button class="fx-m-fab" data-m-fab="#home-dial" aria-label="Quick actions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
+              <div class="fx-m-tabbar" data-m-tabbar>
+                <button class="fx-m-tab" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</button>
+                <button class="fx-m-tab" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Stats</button>
+                <button class="fx-m-tab" aria-current="false"><span class="fx-m-tab-dot">3</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>Alerts</button>
+                <button class="fx-m-tab" aria-current="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</button>
+              </div>
+            </div>
+          </div>
+          <div class="fx-phone-label">Large-title collapse · pull-to-refresh · FAB speed dial · tab bar</div>
+        </div>
+
+        <!-- 2 · chat -->
+        <div>
+          <div class="fx-phone">
+            <div class="fx-phone-screen">
+              <div class="fx-m-nav is-collapsed" style="position:relative">
+                <div class="fx-m-nav-bar">
+                  <span class="fx-m-nav-side"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></span>
+                  <span class="fx-m-nav-title" style="display:flex;align-items:center;gap:.375rem"><span class="fx-avatar fx-avatar--sm">SD</span>Sofia Davis</span>
+                  <span class="fx-m-nav-side right"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                </div>
+              </div>
+              <div class="fx-phone-body">
+                <div class="fx-m-chat" id="chat-log">
+                  <span class="fx-m-chat-day">Today</span>
+                  <div class="fx-m-bub">The component coverage looks right. Can we talk multi-year pricing on Thursday?</div>
+                  <div class="fx-m-bub me">Thursday works — I'll send an invite for 11am your time.</div>
+                  <div class="fx-m-bub">Perfect. Bring the security one-pager too?</div>
+                  <div class="fx-m-bub me">Already attached to the invite 📎</div>
+                </div>
+              </div>
+              <div class="fx-m-composer">
+                <input placeholder="Message…" id="chat-input" aria-label="Message">
+                <button class="fx-m-send" id="chat-send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <div class="fx-phone-label">Chat — bubbles, blur composer (type &amp; send)</div>
+        </div>
+
+        <!-- 3 · settings -->
+        <div>
+          <div class="fx-phone">
+            <div class="fx-phone-screen">
+              <div class="fx-phone-body">
+                <div class="fx-m-nav"><div class="fx-m-nav-bar"><span class="fx-m-nav-title">Settings</span></div></div>
+                <div class="fx-m-large">Settings</div>
+                <div class="fx-m-list">
+                  <button class="fx-m-row" style="min-height:3.5rem">
+                    <span class="fx-avatar">RK</span>
+                    <span class="fx-m-row-main"><b>Rakesh K.</b><small>Apple ID, iCloud &amp; media</small></span>
+                    <svg class="fx-m-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                  </button>
+                </div>
+                <div class="fx-m-group-label">Preferences</div>
+                <div class="fx-m-list">
+                  <label class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span><span class="fx-m-row-main"><b>Dark mode</b></span><span class="fx-m-row-val"><input type="checkbox" class="fx-switch" id="m-dark"></span></label>
+                  <label class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-5)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></span><span class="fx-m-row-main"><b>Notifications</b></span><span class="fx-m-row-val"><input type="checkbox" class="fx-switch" checked></span></label>
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span><span class="fx-m-row-main"><b>Language</b></span><span class="fx-m-row-val">English<svg class="fx-m-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></button>
+                </div>
+                <div class="fx-m-group-label">Data</div>
+                <div class="fx-m-list">
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-4)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></span><span class="fx-m-row-main"><b>Export data</b></span><span class="fx-m-row-val">CSV<svg class="fx-m-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></button>
+                  <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--destructive)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></span><span class="fx-m-row-main"><b style="color:var(--destructive)">Delete account</b></span></button>
+                </div>
+                <p style="text-align:center;font-size:.625rem;color:var(--muted-foreground);padding:1rem">finix mobile · v0.4.0 (demo)</p>
+              </div>
+            </div>
+          </div>
+          <div class="fx-phone-label">Grouped settings — icon tiles, switches, value rows</div>
+        </div>
+
+        <!-- 4 · bottom sheet -->
+        <div>
+          <div class="fx-phone">
+            <div class="fx-phone-screen">
+              <div class="fx-phone-body" style="background:var(--well);background-image:radial-gradient(color-mix(in oklab,var(--foreground) 14%,transparent) 1px,transparent 1px);background-size:1.125rem 1.125rem">
+                <div style="flex:1;display:grid;place-items:center;padding:1rem">
+                  <div style="text-align:center;display:flex;flex-direction:column;gap:.625rem;align-items:center">
+                    <span style="width:2.5rem;height:2.5rem;border-radius:999px;background:var(--primary);color:var(--primary-foreground);display:grid;place-items:center;box-shadow:var(--shadow-lg)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span>
+                    <button class="fx-btn fx-btn--sm" id="sheet-open">Nearby places</button>
+                    <span class="fx-text-xs fx-muted">Open the sheet, then drag its handle<br>between half · full · closed</span>
+                  </div>
+                </div>
+              </div>
+              <div class="fx-m-scrim" id="sheet-scrim"></div>
+              <div class="fx-m-sheet" id="sheet">
+                <div class="fx-m-sheet-grab">
+                  <div class="fx-m-sheet-handle"></div>
+                  <div class="fx-m-sheet-title">Nearby places</div>
+                </div>
+                <div class="fx-m-sheet-body">
+                  <div class="fx-m-list" style="margin:0">
+                    <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-2)">☕</span><span class="fx-m-row-main"><b>Third Wave Coffee</b><small>250 m · open till 11 pm</small></span><span class="fx-m-row-val">4.6 ★</span></button>
+                    <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-1)">🌳</span><span class="fx-m-row-main"><b>Cubbon Park</b><small>1.2 km · sunrise to sunset</small></span><span class="fx-m-row-val">4.8 ★</span></button>
+                    <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-4)">📚</span><span class="fx-m-row-main"><b>Blossom Book House</b><small>900 m · open till 9 pm</small></span><span class="fx-m-row-val">4.7 ★</span></button>
+                    <button class="fx-m-row"><span class="fx-m-ic" style="background:var(--chart-5)">🍜</span><span class="fx-m-row-main"><b>Naru Noodle Bar</b><small>1.8 km · waitlist likely</small></span><span class="fx-m-row-val">4.5 ★</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fx-phone-label">Bottom sheet — snap points, drag handle, scrim</div>
+        </div>
+
+        <!-- 5 · swipe inbox -->
+        <div>
+          <div class="fx-phone">
+            <div class="fx-phone-screen">
+              <div class="fx-phone-body">
+                <div class="fx-m-nav"><div class="fx-m-nav-bar"><span class="fx-m-nav-title">Inbox</span></div></div>
+                <div class="fx-m-large">Inbox</div>
+                <p style="padding:0 1rem .5rem;margin:0" class="fx-text-xs fx-muted">Swipe a row left to reveal actions</p>
+                <div style="border-top:1px solid var(--border-soft)" id="mail-list">
+                  <div class="fx-m-swipe">
+                    <div class="fx-m-swipe-under"><button class="fx-m-swipe-act archive" data-act="archive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>Archive</button><button class="fx-m-swipe-act delete" data-act="delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>Delete</button></div>
+                    <div class="fx-m-swipe-row"><button class="fx-m-row" style="min-height:3.625rem"><span class="fx-avatar fx-avatar--sm">JL</span><span class="fx-m-row-main"><b>Jackson Lee</b><small>Quote approved — sending the countersigned copy…</small></span><span class="fx-m-row-val" style="align-self:flex-start;padding-top:.125rem">2m</span></button></div>
+                  </div>
+                  <div class="fx-m-swipe">
+                    <div class="fx-m-swipe-under"><button class="fx-m-swipe-act archive" data-act="archive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>Archive</button><button class="fx-m-swipe-act delete" data-act="delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>Delete</button></div>
+                    <div class="fx-m-swipe-row"><button class="fx-m-row" style="min-height:3.625rem"><span class="fx-avatar fx-avatar--sm">AN</span><span class="fx-m-row-main"><b>Ava Nakamura</b><small>Legal cleared both redlines. Ready for signature 🎉</small></span><span class="fx-m-row-val" style="align-self:flex-start;padding-top:.125rem">1h</span></button></div>
+                  </div>
+                  <div class="fx-m-swipe">
+                    <div class="fx-m-swipe-under"><button class="fx-m-swipe-act archive" data-act="archive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>Archive</button><button class="fx-m-swipe-act delete" data-act="delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>Delete</button></div>
+                    <div class="fx-m-swipe-row"><button class="fx-m-row" style="min-height:3.625rem"><span class="fx-avatar fx-avatar--sm">MR</span><span class="fx-m-row-main"><b>Marco Ruiz</b><small>Case study looks great — can we get the bento version?</small></span><span class="fx-m-row-val" style="align-self:flex-start;padding-top:.125rem">3h</span></button></div>
+                  </div>
+                  <div class="fx-m-swipe">
+                    <div class="fx-m-swipe-under"><button class="fx-m-swipe-act archive" data-act="archive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>Archive</button><button class="fx-m-swipe-act delete" data-act="delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>Delete</button></div>
+                    <div class="fx-m-swipe-row"><button class="fx-m-row" style="min-height:3.625rem"><span class="fx-avatar fx-avatar--sm">GH</span><span class="fx-m-row-main"><b>GitHub</b><small>[finix-ui] v0.4.0 milestone is 62% complete</small></span><span class="fx-m-row-val" style="align-self:flex-start;padding-top:.125rem">5h</span></button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fx-phone-label">Swipe rows — archive / delete with collapse</div>
+        </div>
+
+        <!-- 6 · otp -->
+        <div>
+          <div class="fx-phone">
+            <div class="fx-phone-screen">
+              <div class="fx-phone-body" style="align-items:center;text-align:center;padding:2.5rem 1.25rem 0">
+                <div class="fx-sidebar-logo" style="width:2.75rem;height:2.75rem;font-size:1.125rem;border-radius:.875rem">F</div>
+                <h3 style="margin:1.25rem 0 .25rem;font-size:1.125rem;font-weight:650;letter-spacing:-.02em">Verify it's you</h3>
+                <p class="fx-text-xs fx-muted" style="margin:0 0 1.25rem">We sent a 6-digit code to +91 ••••• 40</p>
+                <div class="fx-otp" id="m-otp" style="justify-content:center">
+                  <input aria-label="Digit 1"><input aria-label="Digit 2"><input aria-label="Digit 3">
+                  <span class="fx-otp-sep">–</span>
+                  <input aria-label="Digit 4"><input aria-label="Digit 5"><input aria-label="Digit 6">
+                </div>
+                <button class="fx-btn" style="width:100%;max-width:14rem;margin-top:1.25rem" id="m-verify" disabled>Verify</button>
+                <button class="fx-btn fx-btn--ghost fx-btn--sm" style="margin-top:.375rem">Resend in 0:24</button>
+                <div class="fx-m-numpad" id="m-numpad" style="width:100%">
+                  <button>1</button><button>2</button><button>3</button>
+                  <button>4</button><button>5</button><button>6</button>
+                  <button>7</button><button>8</button><button>9</button>
+                  <span></span><button>0</button><button aria-label="Backspace">⌫</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fx-phone-label">OTP sign-in — numpad fills the code</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* chrome: island, home bar, status bar for every phone */
+  document.querySelectorAll(".fx-phone").forEach((p) => {
+    const screen = p.querySelector(".fx-phone-screen");
+    const status = document.createElement("div");
+    status.className = "fx-phone-status";
+    status.innerHTML =
+      `<span>9:41</span>
+       <span>
+         <svg viewBox="0 0 18 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.8"/><rect x="5" y="5" width="3" height="6" rx="0.8"/><rect x="10" y="2.5" width="3" height="8.5" rx="0.8"/><rect x="15" y="0" width="3" height="11" rx="0.8" opacity=".35"/></svg>
+         <svg viewBox="0 0 16 11" fill="currentColor"><path d="M8 9.4a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6ZM8 6c-1.5 0-2.9.6-3.9 1.6l1.2 1.2A3.9 3.9 0 0 1 8 7.7c1 0 2 .4 2.7 1.1l1.2-1.2A5.5 5.5 0 0 0 8 6Zm0-3.4C5.6 2.6 3.4 3.6 1.8 5.2L3 6.4A6.9 6.9 0 0 1 8 4.3c1.9 0 3.7.8 5 2.1l1.2-1.2A8.6 8.6 0 0 0 8 2.6Z"/></svg>
+         <svg viewBox="0 0 25 12" fill="none" stroke="currentColor"><rect x="0.5" y="0.5" width="21" height="11" rx="3" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="1.5" fill="currentColor" stroke="none"/><path d="M23.5 4v4" stroke-linecap="round" opacity=".4"/></svg>
+       </span>`;
+    screen.prepend(status);
+    p.insertAdjacentHTML("beforeend", '<div class="fx-phone-island"></div><div class="fx-phone-homebar"></div>');
+  });
+
+  /* sheet */
+  const sheet = fxSheet(document.getElementById("sheet"), { snaps: [0.46, 0.88], scrim: "#sheet-scrim" });
+  document.getElementById("sheet-open").addEventListener("click", () => sheet.open(0));
+  window.__sheet = sheet;
+
+  /* chat */
+  const log = document.getElementById("chat-log");
+  const input = document.getElementById("chat-input");
+  const send = () => {
+    if (!input.value.trim()) return;
+    log.insertAdjacentHTML("beforeend", `<div class="fx-m-bub me"></div>`);
+    log.lastElementChild.textContent = input.value.trim();
+    input.value = "";
+    log.parentElement.scrollTop = 1e5;
+    setTimeout(() => {
+      log.insertAdjacentHTML("beforeend", `<div class="fx-m-bub">👍 sounds good</div>`);
+      log.parentElement.scrollTop = 1e5;
+    }, 900);
+  };
+  document.getElementById("chat-send").addEventListener("click", send);
+  input.addEventListener("keydown", (e) => e.key === "Enter" && send());
+
+  /* settings dark switch mirrors real theme */
+  const dk = document.getElementById("m-dark");
+  const syncDark = () => (dk.checked = document.documentElement.dataset.theme === "dark");
+  syncDark();
+  new MutationObserver(syncDark).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  dk.addEventListener("change", () => finix.setTheme(dk.checked ? "dark" : "light"));
+
+  /* pull-to-refresh feedback */
+  document.getElementById("home-body").addEventListener("fx-refresh", () => {
+    finix.toast({ title: "Refreshed", description: "Feed is up to date.", variant: "success" });
+  });
+
+  /* otp numpad */
+  const otp = [...document.querySelectorAll("#m-otp input")];
+  const verify = document.getElementById("m-verify");
+  document.getElementById("m-numpad").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    if (b.textContent === "⌫") {
+      const last = [...otp].reverse().find((i) => i.value);
+      if (last) last.value = "";
+    } else {
+      const first = otp.find((i) => !i.value);
+      if (first) first.value = b.textContent;
+    }
+    verify.disabled = !otp.every((i) => i.value);
+    if (!verify.disabled) verify.textContent = "Verify ✓";
+  });
+});
+</script>
+</body>
+</html>

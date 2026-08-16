@@ -497,7 +497,7 @@ Orthogonal primitive — later tasks (V5 checkout, E2 intake) depend on it.
   choice cards w/ A/B/C key hints, rating + NPS reuse, short-text; end screen
   w/ summary. Full keyboard run = the interaction evidence.
 
-### V4. Mobile-first pack → new page `mobile.html` ("Mobile", Apps group)
+### ✅ V4. Mobile-first pack → new page `mobile.html` ("Mobile", Apps group)
 New module `css/finix-mobile.css` + `js/finix-mobile.js`, namespace `fx-m-*`.
 Demo = CSS device frames (`fx-phone`: rounded frame, dynamic-island notch,
 status bar, home indicator), each screen a **container-query context**

@@ -130,7 +130,7 @@ console clean, README component count updated.
 
 ## WAVE 2 — Analytics, flags, growth
 
-### T6. Funnel chart + cohort retention grid → charts.html
+### ✅ T6. Funnel chart + cohort retention grid → charts.html
 - `fxCharts.funnel({steps:[{name,value}]})`: stepped bars w/ connector slopes,
   per-step conversion % and drop-off labels; hover tooltip.
 - `fxCharts.cohort({rows})`: triangular retention matrix, %-shaded cells on a

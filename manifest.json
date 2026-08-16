@@ -1228,6 +1228,29 @@
    ],
    "markup": "<div id=\"importer\"></div>",
    "js": "fxImporter(el, {targets:[{key,label,required,validate(v)->msg|null}], sampleCsv, onComplete}) \u2014 4-step wizard on fx-stepper: CSV upload/drop (quoted-field parser), auto-matched column mapping (bigram name similarity, one source per target), validation preview with per-cell error highlights + click-to-fix inline editing + error-count chips, simulated import progress -> success state with counts. In js/finix-apps.js."
+  },
+  {
+   "name": "funnel-chart",
+   "category": "data",
+   "classes": [
+    "fx-chart",
+    "fx-funnel-bar"
+   ],
+   "markup": "<div id=\"f\"></div>",
+   "js": "fxCharts.funnel(el, {steps:[{name,value}], height}) \u2014 stepped bars with drop-off connector slopes, per-step conversion % vs first step, drop-off labels, hover tooltip. Re-renders on theme/brand change. In demo/charts.js."
+  },
+  {
+   "name": "cohort-grid",
+   "category": "data",
+   "classes": [
+    "fx-cohort",
+    "fx-cohort-cell",
+    "fx-cohort-name",
+    "fx-cohort-n",
+    "fx-cohort-void"
+   ],
+   "markup": "<div id=\"c\"></div>",
+   "js": "fxCharts.cohort(el, {rows:[{label,n,values:[pct...]}], colLabel}) \u2014 triangular retention matrix, sequential chart-1 ramp shading, hover shows absolute users. Re-renders on theme change."
   }
  ]
 }

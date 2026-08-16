@@ -495,6 +495,104 @@
     container.appendChild(svg);
   }
 
+  /* ---------- funnel ---------- */
+  function funnel(container, opts) {
+    const { steps, height = 240 } = opts;
+    container.classList.add("fx-chart");
+    const W = 720, H = height, PT = 30, PB = 40;
+    const n = steps.length;
+    const ih = H - PT - PB;
+    const max = steps[0].value || 1;
+    const gap = 36;                                  // slope gap between bars
+    const bw = (W - gap * (n - 1)) / n;
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+    const c = chartColor(0);
+    const barY = (v) => PT + ih - (v / max) * ih;
+
+    steps.forEach((s, i) => {
+      const bx = i * (bw + gap);
+      const by = barY(s.value);
+      const bh = PT + ih - by;
+      // connector slope to next bar
+      if (i < n - 1) {
+        const ny = barY(steps[i + 1].value);
+        const poly = el("polygon", {
+          points: `${bx + bw},${by} ${bx + bw + gap},${ny} ${bx + bw + gap},${PT + ih} ${bx + bw},${PT + ih}`,
+          fill: c, opacity: 0.14,
+        });
+        svg.appendChild(poly);
+        const drop = steps[i].value ? Math.round((1 - steps[i + 1].value / steps[i].value) * 100) : 0;
+        const dl = el("text", { x: bx + bw + gap / 2, y: Math.min(ny, by) - 8, "text-anchor": "middle", class: "axis-label" });
+        dl.textContent = `−${drop}%`;
+        svg.appendChild(dl);
+      }
+      const rect = el("rect", { x: bx, y: by, width: bw, height: Math.max(bh, 2), rx: 5, fill: c, opacity: 0.9 - i * (0.55 / Math.max(n - 1, 1)) });
+      rect.classList.add("fx-funnel-bar");
+      svg.appendChild(rect);
+      // value on top
+      const vt = el("text", { x: bx + bw / 2, y: by - 8, "text-anchor": "middle", style: "font-size:13px;font-weight:600", fill: "var(--foreground)" });
+      vt.textContent = fmt(s.value);
+      svg.appendChild(vt);
+      // step name + conversion under axis
+      const nt = el("text", { x: bx + bw / 2, y: PT + ih + 16, "text-anchor": "middle", class: "axis-label", style: "font-weight:550" });
+      nt.textContent = s.name;
+      svg.appendChild(nt);
+      const ct = el("text", { x: bx + bw / 2, y: PT + ih + 30, "text-anchor": "middle", class: "axis-label" });
+      ct.textContent = Math.round((s.value / max) * 100) + "%";
+      svg.appendChild(ct);
+
+      const tip = tipFor(container);
+      rect.addEventListener("pointerenter", () => {
+        const prev = i ? steps[i - 1].value : s.value;
+        tip.innerHTML = `<b>${s.name}</b><br>${fmt(s.value)} · ${Math.round((s.value / max) * 100)}% of ${steps[0].name}` +
+          (i ? `<br>${Math.round((s.value / prev) * 100)}% from ${steps[i - 1].name}` : "");
+        tip.style.opacity = 1;
+      });
+      rect.addEventListener("pointermove", (e) => {
+        const r = container.getBoundingClientRect();
+        tip.style.left = Math.min(e.clientX - r.left + 12, r.width - 170) + "px";
+        tip.style.top = e.clientY - r.top - 10 + "px";
+      });
+      rect.addEventListener("pointerleave", () => (tipFor(container).style.opacity = 0));
+    });
+    container.innerHTML = "";
+    container.appendChild(svg);
+  }
+
+  /* ---------- cohort retention grid ---------- */
+  function cohort(container, opts) {
+    const { rows, colLabel = "Week" } = opts;
+    container.classList.add("fx-cohort");
+    const maxCols = Math.max(...rows.map((r) => r.values.length));
+    const cell = (pct, ri, ci) => {
+      if (pct == null) return `<td class="fx-cohort-void"></td>`;
+      const strength = Math.round(Math.pow(pct / 100, 0.85) * 88);
+      const dark = pct >= 55;
+      return `<td class="fx-cohort-cell${dark ? " is-strong" : ""}" data-ri="${ri}" data-ci="${ci}"
+        style="background:color-mix(in oklab, var(--chart-1) ${strength}%, var(--card))">${pct}%</td>`;
+    };
+    container.innerHTML = `<div class="fx-cohort-wrap"><table>
+      <thead><tr><th class="fx-cohort-name">Cohort</th><th class="fx-cohort-n">Users</th>
+        ${Array.from({ length: maxCols }, (_, i) => `<th>${colLabel} ${i}</th>`).join("")}</tr></thead>
+      <tbody>${rows.map((r, ri) =>
+        `<tr><td class="fx-cohort-name">${r.label}</td><td class="fx-cohort-n">${fmt(r.n)}</td>` +
+        Array.from({ length: maxCols }, (_, ci) => cell(r.values[ci] ?? null, ri, ci)).join("") + `</tr>`).join("")}
+      </tbody></table></div>`;
+    const tip = tipFor(container);
+    container.addEventListener("pointermove", (e) => {
+      const td = e.target.closest(".fx-cohort-cell");
+      if (!td) { tip.style.opacity = 0; return; }
+      const r = rows[+td.dataset.ri], ci = +td.dataset.ci;
+      const users = Math.round((r.values[ci] / 100) * r.n);
+      tip.innerHTML = `<b>${r.label}</b><br>${colLabel.toLowerCase()} ${ci}: ${r.values[ci]}% · ${fmt(users)} of ${fmt(r.n)} users`;
+      const rect = container.getBoundingClientRect();
+      tip.style.left = Math.min(e.clientX - rect.left + 12, rect.width - 180) + "px";
+      tip.style.top = e.clientY - rect.top - 10 + "px";
+      tip.style.opacity = 1;
+    });
+    container.addEventListener("pointerleave", () => (tip.style.opacity = 0));
+  }
+
   /* re-render on theme/brand switch so token colors update */
   function register(fn, elc, opts) {
     registry.push({ fn, el: elc, opts });
@@ -513,5 +611,7 @@
     combo: (elc, o) => register(combo, elc, o),
     scatter: (elc, o) => register(scatter, elc, o),
     gauge: (elc, o) => register(gauge, elc, o),
+    funnel: (elc, o) => register(funnel, elc, o),
+    cohort: (elc, o) => register(cohort, elc, o),
   };
 })();

@@ -438,3 +438,27 @@
 @media (prefers-reduced-motion: reduce) {
   .fx-beam::after, .fx-shine-border::after, .fx-anim-list > * { animation: none; }
 }
+
+/* ============ cohort retention grid ============ */
+.fx-cohort { position: relative; }
+.fx-cohort-wrap { overflow-x: auto; }
+.fx-cohort table { border-collapse: separate; border-spacing: 3px; width: 100%; }
+.fx-cohort th {
+  font-size: 0.6875rem; font-weight: 500; color: var(--muted-foreground);
+  text-transform: uppercase; letter-spacing: 0.04em; text-align: center;
+  padding: 0 0.25rem 0.25rem; white-space: nowrap;
+}
+.fx-cohort th.fx-cohort-name, .fx-cohort td.fx-cohort-name { text-align: left; }
+.fx-cohort td.fx-cohort-name { font-size: 0.8125rem; font-weight: 500; white-space: nowrap; padding-right: 0.5rem; }
+.fx-cohort th.fx-cohort-n, .fx-cohort td.fx-cohort-n { text-align: right; }
+.fx-cohort td.fx-cohort-n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted-foreground); padding-right: 0.625rem; }
+.fx-cohort-cell {
+  text-align: center; font-family: var(--font-mono); font-size: 0.6875rem;
+  border-radius: var(--radius-sm); padding: 0.375rem 0.375rem; min-width: 3rem;
+  color: var(--foreground); cursor: default;
+  transition: transform .12s var(--ease-out), box-shadow .12s;
+}
+.fx-cohort-cell.is-strong { color: oklch(0.99 0.002 95); }
+.fx-cohort-cell:hover { transform: scale(1.06); box-shadow: var(--shadow-sm); position: relative; z-index: 1; }
+.fx-cohort-void { background: var(--well); border-radius: var(--radius-sm); opacity: 0.45; }
+@media (prefers-reduced-motion: reduce) { .fx-cohort-cell:hover { transform: none; } }

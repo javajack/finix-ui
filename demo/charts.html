@@ -27,6 +27,20 @@
       </div>
 
       <div class="fx-grid" style="grid-template-columns:1fr 1fr">
+        <div class="fx-card" style="grid-column:1/-1">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Conversion funnel</div>
+            <div class="fx-card-desc">Stepped funnel with drop-off slopes — per-step conversion vs the first step, drop-off % between steps, hover for step detail.</div>
+          </div>
+          <div class="fx-card-content"><div id="c-funnel" style="max-width:56rem;margin:0 auto"></div></div>
+        </div>
+        <div class="fx-card" style="grid-column:1/-1">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Cohort retention</div>
+            <div class="fx-card-desc">Weekly signup cohorts × weeks since signup — sequential shading on the chart ramp, hover a cell for absolute users.</div>
+          </div>
+          <div class="fx-card-content"><div id="c-cohort"></div></div>
+        </div>
         <div class="fx-card">
           <div class="fx-card-header">
             <div class="fx-card-title fx-card-title--lg">Stacked area</div>
@@ -96,6 +110,31 @@
 <script>
 window.addEventListener("DOMContentLoaded", () => {
   const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  fxCharts.funnel(document.getElementById("c-funnel"), {
+    height: 250,
+    steps: [
+      { name: "Visited", value: 48200 },
+      { name: "Signed up", value: 12400 },
+      { name: "Activated", value: 7900 },
+      { name: "Subscribed", value: 3150 },
+      { name: "Retained 90d", value: 2380 },
+    ],
+  });
+
+  fxCharts.cohort(document.getElementById("c-cohort"), {
+    colLabel: "Week",
+    rows: [
+      { label: "Jun 22", n: 1204, values: [100, 64, 51, 44, 39, 36, 34, 33] },
+      { label: "Jun 29", n: 1388, values: [100, 67, 54, 46, 42, 38, 36] },
+      { label: "Jul 6",  n: 1150, values: [100, 61, 48, 41, 37, 34] },
+      { label: "Jul 13", n: 1522, values: [100, 70, 58, 50, 45] },
+      { label: "Jul 20", n: 1618, values: [100, 72, 60, 53] },
+      { label: "Jul 27", n: 1499, values: [100, 69, 57] },
+      { label: "Aug 3",  n: 1746, values: [100, 74] },
+      { label: "Aug 10", n: 1892, values: [100] },
+    ],
+  });
   fxCharts.area(document.getElementById("c-area"), {
     labels: months, stacked: true, height: 240,
     series: [

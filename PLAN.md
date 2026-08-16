@@ -521,7 +521,7 @@ status bar, home indicator), each screen a **container-query context**
 - Validation: sheet + swipe drags via pointer events; container-query proof =
   same component screenshot in narrow frame vs desktop context.
 
-### V5. E-commerce storefront → `demo/site/store.html` + `demo/site/product.html` (Public site group)
+### ✅ V5. E-commerce storefront → `demo/site/store.html` + `demo/site/product.html` (Public site group)
 New module `css/finix-shop.css` + `js/finix-shop.js`, namespace `fx-shop-*`.
 Public pages (fx-mk nav/footer reuse). Product art = self-contained CSS
 gradient/pattern tiles + glyphs (no external images ever).

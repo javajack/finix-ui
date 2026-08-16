@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Store — Finix Supply Co.</title>
+<meta name="description" content="Goods for people who ship — the finix storefront demo: live filters, product cards, cart drawer with free-shipping meter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;650;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/finix.css">
+<link rel="stylesheet" href="../../css/finix-widgets.css">
+<link rel="stylesheet" href="../../css/finix-marketing.css">
+<link rel="stylesheet" href="../../css/finix-shop.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="../../js/finix.js"></script>
+<script defer src="../../js/finix-marketing.js"></script>
+<script defer src="../../js/finix-shop.js"></script>
+</head>
+<body class="fx-site">
+
+<header class="fx-mk-nav">
+  <div class="fx-mk-container fx-mk-nav-inner">
+    <a class="fx-mk-logo-lockup" href="home.html"><i>F</i>Finix Supply Co.</a>
+    <nav class="fx-mk-links" aria-label="Main">
+      <a href="store.html" aria-current="page">Store</a>
+      <a href="product.html">Featured</a>
+      <a href="home.html">Why finix</a>
+      <a href="../index.html">Admin demo</a>
+    </nav>
+    <div class="fx-mk-nav-actions">
+      <button class="fx-btn fx-btn--ghost fx-btn--icon" data-mk-theme data-fx-tip="Toggle theme" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+      <button class="fx-btn fx-btn--outline fx-btn--icon fx-shop-cartbtn" data-shop-cart aria-label="Open cart">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span data-shop-count hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="fx-mk-section" style="padding-block:3rem 2rem">
+  <div class="fx-mk-container">
+    <div class="fx-mk-head" style="text-align:left;margin-bottom:0">
+      <span class="fx-mk-eyebrow">Finix Supply Co.</span>
+      <h1 class="fx-mk-display" style="font-size:clamp(1.75rem,3.6vw,2.75rem)">Goods for people who ship.</h1>
+      <p class="fx-mk-lede" style="margin-inline:0">Every card, filter and drawer on this page is the finix shop module — live client-side filtering, real cart state.</p>
+    </div>
+  </div>
+</section>
+
+<section class="fx-mk-section" style="padding-top:0">
+  <div class="fx-mk-container">
+    <div class="fx-shop-layout">
+      <!-- filter rail -->
+      <aside class="fx-shop-rail" id="rail">
+        <div class="fx-shop-fgroup">
+          <b>Category</b>
+          <label class="fx-shop-check"><input type="checkbox" class="fx-checkbox" data-f-cat value="Desk"><span>Desk</span><span class="count">5</span></label>
+          <label class="fx-shop-check"><input type="checkbox" class="fx-checkbox" data-f-cat value="Goods"><span>Goods</span><span class="count">4</span></label>
+          <label class="fx-shop-check"><input type="checkbox" class="fx-checkbox" data-f-cat value="Apparel"><span>Apparel</span><span class="count">3</span></label>
+        </div>
+        <div class="fx-shop-fgroup">
+          <b>Max price <span style="float:right;font-family:var(--font-mono);font-weight:500;color:var(--muted-foreground)" data-f-price-out>Any</span></b>
+          <div class="fx-shop-hist" data-f-hist></div>
+          <input type="range" class="fx-slider" data-f-price min="15" max="200" step="5" value="200" aria-label="Maximum price">
+        </div>
+        <div class="fx-shop-fgroup">
+          <b>Color</b>
+          <div class="fx-shop-swatches" id="color-swatches"></div>
+        </div>
+        <div class="fx-shop-fgroup">
+          <b>Rating</b>
+          <label class="fx-shop-check"><input type="radio" class="fx-radio" name="frating" data-f-rating value="4.5"><span>4.5★ &amp; up</span></label>
+          <label class="fx-shop-check"><input type="radio" class="fx-radio" name="frating" data-f-rating value="4"><span>4★ &amp; up</span></label>
+          <label class="fx-shop-check"><input type="radio" class="fx-radio" name="frating" data-f-rating value="0" checked><span>Any</span></label>
+        </div>
+      </aside>
+
+      <!-- results -->
+      <div>
+        <div class="fx-shop-bar">
+          <span class="fx-shop-count" id="count"></span>
+          <div class="fx-shop-chips" id="chips"></div>
+          <select class="fx-select" id="sort" style="margin-left:auto;width:auto;height:2rem;font-size:.75rem">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: low → high</option>
+            <option value="price-desc">Price: high → low</option>
+            <option value="rating">Top rated</option>
+          </select>
+        </div>
+        <div class="fx-shop-grid" id="grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="fx-mk-footer" style="margin-top:2rem">
+  <div class="fx-mk-container">
+    <div class="fx-mk-footer-bottom" style="margin-top:0;border-top:0">
+      <a class="fx-mk-logo-lockup" href="home.html" style="font-size:.875rem"><i style="width:1.375rem;height:1.375rem;font-size:.75rem">F</i>Finix Supply Co.</a>
+      <span>© 2026 Finix Labs Inc.</span>
+      <span>Free shipping over $150 · 30-day returns</span>
+      <span class="fx-status fx-status--online"><i></i>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* color swatch buttons from the shared palette */
+  document.getElementById("color-swatches").innerHTML = Object.entries(fxShopColors)
+    .map(([k, c]) => `<button class="fx-shop-swatch" data-f-color="${k}" aria-pressed="false" style="background:${c}" data-fx-tip="${k}" aria-label="${k}"></button>`).join("");
+
+  window.__grid = fxShopGrid(document.getElementById("grid"), {
+    rail: document.getElementById("rail"),
+    chipsEl: document.getElementById("chips"),
+    countEl: document.getElementById("count"),
+    sortEl: document.getElementById("sort"),
+  });
+});
+</script>
+</body>
+</html>

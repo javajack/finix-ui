@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product — Finix Supply Co.</title>
+<meta name="description" content="Product detail demo — gallery, variant pickers, qty stepper, reviews, cart drawer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;650;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/finix.css">
+<link rel="stylesheet" href="../../css/finix-widgets.css">
+<link rel="stylesheet" href="../../css/finix-marketing.css">
+<link rel="stylesheet" href="../../css/finix-shop.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="../../js/finix.js"></script>
+<script defer src="../../js/finix-marketing.js"></script>
+<script defer src="../../js/finix-shop.js"></script>
+</head>
+<body class="fx-site">
+
+<header class="fx-mk-nav">
+  <div class="fx-mk-container fx-mk-nav-inner">
+    <a class="fx-mk-logo-lockup" href="home.html"><i>F</i>Finix Supply Co.</a>
+    <nav class="fx-mk-links" aria-label="Main">
+      <a href="store.html">Store</a>
+      <a href="product.html" aria-current="page">Featured</a>
+      <a href="home.html">Why finix</a>
+      <a href="../index.html">Admin demo</a>
+    </nav>
+    <div class="fx-mk-nav-actions">
+      <button class="fx-btn fx-btn--ghost fx-btn--icon" data-mk-theme data-fx-tip="Toggle theme" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+      <button class="fx-btn fx-btn--outline fx-btn--icon fx-shop-cartbtn" data-shop-cart aria-label="Open cart">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span data-shop-count hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="fx-mk-section" style="padding-block:2.5rem">
+  <div class="fx-mk-container">
+    <ol class="fx-breadcrumb" style="margin-bottom:1.25rem">
+      <li><a href="store.html">Store</a></li>
+      <li><a href="store.html" id="bc-cat">Desk</a></li>
+      <li><span aria-current="page" id="bc-name">—</span></li>
+    </ol>
+
+    <div class="fx-shop-pdp">
+      <!-- gallery -->
+      <div class="fx-shop-gallery">
+        <div class="fx-shop-main" id="pdp-main"><span id="pdp-glyph">⌨️</span></div>
+        <div class="fx-shop-thumbs" id="pdp-thumbs"></div>
+      </div>
+
+      <!-- info -->
+      <div class="fx-shop-info">
+        <div style="display:flex;flex-direction:column;gap:.5rem">
+          <span class="fx-shop-stars" id="pdp-stars"></span>
+          <h1 class="fx-shop-title" id="pdp-name">—</h1>
+          <span class="fx-shop-price" id="pdp-price"></span>
+        </div>
+        <p class="fx-text-sm" style="margin:0;line-height:1.65;color:var(--muted-foreground)" id="pdp-desc"></p>
+
+        <div class="fx-shop-opt" id="opt-color">
+          <span>Color · <i id="color-label">—</i></span>
+          <div class="fx-shop-swatches" id="pdp-colors"></div>
+        </div>
+
+        <div class="fx-shop-opt" id="opt-switch">
+          <span>Switches</span>
+          <div class="fx-shop-sizes">
+            <button class="fx-shop-size" aria-pressed="true">Linear</button>
+            <button class="fx-shop-size" aria-pressed="false">Tactile</button>
+            <button class="fx-shop-size" aria-pressed="false" disabled data-fx-tip="Out of stock">Clicky</button>
+          </div>
+        </div>
+
+        <div class="fx-row" style="gap:.75rem;flex-wrap:wrap">
+          <span class="fx-shop-qty"><button id="qty-dec" aria-label="Decrease">−</button><output id="qty">1</output><button id="qty-inc" aria-label="Increase">+</button></span>
+          <button class="fx-btn fx-btn--lg" id="pdp-add" style="flex:1;min-width:12rem" data-fx-stateful-manual data-loading-text="Adding…">Add to cart</button>
+        </div>
+
+        <div class="fx-shop-usp">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" x2="12.01" y1="20" y2="20"/></svg>Free shipping on orders over $150</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>2-year warranty, no questions asked</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>30-day returns — even if it's just not your vibe</span>
+        </div>
+
+        <div class="fx-accordion">
+          <details name="pdp" open>
+            <summary>Details</summary>
+            <div class="fx-acc-body" id="pdp-details">Gasket-mounted 75% board, hot-swappable switches, PBT keycaps, QMK/VIA, 2.4G + BT + USB-C. 41 dB typing at the office, zero apologies.</div>
+          </details>
+          <details name="pdp">
+            <summary>Shipping</summary>
+            <div class="fx-acc-body">Ships in 24h from Bengaluru or Rotterdam. Standard 4–6 days, Express 2 days. Duties included in EU/IN/US.</div>
+          </details>
+          <details name="pdp">
+            <summary>Returns</summary>
+            <div class="fx-acc-body">30 days, self-serve label, full refund to original payment. Opened boxes welcome.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- reviews -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container">
+    <div class="fx-mk-head" style="text-align:left;margin-bottom:1.25rem">
+      <h2 class="fx-mk-h2" style="font-size:1.25rem">Reviews</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:14rem minmax(0,1fr);gap:2rem;align-items:start" id="reviews-grid">
+      <div>
+        <div style="display:flex;align-items:baseline;gap:.5rem;margin-bottom:.5rem">
+          <b style="font-size:2rem;font-family:var(--font-mono)" id="rv-avg">4.8</b>
+          <span class="fx-text-sm fx-muted" id="rv-count">214 reviews</span>
+        </div>
+        <div class="fx-shop-hrow"><span>5★</span><div class="bar"><i style="--_w:74%"></i></div><b>74%</b></div>
+        <div class="fx-shop-hrow"><span>4★</span><div class="bar"><i style="--_w:18%"></i></div><b>18%</b></div>
+        <div class="fx-shop-hrow"><span>3★</span><div class="bar"><i style="--_w:5%"></i></div><b>5%</b></div>
+        <div class="fx-shop-hrow"><span>2★</span><div class="bar"><i style="--_w:2%"></i></div><b>2%</b></div>
+        <div class="fx-shop-hrow"><span>1★</span><div class="bar"><i style="--_w:1%"></i></div><b>1%</b></div>
+      </div>
+      <div style="display:grid;gap:.875rem">
+        <div class="fx-shop-review">
+          <span class="fx-shop-stars"><b>★★★★★</b><span class="fx-text-xs fx-muted">Verified purchase</span></span>
+          <p>Swapped from a board that cost twice as much. The gasket mount is <b>absurdly</b> smooth and the sage colorway matches my desk mat. My teammates asked what it was within a day.</p>
+          <div class="fx-mk-person" style="margin-top:.125rem"><span class="fx-avatar fx-avatar--sm">MK</span><div><b>Maya K.</b><span>2 weeks ago</span></div></div>
+        </div>
+        <div class="fx-shop-review">
+          <span class="fx-shop-stars"><b>★★★★☆</b><span class="fx-text-xs fx-muted">Verified purchase</span></span>
+          <p>Four stars only because the clicky switches were sold out. Battery life is honest — three weeks with the backlight low. VIA remap took five minutes.</p>
+          <div class="fx-mk-person" style="margin-top:.125rem"><span class="fx-avatar fx-avatar--sm">TB</span><div><b>Tom B.</b><span>1 month ago</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- pairs well with -->
+<section class="fx-mk-section fx-mk-section--tight">
+  <div class="fx-mk-container">
+    <div class="fx-mk-head" style="text-align:left;margin-bottom:1.25rem">
+      <h2 class="fx-mk-h2" style="font-size:1.25rem">Pairs well with</h2>
+    </div>
+    <div class="fx-shop-grid" id="pairs" style="grid-template-columns:repeat(auto-fill,minmax(13.5rem,1fr))"></div>
+  </div>
+</section>
+
+<footer class="fx-mk-footer" style="margin-top:2rem">
+  <div class="fx-mk-container">
+    <div class="fx-mk-footer-bottom" style="margin-top:0;border-top:0">
+      <a class="fx-mk-logo-lockup" href="home.html" style="font-size:.875rem"><i style="width:1.375rem;height:1.375rem;font-size:.75rem">F</i>Finix Supply Co.</a>
+      <span>© 2026 Finix Labs Inc.</span>
+      <span>Free shipping over $150 · 30-day returns</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const id = new URLSearchParams(location.search).get("id") || "aurora-kb";
+  const p = FX_PRODUCTS.find((x) => x.id === id) || FX_PRODUCTS[0];
+  const money = (n) => "$" + n.toLocaleString("en-US");
+  const stars = (r) => "★★★★★".slice(0, Math.round(r)) + "☆☆☆☆☆".slice(0, 5 - Math.round(r));
+
+  document.title = p.name + " — Finix Supply Co.";
+  document.getElementById("bc-cat").textContent = p.cat;
+  document.getElementById("bc-name").textContent = p.name;
+  document.getElementById("pdp-name").textContent = p.name;
+  document.getElementById("pdp-stars").innerHTML = `<b>${stars(p.rating)}</b>${p.rating} · <a href="#reviews-grid" style="color:inherit">${p.reviews} reviews</a>`;
+  document.getElementById("rv-avg").textContent = p.rating;
+  document.getElementById("rv-count").textContent = p.reviews + " reviews";
+  document.getElementById("pdp-price").innerHTML = money(p.price) + (p.compareAt ? `<s>${money(p.compareAt)}</s><span class="off">−${Math.round((1 - p.price / p.compareAt) * 100)}%</span>` : "");
+  if (p.id !== "aurora-kb") {
+    document.getElementById("opt-switch").hidden = true;
+    document.getElementById("pdp-desc").textContent = `The ${p.name.toLowerCase()} — made properly, priced honestly, shipped fast. Part of the Finix Supply ${p.cat.toLowerCase()} line.`;
+    document.getElementById("pdp-details").textContent = "Materials chosen to last, packaging that composts, and a design that won't date. That's the whole pitch.";
+  } else {
+    document.getElementById("pdp-desc").textContent = "A 75% gasket-mounted board tuned for people who live in a terminal. Hot-swap switches, PBT caps in the finix palette, and battery life measured in weeks.";
+  }
+  const main = document.getElementById("pdp-main");
+  main.style.setProperty("--_h1", p.h1);
+  main.style.setProperty("--_h2", p.h2);
+  document.getElementById("pdp-glyph").textContent = p.glyph;
+
+  /* thumbs: hue-shifted views */
+  const thumbs = [[p.glyph, 0], ["🎨", 24], ["📦", -28], ["🔍", 50]];
+  const tEl = document.getElementById("pdp-thumbs");
+  tEl.innerHTML = thumbs.map(([g, d], i) =>
+    `<button class="fx-shop-thumb" aria-current="${i === 0}" data-g="${g}" data-d="${d}" style="--_h1:${p.h1 + d};--_h2:${p.h2 + d}" aria-label="View ${i + 1}">${g}</button>`).join("");
+  tEl.addEventListener("click", (e) => {
+    const th = e.target.closest(".fx-shop-thumb");
+    if (!th) return;
+    tEl.querySelectorAll(".fx-shop-thumb").forEach((t) => t.setAttribute("aria-current", t === th));
+    main.style.setProperty("--_h1", p.h1 + +th.dataset.d);
+    main.style.setProperty("--_h2", p.h2 + +th.dataset.d);
+    document.getElementById("pdp-glyph").textContent = th.dataset.g;
+    main.classList.remove("is-swap");
+    void main.offsetWidth;
+    main.classList.add("is-swap");
+  });
+
+  /* colors */
+  const cEl = document.getElementById("pdp-colors");
+  cEl.innerHTML = p.colors.map((c, i) =>
+    `<button class="fx-shop-swatch fx-shop-swatch--lg" data-c="${c}" aria-pressed="${i === 0}" style="background:${fxShopColors[c]}" aria-label="${c}"></button>`).join("");
+  const colorLabel = document.getElementById("color-label");
+  let color = p.colors[0];
+  colorLabel.textContent = color;
+  cEl.addEventListener("click", (e) => {
+    const sw = e.target.closest(".fx-shop-swatch");
+    if (!sw) return;
+    color = sw.dataset.c;
+    colorLabel.textContent = color;
+    cEl.querySelectorAll(".fx-shop-swatch").forEach((s) => s.setAttribute("aria-pressed", s === sw));
+  });
+
+  /* switch picker */
+  let sw = "Linear";
+  document.getElementById("opt-switch").addEventListener("click", (e) => {
+    const b = e.target.closest(".fx-shop-size");
+    if (!b || b.disabled) return;
+    sw = b.textContent;
+    b.parentElement.querySelectorAll(".fx-shop-size").forEach((x) => x.setAttribute("aria-pressed", x === b));
+  });
+
+  /* qty + add */
+  let qty = 1;
+  const qEl = document.getElementById("qty");
+  document.getElementById("qty-inc").addEventListener("click", () => (qEl.textContent = ++qty));
+  document.getElementById("qty-dec").addEventListener("click", () => (qEl.textContent = qty = Math.max(1, qty - 1)));
+  document.getElementById("pdp-add").addEventListener("click", () => {
+    const variant = p.id === "aurora-kb" ? `${color} · ${sw}` : color;
+    setTimeout(() => fxShopCart.add(p.id, { qty, variant }), 350);
+  });
+
+  /* pairs */
+  const pairs = ["drift-mat", "cable-trio", "mono-mug"].filter((x) => x !== p.id).slice(0, 3);
+  const pe = document.getElementById("pairs");
+  pe.innerHTML = pairs.map((x) => fxShopCard(FX_PRODUCTS.find((q) => q.id === x))).join("");
+  pe.addEventListener("click", (e) => {
+    const card = e.target.closest(".fx-shop-card");
+    if (!card) return;
+    if (e.target.closest("[data-heart]")) return e.target.closest("[data-heart]").classList.toggle("is-on");
+    if (e.target.closest("[data-quick]")) return fxShopCart.add(card.dataset.id);
+    location.href = "product.html?id=" + card.dataset.id;
+  });
+});
+</script>
+</body>
+</html>

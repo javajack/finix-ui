@@ -347,7 +347,7 @@ mini-components in cells) · zig-zag rows ×2 · stats band (counter-up) ·
 testimonial spotlight + carousel · integrations · pricing (toggle) · FAQ ·
 final CTA · footer. Full loop.
 
-### M3. launch.html — launch/waitlist page
+### ✅ M3. launch.html — launch/waitlist page
 Minimal nav · countdown hero · waitlist capture w/ live counter · blurred
 "early preview" frame · launch timeline (reuse fx-stages) · early tweets
 (wall-of-love lite) · mini FAQ · minimal footer. Full loop.

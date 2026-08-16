@@ -109,6 +109,23 @@
           </div>
         </div>
 
+        <!-- voice orb states -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Voice orb</div>
+            <div class="fx-card-desc">AI presence indicator — pure CSS gradients, no WebGL. Four states.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.5rem;align-items:center">
+            <span class="fx-orb" style="--size:5rem" id="orb-demo"></span>
+            <div class="fx-toggle-group fx-toggle-group--outline" data-fx-single id="orb-states">
+              <button class="fx-toggle" aria-pressed="true" data-orb="">Idle</button>
+              <button class="fx-toggle" aria-pressed="false" data-orb="listening">Listening</button>
+              <button class="fx-toggle" aria-pressed="false" data-orb="speaking">Speaking</button>
+              <button class="fx-toggle" aria-pressed="false" data-orb="muted">Muted</button>
+            </div>
+          </div>
+        </div>
+
         <!-- animated list -->
         <div class="fx-card" style="grid-row:span 2">
           <div class="fx-card-header">
@@ -176,6 +193,15 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   addEvent(); addEvent(); addEvent();
   setInterval(addEvent, 2600);
+
+  // voice orb states
+  document.getElementById("orb-states").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-orb]");
+    if (!b) return;
+    const orb = document.getElementById("orb-demo");
+    if (b.dataset.orb) orb.dataset.state = b.dataset.orb;
+    else delete orb.dataset.state;
+  });
 
   // fade list content
   document.getElementById("fade-list").innerHTML = Array.from({ length: 18 }, (_, k) =>

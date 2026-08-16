@@ -143,6 +143,32 @@
           </div>
         </div>
 
+        <!-- tabs -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Tabs</div>
+            <div class="fx-card-desc">Pill and underline variants with the sliding indicator, keyboard navigable.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div class="fx-tabs">
+              <div class="fx-tablist" role="tablist">
+                <button class="fx-tab" role="tab" aria-selected="true" aria-controls="tp-account">Account</button>
+                <button class="fx-tab" role="tab" aria-selected="false" aria-controls="tp-password">Password</button>
+                <button class="fx-tab" role="tab" aria-selected="false" aria-controls="tp-team">Team</button>
+              </div>
+              <div class="fx-tabpanel" id="tp-account" role="tabpanel"><p class="fx-text-sm fx-muted">Make changes to your account here.</p></div>
+              <div class="fx-tabpanel" id="tp-password" role="tabpanel" hidden><p class="fx-text-sm fx-muted">Change your password here.</p></div>
+              <div class="fx-tabpanel" id="tp-team" role="tabpanel" hidden><p class="fx-text-sm fx-muted">Invite and manage your team.</p></div>
+            </div>
+            <div class="fx-tablist fx-tablist--underline" role="tablist">
+              <button class="fx-tab" role="tab" aria-selected="true">General</button>
+              <button class="fx-tab" role="tab" aria-selected="false">Members</button>
+              <button class="fx-tab" role="tab" aria-selected="false">Billing</button>
+              <button class="fx-tab" role="tab" aria-selected="false">Integrations</button>
+            </div>
+          </div>
+        </div>
+
         <!-- command palette -->
         <div class="fx-card">
           <div class="fx-card-header">

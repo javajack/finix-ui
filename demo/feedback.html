@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/finix.css">
 <link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
 <script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
 <script defer src="charts.js"></script>
 <script defer src="shell.js"></script>
@@ -208,26 +209,69 @@
           </div>
         </div>
 
-        <!-- surface hierarchy -->
+        <!-- activity timeline -->
         <div class="fx-card">
           <div class="fx-card-header">
-            <div class="fx-card-title fx-card-title--lg">Surface hierarchy</div>
-            <div class="fx-card-desc">Depth is encoded by lightness — every layer has a named token. Wells sit below surfaces; overlays float above them.</div>
+            <div class="fx-card-title fx-card-title--lg">Activity timeline</div>
+            <div class="fx-card-desc">Recent events, newest first.</div>
           </div>
           <div class="fx-card-content">
-            <div style="background:var(--background);border:1px dashed var(--border);border-radius:var(--radius-lg);padding:1rem">
-              <div class="fx-text-xs fx-muted" style="margin-bottom:.625rem"><code class="fx-inline-code">--background</code> · canvas (dot-grid ground)</div>
-              <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;box-shadow:var(--shadow-xs)">
-                <div class="fx-text-xs fx-muted" style="margin-bottom:.625rem"><code class="fx-inline-code">--card</code> · surface (cards, tables, panels)</div>
-                <div style="background:var(--well);border:1px solid var(--border-soft);border-radius:var(--radius-md);padding:.75rem;margin-bottom:.625rem">
-                  <div class="fx-text-xs fx-muted"><code class="fx-inline-code">--well</code> · inset (toolbars, column wells, code, headers)</div>
-                </div>
-                <div style="background:var(--popover);border:1px solid var(--border);border-radius:var(--radius-md);padding:.75rem;box-shadow:var(--shadow-md);width:fit-content">
-                  <div class="fx-text-xs fx-muted"><code class="fx-inline-code">--popover</code> · overlay (menus, dialogs — lighter than cards in dark)</div>
-                </div>
-              </div>
+            <ul class="fx-timeline">
+              <li>
+                <div class="fx-timeline-time">2 minutes ago</div>
+                <div class="fx-timeline-title">Deployment succeeded</div>
+                <div class="fx-timeline-body">finix-ui@1.6.0 deployed to production in 42s.</div>
+              </li>
+              <li>
+                <div class="fx-timeline-time">1 hour ago</div>
+                <div class="fx-timeline-title">Pull request merged</div>
+                <div class="fx-timeline-body">#482 “Add themeable data grid” by Sofia Davis.</div>
+              </li>
+              <li data-state="muted">
+                <div class="fx-timeline-time">Yesterday</div>
+                <div class="fx-timeline-title">New member joined</div>
+                <div class="fx-timeline-body">Jackson Lee accepted the workspace invite.</div>
+              </li>
+              <li data-state="muted">
+                <div class="fx-timeline-time">Aug 12</div>
+                <div class="fx-timeline-title">Billing updated</div>
+                <div class="fx-timeline-body">Plan upgraded to Pro (annual).</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- onboarding checklist -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Getting started</div>
+            <div class="fx-card-desc">Onboarding checklist — <span id="ob-count">2 of 5</span> complete.</div>
+            <div class="fx-card-action" style="align-self:center;width:6rem"><div class="fx-progress"><div id="ob-bar" style="width:40%"></div></div></div>
+          </div>
+          <div class="fx-card-content" id="ob-list">
+            <div class="fx-onboard-step" data-done>
+              <span class="fx-onboard-dot"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div><div class="fx-onboard-title">Create your workspace</div><div class="fx-onboard-desc">Named it, picked a region.</div></div>
             </div>
-            <p class="fx-text-xs fx-muted" style="margin-top:.625rem">Plus <code class="fx-inline-code">--hover</code> for every pointer-over fill and <code class="fx-inline-code">--border-soft</code> for internal dividers — structural container borders always use <code class="fx-inline-code">--border</code>.</p>
+            <div class="fx-onboard-step" data-done>
+              <span class="fx-onboard-dot"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div><div class="fx-onboard-title">Connect a data source</div><div class="fx-onboard-desc">PostgreSQL connected 2 days ago.</div></div>
+            </div>
+            <div class="fx-onboard-step">
+              <span class="fx-onboard-dot">3</span>
+              <div><div class="fx-onboard-title">Invite your team</div><div class="fx-onboard-desc">Bring at least one teammate on board.</div></div>
+              <button class="fx-btn fx-btn--outline fx-btn--sm" data-ob>Invite</button>
+            </div>
+            <div class="fx-onboard-step">
+              <span class="fx-onboard-dot">4</span>
+              <div><div class="fx-onboard-title">Create your first dashboard</div><div class="fx-onboard-desc">Charts, stats and a data grid in minutes.</div></div>
+              <button class="fx-btn fx-btn--outline fx-btn--sm" data-ob>Create</button>
+            </div>
+            <div class="fx-onboard-step">
+              <span class="fx-onboard-dot">5</span>
+              <div><div class="fx-onboard-title">Set up alerts</div><div class="fx-onboard-desc">Get notified when metrics move.</div></div>
+              <button class="fx-btn fx-btn--outline fx-btn--sm" data-ob>Configure</button>
+            </div>
           </div>
         </div>
 
@@ -259,5 +303,22 @@
     </div>
   </div>
 </div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("ob-list").addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-ob]");
+    if (!btn) return;
+    const step = btn.closest(".fx-onboard-step");
+    step.setAttribute("data-done", "");
+    step.querySelector(".fx-onboard-dot").innerHTML = '<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    btn.remove();
+    const done = document.querySelectorAll("#ob-list [data-done]").length;
+    document.getElementById("ob-count").textContent = done + " of 5";
+    document.getElementById("ob-bar").style.width = (done / 5) * 100 + "%";
+    if (done === 5) finix.toast({ title: "Onboarding complete 🎉", variant: "success" });
+  });
+});
+</script>
 </body>
 </html>

@@ -36,6 +36,29 @@
         <div class="fx-alert-desc">Finix UI is a plain HTML/CSS/JS distillation — not a copy — of the best free UX patterns in the shadcn ecosystem. Visual fidelity comes from porting the shared OKLCH token system verbatim; behavior is rebuilt on modern platform primitives (<code class="fx-inline-code">&lt;dialog&gt;</code>, Popover API, <code class="fx-inline-code">&lt;details name&gt;</code>) instead of React/Radix. All sources are MIT or Apache-2.0 licensed.</div>
       </div>
 
+      <!-- surface hierarchy -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Surface hierarchy</div>
+          <div class="fx-card-desc">Depth is encoded by lightness — every layer has a named token. Wells sit below surfaces; overlays float above them.</div>
+        </div>
+        <div class="fx-card-content">
+          <div style="background:var(--background);border:1px dashed var(--border);border-radius:var(--radius-lg);padding:1rem">
+            <div class="fx-text-xs fx-muted" style="margin-bottom:.625rem"><code class="fx-inline-code">--background</code> · canvas (dot-grid ground)</div>
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;box-shadow:var(--shadow-xs)">
+              <div class="fx-text-xs fx-muted" style="margin-bottom:.625rem"><code class="fx-inline-code">--card</code> · surface (cards, tables, panels)</div>
+              <div style="background:var(--well);border:1px solid var(--border-soft);border-radius:var(--radius-md);padding:.75rem;margin-bottom:.625rem">
+                <div class="fx-text-xs fx-muted"><code class="fx-inline-code">--well</code> · inset (toolbars, column wells, code, headers)</div>
+              </div>
+              <div style="background:var(--popover);border:1px solid var(--border);border-radius:var(--radius-md);padding:.75rem;box-shadow:var(--shadow-md);width:fit-content">
+                <div class="fx-text-xs fx-muted"><code class="fx-inline-code">--popover</code> · overlay (menus, dialogs — lighter than cards in dark)</div>
+              </div>
+            </div>
+          </div>
+          <p class="fx-text-xs fx-muted" style="margin-top:.625rem">Plus <code class="fx-inline-code">--hover</code> for every pointer-over fill and <code class="fx-inline-code">--border-soft</code> for internal dividers — structural container borders always use <code class="fx-inline-code">--border</code>.</p>
+        </div>
+      </div>
+
       <!-- primary sources -->
       <div class="fx-card">
         <div class="fx-card-header">

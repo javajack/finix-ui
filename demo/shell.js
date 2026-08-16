@@ -38,21 +38,20 @@
       items: [
         { href: "forms.html", icon: "forms", label: "Forms & Inputs" },
         { href: "data.html", icon: "data", label: "Data & Tables" },
-        { href: "overlays.html", icon: "overlays", label: "Overlays & Menus" },
+        { href: "overlays.html", icon: "overlays", label: "Navigation & Overlays" },
         { href: "feedback.html", icon: "feedback", label: "Feedback & Status" },
-        { href: "widgets.html", icon: "widgets", label: "Widgets & Apps" },
       ],
     },
     {
       group: "Apps",
       items: [
         { href: "charts.html", icon: "chart", label: "Charts" },
-        { href: "scheduling.html", icon: "calendar", label: "Scheduling" },
+        { href: "scheduling.html", icon: "calendar", label: "Projects" },
         { href: "ai.html", icon: "sparkles", label: "AI Assistant" },
-        { href: "editor.html", icon: "pen", label: "Editor & Media" },
-        { href: "motion.html", icon: "wand", label: "Motion Lab" },
         { href: "business.html", icon: "briefcase", label: "Business & CRM" },
         { href: "people.html", icon: "users", label: "People & HR" },
+        { href: "editor.html", icon: "pen", label: "Editor & Media" },
+        { href: "motion.html", icon: "wand", label: "Motion Lab" },
       ],
     },
     {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scheduling · Finix UI</title>
+<title>Projects · Finix UI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/tokens.css">
@@ -23,8 +23,8 @@
 
       <div class="fx-page-header">
         <div>
-          <h1 class="fx-page-title">Scheduling</h1>
-          <p class="fx-page-sub">Event calendar with month/week views and a draggable Gantt timeline — ReUI/Kibo patterns, zero dependencies.</p>
+          <h1 class="fx-page-title">Projects</h1>
+          <p class="fx-page-sub">Calendar, Gantt timeline and sprint board — the project-management trio, zero dependencies.</p>
         </div>
       </div>
 
@@ -45,6 +45,62 @@
         </div>
         <div class="fx-card-content">
           <div id="gantt"></div>
+        </div>
+      </div>
+
+      <!-- kanban board -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Sprint board</div>
+          <div class="fx-card-desc">Drag cards between columns — native HTML5 drag &amp; drop.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-kanban">
+            <div class="fx-kanban-col">
+              <div class="fx-kanban-col-head">Backlog <span class="fx-badge fx-badge--secondary">3</span></div>
+              <div class="fx-kanban-card">
+                <div class="fx-kanban-card-title">Research date-range picker patterns</div>
+                <div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">design</span><span class="fx-avatar fx-avatar--sm">IN</span></div>
+              </div>
+              <div class="fx-kanban-card">
+                <div class="fx-kanban-card-title">Audit color contrast for dark brands</div>
+                <div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">a11y</span><span class="fx-avatar fx-avatar--sm">SD</span></div>
+              </div>
+              <div class="fx-kanban-card">
+                <div class="fx-kanban-card-title">Write agent manifest spec</div>
+                <div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">docs</span><span class="fx-avatar fx-avatar--sm">RK</span></div>
+              </div>
+            </div>
+            <div class="fx-kanban-col">
+              <div class="fx-kanban-col-head">In progress <span class="fx-badge fx-badge--secondary">2</span></div>
+              <div class="fx-kanban-card">
+                <div class="fx-kanban-card-title">Port data grid inline editing</div>
+                <div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--warning fx-badge--dot">P1</span><span class="fx-avatar fx-avatar--sm">JL</span></div>
+              </div>
+              <div class="fx-kanban-card">
+                <div class="fx-kanban-card-title">Theme-aware chart tooltips</div>
+                <div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">charts</span><span class="fx-avatar fx-avatar--sm">OM</span></div>
+              </div>
+            </div>
+            <div class="fx-kanban-col">
+              <div class="fx-kanban-col-head">Review <span class="fx-badge fx-badge--secondary">1</span></div>
+              <div class="fx-kanban-card">
+                <div class="fx-kanban-card-title">Command palette fuzzy match</div>
+                <div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">core</span><span class="fx-avatar fx-avatar--sm">NG</span></div>
+              </div>
+            </div>
+            <div class="fx-kanban-col">
+              <div class="fx-kanban-col-head">Done <span class="fx-badge fx-badge--secondary">2</span></div>
+              <div class="fx-kanban-card" style="opacity:.75">
+                <div class="fx-kanban-card-title">Token system with 5 brand presets</div>
+                <div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--success fx-badge--dot">Shipped</span><span class="fx-avatar fx-avatar--sm">RK</span></div>
+              </div>
+              <div class="fx-kanban-card" style="opacity:.75">
+                <div class="fx-kanban-card-title">Native dialog + popover layer</div>
+                <div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--success fx-badge--dot">Shipped</span><span class="fx-avatar fx-avatar--sm">WK</span></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

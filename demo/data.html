@@ -173,57 +173,19 @@
           </div>
         </div>
 
-        <!-- timeline -->
+        <!-- sortable list -->
         <div class="fx-card">
           <div class="fx-card-header">
-            <div class="fx-card-title fx-card-title--lg">Activity timeline</div>
-            <div class="fx-card-desc">Recent events on this project.</div>
+            <div class="fx-card-title fx-card-title--lg">Sortable list</div>
+            <div class="fx-card-desc">Drag rows to reorder — column priorities, pipeline stages, nav items.</div>
           </div>
           <div class="fx-card-content">
-            <ul class="fx-timeline">
-              <li>
-                <div class="fx-timeline-time">2 minutes ago</div>
-                <div class="fx-timeline-title">Deployment succeeded</div>
-                <div class="fx-timeline-body">finix-ui@1.4.2 deployed to production in 42s.</div>
-              </li>
-              <li>
-                <div class="fx-timeline-time">1 hour ago</div>
-                <div class="fx-timeline-title">Pull request merged</div>
-                <div class="fx-timeline-body">#482 “Add themeable data grid” by Sofia Davis.</div>
-              </li>
-              <li data-state="muted">
-                <div class="fx-timeline-time">Yesterday</div>
-                <div class="fx-timeline-title">New member joined</div>
-                <div class="fx-timeline-body">Jackson Lee accepted the workspace invite.</div>
-              </li>
-              <li data-state="muted">
-                <div class="fx-timeline-time">Aug 12</div>
-                <div class="fx-timeline-title">Billing updated</div>
-                <div class="fx-timeline-body">Plan upgraded to Pro (annual).</div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- description list / simple table -->
-        <div class="fx-card">
-          <div class="fx-card-header">
-            <div class="fx-card-title fx-card-title--lg">Invoice summary</div>
-            <div class="fx-card-desc">Plain table with footer totals.</div>
-          </div>
-          <div class="fx-card-content">
-            <div class="fx-table-wrap">
-              <table class="fx-table">
-                <thead><tr><th>Item</th><th style="text-align:right">Qty</th><th style="text-align:right">Amount</th></tr></thead>
-                <tbody>
-                  <tr><td>Pro plan (annual)</td><td style="text-align:right">1</td><td style="text-align:right" class="fx-tabular">$240.00</td></tr>
-                  <tr><td>Additional seats</td><td style="text-align:right">4</td><td style="text-align:right" class="fx-tabular">$96.00</td></tr>
-                  <tr><td>Priority support</td><td style="text-align:right">1</td><td style="text-align:right" class="fx-tabular">$49.00</td></tr>
-                </tbody>
-                <tfoot>
-                  <tr><td>Total</td><td></td><td style="text-align:right" class="fx-tabular">$385.00</td></tr>
-                </tfoot>
-              </table>
+            <div class="fx-sortable">
+              <div class="fx-sortable-item"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button>Lead qualification<span class="fx-badge fx-badge--secondary" style="margin-left:auto">12</span></div>
+              <div class="fx-sortable-item"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button>Discovery call<span class="fx-badge fx-badge--secondary" style="margin-left:auto">8</span></div>
+              <div class="fx-sortable-item"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button>Proposal sent<span class="fx-badge fx-badge--secondary" style="margin-left:auto">5</span></div>
+              <div class="fx-sortable-item"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button>Negotiation<span class="fx-badge fx-badge--secondary" style="margin-left:auto">3</span></div>
+              <div class="fx-sortable-item"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button>Closed won<span class="fx-badge fx-badge--success fx-badge--dot" style="margin-left:auto">2</span></div>
             </div>
           </div>
         </div>

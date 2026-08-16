@@ -347,6 +347,45 @@
           </div>
         </div>
 
+        <!-- multi-step wizard -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Multi-step wizard</div>
+            <div class="fx-card-desc">Stepper-driven checkout flow with animated states.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.5rem">
+            <div class="fx-stepper" id="wiz-stepper">
+              <div class="fx-step" data-state="done">
+                <div class="fx-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+                <div><div class="fx-step-label">Cart</div><div class="fx-step-desc">3 items</div></div>
+              </div>
+              <div class="fx-step" data-state="active">
+                <div class="fx-step-dot">2</div>
+                <div><div class="fx-step-label">Shipping</div><div class="fx-step-desc">Address</div></div>
+              </div>
+              <div class="fx-step" data-state="pending">
+                <div class="fx-step-dot">3</div>
+                <div><div class="fx-step-label">Payment</div><div class="fx-step-desc">Card</div></div>
+              </div>
+              <div class="fx-step" data-state="pending">
+                <div class="fx-step-dot">4</div>
+                <div><div class="fx-step-label">Confirm</div><div class="fx-step-desc">Review</div></div>
+              </div>
+            </div>
+            <div class="fx-stack" style="gap:1rem">
+              <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:1rem">
+                <div class="fx-field"><label class="fx-label">City</label><input class="fx-input" placeholder="Bengaluru"></div>
+                <div class="fx-field"><label class="fx-label">PIN code</label><input class="fx-input" placeholder="560001"></div>
+              </div>
+              <div class="fx-field"><label class="fx-label">Address</label><textarea class="fx-textarea" rows="2" placeholder="Street address"></textarea></div>
+            </div>
+            <div class="fx-row" style="justify-content:space-between">
+              <button class="fx-btn fx-btn--outline" id="wiz-back">Back</button>
+              <button class="fx-btn" id="wiz-next">Continue</button>
+            </div>
+          </div>
+        </div>
+
         <!-- full form -->
         <div class="fx-card">
           <div class="fx-card-header">
@@ -378,5 +417,29 @@
     </div>
   </div>
 </div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const steps = Array.from(document.querySelectorAll("#wiz-stepper .fx-step"));
+  let cur = 1;
+  function paint() {
+    steps.forEach((s, i) => s.dataset.state = i < cur ? "done" : i === cur ? "active" : "pending");
+    steps.forEach((s, i) => {
+      const dot = s.querySelector(".fx-step-dot");
+      dot.innerHTML = i < cur
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+        : String(i + 1);
+    });
+    document.getElementById("wiz-back").disabled = cur === 0;
+    document.getElementById("wiz-next").textContent = cur === steps.length - 1 ? "Place order" : "Continue";
+  }
+  document.getElementById("wiz-next").addEventListener("click", () => {
+    if (cur < steps.length - 1) { cur++; paint(); }
+    else finix.toast({ title: "Order placed 🎉", description: "Confirmation sent to your email.", variant: "success" });
+  });
+  document.getElementById("wiz-back").addEventListener("click", () => { if (cur > 0) { cur--; paint(); } });
+  paint();
+});
+</script>
 </body>
 </html>

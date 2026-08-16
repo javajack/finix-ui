@@ -1664,6 +1664,44 @@
    ],
    "markup": "<div id=\"coa\"></div>",
    "js": "fxAccountsTree(el, {tree:[{name,code,balance,children}], open}) \u2014 expandable hierarchy table with indent guides, animated carets, recursive rollup sums in mono (negatives destructive)."
+  },
+  {
+   "name": "trace-waterfall",
+   "category": "devtools",
+   "classes": [
+    "fx-tw",
+    "fx-tw-head",
+    "fx-tw-row",
+    "fx-tw-label",
+    "fx-tw-name",
+    "fx-tw-svc",
+    "fx-tw-track",
+    "fx-tw-bar",
+    "fx-tw-dur",
+    "fx-tw-axis"
+   ],
+   "markup": "<div id=\"trace\"></div>",
+   "js": "fxTraceWaterfall(el, {spans:[{name,service,start,dur,error,children}]}) \u2014 nested spans on a shared ms axis, service-colored bars (error spans destructive), duration labels, click-to-collapse subtrees, hover detail tooltip."
+  },
+  {
+   "name": "time-heatmap",
+   "category": "data",
+   "classes": [
+    "fx-cohort",
+    "fx-cohort-cell"
+   ],
+   "markup": "<div id=\"th\"></div>",
+   "js": "fxCharts.timeheat(el, {rows, cols, values, label}) \u2014 time x dimension heat grid on the chart-1 sequential ramp with hover counts; theme re-render registered."
+  },
+  {
+   "name": "alert-rule",
+   "category": "devtools",
+   "classes": [
+    "fx-chart",
+    "fx-slider"
+   ],
+   "markup": "<div id=\"chart\"></div> + range input",
+   "js": "fxCharts.area now takes opts.threshold {value,label} (dashed destructive rule line + label); fxCharts.refresh(el) re-renders a registered chart after mutating opts \u2014 wire to a slider for a live alert-rule builder."
   }
  ]
 }

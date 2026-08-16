@@ -243,7 +243,7 @@ The biggest structural gap; unlocks automation, journeys, lineage, service maps.
 - Chart-of-accounts tree table: expandable hierarchy rows (fx-tree + table) w/
   rollup sums in mono; indent guides.
 
-### T19. Observability → devtools.html
+### ✅ T19. Observability → devtools.html
 - `fxTraceWaterfall({spans})`: nested span bars on a time axis, service color
   coding, duration labels, collapse subtree, hover detail tooltip.
 - `fxCharts.timeheat({rows,cols,values})`: time × dimension heatmap w/ sage

@@ -451,4 +451,67 @@
     });
     return { entries };
   };
+
+  /* ---------- trace waterfall ---------- */
+  window.fxTraceWaterfall = function (root, opts) {
+    const spans = opts.spans || [];
+    const collapsed = new Set();
+    const services = [];
+    (function reg(list) { list.forEach((s2) => { if (!services.includes(s2.service)) services.push(s2.service); if (s2.children) reg(s2.children); }); })(spans);
+    const color = (svc) => `var(--chart-${(services.indexOf(svc) % 5) + 1})`;
+    let total = 0;
+    (function ext(list) { list.forEach((s2) => { total = Math.max(total, s2.start + s2.dur); if (s2.children) ext(s2.children); }); })(spans);
+
+    function rowHtml(span, depth, path) {
+      const isBranch = !!(span.children && span.children.length);
+      const isCol = collapsed.has(path);
+      let html = `<div class="fx-tw-row" data-path="${path}" data-branch="${isBranch}"
+          data-tip="${span.name} · ${span.service} · ${span.dur} ms (starts at ${span.start} ms)">
+        <div class="fx-tw-label" style="padding-left:${depth * 0.875}rem">
+          <svg class="fx-tw-caret ${isBranch ? "" : "is-leaf"} ${isCol ? "" : "is-open"}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          <span class="fx-tw-name">${span.name}</span>
+          <span class="fx-tw-svc" style="color:${color(span.service)}">${span.service}</span>
+        </div>
+        <div class="fx-tw-track">
+          <span class="fx-tw-bar ${span.error ? "is-error" : ""}" style="left:${(span.start / total) * 100}%;width:${Math.max((span.dur / total) * 100, 0.5)}%;background:${span.error ? "var(--destructive)" : color(span.service)}"></span>
+          <span class="fx-tw-dur" style="left:${Math.min((span.start + span.dur) / total * 100 + 1, 88)}%">${span.dur} ms</span>
+        </div>
+      </div>`;
+      if (isBranch && !isCol)
+        html += span.children.map((c, i) => rowHtml(c, depth + 1, path + "/" + i)).join("");
+      return html;
+    }
+    function render() {
+      const ticks = 4;
+      root.classList.add("fx-tw");
+      root.innerHTML =
+        `<div class="fx-tw-head">
+          <div class="fx-tw-label" style="font-weight:600">Span</div>
+          <div class="fx-tw-track fx-tw-axis">${Array.from({ length: ticks + 1 }, (_, i) =>
+            `<span style="left:${(i / ticks) * 100}%">${Math.round((total * i) / ticks)} ms</span>`).join("")}</div>
+        </div>` +
+        spans.map((s2, i) => rowHtml(s2, 0, String(i))).join("");
+    }
+    root.addEventListener("click", (e) => {
+      const row = e.target.closest('.fx-tw-row[data-branch="true"]');
+      if (!row) return;
+      const p2 = row.dataset.path;
+      collapsed.has(p2) ? collapsed.delete(p2) : collapsed.add(p2);
+      render();
+    });
+    root.addEventListener("pointermove", (e) => {
+      const row = e.target.closest(".fx-tw-row");
+      let tip = root.querySelector(".fx-chart-tip");
+      if (!tip) { tip = document.createElement("div"); tip.className = "fx-chart-tip"; root.appendChild(tip); }
+      if (!row) { tip.style.opacity = 0; return; }
+      tip.textContent = row.dataset.tip;
+      const r = root.getBoundingClientRect();
+      tip.style.left = Math.min(e.clientX - r.left + 12, r.width - 220) + "px";
+      tip.style.top = e.clientY - r.top - 10 + "px";
+      tip.style.opacity = 1;
+    });
+    root.addEventListener("pointerleave", () => { const t = root.querySelector(".fx-chart-tip"); if (t) t.style.opacity = 0; });
+    render();
+    return { render };
+  };
 })();

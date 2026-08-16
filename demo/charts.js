@@ -109,6 +109,18 @@
       return { color: c, tops, name: sr.name };
     });
 
+    // optional threshold line (alert rules)
+    if (opts.threshold && opts.threshold.value != null) {
+      const tv = opts.threshold.value;
+      const ty = y(Math.min(tv, max));
+      const tl = el("line", { x1: PL, x2: W - PR, y1: ty, y2: ty, "stroke-dasharray": "5 4", "stroke-width": 1.5 });
+      tl.style.stroke = "var(--destructive)";
+      svg.appendChild(tl);
+      const tt = el("text", { x: W - PR - 4, y: ty - 5, "text-anchor": "end", style: "font-size:10px;font-weight:600", fill: "var(--destructive)" });
+      tt.textContent = (opts.threshold.label || "alert") + " " + tv.toLocaleString();
+      svg.appendChild(tt);
+    }
+
     // hover interaction
     const cursor = el("line", { y1: PT, y2: PT + ih, class: "grid-line", "stroke-dasharray": "none", opacity: 0 });
     cursor.style.stroke = "var(--muted-foreground)";
@@ -665,6 +677,35 @@
     container.addEventListener("pointerleave", () => (tip.style.opacity = 0));
   }
 
+  /* ---------- time heatmap ---------- */
+  function timeheat(container, opts) {
+    const { rows, cols, values, label = "" } = opts;
+    container.classList.add("fx-cohort");
+    const max = Math.max(...values.flat());
+    container.innerHTML = `<div class="fx-cohort-wrap"><table>
+      <thead><tr><th class="fx-cohort-name">${label}</th>${cols.map((c) => `<th>${c}</th>`).join("")}</tr></thead>
+      <tbody>${rows.map((r, ri) =>
+        `<tr><td class="fx-cohort-name">${r}</td>` +
+        values[ri].map((v, ci) => {
+          const strength = Math.round(Math.pow(v / max, 0.8) * 90);
+          return `<td class="fx-cohort-cell ${strength > 55 ? "is-strong" : ""}" data-ri="${ri}" data-ci="${ci}"
+            style="background:color-mix(in oklab, var(--chart-1) ${strength}%, var(--card))">${v >= 1000 ? (v / 1000).toFixed(1) + "k" : v}</td>`;
+        }).join("") + `</tr>`).join("")}
+      </tbody></table></div>`;
+    const tip = tipFor(container);
+    container.addEventListener("pointermove", (e) => {
+      const td = e.target.closest(".fx-cohort-cell");
+      if (!td) { tip.style.opacity = 0; return; }
+      const ri = +td.dataset.ri, ci = +td.dataset.ci;
+      tip.innerHTML = `<b>${rows[ri]} · ${cols[ci]}</b><br>${values[ri][ci].toLocaleString()} events`;
+      const rect = container.getBoundingClientRect();
+      tip.style.left = Math.min(e.clientX - rect.left + 12, rect.width - 150) + "px";
+      tip.style.top = e.clientY - rect.top - 10 + "px";
+      tip.style.opacity = 1;
+    });
+    container.addEventListener("pointerleave", () => (tip.style.opacity = 0));
+  }
+
   /* re-render on theme/brand switch so token colors update */
   function register(fn, elc, opts) {
     registry.push({ fn, el: elc, opts });
@@ -686,5 +727,7 @@
     funnel: (elc, o) => register(funnel, elc, o),
     cohort: (elc, o) => register(cohort, elc, o),
     candles: (elc, o) => register(candles, elc, o),
+    timeheat: (elc, o) => register(timeheat, elc, o),
+    refresh: (elc) => { const r = registry.find((x) => x.el === elc); if (r) r.fn(r.el, r.opts); },
   };
 })();

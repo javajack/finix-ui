@@ -131,6 +131,46 @@
         </div>
       </div>
 
+      <!-- trace waterfall -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Trace waterfall</div>
+          <div class="fx-card-desc">Distributed trace for <code class="fx-inline-code">POST /v2/orders</code> — nested spans on a shared time axis, service-colored bars, <b>click a parent</b> to collapse its subtree.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="trace"></div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(26rem,1fr))">
+        <!-- traffic heatmap -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Traffic heatmap</div>
+            <div class="fx-card-desc">Requests by weekday × hour — hover a cell for the exact count.</div>
+          </div>
+          <div class="fx-card-content">
+            <div id="timeheat"></div>
+          </div>
+        </div>
+
+        <!-- alert rule -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Alert rule</div>
+            <div class="fx-card-desc">Drag the threshold — the rule line redraws live on the p95 latency chart.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.75rem">
+            <div id="alert-chart"></div>
+            <div class="fx-row" style="gap:.75rem">
+              <span class="fx-label" style="white-space:nowrap">Alert when p95 &gt;</span>
+              <input type="range" class="fx-slider" id="alert-threshold" min="200" max="900" value="600" style="--fx-fill:57%;flex:1" aria-label="Alert threshold">
+              <b class="fx-tabular" id="alert-value" style="font-family:var(--font-mono);font-size:.8125rem;width:4rem;text-align:right">600 ms</b>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- feature flags -->
       <div class="fx-card">
         <div class="fx-card-header">
@@ -469,6 +509,60 @@ window.addEventListener("DOMContentLoaded", () => {
       fxJsonTree(document.getElementById("wh-response"), d.response ?? { status: "pending", note: "delivery has not been attempted yet" });
       finix.openDialog("#wh-sheet");
     },
+  });
+
+  /* ---- trace waterfall ---- */
+  fxTraceWaterfall(document.getElementById("trace"), {
+    spans: [
+      { name: "POST /v2/orders", service: "gateway", start: 0, dur: 412, children: [
+        { name: "authenticate", service: "auth", start: 4, dur: 38, children: [
+          { name: "jwt.verify", service: "auth", start: 8, dur: 12 },
+          { name: "session.load", service: "cache", start: 22, dur: 16 },
+        ]},
+        { name: "orders.create", service: "orders", start: 48, dur: 330, children: [
+          { name: "validate payload", service: "orders", start: 52, dur: 18 },
+          { name: "inventory.reserve", service: "inventory", start: 74, dur: 96, children: [
+            { name: "SELECT stock FOR UPDATE", service: "db", start: 80, dur: 62 },
+          ]},
+          { name: "payments.charge", service: "payments", start: 176, dur: 142, error: true, children: [
+            { name: "stripe.paymentIntent", service: "payments", start: 182, dur: 128, error: true },
+          ]},
+          { name: "INSERT orders", service: "db", start: 322, dur: 44 },
+        ]},
+        { name: "emit order.created", service: "gateway", start: 384, dur: 22 },
+      ]},
+    ],
+  });
+
+  /* ---- traffic heatmap ---- */
+  fxCharts.timeheat(document.getElementById("timeheat"), {
+    label: "Day",
+    rows: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    cols: ["00", "04", "08", "10", "12", "14", "16", "18", "20"],
+    values: [
+      [210, 180, 1450, 3200, 2900, 3400, 3100, 1900, 820],
+      [190, 160, 1520, 3350, 3000, 3500, 3260, 2000, 860],
+      [205, 175, 1490, 3400, 3100, 3620, 3300, 2050, 900],
+      [220, 190, 1530, 3300, 2950, 3560, 3220, 1980, 870],
+      [230, 200, 1400, 3100, 2800, 3200, 2900, 1700, 760],
+      [180, 150, 600, 1100, 1300, 1250, 1100, 900, 500],
+      [160, 140, 520, 950, 1150, 1100, 980, 800, 430],
+    ],
+  });
+
+  /* ---- alert rule ---- */
+  const alertOpts = {
+    labels: ["-24h", "-21h", "-18h", "-15h", "-12h", "-9h", "-6h", "-3h", "now"],
+    height: 220,
+    showLegend: false,
+    threshold: { value: 600, label: "p95 alert" },
+    series: [{ name: "p95 latency (ms)", data: [420, 380, 460, 510, 640, 720, 560, 480, 530] }],
+  };
+  fxCharts.area(document.getElementById("alert-chart"), alertOpts);
+  document.getElementById("alert-threshold").addEventListener("input", (e) => {
+    alertOpts.threshold.value = +e.target.value;
+    document.getElementById("alert-value").textContent = e.target.value + " ms";
+    fxCharts.refresh(document.getElementById("alert-chart"));
   });
 
   /* ---- permission matrix ---- */

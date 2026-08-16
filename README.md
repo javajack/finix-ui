@@ -25,7 +25,7 @@ Two orthogonal theme axes: **mode** (`light`/`dark`) × **brand** (`finix` warm-
 
 ## What's inside
 
-**160 registered components** (see `manifest.json`), organized in composable layers:
+**197 registered components** (see `manifest.json`), organized in composable layers:
 
 | Layer | Contents |
 |---|---|
@@ -39,9 +39,15 @@ Two orthogonal theme axes: **mode** (`light`/`dark`) × **brand** (`finix` warm-
 | `css/finix-devtools.css` + `js/finix-devtools.js` | Developer platform: `fxDiff` unified/split diff viewer, API-key rows (hold-to-reveal), env-var editor, webhook delivery log, `fxJsonTree`, feature flags + rollout balance + experiments, `fxPermMatrix`, `fxAuditLog`, `fxTraceWaterfall` |
 | `js/finix-canvas.js` | `fxCanvas` workflow node canvas: pan/zoom, drag-arrange, bezier edges w/ animated running dash, minimap + `fxSchemaForm` config forms |
 | `css/finix-marketing.css` + `js/finix-marketing.js` | Marketing kit (`fx-mk-*`): heroes w/ aurora + live browser frames, logo marquee, bento, zig-zag, stats counter-up, testimonial carousel + tweet wall, pricing w/ billing toggle, comparison table, ROI calculator, waitlist + countdown, CTA band, footer — see `demo/site/` |
+| `css/finix-crm.css` + `js/finix-crm.js` | Sales CRM: `fxPipeline` weighted pipeline board (pointer-drag, live forecast rollups), `fxScore` lead-score ring w/ factor popover, `fxQuote` CPQ builder w/ approval gates, contact-360 recipe |
+| `css/finix-trading.css` + `js/finix-trading.js` | Trading terminal: `fxWatchlist` live ticks, `fxOrderTicket` w/ margin math, `fxOptionChain` (ITM/ATM logic), `fxDepth`, `fxPositions` P&L, `fxBlotter` — see `demo/trading.html` |
+| `css/finix-flows.css` + `js/finix-flows.js` | `fxWizard` flow engine: declarative steps, branching, validation gates, auto review, localStorage save-and-resume, Typeform-style focus mode — checkout/KYC/survey demos |
+| `css/finix-mobile.css` + `js/finix-mobile.js` | Mobile-first kit: CSS device frames w/ container-query screens, `fxSheet` snap bottom sheet, swipe rows, tab bar, FAB speed dial, large-title collapse, pull-to-refresh |
+| `css/finix-shop.css` + `js/finix-shop.js` | Storefront: PLP live filters + product cards (CSS gradient art), PDP variants/gallery, `fxShopCart` cross-page cart drawer w/ free-shipping meter |
+| `css/finix-bank.css` + `js/finix-bank.js` | Consumer banking: `fxBankFeed` running-balance feed, `fxBankCard` freeze + hold-to-reveal, `fxTransfer` keypad flow, `fxBankBudgets` rings, bills + UPI |
 | `js/finix-editor.js` | `fxEditor` — Notion-style rich text (bubble menu, slash commands, md shortcuts) + `fxCropper` — image crop with aspect lock |
 | `demo/charts.js` | Dependency-free SVG charts: area/line (w/ alert thresholds), bars (incl. negative + stacked), hbars, combo, scatter, donut, gauge, spark, funnel, cohort grid, candlestick, time heatmap — interactive legends & tooltips, re-render on theme change |
-| `demo/` | Full admin template, 18 pages + a 3-page marketing site (`demo/site/`: home, launch/waitlist, pricing): Dashboard, Forms, Data & Tables, Navigation & Overlays, Feedback & Status, Charts, Projects, AI Assistant, Support, Business & CRM, Dev & API, Workflows, People & HR, Collaboration, Editor & Media, Motion Lab, Auth, Research |
+| `demo/` | Full admin template, 24 pages + a 6-page public site (`demo/site/`: home, launch, pricing, store, product, status): Dashboard, Forms, Data & Tables, Navigation & Overlays, Feedback & Status, Charts, Projects, Wizards & Flows, AI Assistant, Mobile, Sales CRM, Trading, Banking, Support, Business Ops, Dev & API, Workflows, People & HR, Collaboration, Incidents, Editor & Media, Motion Lab, Auth, Research |
 | `manifest.json` + `llms.txt` | Machine-readable registry for AI agents: component → classes → markup → JS hook |
 
 ## Run the demo

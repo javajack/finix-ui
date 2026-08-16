@@ -586,7 +586,7 @@ Small lift, big credibility. Extends finix-devtools module (`fx-ops-*` classes).
 - Research: Upptime + cState (MIT, distill) · Instatus/Statuspage
   (inspiration-only).
 
-### V8. v0.4 integration & release
+### ✅ V8. v0.4 integration & release
 - NAV restructure per §0.1 (Apps / Industries split; "Public site" rename) +
   command palette verify.
 - manifest.json entries + llms.txt lines for **every** new component (verify

@@ -1,7 +1,7 @@
 {
  "$schema": "https://finix-ui.dev/schema/manifest-v1.json",
  "name": "finix-ui",
- "version": "0.3.0",
+ "version": "0.4.0",
  "description": "Plain HTML/CSS/JS admin component framework distilled from the best free shadcn-ecosystem patterns. Framework-agnostic, token-themed, agent-consumable.",
  "license": "MIT",
  "files": {
@@ -19,6 +19,31 @@
   ],
   "chartsOptional": [
    "demo/charts.js"
+  ],
+  "crmOptional": [
+   "css/finix-crm.css",
+   "js/finix-crm.js"
+  ],
+  "tradingOptional": [
+   "css/finix-trading.css",
+   "js/finix-trading.js"
+  ],
+  "flowsOptional": [
+   "css/finix-flows.css",
+   "js/finix-flows.js"
+  ],
+  "mobileOptional": [
+   "css/finix-mobile.css",
+   "js/finix-mobile.js"
+  ],
+  "shopOptional": [
+   "css/finix-shop.css",
+   "js/finix-shop.js",
+   "css/finix-marketing.css"
+  ],
+  "bankOptional": [
+   "css/finix-bank.css",
+   "js/finix-bank.js"
   ]
  },
  "theming": {
@@ -39,7 +64,7 @@
    "finix.setTheme(mode)",
    "finix.setBrand(brand)"
   ],
-  "tokens": "All colors OKLCH CSS custom properties on :root \u2014 override --primary/--radius/--chart-* to rebrand everything."
+  "tokens": "All colors OKLCH CSS custom properties on :root — override --primary/--radius/--chart-* to rebrand everything."
  },
  "components": [
   {
@@ -95,7 +120,7 @@
     "fx-card-content",
     "fx-card-footer"
    ],
-   "markup": "<div class=\"fx-card\"><div class=\"fx-card-header\"><div class=\"fx-card-title\">Title</div><div class=\"fx-card-desc\">Description</div></div><div class=\"fx-card-content\">\u2026</div></div>",
+   "markup": "<div class=\"fx-card\"><div class=\"fx-card-header\"><div class=\"fx-card-title\">Title</div><div class=\"fx-card-desc\">Description</div></div><div class=\"fx-card-content\">…</div></div>",
    "js": null
   },
   {
@@ -154,7 +179,7 @@
     "fx-combo-search",
     "fx-combo-list"
    ],
-   "markup": "<div class=\"fx-combobox\"><button class=\"fx-combo-trigger\" popovertarget=\"cb1\"><span class=\"fx-combo-value\" data-placeholder>Select\u2026</span></button><div class=\"fx-menu\" popover id=\"cb1\"><div class=\"fx-combo-list\"><button class=\"fx-menu-item\" data-value=\"a\">A</button></div></div></div>",
+   "markup": "<div class=\"fx-combobox\"><button class=\"fx-combo-trigger\" popovertarget=\"cb1\"><span class=\"fx-combo-value\" data-placeholder>Select…</span></button><div class=\"fx-menu\" popover id=\"cb1\"><div class=\"fx-combo-list\"><button class=\"fx-menu-item\" data-value=\"a\">A</button></div></div></div>",
    "js": "auto-wired by finix.js; add .fx-combo-search input for filtering; fires fx:select"
   },
   {
@@ -182,7 +207,7 @@
    "classes": [
     "fx-choicebox"
    ],
-   "markup": "<label class=\"fx-choicebox\"><input type=\"radio\" class=\"fx-radio\"><span>\u2026</span></label>",
+   "markup": "<label class=\"fx-choicebox\"><input type=\"radio\" class=\"fx-radio\"><span>…</span></label>",
    "js": null
   },
   {
@@ -221,7 +246,7 @@
     "fx-otp",
     "fx-otp-sep"
    ],
-   "markup": "<div class=\"fx-otp\"><input><input><input><span class=\"fx-otp-sep\">\u2013</span><input><input><input></div>",
+   "markup": "<div class=\"fx-otp\"><input><input><input><span class=\"fx-otp-sep\">–</span><input><input><input></div>",
    "js": "auto-advance/backspace/paste by finix.js"
   },
   {
@@ -231,7 +256,7 @@
     "fx-tags",
     "fx-tag"
    ],
-   "markup": "<div class=\"fx-tags\"><input placeholder=\"Add tag\u2026\"></div>",
+   "markup": "<div class=\"fx-tags\"><input placeholder=\"Add tag…\"></div>",
    "js": "Enter adds, Backspace removes; wired by finix.js"
   },
   {
@@ -240,7 +265,7 @@
    "classes": [
     "fx-rating"
    ],
-   "markup": "<div class=\"fx-rating\" data-value=\"3\"><button>\u2605svg</button>\u00d75</div>",
+   "markup": "<div class=\"fx-rating\" data-value=\"3\"><button>★svg</button>×5</div>",
    "js": "wired by finix.js"
   },
   {
@@ -260,7 +285,7 @@
     "fx-table-wrap",
     "fx-th-sort"
    ],
-   "markup": "<div class=\"fx-table-wrap\"><table class=\"fx-table\">\u2026</table></div>",
+   "markup": "<div class=\"fx-table-wrap\"><table class=\"fx-table\">…</table></div>",
    "js": "sort: <button class=\"fx-th-sort\"> in th; filter: input[data-fx-table-filter=\"#tableId\"]; select-all: [data-fx-select-all]"
   },
   {
@@ -289,7 +314,7 @@
    "classes": [
     "fx-heatmap"
    ],
-   "markup": "<div class=\"fx-heatmap\"><span data-l=\"0..4\"></span>\u00d7182</div>",
+   "markup": "<div class=\"fx-heatmap\"><span data-l=\"0..4\"></span>×182</div>",
    "js": null
   },
   {
@@ -347,7 +372,7 @@
     "fx-tab",
     "fx-tabpanel"
    ],
-   "markup": "<div class=\"fx-tablist\" role=\"tablist\"><button class=\"fx-tab\" role=\"tab\" aria-selected=\"true\" aria-controls=\"p1\">Tab</button></div><div class=\"fx-tabpanel\" id=\"p1\" role=\"tabpanel\">\u2026</div>",
+   "markup": "<div class=\"fx-tablist\" role=\"tablist\"><button class=\"fx-tab\" role=\"tab\" aria-selected=\"true\" aria-controls=\"p1\">Tab</button></div><div class=\"fx-tabpanel\" id=\"p1\" role=\"tabpanel\">…</div>",
    "js": "wired by finix.js (click + arrow keys)"
   },
   {
@@ -389,7 +414,7 @@
    "classes": [
     "fx-popover"
    ],
-   "markup": "<button popovertarget=\"p1\">Open</button><div class=\"fx-popover\" popover id=\"p1\">\u2026</div>",
+   "markup": "<button popovertarget=\"p1\">Open</button><div class=\"fx-popover\" popover id=\"p1\">…</div>",
    "js": "positioned by finix.js"
   },
   {
@@ -411,7 +436,7 @@
     "fx-dialog-footer",
     "fx-dialog-close"
    ],
-   "markup": "<button data-fx-open=\"#d1\">Open</button><dialog class=\"fx-dialog\" id=\"d1\"><div class=\"fx-dialog-body\">\u2026<button data-fx-close>Close</button></div></dialog>",
+   "markup": "<button data-fx-open=\"#d1\">Open</button><dialog class=\"fx-dialog\" id=\"d1\"><div class=\"fx-dialog-body\">…<button data-fx-close>Close</button></div></dialog>",
    "js": "open/close + backdrop-click by finix.js; native Esc + focus trap"
   },
   {
@@ -421,7 +446,7 @@
     "fx-sheet",
     "fx-sheet-body"
    ],
-   "markup": "<dialog class=\"fx-sheet\" data-side=\"right\" id=\"s1\">\u2026</dialog>",
+   "markup": "<dialog class=\"fx-sheet\" data-side=\"right\" id=\"s1\">…</dialog>",
    "js": "same as dialog; data-side=\"left|right\""
   },
   {
@@ -431,7 +456,7 @@
     "fx-drawer",
     "fx-drawer-handle"
    ],
-   "markup": "<dialog class=\"fx-drawer\" id=\"dr1\"><div class=\"fx-drawer-handle\"></div>\u2026</dialog>",
+   "markup": "<dialog class=\"fx-drawer\" id=\"dr1\"><div class=\"fx-drawer-handle\"></div>…</dialog>",
    "js": "same as dialog"
   },
   {
@@ -444,8 +469,8 @@
     "fx-cmd-group-label",
     "fx-cmd-empty"
    ],
-   "markup": "<dialog class=\"fx-dialog fx-cmd\">\u2026</dialog>",
-   "js": "\u2318K toggle, filtering, arrow nav by finix.js"
+   "markup": "<dialog class=\"fx-dialog fx-cmd\">…</dialog>",
+   "js": "⌘K toggle, filtering, arrow nav by finix.js"
   },
   {
    "name": "toast",
@@ -478,7 +503,7 @@
     "fx-banner",
     "fx-banner-close"
    ],
-   "markup": "<div class=\"fx-banner\">\u2026</div>",
+   "markup": "<div class=\"fx-banner\">…</div>",
    "js": null
   },
   {
@@ -496,7 +521,7 @@
    "classes": [
     "fx-progress-circle"
    ],
-   "markup": "<div class=\"fx-progress-circle\" data-value=\"72\"><svg>\u2026track+fill circles\u2026</svg><b>72%</b></div>",
+   "markup": "<div class=\"fx-progress-circle\" data-value=\"72\"><svg>…track+fill circles…</svg><b>72%</b></div>",
    "js": "dash offset by finix.js"
   },
   {
@@ -527,7 +552,7 @@
     "fx-empty-desc",
     "fx-empty-actions"
    ],
-   "markup": "<div class=\"fx-empty\"><div class=\"fx-empty-icon\"><svg/></div><div class=\"fx-empty-title\">No data</div>\u2026</div>",
+   "markup": "<div class=\"fx-empty\"><div class=\"fx-empty-icon\"><svg/></div><div class=\"fx-empty-title\">No data</div>…</div>",
    "js": null
   },
   {
@@ -548,7 +573,7 @@
    "classes": [
     "fx-kbd"
    ],
-   "markup": "<span class=\"fx-kbd\">\u2318K</span>",
+   "markup": "<span class=\"fx-kbd\">⌘K</span>",
    "js": null
   },
   {
@@ -573,7 +598,7 @@
     "fx-step-label",
     "fx-step-desc"
    ],
-   "markup": "<div class=\"fx-stepper\"><div class=\"fx-step\" data-state=\"done|active|pending\">\u2026</div></div>",
+   "markup": "<div class=\"fx-stepper\"><div class=\"fx-step\" data-state=\"done|active|pending\">…</div></div>",
    "js": null
   },
   {
@@ -641,7 +666,7 @@
    "classes": [
     "fx-tracker"
    ],
-   "markup": "<div class=\"fx-tracker\"><span></span><span data-state=\"down\"></span>\u2026</div>",
+   "markup": "<div class=\"fx-tracker\"><span></span><span data-state=\"down\"></span>…</div>",
    "js": null
   },
   {
@@ -663,7 +688,7 @@
     "fx-catbar",
     "fx-catbar-legend"
    ],
-   "markup": "<div class=\"fx-catbar\"><span style=\"width:44%;background:var(--chart-1)\"></span>\u2026</div>",
+   "markup": "<div class=\"fx-catbar\"><span style=\"width:44%;background:var(--chart-1)\"></span>…</div>",
    "js": null
   },
   {
@@ -675,7 +700,7 @@
     "fx-kanban-col-head",
     "fx-kanban-card"
    ],
-   "markup": "<div class=\"fx-kanban\"><div class=\"fx-kanban-col\">\u2026cards\u2026</div></div>",
+   "markup": "<div class=\"fx-kanban\"><div class=\"fx-kanban-col\">…cards…</div></div>",
    "js": "HTML5 drag-and-drop wired by finix.js"
   },
   {
@@ -691,7 +716,7 @@
     "fx-composer",
     "fx-shimmer"
    ],
-   "markup": "<div class=\"fx-chat\"><div class=\"fx-chat-thread\">\u2026</div><div class=\"fx-composer\"><textarea></textarea></div></div>",
+   "markup": "<div class=\"fx-chat\"><div class=\"fx-chat-thread\">…</div><div class=\"fx-composer\"><textarea></textarea></div></div>",
    "js": "app-level; see demo/widgets.html"
   },
   {
@@ -703,7 +728,7 @@
     "fx-chart-legend"
    ],
    "markup": "<div id=\"c\"></div>",
-   "js": "fxCharts.area|bars|donut|spark(el, opts) \u2014 demo/charts.js; auto re-renders on theme/brand change"
+   "js": "fxCharts.area|bars|donut|spark(el, opts) — demo/charts.js; auto re-renders on theme/brand change"
   },
   {
    "name": "snippet",
@@ -723,7 +748,7 @@
     "fx-dg"
    ],
    "markup": "<div id=\"grid\"></div>",
-   "js": "fxDataGrid(el, {columns, data, select, pageSize, pinned, maxHeight}) \u2014 finix-datagrid.js. Features: sort, global search, column resize/reorder/pin/hide, inline edit (dblclick), row selection, pagination. API: setGlobalFilter, setPredicate, refresh, filterSlot"
+   "js": "fxDataGrid(el, {columns, data, select, pageSize, pinned, maxHeight}) — finix-datagrid.js. Features: sort, global search, column resize/reorder/pin/hide, inline edit (dblclick), row selection, pagination. API: setGlobalFilter, setPredicate, refresh, filterSlot"
   },
   {
    "name": "filter-bar",
@@ -733,7 +758,7 @@
     "fx-fchip"
    ],
    "markup": "<div id=\"fb\"></div>",
-   "js": "fxFilterBar(el, {fields:[{key,label,type:'enum'|'number',options}], onChange(predicate)}) \u2014 Linear-style chips with operators; pair with grid.setPredicate"
+   "js": "fxFilterBar(el, {fields:[{key,label,type:'enum'|'number',options}], onChange(predicate)}) — Linear-style chips with operators; pair with grid.setPredicate"
   },
   {
    "name": "date-range-picker",
@@ -767,7 +792,7 @@
    "classes": [
     "fx-numberfield"
    ],
-   "markup": "<div class=\"fx-numberfield\"><button data-step=\"-1\">\u2212</button><input value=\"1\" min=\"0\" max=\"99\"><button data-step=\"1\">+</button></div>",
+   "markup": "<div class=\"fx-numberfield\"><button data-step=\"-1\">−</button><input value=\"1\" min=\"0\" max=\"99\"><button data-step=\"1\">+</button></div>",
    "js": "stepper buttons with min/max clamp"
   },
   {
@@ -777,7 +802,7 @@
     "fx-strength",
     "fx-strength-label"
    ],
-   "markup": "<input type=\"password\" id=\"p\" data-fx-strength=\"#meter\"> + <button data-fx-password-toggle=\"#p\"> + <div class=\"fx-strength\" id=\"meter\"><span>\u00d74</span></div>",
+   "markup": "<input type=\"password\" id=\"p\" data-fx-strength=\"#meter\"> + <button data-fx-password-toggle=\"#p\"> + <div class=\"fx-strength\" id=\"meter\"><span>×4</span></div>",
    "js": "visibility toggle + 4-segment strength meter (length/case/digit/symbol)"
   },
   {
@@ -786,7 +811,7 @@
    "classes": [
     "fx-combo-trigger--multi"
    ],
-   "markup": "<div class=\"fx-combobox\" data-fx-multi>\u2026checkbox fx-menu-items\u2026</div>",
+   "markup": "<div class=\"fx-combobox\" data-fx-multi>…checkbox fx-menu-items…</div>",
    "js": "chips in trigger, checkbox list stays open; fires fx:multiselect"
   },
   {
@@ -808,7 +833,7 @@
     "fx-sortable-item",
     "fx-sortable-handle"
    ],
-   "markup": "<div class=\"fx-sortable\"><div class=\"fx-sortable-item\">\u2026</div></div>",
+   "markup": "<div class=\"fx-sortable\"><div class=\"fx-sortable-item\">…</div></div>",
    "js": "drag-reorder wired by finix.js"
   },
   {
@@ -819,7 +844,7 @@
     "fx-notif",
     "fx-bell-dot"
    ],
-   "markup": "<button class=\"fx-bell-dot\" popovertarget=\"n\">bell</button><div class=\"fx-menu fx-notif-panel\" popover id=\"n\">\u2026fx-notif items ([data-unread])\u2026</div>",
+   "markup": "<button class=\"fx-bell-dot\" popovertarget=\"n\">bell</button><div class=\"fx-menu fx-notif-panel\" popover id=\"n\">…fx-notif items ([data-unread])…</div>",
    "js": "[data-fx-notif-readall] marks all read; clicking an unread item clears its dot"
   },
   {
@@ -840,7 +865,7 @@
    "name": "auth-pages",
    "category": "template",
    "classes": [],
-   "markup": "demo/auth.html \u2014 sign-in, sign-up, forgot-password, 2FA cards built from finix primitives",
+   "markup": "demo/auth.html — sign-in, sign-up, forgot-password, 2FA cards built from finix primitives",
    "js": null
   },
   {
@@ -851,7 +876,7 @@
     "fx-event"
    ],
    "markup": "<div id=\"cal\"></div>",
-   "js": "fxEventCalendar(el, {events:[{title,date,time?,dur?,color:1-5}], view:'month'|'week'}) \u2014 finix-apps.js. Month grid with drag-to-move events, week time grid; fires fx:eventmove"
+   "js": "fxEventCalendar(el, {events:[{title,date,time?,dur?,color:1-5}], view:'month'|'week'}) — finix-apps.js. Month grid with drag-to-move events, week time grid; fires fx:eventmove"
   },
   {
    "name": "gantt",
@@ -861,7 +886,7 @@
     "fx-gantt-bar"
    ],
    "markup": "<div id=\"g\"></div>",
-   "js": "fxGantt(el, {tasks:[{name,start,end,progress,color}]}) \u2014 draggable bars (pointer events), progress fill, weekend shading, today line; fires fx:ganttmove"
+   "js": "fxGantt(el, {tasks:[{name,start,end,progress,color}]}) — draggable bars (pointer events), progress fill, weekend shading, today line; fires fx:ganttmove"
   },
   {
    "name": "filter-builder",
@@ -870,7 +895,7 @@
     "fx-fb"
    ],
    "markup": "<div id=\"fb\"></div>",
-   "js": "fxFilterBuilder(el, {fields:[{key,label,type:'text'|'number'|'enum'|'date',options?}], onChange(predicate,state)}) \u2014 Notion-style AND/OR groups with typed operators"
+   "js": "fxFilterBuilder(el, {fields:[{key,label,type:'text'|'number'|'enum'|'date',options?}], onChange(predicate,state)}) — Notion-style AND/OR groups with typed operators"
   },
   {
    "name": "log-table",
@@ -879,7 +904,7 @@
     "fx-logs"
    ],
    "markup": "<div id=\"logs\"></div>",
-   "js": "fxLogTable(el, {count}) \u2014 virtualized fixed-row-height table (50k+ rows), level filter chips, search, live tail, row detail"
+   "js": "fxLogTable(el, {count}) — virtualized fixed-row-height table (50k+ rows), level filter chips, search, live tail, row detail"
   },
   {
    "name": "charts-extended",
@@ -900,7 +925,7 @@
     "fx-branch",
     "fx-prose"
    ],
-   "markup": "demo/ai.html \u2014 thread list, model switcher, streaming markdown, collapsible tool calls, approval cards, branch picker",
+   "markup": "demo/ai.html — thread list, model switcher, streaming markdown, collapsible tool calls, approval cards, branch picker",
    "js": "page-level composition of finix primitives"
   },
   {
@@ -912,7 +937,7 @@
     "fx-bubblemenu"
    ],
    "markup": "<div id=\"ed\"></div>",
-   "js": "fxEditor(el, {html?}) \u2014 finix-editor.js. Toolbar, selection bubble menu, '/' slash commands, markdown shortcuts (# ## - 1. > ---), word count; .getHTML()"
+   "js": "fxEditor(el, {html?}) — finix-editor.js. Toolbar, selection bubble menu, '/' slash commands, markdown shortcuts (# ## - 1. > ---), word count; .getHTML()"
   },
   {
    "name": "image-cropper",
@@ -922,7 +947,7 @@
     "fx-crop-box"
    ],
    "markup": "<div id=\"crop\"></div>",
-   "js": "fxCropper(el, {src, previewEl, aspect?, onCrop}) \u2014 drag/resize crop box, aspect lock via .setAspect(), canvas preview + .apply()"
+   "js": "fxCropper(el, {src, previewEl, aspect?, onCrop}) — drag/resize crop box, aspect lock via .setAspect(), canvas preview + .apply()"
   },
   {
    "name": "onboarding-checklist",
@@ -933,7 +958,7 @@
     "fx-onboard-title",
     "fx-onboard-desc"
    ],
-   "markup": "<div class=\"fx-onboard-step\" data-done?><span class=\"fx-onboard-dot\">1</span><div>\u2026</div><button>CTA</button></div>",
+   "markup": "<div class=\"fx-onboard-step\" data-done?><span class=\"fx-onboard-dot\">1</span><div>…</div><button>CTA</button></div>",
    "js": "app-level; see demo/widgets.html"
   },
   {
@@ -986,7 +1011,7 @@
     "fx-cot",
     "fx-cot-step"
    ],
-   "markup": "<details class=\"fx-toolcall fx-reasoning\"><summary>Reasoning \u00b7 6.2s</summary><div class=\"fx-cot\"><div class=\"fx-cot-step\" data-active?>\u2026</div></div></details>",
+   "markup": "<details class=\"fx-toolcall fx-reasoning\"><summary>Reasoning · 6.2s</summary><div class=\"fx-cot\"><div class=\"fx-cot-step\" data-active?>…</div></div></details>",
    "js": null
   },
   {
@@ -1017,7 +1042,7 @@
     "fx-tickertape",
     "fx-tick"
    ],
-   "markup": "<div class=\"fx-tickertape\"><div class=\"fx-tickertape-track\">\u2026fx-tick spans, content doubled\u2026</div></div>",
+   "markup": "<div class=\"fx-tickertape\"><div class=\"fx-tickertape-track\">…fx-tick spans, content doubled…</div></div>",
    "js": null
   },
   {
@@ -1029,7 +1054,7 @@
     "fx-ob-spread"
    ],
    "markup": "<div id=\"ob\"></div>",
-   "js": "fxOrderBook(el, {mid, rows, symbol, interval}) \u2014 finix-domains.js; live depth ladder with flash-on-change"
+   "js": "fxOrderBook(el, {mid, rows, symbol, interval}) — finix-domains.js; live depth ladder with flash-on-change"
   },
   {
    "name": "transaction-ledger",
@@ -1075,7 +1100,7 @@
     "fx-mention"
    ],
    "markup": "<div id=\"c\"></div>",
-   "js": "fxComments(el, {comments, people}) \u2014 nesting, reaction toggles, @mention typeahead, posting"
+   "js": "fxComments(el, {comments, people}) — nesting, reaction toggles, @mention typeahead, posting"
   },
   {
    "name": "reviews",
@@ -1095,7 +1120,7 @@
     "fx-org",
     "fx-org-node"
    ],
-   "markup": "nested <ul>/<li> tree of .fx-org-node cards \u2014 pure CSS connectors, no layout engine",
+   "markup": "nested <ul>/<li> tree of .fx-org-node cards — pure CSS connectors, no layout engine",
    "js": null
   },
   {
@@ -1118,7 +1143,7 @@
     "fx-ts-timer"
    ],
    "markup": "<div id=\"ts\"></div>",
-   "js": "fxTimesheet(el, {rows, timerBtn, timerOut}) \u2014 editable grid, live totals, running timer logs on stop"
+   "js": "fxTimesheet(el, {rows, timerBtn, timerOut}) — editable grid, live totals, running timer logs on stop"
   },
   {
    "name": "review-matrix",
@@ -1128,7 +1153,7 @@
     "fx-mark--self",
     "fx-mark--mgr"
    ],
-   "markup": "grid of competency rows \u00d7 5 rating columns with self/manager marks",
+   "markup": "grid of competency rows × 5 rating columns with self/manager marks",
    "js": null
   },
   {
@@ -1209,7 +1234,7 @@
     "fx-jt-count"
    ],
    "markup": "<div id=\"jt\"></div>",
-   "js": "fxJsonTree(el, data, {open:2}) \u2014 collapsible JSON viewer: caret toggles, item/key counts when collapsed, type-colored values, indent guides on --border-soft."
+   "js": "fxJsonTree(el, data, {open:2}) — collapsible JSON viewer: caret toggles, item/key counts when collapsed, type-colored values, indent guides on --border-soft."
   },
   {
    "name": "csv-importer",
@@ -1227,7 +1252,7 @@
     "fx-imp-check"
    ],
    "markup": "<div id=\"importer\"></div>",
-   "js": "fxImporter(el, {targets:[{key,label,required,validate(v)->msg|null}], sampleCsv, onComplete}) \u2014 4-step wizard on fx-stepper: CSV upload/drop (quoted-field parser), auto-matched column mapping (bigram name similarity, one source per target), validation preview with per-cell error highlights + click-to-fix inline editing + error-count chips, simulated import progress -> success state with counts. In js/finix-apps.js."
+   "js": "fxImporter(el, {targets:[{key,label,required,validate(v)->msg|null}], sampleCsv, onComplete}) — 4-step wizard on fx-stepper: CSV upload/drop (quoted-field parser), auto-matched column mapping (bigram name similarity, one source per target), validation preview with per-cell error highlights + click-to-fix inline editing + error-count chips, simulated import progress -> success state with counts. In js/finix-apps.js."
   },
   {
    "name": "funnel-chart",
@@ -1237,7 +1262,7 @@
     "fx-funnel-bar"
    ],
    "markup": "<div id=\"f\"></div>",
-   "js": "fxCharts.funnel(el, {steps:[{name,value}], height}) \u2014 stepped bars with drop-off connector slopes, per-step conversion % vs first step, drop-off labels, hover tooltip. Re-renders on theme/brand change. In demo/charts.js."
+   "js": "fxCharts.funnel(el, {steps:[{name,value}], height}) — stepped bars with drop-off connector slopes, per-step conversion % vs first step, drop-off labels, hover tooltip. Re-renders on theme/brand change. In demo/charts.js."
   },
   {
    "name": "cohort-grid",
@@ -1250,7 +1275,7 @@
     "fx-cohort-void"
    ],
    "markup": "<div id=\"c\"></div>",
-   "js": "fxCharts.cohort(el, {rows:[{label,n,values:[pct...]}], colLabel}) \u2014 triangular retention matrix, sequential chart-1 ramp shading, hover shows absolute users. Re-renders on theme change."
+   "js": "fxCharts.cohort(el, {rows:[{label,n,values:[pct...]}], colLabel}) — triangular retention matrix, sequential chart-1 ramp shading, hover shows absolute users. Re-renders on theme change."
   },
   {
    "name": "feature-flags",
@@ -1296,7 +1321,7 @@
     "fx-tour-dots"
    ],
    "markup": "(created dynamically)",
-   "js": "fxTour([{el:'#selector', title, body}], {onEnd}).start() \u2014 coachmark engine: SVG-mask spotlight cutout that animates between targets, popover with step count/dots/back-next-skip, Esc + arrow keys, scroll-into-view, viewport-clamped placement. In js/finix.js."
+   "js": "fxTour([{el:'#selector', title, body}], {onEnd}).start() — coachmark engine: SVG-mask spotlight cutout that animates between targets, popover with step count/dots/back-next-skip, Esc + arrow keys, scroll-into-view, viewport-clamped placement. In js/finix.js."
   },
   {
    "name": "nps",
@@ -1328,7 +1353,7 @@
     "fx-macro-pop"
    ],
    "markup": "<div id=\"inbox\"></div>",
-   "js": "fxInbox(el, {tickets, macros, agent}) in js/finix-domains.js \u2014 three-pane Zendesk-grade inbox: queue with Open/Mine/Snoozed chips + SLA countdown chips, conversation with customer/agent bubbles + amber internal notes, Reply/Internal-note composer toggle, searchable macro popover ({name} interpolation), snooze/resolve actions, customer context rail (attrs well + fxActivity)."
+   "js": "fxInbox(el, {tickets, macros, agent}) in js/finix-domains.js — three-pane Zendesk-grade inbox: queue with Open/Mine/Snoozed chips + SLA countdown chips, conversation with customer/agent bubbles + amber internal notes, Reply/Internal-note composer toggle, searchable macro popover ({name} interpolation), snooze/resolve actions, customer context rail (attrs well + fxActivity)."
   },
   {
    "name": "sla-chip",
@@ -1368,7 +1393,7 @@
     "fx-msg-composer"
    ],
    "markup": "<div id=\"channel\" style=\"height:28rem\"></div>",
-   "js": "fxMessages(el, {messages:[{author,day,time,body,reactions,thread,unreadBefore}], channel, me}) \u2014 Slack-style: day dividers, consecutive-author grouping (hover timestamp gutter), unread 'New' line, hover action bar (react via fxEmoji / thread / pin), toggleable reaction chips (is-mine), composer with Enter-to-send."
+   "js": "fxMessages(el, {messages:[{author,day,time,body,reactions,thread,unreadBefore}], channel, me}) — Slack-style: day dividers, consecutive-author grouping (hover timestamp gutter), unread 'New' line, hover action bar (react via fxEmoji / thread / pin), toggleable reaction chips (is-mine), composer with Enter-to-send."
   },
   {
    "name": "emoji-picker",
@@ -1380,7 +1405,7 @@
     "fx-emoji-btn"
    ],
    "markup": "(singleton, created on demand)",
-   "js": "fxEmoji.open(anchorEl, (emoji)=>{}) \u2014 searchable categorized picker (~60 curated emoji), viewport-clamped, Esc/outside-click close."
+   "js": "fxEmoji.open(anchorEl, (emoji)=>{}) — searchable categorized picker (~60 curated emoji), viewport-clamped, Esc/outside-click close."
   },
   {
    "name": "facepile",
@@ -1400,7 +1425,7 @@
     "fx-toc-title"
    ],
    "markup": "<nav id=\"toc\"></nav>",
-   "js": "fxToc(el, {target:'#article', scroller:'#article', title}) \u2014 builds links from h2/h3, IntersectionObserver scroll-spy highlights the active section, click smooth-scrolls."
+   "js": "fxToc(el, {target:'#article', scroller:'#article', title}) — builds links from h2/h3, IntersectionObserver scroll-spy highlights the active section, click smooth-scrolls."
   },
   {
    "name": "call-tiles",
@@ -1419,7 +1444,7 @@
     "fx-call-strip"
    ],
    "markup": "<div id=\"call\"></div>",
-   "js": "fxCallTiles(el, {participants:[{name,muted,camera,speaking,self}], screenShare:{by,title}}) \u2014 responsive tile grid with rotating speaking ring (ping animation), mic/cam badges, screen-share hero + filmstrip layout, floating self-tile, mute/cam/present/leave control bar with rejoin."
+   "js": "fxCallTiles(el, {participants:[{name,muted,camera,speaking,self}], screenShare:{by,title}}) — responsive tile grid with rotating speaking ring (ping animation), mic/cam badges, screen-share hero + filmstrip layout, floating self-tile, mute/cam/present/leave control bar with rejoin."
   },
   {
    "name": "payment-form",
@@ -1445,7 +1470,7 @@
     "fx-chart"
    ],
    "markup": "<div id=\"candles\"></div>",
-   "js": "fxCharts.candles(el, {data:[{t,o,h,l,c}], height}) \u2014 wicks, success/destructive up/down coloring, crosshair + OHLC tooltip; theme re-render registered."
+   "js": "fxCharts.candles(el, {data:[{t,o,h,l,c}], height}) — wicks, success/destructive up/down coloring, crosshair + OHLC tooltip; theme re-render registered."
   },
   {
    "name": "printable-doc",
@@ -1462,7 +1487,7 @@
     "fx-doc-foot"
    ],
    "markup": "<div class=\"fx-doc\">(header + bill-to meta + items table + totals + footer)</div>",
-   "js": "A4-styled document frame; @media print isolates .fx-doc (white, full page, chrome hidden) \u2014 trigger with window.print(). Reuse for receipts and packing labels."
+   "js": "A4-styled document frame; @media print isolates .fx-doc (white, full page, chrome hidden) — trigger with window.print(). Reuse for receipts and packing labels."
   },
   {
    "name": "sku-matrix",
@@ -1475,7 +1500,7 @@
     "fx-sku-count"
    ],
    "markup": "<div class=\"fx-tags\" id=\"opt-size\">(pre-rendered tags)</div> <div id=\"sku\"></div>",
-   "js": "fxSkuMatrix(el, {options:[{name,wrap:'#tags'}], prefix, defaults:{price,stock}}) \u2014 watches fx-tags wraps via MutationObserver, regenerates the cartesian variant table live (new rows flash), auto SKU codes, click-to-edit price/stock cells whose edits survive regeneration (keyed by combo)."
+   "js": "fxSkuMatrix(el, {options:[{name,wrap:'#tags'}], prefix, defaults:{price,stock}}) — watches fx-tags wraps via MutationObserver, regenerates the cartesian variant table live (new rows flash), auto SKU codes, click-to-edit price/stock cells whose edits survive regeneration (keyed by combo)."
   },
   {
    "name": "order-detail",
@@ -1505,7 +1530,7 @@
     "fx-approval-time"
    ],
    "markup": "<div id=\"approvals\"></div>",
-   "js": "fxApprovals(el, {stages:[{name,role,state:approved|rejected|current|pending|skipped,time,note}], onChange}) \u2014 vertical approver chain with avatars, state chips, glow on the current stage, approve/reject actions that advance or cascade-skip. In js/finix-domains.js."
+   "js": "fxApprovals(el, {stages:[{name,role,state:approved|rejected|current|pending|skipped,time,note}], onChange}) — vertical approver chain with avatars, state chips, glow on the current stage, approve/reject actions that advance or cascade-skip. In js/finix-domains.js."
   },
   {
    "name": "signature-pad",
@@ -1519,7 +1544,7 @@
     "fx-sig-preview"
    ],
    "markup": "<div id=\"signature\"></div>",
-   "js": "fxSignature(el, {onApply}) in js/finix-editor.js \u2014 Draw tab (pointer canvas, per-stroke undo, DPR-aware) + Type tab (system cursive), Apply -> PNG dataURL preview + callback."
+   "js": "fxSignature(el, {onApply}) in js/finix-editor.js — Draw tab (pointer canvas, per-stroke undo, DPR-aware) + Type tab (system cursive), Apply -> PNG dataURL preview + callback."
   },
   {
    "name": "slot-picker",
@@ -1534,7 +1559,7 @@
     "fx-avail-row"
    ],
    "markup": "<div id=\"slotpicker\"></div>",
-   "js": "fxSlotPicker(el, {title,duration,availability:{weekday:[startUTC,endUTC]},timezones,onBook}) in js/finix-apps.js \u2014 Calendly-style 5-day slot columns, timezone-shifted labels, selected-slot confirm card, api.setAvailability(day,range,on) for a weekly availability editor."
+   "js": "fxSlotPicker(el, {title,duration,availability:{weekday:[startUTC,endUTC]},timezones,onBook}) in js/finix-apps.js — Calendly-style 5-day slot columns, timezone-shifted labels, selected-slot confirm card, api.setAvailability(day,range,on) for a weekly availability editor."
   },
   {
    "name": "permission-matrix",
@@ -1547,7 +1572,7 @@
     "fx-pm-inherit"
    ],
    "markup": "<div id=\"pm\"></div>",
-   "js": "fxPermMatrix(el, {roles, permissions:[{group,items:[{key,label}]}], grants:{role:{perm:true|false|'inherited', __from}}, onChange}) \u2014 role x permission checkbox grid with group headers, inherited-state dots (tooltip names the source role), row+column hover cross-highlight, click-to-toggle."
+   "js": "fxPermMatrix(el, {roles, permissions:[{group,items:[{key,label}]}], grants:{role:{perm:true|false|'inherited', __from}}, onChange}) — role x permission checkbox grid with group headers, inherited-state dots (tooltip names the source role), row+column hover cross-highlight, click-to-toggle."
   },
   {
    "name": "audit-log",
@@ -1563,7 +1588,7 @@
     "fx-audit-detail"
    ],
    "markup": "<div id=\"audit\"></div>",
-   "js": "fxAuditLog(el, {entries:[{time,actor,action:create|update|delete|access,target,ip,before,after}]}) \u2014 mono trail rows with actor avatars and action badges; rows with before/after expand to an inline fxDiff of the JSON change (fxJsonTree fallback)."
+   "js": "fxAuditLog(el, {entries:[{time,actor,action:create|update|delete|access,target,ip,before,after}]}) — mono trail rows with actor avatars and action badges; rows with before/after expand to an inline fxDiff of the JSON change (fxJsonTree fallback)."
   },
   {
    "name": "node-canvas",
@@ -1581,14 +1606,14 @@
     "fx-canvas-zoom"
    ],
    "markup": "<div id=\"canvas\" style=\"height:32rem\"></div>",
-   "js": "fxCanvas(el, {nodes:[{id,x,y,title,sub,icon,status,schema,config}], edges:[{from,to,status}], onSelect}) in js/finix-canvas.js \u2014 pan (bg drag), wheel zoom 0.5-1.5x around cursor, node drag (pointer events), bezier edges with animated dash-flow when running, fx-beam on running nodes, live minimap with viewport rect, zoom bar with fit. api: fit, select, setStatus(id,st), setEdgeStatus(from,to,st). v1 scope: read-and-arrange (no edge re-connection)."
+   "js": "fxCanvas(el, {nodes:[{id,x,y,title,sub,icon,status,schema,config}], edges:[{from,to,status}], onSelect}) in js/finix-canvas.js — pan (bg drag), wheel zoom 0.5-1.5x around cursor, node drag (pointer events), bezier edges with animated dash-flow when running, fx-beam on running nodes, live minimap with viewport rect, zoom bar with fit. api: fit, select, setStatus(id,st), setEdgeStatus(from,to,st). v1 scope: read-and-arrange (no edge re-connection)."
   },
   {
    "name": "schema-form",
    "category": "form",
    "classes": [],
    "markup": "<div id=\"sf\"></div>",
-   "js": "fxSchemaForm(el, {fields:[{key,label,type:text|number|select|toggle|textarea,options,default,desc,mono}]}, values, onChange) \u2014 schema-driven config form used by node-canvas step panels."
+   "js": "fxSchemaForm(el, {fields:[{key,label,type:text|number|select|toggle|textarea,options,default,desc,mono}]}, values, onChange) — schema-driven config form used by node-canvas step panels."
   },
   {
    "name": "run-history",
@@ -1621,7 +1646,7 @@
     "fx-issues-foot"
    ],
    "markup": "<div id=\"issues\"></div>",
-   "js": "fxIssues(el, {issues:[{id,title,status:progress|review|todo|backlog|done,priority:urgent|high|medium|low|none,labels:[{name,color}],assignee,updated}], groups}) in js/finix-apps.js \u2014 Linear-density rows: priority glyphs, status dots (dashed/outline/half/check), mono IDs, dot-label chips, hover action bar; keyboard j/k cursor, x select, Esc clear, Enter open; selection footer."
+   "js": "fxIssues(el, {issues:[{id,title,status:progress|review|todo|backlog|done,priority:urgent|high|medium|low|none,labels:[{name,color}],assignee,updated}], groups}) in js/finix-apps.js — Linear-density rows: priority glyphs, status dots (dashed/outline/half/check), mono IDs, dot-label chips, hover action bar; keyboard j/k cursor, x select, Esc clear, Enter open; selection footer."
   },
   {
    "name": "kanban-swimlanes",
@@ -1648,7 +1673,7 @@
     "fx-recon-sug-meta"
    ],
    "markup": "<div id=\"recon\"></div>",
-   "js": "fxRecon(el, {feed:[{date,desc,amount,suggestions:[{name,ref,date,amount,confidence}]}]}) in js/finix-domains.js \u2014 fx-split pane: bank feed rows (signed mono amounts, matched check + fade) vs suggested matches with confidence badges (>=90 success, >=60 warning), confirm advances to next unmatched, running matched-total progress meter."
+   "js": "fxRecon(el, {feed:[{date,desc,amount,suggestions:[{name,ref,date,amount,confidence}]}]}) in js/finix-domains.js — fx-split pane: bank feed rows (signed mono amounts, matched check + fade) vs suggested matches with confidence badges (>=90 success, >=60 warning), confirm advances to next unmatched, running matched-total progress meter."
   },
   {
    "name": "accounts-tree",
@@ -1663,7 +1688,7 @@
     "fx-coa-bal"
    ],
    "markup": "<div id=\"coa\"></div>",
-   "js": "fxAccountsTree(el, {tree:[{name,code,balance,children}], open}) \u2014 expandable hierarchy table with indent guides, animated carets, recursive rollup sums in mono (negatives destructive)."
+   "js": "fxAccountsTree(el, {tree:[{name,code,balance,children}], open}) — expandable hierarchy table with indent guides, animated carets, recursive rollup sums in mono (negatives destructive)."
   },
   {
    "name": "trace-waterfall",
@@ -1681,7 +1706,7 @@
     "fx-tw-axis"
    ],
    "markup": "<div id=\"trace\"></div>",
-   "js": "fxTraceWaterfall(el, {spans:[{name,service,start,dur,error,children}]}) \u2014 nested spans on a shared ms axis, service-colored bars (error spans destructive), duration labels, click-to-collapse subtrees, hover detail tooltip."
+   "js": "fxTraceWaterfall(el, {spans:[{name,service,start,dur,error,children}]}) — nested spans on a shared ms axis, service-colored bars (error spans destructive), duration labels, click-to-collapse subtrees, hover detail tooltip."
   },
   {
    "name": "time-heatmap",
@@ -1691,7 +1716,7 @@
     "fx-cohort-cell"
    ],
    "markup": "<div id=\"th\"></div>",
-   "js": "fxCharts.timeheat(el, {rows, cols, values, label}) \u2014 time x dimension heat grid on the chart-1 sequential ramp with hover counts; theme re-render registered."
+   "js": "fxCharts.timeheat(el, {rows, cols, values, label}) — time x dimension heat grid on the chart-1 sequential ramp with hover counts; theme re-render registered."
   },
   {
    "name": "alert-rule",
@@ -1701,7 +1726,7 @@
     "fx-slider"
    ],
    "markup": "<div id=\"chart\"></div> + range input",
-   "js": "fxCharts.area now takes opts.threshold {value,label} (dashed destructive rule line + label); fxCharts.refresh(el) re-renders a registered chart after mutating opts \u2014 wire to a slider for a live alert-rule builder."
+   "js": "fxCharts.area now takes opts.threshold {value,label} (dashed destructive rule line + label); fxCharts.refresh(el) re-renders a registered chart after mutating opts — wire to a slider for a live alert-rule builder."
   },
   {
    "name": "announcement-bar",
@@ -1916,7 +1941,7 @@
    "classes": [
     "fx-mk-band"
    ],
-   "markup": "<div class=fx-mk-band>(h2 + lede + CTA row + click-trigger microcopy)</div> \u2014 radial primary glow, one per page",
+   "markup": "<div class=fx-mk-band>(h2 + lede + CTA row + click-trigger microcopy)</div> — radial primary glow, one per page",
    "js": null
   },
   {
@@ -1956,6 +1981,476 @@
    ],
    "markup": "<div data-mk-countdown=\"2026-09-08T16:00:00Z\"></div>",
    "js": "Auto-renders DD/HH/MM/SS cells, ticks every second with a bump on change; reduced-motion skips the bump."
+  },
+  {
+   "name": "pipeline-board",
+   "category": "crm",
+   "classes": [
+    "fx-crm-pipe",
+    "fx-crm-lanes",
+    "fx-crm-stage",
+    "fx-crm-deal",
+    "fx-crm-place",
+    "fx-crm-pipe-foot",
+    "fx-crm-kpi"
+   ],
+   "markup": "<div id=\"pipeline\"></div>",
+   "js": "fxPipeline(el, {stages:[{id,name,prob}], deals:[{id,name,company,value,stage,closes,owner,late}], winRate, onMove}) — weighted board; pointer-drag deals between stages, stage sums + weighted forecast footer recompute live; api.moveDeal(id, stageId), api.totals()."
+  },
+  {
+   "name": "lead-score",
+   "category": "crm",
+   "classes": [
+    "fx-crm-score",
+    "fx-crm-score--sm",
+    "fx-crm-factors",
+    "fx-crm-factor"
+   ],
+   "markup": "<button class=\"fx-crm-score\" popovertarget=\"pop-id\"></button><div class=\"fx-menu\" popover id=\"pop-id\"></div>",
+   "js": "fxScore(el, {score:0-100, size, factors:[{label,delta}], popover:\"#pop-id\"}) — conic ring sweeps in, cold/warm/hot ramps at 40/70; factors fill the popover breakdown."
+  },
+  {
+   "name": "quote-builder",
+   "category": "crm",
+   "classes": [
+    "fx-crm-quote",
+    "fx-crm-quote-totals",
+    "fx-crm-total",
+    "fx-crm-margin"
+   ],
+   "markup": "<div id=\"quote\"></div>",
+   "js": "fxQuote(el, {products:[{id,name,price,cost}], lines, taxRate, approvalThreshold, onApproval}) — CPQ line items w/ live subtotal/discount/tax/total + margin meter; discount past threshold flags approval; api.totals(), api.lines."
+  },
+  {
+   "name": "contact-360",
+   "category": "crm",
+   "classes": [
+    "fx-crm-contacts",
+    "fx-crm-contact",
+    "fx-crm-360",
+    "fx-crm-attrs",
+    "fx-crm-attr",
+    "fx-crm-rail",
+    "fx-crm-nba",
+    "fx-crm-mini-deal"
+   ],
+   "markup": "<div class=\"fx-split\" data-fx-split>(contact list | fx-crm-360 grid: profile + attrs + tabs | rail)</div>",
+   "js": "Composition recipe: fx-split + fxActivity + fxScore; [data-editable] dd swaps to input on click (see demo/crm.html)."
+  },
+  {
+   "name": "watchlist",
+   "category": "trading",
+   "classes": [
+    "fx-tr-watch",
+    "fx-tr-wrow",
+    "fx-tr-sym",
+    "fx-tr-exch",
+    "fx-tr-ltp",
+    "fx-tr-chg"
+   ],
+   "markup": "<div id=\"watchlist\"></div>",
+   "js": "fxWatchlist(el, {symbols:[{sym,exch,ltp,prev}], selected, onSelect, onTick}) — live tick sim w/ price flashes + inline SVG sparks, add-symbol input, active-row routing."
+  },
+  {
+   "name": "order-ticket",
+   "category": "trading",
+   "classes": [
+    "fx-tr-ticket",
+    "fx-tr-side",
+    "fx-tr-seg",
+    "fx-tr-margin",
+    "fx-tr-submit"
+   ],
+   "markup": "<div id=\"order-ticket\"></div>",
+   "js": "fxOrderTicket(el, {symbol, ltp, qty, available, onOrder}) — buy/sell accent swap, MARKET/LIMIT/SL/SL-M, MIS 5x / CNC 1x product, live margin math + insufficient guard; api.setSymbol/setLtp/getMargin."
+  },
+  {
+   "name": "option-chain",
+   "category": "trading",
+   "classes": [
+    "fx-tr-chain-wrap",
+    "fx-tr-chain",
+    "fx-tr-oi"
+   ],
+   "markup": "<div id=\"option-chain\"></div>",
+   "js": "fxOptionChain(el, {spot, step}) — CALLS|strike|PUTS ladder, ITM shading both sides, ATM row highlight, OI micro-bars; api.setSpot(v) re-renders."
+  },
+  {
+   "name": "market-depth",
+   "category": "trading",
+   "classes": [
+    "fx-tr-depth",
+    "fx-tr-drow",
+    "fx-tr-spread"
+   ],
+   "markup": "<div id=\"depth\"></div>",
+   "js": "fxDepth(el, {ltp}) — 5-level bid/ask ladder w/ qty bars, totals + spread; api.tick(ltp)."
+  },
+  {
+   "name": "positions",
+   "category": "trading",
+   "classes": [
+    "fx-tr-table-wrap",
+    "fx-tr-table",
+    "fx-tr-prod"
+   ],
+   "markup": "<div id=\"positions\"></div>",
+   "js": "fxPositions(el, {mode:\"positions\"|\"holdings\", rows, onExit}) — live P&L ((ltp-avg)*qty incl. shorts), Exit square-off, tfoot totals; holdings adds invested/current/returns; api.tick(sym, ltp)."
+  },
+  {
+   "name": "order-blotter",
+   "category": "trading",
+   "classes": [
+    "fx-tr-bs"
+   ],
+   "markup": "<div id=\"blotter\"></div>",
+   "js": "fxBlotter(el) — api.add(order) prepends row; open orders fill after a beat (cancellable while open)."
+  },
+  {
+   "name": "gtt-alerts",
+   "category": "trading",
+   "classes": [
+    "fx-tr-gtt",
+    "fx-tr-grow",
+    "fx-tr-gnew"
+   ],
+   "markup": "<div class=\"fx-tr-gtt\">(rows)</div><div class=\"fx-tr-gnew\">(symbol select + condition + price + Add)</div>",
+   "js": "Pattern: static rows + inline composer (see demo/trading.html)."
+  },
+  {
+   "name": "wizard",
+   "category": "flows",
+   "classes": [
+    "fx-wiz",
+    "fx-wiz-rail",
+    "fx-wiz-node",
+    "fx-wiz-dot",
+    "fx-wiz-sec",
+    "fx-wiz-foot",
+    "fx-wiz-review",
+    "fx-wiz-rgroup",
+    "fx-wiz-done"
+   ],
+   "markup": "<div id=\"wiz\"><section data-step=\"a\" data-title=\"Step A\">(fields)</section><section data-step=\"review\" data-title=\"Review\"><div data-review></div></section><section data-step=\"done\">(success)</section></div>",
+   "js": "fxWizard(el, {storageKey, focus, next:{step:fn(values)}, validate:{step:fn}, onShow, onFinish, onResume}) — rail w/ done/active/skipped, native+custom validation, branching, auto review (data-secret masks, data-label overrides), localStorage save-and-resume; api.go/next/back/values."
+  },
+  {
+   "name": "wizard-survey-mode",
+   "category": "flows",
+   "classes": [
+    "fx-wiz--focus",
+    "fx-wiz-bar",
+    "fx-wiz-hint"
+   ],
+   "markup": "<div id=\"survey\">(sections with fx-wiz-choices)</div> + fxWizard(el, {focus:true})",
+   "js": "Typeform-style one-question-per-screen: hairline progress, Enter advances (Shift+Enter newline in textarea), A–D keys answer choices, choices auto-advance."
+  },
+  {
+   "name": "choice-cards",
+   "category": "flows",
+   "classes": [
+    "fx-wiz-choices",
+    "fx-wiz-choice",
+    "fx-wiz-key",
+    "fx-wiz-price"
+   ],
+   "markup": "<label class=\"fx-wiz-choice\"><input type=\"radio\" name=\"x\" value=\"v\" data-display=\"Label — $9\"><span class=\"fx-wiz-key\">A</span><div><b>Label</b><small>desc</small></div><span class=\"fx-wiz-price\">$9</span></label>",
+   "js": "Radio cards w/ key hints + :has(:checked) selection ring; data-display feeds the wizard review step."
+  },
+  {
+   "name": "upload-cards",
+   "category": "flows",
+   "classes": [
+    "fx-wiz-files",
+    "fx-wiz-file",
+    "fx-wiz-file-bar",
+    "fx-wiz-cam"
+   ],
+   "markup": "<div class=\"fx-wiz-file\" data-fake-upload=\"pan\" data-file=\"doc.pdf\">(icon + name + note + progress bar + badge)</div>",
+   "js": "KYC document cards: progress -> verified badge, is-rejected state w/ reason + re-upload (demo wiring in flows.html)."
+  },
+  {
+   "name": "phone-frame",
+   "category": "mobile",
+   "classes": [
+    "fx-phone",
+    "fx-phone-screen",
+    "fx-phone-island",
+    "fx-phone-status",
+    "fx-phone-body",
+    "fx-phone-homebar"
+   ],
+   "markup": "<div class=\"fx-phone\"><div class=\"fx-phone-screen\"><div class=\"fx-phone-body\">(screen)</div></div></div>",
+   "js": "CSS device frame; .fx-phone-screen is a container-query context (container-type:inline-size) so components adapt to frame width — no iframes. Body children need flex-shrink:0 to overflow-scroll."
+  },
+  {
+   "name": "tab-bar",
+   "category": "mobile",
+   "classes": [
+    "fx-m-tabbar",
+    "fx-m-tab",
+    "fx-m-tab-dot"
+   ],
+   "markup": "<div class=\"fx-m-tabbar\" data-m-tabbar><button class=\"fx-m-tab\" aria-current=\"true\">(svg)Home</button>…</div>",
+   "js": "Auto-wired: click switches aria-current; badge dot via .fx-m-tab-dot."
+  },
+  {
+   "name": "bottom-sheet",
+   "category": "mobile",
+   "classes": [
+    "fx-m-sheet",
+    "fx-m-sheet-grab",
+    "fx-m-sheet-handle",
+    "fx-m-scrim"
+   ],
+   "markup": "<div class=\"fx-m-scrim\"></div><div class=\"fx-m-sheet\"><div class=\"fx-m-sheet-grab\">(handle+title)</div><div class=\"fx-m-sheet-body\">…</div></div>",
+   "js": "fxSheet(el, {snaps:[0.46,0.88], scrim}) — pointer-drag between snap points + closed; api.open(i)/close; scrim click closes."
+  },
+  {
+   "name": "grouped-list",
+   "category": "mobile",
+   "classes": [
+    "fx-m-list",
+    "fx-m-row",
+    "fx-m-ic",
+    "fx-m-group-label",
+    "fx-m-chev"
+   ],
+   "markup": "<div class=\"fx-m-group-label\">Section</div><div class=\"fx-m-list\"><button class=\"fx-m-row\"><span class=\"fx-m-ic\">(svg)</span><span class=\"fx-m-row-main\"><b>Title</b><small>sub</small></span><span class=\"fx-m-row-val\">value</span></button></div>",
+   "js": "iOS-style inset groups; rows take switches, values, chevrons."
+  },
+  {
+   "name": "swipe-row",
+   "category": "mobile",
+   "classes": [
+    "fx-m-swipe",
+    "fx-m-swipe-under",
+    "fx-m-swipe-act",
+    "fx-m-swipe-row"
+   ],
+   "markup": "<div class=\"fx-m-swipe\"><div class=\"fx-m-swipe-under\"><button class=\"fx-m-swipe-act archive\" data-act=\"archive\">…</button><button class=\"fx-m-swipe-act delete\" data-act=\"delete\">…</button></div><div class=\"fx-m-swipe-row\">(row content)</div></div>",
+   "js": "Auto-init: pointer-drag left reveals actions, snap open/close, one open at a time; delete/archive collapses + removes the row."
+  },
+  {
+   "name": "fab-speed-dial",
+   "category": "mobile",
+   "classes": [
+    "fx-m-fab",
+    "fx-m-dial"
+   ],
+   "markup": "<div class=\"fx-m-dial\" id=\"dial\"><button>(svg)Action</button>…</div><button class=\"fx-m-fab\" data-m-fab=\"#dial\">(plus svg)</button>",
+   "js": "FAB toggles the dial w/ staggered pill reveal; icon rotates 45°."
+  },
+  {
+   "name": "large-title-nav",
+   "category": "mobile",
+   "classes": [
+    "fx-m-nav",
+    "fx-m-nav-bar",
+    "fx-m-nav-title",
+    "fx-m-large"
+   ],
+   "markup": "<div class=\"fx-m-nav\"><div class=\"fx-m-nav-bar\"><span class=\"fx-m-nav-title\">Home</span></div></div><div class=\"fx-m-large\">Home</div>",
+   "js": "Auto-wired inside .fx-phone-body: scrolling past 30px adds .is-collapsed (compact blurred title fades in)."
+  },
+  {
+   "name": "pull-to-refresh",
+   "category": "mobile",
+   "classes": [
+    "fx-m-ptr"
+   ],
+   "markup": "<div class=\"fx-phone-body\" data-m-refresh>…</div>",
+   "js": "Pointer-drag down at scrollTop 0 arms a spinner; release spins ~1s then fires a bubbling \"fx-refresh\" CustomEvent."
+  },
+  {
+   "name": "mobile-chat",
+   "category": "mobile",
+   "classes": [
+    "fx-m-chat",
+    "fx-m-bub",
+    "fx-m-composer",
+    "fx-m-send",
+    "fx-m-seg",
+    "fx-m-stats",
+    "fx-m-numpad"
+   ],
+   "markup": "<div class=\"fx-m-chat\"><div class=\"fx-m-bub\">them</div><div class=\"fx-m-bub me\">me</div></div><div class=\"fx-m-composer\">(input + send)</div>",
+   "js": "Chat bubbles + blur composer; fx-m-seg segmented control and fx-m-stats (container-query 2-col) ship in the same module."
+  },
+  {
+   "name": "product-card",
+   "category": "commerce",
+   "classes": [
+    "fx-shop-card",
+    "fx-shop-art",
+    "fx-shop-glyph",
+    "fx-shop-heart",
+    "fx-shop-quick",
+    "fx-shop-price",
+    "fx-shop-stars"
+   ],
+   "markup": "fxShopCard(product) -> HTML string",
+   "js": "Gradient art tile (--_h1/--_h2 hues + glyph — no images), wishlist heart, hover quick-add, price w/ compare-at strike + % off."
+  },
+  {
+   "name": "shop-grid-filters",
+   "category": "commerce",
+   "classes": [
+    "fx-shop-layout",
+    "fx-shop-rail",
+    "fx-shop-fgroup",
+    "fx-shop-check",
+    "fx-shop-hist",
+    "fx-shop-swatch",
+    "fx-shop-chips",
+    "fx-shop-chip",
+    "fx-shop-grid"
+   ],
+   "markup": "<div class=\"fx-shop-layout\"><aside class=\"fx-shop-rail\" id=\"rail\">(category checks [data-f-cat], price slider [data-f-price] + [data-f-hist], color swatches [data-f-color], rating radios [data-f-rating])</aside><div><div class=\"fx-shop-grid\" id=\"grid\"></div></div></div>",
+   "js": "fxShopGrid(gridEl, {rail, chipsEl, countEl, sortEl}) — live client-side filter/sort, applied chips w/ clear, histogram shades out-of-range buckets; card click -> product.html?id=."
+  },
+  {
+   "name": "cart-drawer",
+   "category": "commerce",
+   "classes": [
+    "fx-shop-drawer",
+    "fx-shop-item",
+    "fx-shop-meter",
+    "fx-shop-subtotal",
+    "fx-shop-cartbtn"
+   ],
+   "markup": "<button data-shop-cart class=\"fx-btn fx-btn--outline fx-btn--icon fx-shop-cartbtn\">(bag svg)<span data-shop-count hidden>0</span></button>",
+   "js": "fxShopCart (singleton, localStorage-shared across pages): add(id,{qty,variant}), qty steppers, remove, free-shipping progress meter (threshold $150), subtotal, badge sync on [data-shop-count]; drawer + scrim auto-injected."
+  },
+  {
+   "name": "pdp-gallery-variants",
+   "category": "commerce",
+   "classes": [
+    "fx-shop-pdp",
+    "fx-shop-gallery",
+    "fx-shop-main",
+    "fx-shop-thumb",
+    "fx-shop-sizes",
+    "fx-shop-size",
+    "fx-shop-qty",
+    "fx-shop-usp",
+    "fx-shop-hrow",
+    "fx-shop-review"
+   ],
+   "markup": "(see demo/site/product.html)",
+   "js": "PDP recipe: hue-shifted thumbs crossfade the main tile, size boxes w/ disabled OOS, swatch picker, qty stepper, review histogram bars (--_w)."
+  },
+  {
+   "name": "balance-hero",
+   "category": "banking",
+   "classes": [
+    "fx-bank-hero",
+    "fx-bank-balance",
+    "fx-bank-eye",
+    "fx-bank-flow",
+    "fx-bank-acct",
+    "fx-bank-util"
+   ],
+   "markup": "(balance + eye toggle + in/out flow chips + account cards w/ utilization bar)",
+   "js": "Pattern: mask/unmask toggle; .fx-bank-util is-warn/is-high ramps (see demo/banking.html)."
+  },
+  {
+   "name": "transaction-feed",
+   "category": "banking",
+   "classes": [
+    "fx-bank-txn",
+    "fx-bank-day",
+    "fx-bank-catchip",
+    "fx-bank-amt",
+    "fx-bank-run"
+   ],
+   "markup": "<div id=\"feed\"></div>",
+   "js": "fxBankFeed(el, {balance, txns:[{name,cat,glyph,day,time,amount,pending}], onBalance}) — day groups w/ net totals, search + category chip filters, running-balance column; api.add(txn) prepends + updates closing balance."
+  },
+  {
+   "name": "virtual-card",
+   "category": "banking",
+   "classes": [
+    "fx-bank-card",
+    "fx-bank-chip",
+    "fx-bank-pan",
+    "fx-bank-cvv",
+    "fx-bank-frost",
+    "fx-bank-ctl",
+    "fx-bank-limit"
+   ],
+   "markup": "<div id=\"vcard\"></div>",
+   "js": "fxBankCard(el, {last4, holder, exp, cvv}) — card visual; press-and-hold CVV reveal (550ms), api.freeze(bool) frosts the card; pair with fx-bank-ctl switch rows + fx-bank-limit sliders."
+  },
+  {
+   "name": "transfer-flow",
+   "category": "banking",
+   "classes": [
+    "fx-bank-recips",
+    "fx-bank-recip",
+    "fx-bank-amount",
+    "fx-bank-pad",
+    "fx-bank-review"
+   ],
+   "markup": "<div id=\"transfer\"></div>",
+   "js": "fxTransfer(el, {recipients:[{ini,name,vpa}], max, onSend}) — recipient picker, keypad + quick amounts, review (fee/arrival), send w/ stateful button; onSend gets {to, amount} to mutate feed + balance."
+  },
+  {
+   "name": "budget-rings",
+   "category": "banking",
+   "classes": [
+    "fx-bank-budgets",
+    "fx-bank-budget",
+    "fx-bank-ring"
+   ],
+   "markup": "<div id=\"budgets\"></div>",
+   "js": "fxBankBudgets(el, {cats:[{name,glyph,spent,limit}]}) — conic spend rings; >100% flips destructive."
+  },
+  {
+   "name": "bills-upi",
+   "category": "banking",
+   "classes": [
+    "fx-bank-bill",
+    "fx-bank-due",
+    "fx-bank-qr"
+   ],
+   "markup": "(bill rows w/ due chips + pay buttons; CSS QR + VPA input + verify)",
+   "js": "Pattern: .fx-bank-due is-soon/is-over urgency ramp; QR is pure CSS repeating gradients (see demo/banking.html)."
+  },
+  {
+   "name": "incident-queue",
+   "category": "ops",
+   "classes": [
+    "fx-ops-inc",
+    "fx-ops-sev",
+    "fx-ops-age"
+   ],
+   "markup": "<div class=\"fx-ops-inc\" data-inc=\"0\"><span class=\"fx-ops-sev s1\">SEV1</span><span class=\"fx-ops-inc-main\"><b>Title</b><small>service · started</small></span>(status badge)(age)</div>",
+   "js": "Pattern: click loads detail (fxActivity timeline + update composer that posts events / flips status — see demo/ops.html)."
+  },
+  {
+   "name": "oncall-rotation",
+   "category": "ops",
+   "classes": [
+    "fx-ops-rota",
+    "fx-ops-shift",
+    "fx-ops-now",
+    "fx-ops-rota-scale"
+   ],
+   "markup": "<div class=\"fx-ops-rota\"><div class=\"fx-ops-shift\" style=\"flex:8\">Name</div>…</div>",
+   "js": "Shift blocks sized by flex; .is-now highlights; position an .fx-ops-now marker at (hour/24*100)%."
+  },
+  {
+   "name": "status-page",
+   "category": "ops",
+   "classes": [
+    "fx-ops-banner",
+    "fx-ops-banner-dot",
+    "fx-ops-svc",
+    "fx-ops-past"
+   ],
+   "markup": "(banner + per-service fx-tracker uptime bars + uptime % + past incidents — see demo/site/status.html)",
+   "js": "Public status recipe: fx-tracker spans w/ data-state=degraded|down + computed uptime %; subscribe reuses the fx-mk waitlist capture."
   }
  ]
 }

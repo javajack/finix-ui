@@ -72,6 +72,18 @@ Marketing kit (css/finix-marketing.css + js/finix-marketing.js, fx-mk-* namespac
 - Command palette v2: fuzzy matching + Recent group (localStorage).
 - AI assistant page (demo/ai.html): fx-ai layout, fx-toolcall collapsible blocks, fx-approval cards, fx-branch picker, fx-prose markdown styles.
 
+## Industry & mobile modules (v0.4)
+
+All optional, all namespaced; include the module's css+js and go.
+
+- CRM (css/finix-crm.css + js/finix-crm.js, fx-crm-*): fxPipeline(el,{stages,deals,winRate,onMove}) weighted pipeline board w/ pointer-drag + live rollups; fxScore(el,{score,factors,popover}) lead-score ring; fxQuote(el,{products,lines,taxRate,approvalThreshold,onApproval}) CPQ w/ live math + approval gate; contact-360 recipe on fx-split (demo/crm.html).
+- Trading (css/finix-trading.css + js/finix-trading.js, fx-tr-*): fxWatchlist (live ticks + sparks), fxOrderTicket (margin math, MIS/CNC, SL types), fxOptionChain (ITM shading, ATM row, OI bars, setSpot), fxDepth (5-level book), fxPositions (positions/holdings P&L, Exit), fxBlotter (filling order log). Terminal layout: demo/trading.html.
+- Flows (css/finix-flows.css + js/finix-flows.js, fx-wiz-*): fxWizard(el,{storageKey,focus,next,validate,onFinish}) — declarative [data-step] sections, rail, branching, native+custom validation, auto review step (data-label/data-secret), localStorage resume, focus/survey mode w/ keyboard advance. Checkout/KYC/survey demos: demo/flows.html.
+- Mobile (css/finix-mobile.css + js/finix-mobile.js, fx-m-*): .fx-phone device frame w/ container-query screens; fxSheet snap bottom sheet; auto-wired swipe rows, tab bar, FAB speed dial ([data-m-fab]), large-title collapse, pull-to-refresh ([data-m-refresh] → "fx-refresh" event); grouped lists, segmented, chat bubbles, numpad. Six composed screens: demo/mobile.html.
+- Shop (css/finix-shop.css + js/finix-shop.js, fx-shop-*, public web): FX_PRODUCTS catalog, fxShopCard renderer (CSS gradient art — no images), fxShopGrid live PLP filters (chips/histogram/swatches/rating/sort), fxShopCart localStorage cart + drawer w/ free-shipping meter, PDP recipe w/ variants. Pages: demo/site/store.html + product.html?id=.
+- Banking (css/finix-bank.css + js/finix-bank.js, fx-bank-*): fxBankFeed (day groups, running balance, category chips, api.add), fxBankCard (freeze + hold-to-reveal CVV), fxTransfer (recipients + keypad + review + onSend), fxBankBudgets rings; balance hero, bill rows, CSS UPI QR. Page: demo/banking.html.
+- Ops (fx-ops-* in css/finix-devtools.css): incident queue rows + SEV chips, on-call rotation strip w/ now marker, escalation on fx-stages; public status page recipe (fx-ops-banner + fx-tracker uptime bars + computed %). Pages: demo/ops.html + demo/site/status.html.
+
 ## Files
 
 - manifest.json: machine-readable registry — every component with its classes, markup snippet, and JS hook.
@@ -79,7 +91,7 @@ Marketing kit (css/finix-marketing.css + js/finix-marketing.js, fx-mk-* namespac
 - css/finix.css: primitives (buttons, forms, tables, tabs, menus, dialogs, toasts, steppers, trees, calendars…).
 - css/finix-widgets.css: composites (app shell/sidebar/topbar, stat cards, tracker, bar list, kanban, chat, chart chrome).
 - js/finix.js: all behaviors, delegated; safe on dynamic DOM for click-driven features.
-- demo/: full admin template, 18 pages — dashboard, forms, data, overlays, feedback, charts, projects, ai, support, business, devtools, workflow, people, collab, editor, motion, auth, research.
+- demo/: full admin template, 24 pages — dashboard, forms, data, overlays, feedback, charts, projects, flows, ai, mobile, crm, trading, banking, support, business, devtools, workflow, people, collab, ops, editor, motion, auth, research — plus a 6-page public site (demo/site/: home, launch, pricing, store, product, status).
 - demo/charts.js: optional dependency-free SVG charts — fxCharts.area/bars/donut/spark(el, opts); re-render on theme change.
 
 ## Provenance

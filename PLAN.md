@@ -208,7 +208,7 @@ Composes T1 + T2. Zendesk/Intercom-grade split-pane:
   buttons, timezone select, selected-slot confirm card. Weekly availability
   editor (per-day ranges + copy-to-all) beside it.
 
-### T15. Identity & audit → devtools.html
+### ✅ T15. Identity & audit → devtools.html
 - `fx-permmatrix`: role × permission checkbox grid w/ inherited-state dots and
   column/row hover cross-highlight.
 - Audit log: fxLogTable variant with actor/action/target formatting + row

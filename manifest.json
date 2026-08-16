@@ -1535,6 +1535,35 @@
    ],
    "markup": "<div id=\"slotpicker\"></div>",
    "js": "fxSlotPicker(el, {title,duration,availability:{weekday:[startUTC,endUTC]},timezones,onBook}) in js/finix-apps.js \u2014 Calendly-style 5-day slot columns, timezone-shifted labels, selected-slot confirm card, api.setAvailability(day,range,on) for a weekly availability editor."
+  },
+  {
+   "name": "permission-matrix",
+   "category": "devtools",
+   "classes": [
+    "fx-permmatrix",
+    "fx-pm-group",
+    "fx-pm-perm",
+    "fx-pm-cell",
+    "fx-pm-inherit"
+   ],
+   "markup": "<div id=\"pm\"></div>",
+   "js": "fxPermMatrix(el, {roles, permissions:[{group,items:[{key,label}]}], grants:{role:{perm:true|false|'inherited', __from}}, onChange}) \u2014 role x permission checkbox grid with group headers, inherited-state dots (tooltip names the source role), row+column hover cross-highlight, click-to-toggle."
+  },
+  {
+   "name": "audit-log",
+   "category": "devtools",
+   "classes": [
+    "fx-audit",
+    "fx-audit-item",
+    "fx-audit-row",
+    "fx-audit-time",
+    "fx-audit-actor",
+    "fx-audit-action",
+    "fx-audit-target",
+    "fx-audit-detail"
+   ],
+   "markup": "<div id=\"audit\"></div>",
+   "js": "fxAuditLog(el, {entries:[{time,actor,action:create|update|delete|access,target,ip,before,after}]}) \u2014 mono trail rows with actor avatars and action badges; rows with before/after expand to an inline fxDiff of the JSON change (fxJsonTree fallback)."
   }
  ]
 }

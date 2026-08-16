@@ -362,4 +362,93 @@
       }
     });
   });
+
+  /* ---------- permission matrix ---------- */
+  window.fxPermMatrix = function (root, opts) {
+    const roles = opts.roles || [];
+    const groups = opts.permissions || [];
+    const grants = opts.grants || {};
+    function render() {
+      root.classList.add("fx-permmatrix");
+      root.innerHTML = `<table>
+        <thead><tr><th>Permission</th>${roles.map((r, c) => `<th data-col="${c}">${r}</th>`).join("")}</tr></thead>
+        <tbody>
+          ${groups.map((g) =>
+            `<tr class="fx-pm-group"><td colspan="${roles.length + 1}">${g.group}</td></tr>` +
+            g.items.map((it) => `<tr>
+              <td class="fx-pm-perm">${it.label}</td>
+              ${roles.map((r, c) => {
+                const v = grants[r]?.[it.key];
+                return `<td class="fx-pm-cell" data-col="${c}" data-role="${r}" data-perm="${it.key}" ${v === "inherited" ? `data-fx-tip="Inherited from ${grants[r].__from || "parent role"}"` : ""}>
+                  ${v === "inherited"
+                    ? '<span class="fx-pm-inherit"></span>'
+                    : `<input type="checkbox" class="fx-checkbox" ${v ? "checked" : ""} tabindex="-1">`}
+                </td>`;
+              }).join("")}
+            </tr>`).join("")
+          ).join("")}
+        </tbody></table>`;
+    }
+    root.addEventListener("pointerover", (e) => {
+      const cell = e.target.closest("[data-col]");
+      root.querySelectorAll(".is-colhover").forEach((c) => c.classList.remove("is-colhover"));
+      if (cell) root.querySelectorAll(`[data-col="${cell.dataset.col}"]`).forEach((c) => c.classList.add("is-colhover"));
+    });
+    root.addEventListener("pointerleave", () => root.querySelectorAll(".is-colhover").forEach((c) => c.classList.remove("is-colhover")));
+    root.addEventListener("click", (e) => {
+      const cell = e.target.closest(".fx-pm-cell");
+      if (!cell) return;
+      const { role, perm } = cell.dataset;
+      const cur = grants[role]?.[perm];
+      if (cur === "inherited") return;
+      (grants[role] = grants[role] || {})[perm] = !cur;
+      cell.innerHTML = `<input type="checkbox" class="fx-checkbox" ${!cur ? "checked" : ""} tabindex="-1">`;
+      opts.onChange?.(role, perm, !cur);
+    });
+    render();
+    return { render, grants };
+  };
+
+  /* ---------- audit log ---------- */
+  window.fxAuditLog = function (root, opts) {
+    const entries = opts.entries || [];
+    const ini = (n) => n.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+    root.classList.add("fx-audit");
+    root.innerHTML = entries.map((en, i) => `
+      <div class="fx-audit-item">
+        <button class="fx-audit-row" data-ai="${i}" ${en.before || en.after ? "" : "disabled"}>
+          <svg class="fx-audit-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ${en.before || en.after ? "" : 'style="visibility:hidden"'}><path d="m9 18 6-6-6-6"/></svg>
+          <span class="fx-audit-time">${en.time}</span>
+          <span class="fx-audit-actor"><span class="fx-avatar fx-avatar--sm">${ini(en.actor)}</span><b>${en.actor}</b></span>
+          <span class="fx-audit-action is-${en.action}">${en.action}</span>
+          <span class="fx-audit-target">${en.target}</span>
+          <span class="fx-audit-ip">${en.ip || ""}</span>
+        </button>
+        <div class="fx-audit-detail" data-detail="${i}"></div>
+      </div>`).join("");
+    root.addEventListener("click", (e) => {
+      const row = e.target.closest("[data-ai]");
+      if (!row || row.disabled) return;
+      const item = row.closest(".fx-audit-item");
+      const open = item.classList.toggle("is-open");
+      const detail = item.querySelector(".fx-audit-detail");
+      if (open && !detail.dataset.rendered) {
+        detail.dataset.rendered = "1";
+        const en = entries[+row.dataset.ai];
+        const box = document.createElement("div");
+        detail.appendChild(box);
+        if (en.before && en.after && window.fxDiff) {
+          fxDiff(box, {
+            file: en.target,
+            before: JSON.stringify(en.before, null, 2),
+            after: JSON.stringify(en.after, null, 2),
+            context: 2,
+          });
+        } else if (window.fxJsonTree) {
+          fxJsonTree(box, en.after || en.before || {});
+        }
+      }
+    });
+    return { entries };
+  };
 })();

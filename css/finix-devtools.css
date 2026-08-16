@@ -192,3 +192,58 @@ tr + tr .fx-diff-cell-del + .fx-diff-num { border-left: 1px solid var(--border-s
 .fx-ci-mid { position: absolute; top: 50%; width: 2px; height: 0.8125rem; margin: -0.40625rem 0 0 -1px; border-radius: 999px; background: var(--chart-1); }
 .fx-ci-zero { position: absolute; top: 15%; bottom: 15%; width: 1px; background: var(--border); }
 .fx-exp-lift { text-align: right; }
+
+/* ============ permission matrix (fxPermMatrix) ============ */
+.fx-permmatrix { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); }
+.fx-permmatrix table { border-collapse: collapse; width: 100%; min-width: 34rem; }
+.fx-permmatrix th, .fx-permmatrix td { padding: 0.4375rem 0.75rem; font-size: 0.8125rem; }
+.fx-permmatrix thead th {
+  background: var(--well); border-bottom: 1px solid var(--border);
+  font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--muted-foreground); text-align: center;
+}
+.fx-permmatrix thead th:first-child { text-align: left; }
+.fx-pm-group td {
+  background: var(--well); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--muted-foreground); padding: 0.3125rem 0.75rem;
+  border-block: 1px solid var(--border-soft);
+}
+.fx-pm-perm { color: var(--foreground); white-space: nowrap; }
+.fx-pm-cell { text-align: center; cursor: pointer; transition: background-color .1s; position: relative; }
+.fx-permmatrix tbody tr:hover td { background: var(--hover); }
+.fx-permmatrix td.is-colhover, .fx-permmatrix th.is-colhover { background: var(--hover); }
+.fx-permmatrix tbody tr:hover td.is-colhover { background: color-mix(in oklab, var(--primary) 10%, var(--card)); }
+.fx-pm-cell .fx-checkbox { pointer-events: none; vertical-align: middle; }
+.fx-pm-inherit {
+  display: inline-block; width: 0.5rem; height: 0.5rem; border-radius: 999px;
+  background: color-mix(in oklab, var(--primary) 45%, var(--muted-foreground));
+  opacity: 0.55; vertical-align: middle;
+}
+
+/* ============ audit log (fxAuditLog) ============ */
+.fx-audit { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.fx-audit-row {
+  display: flex; align-items: center; gap: 0.75rem; width: 100%;
+  padding: 0.5rem 0.75rem; border: 0; background: var(--card); cursor: pointer;
+  font: inherit; color: inherit; text-align: left; transition: background-color .12s;
+}
+.fx-audit-row:hover { background: var(--hover); }
+.fx-audit-item + .fx-audit-item { border-top: 1px solid var(--border-soft); }
+.fx-audit-time { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted-foreground); width: 7.5rem; flex-shrink: 0; }
+.fx-audit-actor { display: flex; align-items: center; gap: 0.5rem; width: 11rem; flex-shrink: 0; min-width: 0; }
+.fx-audit-actor b { font-size: 0.8125rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fx-audit-action {
+  font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
+  border-radius: var(--radius-sm); padding: 0.0625rem 0.4375rem; flex-shrink: 0;
+}
+.fx-audit-action.is-create { background: color-mix(in oklab, var(--success) 14%, transparent); color: var(--success); }
+.fx-audit-action.is-update { background: color-mix(in oklab, var(--chart-1) 15%, transparent); color: var(--chart-1); }
+.fx-audit-action.is-delete { background: color-mix(in oklab, var(--destructive) 13%, transparent); color: var(--destructive); }
+.fx-audit-action.is-access { background: var(--muted); color: var(--muted-foreground); }
+.fx-audit-target { font-family: var(--font-mono); font-size: 0.75rem; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fx-audit-ip { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted-foreground); flex-shrink: 0; }
+.fx-audit-caret { width: 0.875rem; height: 0.875rem; color: var(--muted-foreground); flex-shrink: 0; transition: transform .18s var(--ease-out); }
+.fx-audit-item.is-open .fx-audit-caret { transform: rotate(90deg); }
+.fx-audit-detail { display: none; padding: 0.75rem; background: var(--well); border-top: 1px solid var(--border-soft); }
+.fx-audit-item.is-open .fx-audit-detail { display: block; animation: fx-nps-in .2s var(--ease-out); }
+@media (prefers-reduced-motion: reduce) { .fx-audit-item.is-open .fx-audit-detail { animation: none; } }

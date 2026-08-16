@@ -229,7 +229,7 @@ The biggest structural gap; unlocks automation, journeys, lineage, service maps.
 - Keep scope honest: read-and-arrange canvas, not a full editor (no edge
   re-connection dragging in v1 — note it).
 
-### T17. Issue list + swimlanes → scheduling.html (Projects)
+### ✅ T17. Issue list + swimlanes → scheduling.html (Projects)
 - `fx-issues`: Linear-density rows — priority icon, ID (mono), title, label
   chips, assignee avatar, status dot; grouped section headers w/ counts;
   keyboard j/k navigation + x to select; hover action bar.

@@ -1604,6 +1604,36 @@
    ],
    "markup": "<div class=\"fx-runs\"></div>",
    "js": "Run rows with per-step status dots (success/failed/skipped) + expandable fxJsonTree payload inspector (see workflow.html demo)."
+  },
+  {
+   "name": "issue-list",
+   "category": "widget",
+   "classes": [
+    "fx-issues",
+    "fx-issues-group",
+    "fx-issue",
+    "fx-issue-prio",
+    "fx-issue-status",
+    "fx-issue-id",
+    "fx-issue-title",
+    "fx-issue-label",
+    "fx-issue-actions",
+    "fx-issues-foot"
+   ],
+   "markup": "<div id=\"issues\"></div>",
+   "js": "fxIssues(el, {issues:[{id,title,status:progress|review|todo|backlog|done,priority:urgent|high|medium|low|none,labels:[{name,color}],assignee,updated}], groups}) in js/finix-apps.js \u2014 Linear-density rows: priority glyphs, status dots (dashed/outline/half/check), mono IDs, dot-label chips, hover action bar; keyboard j/k cursor, x select, Esc clear, Enter open; selection footer."
+  },
+  {
+   "name": "kanban-swimlanes",
+   "category": "widget",
+   "classes": [
+    "fx-kanban--lanes",
+    "fx-lane-colhead",
+    "fx-lane-head",
+    "fx-lane-cell"
+   ],
+   "markup": "<div class=\"fx-kanban--lanes\" style=\"--lane-cols:3\">(corner + col heads, then per lane: .fx-lane-head + .fx-lane-cell cells of .fx-kanban-card)</div>",
+   "js": null
   }
  ]
 }

@@ -105,6 +105,63 @@
       </div>
 
 
+      <!-- issue list -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Issues</div>
+          <div class="fx-card-desc">Linear-density issue list — click a row then use <span class="fx-kbd">j</span>/<span class="fx-kbd">k</span> to move, <span class="fx-kbd">x</span> to select, <span class="fx-kbd">Esc</span> to clear. Hover for actions.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="issues"></div>
+        </div>
+      </div>
+
+      <!-- swimlanes -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Swimlanes — by assignee</div>
+          <div class="fx-card-desc">Lane rows × status columns; lane headers stay pinned while the board scrolls horizontally.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-kanban--lanes" style="--lane-cols:3">
+            <div></div>
+            <div class="fx-lane-colhead">Todo <span class="fx-badge fx-badge--secondary">3</span></div>
+            <div class="fx-lane-colhead">In progress <span class="fx-badge fx-badge--secondary">3</span></div>
+            <div class="fx-lane-colhead">Done <span class="fx-badge fx-badge--secondary">2</span></div>
+
+            <div class="fx-lane-head"><span class="fx-avatar">OM</span><div><b>Olivia Martin</b><small>3 issues</small></div></div>
+            <div class="fx-lane-cell">
+              <div class="fx-kanban-card"><div class="fx-kanban-card-title">Funnel drop-off tooltips</div><div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">charts</span></div></div>
+            </div>
+            <div class="fx-lane-cell">
+              <div class="fx-kanban-card"><div class="fx-kanban-card-title">Cohort grid color ramp</div><div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--warning fx-badge--dot">P1</span></div></div>
+            </div>
+            <div class="fx-lane-cell">
+              <div class="fx-kanban-card" style="opacity:.75"><div class="fx-kanban-card-title">Surface ladder tokens</div><div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--success fx-badge--dot">Shipped</span></div></div>
+            </div>
+
+            <div class="fx-lane-head"><span class="fx-avatar">JL</span><div><b>Jackson Lee</b><small>3 issues</small></div></div>
+            <div class="fx-lane-cell">
+              <div class="fx-kanban-card"><div class="fx-kanban-card-title">Split-pane keyboard resize</div><div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">a11y</span></div></div>
+              <div class="fx-kanban-card"><div class="fx-kanban-card-title">Webhook redelivery UX</div><div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">devtools</span></div></div>
+            </div>
+            <div class="fx-lane-cell">
+              <div class="fx-kanban-card"><div class="fx-kanban-card-title">Diff viewer word-level pass</div><div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">devtools</span></div></div>
+            </div>
+            <div class="fx-lane-cell"></div>
+
+            <div class="fx-lane-head"><span class="fx-avatar">IN</span><div><b>Isabella Nguyen</b><small>2 issues</small></div></div>
+            <div class="fx-lane-cell"></div>
+            <div class="fx-lane-cell">
+              <div class="fx-kanban-card"><div class="fx-kanban-card-title">Ticket inbox macros v2</div><div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--outline">support</span></div></div>
+            </div>
+            <div class="fx-lane-cell">
+              <div class="fx-kanban-card" style="opacity:.75"><div class="fx-kanban-card-title">SLA countdown chips</div><div class="fx-kanban-card-meta"><span class="fx-badge fx-badge--success fx-badge--dot">Shipped</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- slot picker -->
       <div class="fx-card">
         <div class="fx-card-header">
@@ -130,6 +187,22 @@
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
+  /* ---- issue list ---- */
+  fxIssues(document.getElementById("issues"), {
+    issues: [
+      { id: "FIN-231", title: "Cohort grid should support monthly buckets", status: "progress", priority: "urgent", assignee: "Olivia Martin", updated: "2h", labels: [{ name: "charts", color: "var(--chart-1)" }] },
+      { id: "FIN-228", title: "Peek panel loses scroll position on refresh", status: "progress", priority: "high", assignee: "Jackson Lee", updated: "5h", labels: [{ name: "bug", color: "var(--destructive)" }, { name: "data-grid", color: "var(--chart-2)" }] },
+      { id: "FIN-224", title: "Diff viewer: word-level highlights inside changed lines", status: "review", priority: "medium", assignee: "Sofia Davis", updated: "1d", labels: [{ name: "devtools", color: "var(--chart-4)" }] },
+      { id: "FIN-219", title: "Slot picker should surface next available day", status: "todo", priority: "high", assignee: "William Kim", updated: "1d", labels: [{ name: "scheduling", color: "var(--chart-3)" }] },
+      { id: "FIN-217", title: "Tour coachmarks overlap sticky headers", status: "todo", priority: "medium", assignee: "Isabella Nguyen", updated: "2d", labels: [{ name: "bug", color: "var(--destructive)" }] },
+      { id: "FIN-214", title: "Investigate reduced-motion for edge dash-flow", status: "todo", priority: "low", assignee: "Noah Garcia", updated: "3d", labels: [{ name: "motion", color: "var(--chart-5)" }] },
+      { id: "FIN-209", title: "Audit log CSV export", status: "backlog", priority: "none", assignee: "", updated: "1w", labels: [{ name: "devtools", color: "var(--chart-4)" }] },
+      { id: "FIN-206", title: "Facepile keyboard focus order", status: "backlog", priority: "low", assignee: "Ava Patel", updated: "1w", labels: [{ name: "a11y", color: "var(--chart-2)" }] },
+      { id: "FIN-201", title: "Ship the workflow node canvas", status: "done", priority: "urgent", assignee: "Rakesh K.", updated: "1d", labels: [{ name: "workflows", color: "var(--chart-1)" }] },
+      { id: "FIN-198", title: "Permission matrix inherited-state dots", status: "done", priority: "medium", assignee: "Rakesh K.", updated: "2d", labels: [{ name: "devtools", color: "var(--chart-4)" }] },
+    ],
+  });
+
   /* ---- slot picker + availability editor ---- */
   const AVAIL = { 1: [14, 20], 2: [14, 20], 3: [14, 20], 4: [14, 20], 5: [14, 17] };
   const picker = fxSlotPicker(document.getElementById("slotpicker"), {

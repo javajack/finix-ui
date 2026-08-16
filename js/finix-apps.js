@@ -477,6 +477,87 @@
     return { refilter };
   };
 
+  /* ================= issue list (fxIssues) ================= */
+  window.fxIssues = function (root, opts) {
+    const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const issues = opts.issues || [];
+    const GROUPS = opts.groups || [
+      { key: "progress", label: "In progress", color: "var(--warning)" },
+      { key: "review", label: "In review", color: "var(--chart-1)" },
+      { key: "todo", label: "Todo", color: "var(--muted-foreground)" },
+      { key: "backlog", label: "Backlog", color: "var(--muted-foreground)" },
+      { key: "done", label: "Done", color: "var(--success)" },
+    ];
+    const ini = (n) => (n || "?").split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+    const PRIO = {
+      urgent: '<svg viewBox="0 0 16 16" width="14" height="14"><rect width="14" height="14" x="1" y="1" rx="3.5" fill="#f76808"/><path d="M8 4.2v4.3M8 11.2v.4" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>',
+      high: '<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><rect x="1.5" y="8" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="9" rx="1"/><rect x="11.5" y="2" width="3" height="12" rx="1"/></svg>',
+      medium: '<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><rect x="1.5" y="8" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="9" rx="1"/><rect x="11.5" y="2" width="3" height="12" rx="1" opacity=".25"/></svg>',
+      low: '<svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor"><rect x="1.5" y="8" width="3" height="6" rx="1"/><rect x="6.5" y="5" width="3" height="9" rx="1" opacity=".25"/><rect x="11.5" y="2" width="3" height="12" rx="1" opacity=".25"/></svg>',
+      none: '<svg viewBox="0 0 16 16" width="14" height="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".5"><path d="M2.5 8h2.5M6.75 8h2.5M11 8h2.5"/></svg>',
+    };
+    function statusDot(key, color) {
+      if (key === "done") return `<svg class="fx-issue-status" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="${color}"/><path d="m5.2 8 2 2 3.6-3.8" stroke="var(--card)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      if (key === "progress") return `<svg class="fx-issue-status" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="${color}" stroke-width="1.8"/><path d="M8 8 V 2.6 A 5.4 5.4 0 0 1 13.4 8 Z" fill="${color}"/></svg>`;
+      if (key === "backlog") return `<svg class="fx-issue-status" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="${color}" stroke-width="1.8" stroke-dasharray="2.5 2.5"/></svg>`;
+      return `<svg class="fx-issue-status" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="${color}" stroke-width="1.8"/></svg>`;
+    }
+    let flat = [], cursor = 0;
+    const selected = new Set();
+    function render() {
+      flat = [];
+      let html = "";
+      for (const g of GROUPS) {
+        const list = issues.filter((i) => i.status === g.key);
+        if (!list.length) continue;
+        html += `<div class="fx-issues-group">${statusDot(g.key, g.color)}${g.label} <small>${list.length}</small></div>`;
+        for (const it of list) {
+          const idx = flat.length;
+          flat.push(it);
+          html += `<div class="fx-issue ${idx === cursor ? "is-cursor" : ""} ${selected.has(it.id) ? "is-sel" : ""}" data-idx="${idx}">
+            <span class="fx-issue-prio" style="color:var(--muted-foreground)">${PRIO[it.priority || "none"]}</span>
+            <span class="fx-issue-id">${esc(it.id)}</span>
+            <span class="fx-issue-title">${esc(it.title)}</span>
+            <span class="fx-issue-labels">${(it.labels || []).map((l) => `<span class="fx-issue-label"><i style="background:${l.color || "var(--chart-2)"}"></i>${esc(l.name)}</span>`).join("")}</span>
+            <span class="fx-issue-date">${esc(it.updated || "")}</span>
+            <span class="fx-avatar fx-avatar--sm" data-fx-tip="${esc(it.assignee || "Unassigned")}">${ini(it.assignee)}</span>
+            <span class="fx-issue-actions">
+              <button data-fx-tip="Edit" aria-label="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+              <button data-fx-tip="Copy link" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+            </span>
+          </div>`;
+        }
+      }
+      html += `<div class="fx-issues-foot" ${selected.size ? "" : "hidden"}><b>${selected.size}</b> selected · <span class="fx-kbd" style="height:1.125rem;min-width:1.125rem;font-size:.625rem">Esc</span> to clear</div>`;
+      root.classList.add("fx-issues");
+      root.innerHTML = html;
+    }
+    function moveCursor(d) {
+      cursor = Math.min(flat.length - 1, Math.max(0, cursor + d));
+      render();
+      root.querySelector(".fx-issue.is-cursor")?.scrollIntoView({ block: "nearest" });
+    }
+    root.tabIndex = 0;
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "j") { moveCursor(1); e.preventDefault(); }
+      if (e.key === "k") { moveCursor(-1); e.preventDefault(); }
+      if (e.key === "x") {
+        const it = flat[cursor];
+        if (it) { selected.has(it.id) ? selected.delete(it.id) : selected.add(it.id); render(); }
+        e.preventDefault();
+      }
+      if (e.key === "Escape") { selected.clear(); render(); }
+      if (e.key === "Enter" && flat[cursor] && window.finix) finix.toast({ title: flat[cursor].id, description: flat[cursor].title });
+    });
+    root.addEventListener("click", (e) => {
+      if (e.target.closest(".fx-issue-actions")) return;
+      const row = e.target.closest("[data-idx]");
+      if (row) { cursor = +row.dataset.idx; render(); root.focus({ preventScroll: true }); }
+    });
+    render();
+    return { render, get selected() { return [...selected]; }, get cursor() { return flat[cursor]; } };
+  };
+
   /* ================= slot picker ================= */
   window.fxSlotPicker = function (root, opts = {}) {
     const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];

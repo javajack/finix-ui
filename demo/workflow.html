@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workflows · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<link rel="stylesheet" href="../css/finix-devtools.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-canvas.js"></script>
+<script defer src="../js/finix-devtools.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Workflows</h1>
+          <p class="fx-page-sub">Automation node canvas — pan, zoom, drag to arrange, click a node to configure it. Read-and-arrange scope: edges aren't re-connectable in v1.</p>
+        </div>
+        <button class="fx-btn" id="run-wf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+          Run workflow
+        </button>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Order automation</div>
+          <div class="fx-card-desc"><b>Drag the background</b> to pan, <b>scroll</b> to zoom (0.5–1.5×), <b>drag nodes</b> to arrange — the minimap tracks everything. Hit <b>Run workflow</b> to watch the beam travel the graph.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-grid" style="grid-template-columns:minmax(0,1fr) 17rem;gap:1.25rem;align-items:stretch">
+            <div id="canvas"></div>
+            <div class="fx-stack" style="gap:.75rem;border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;background:var(--card);overflow-y:auto;max-height:32rem">
+              <span class="fx-label" style="text-transform:uppercase;letter-spacing:.05em;font-size:.6875rem;color:var(--muted-foreground)">Step configuration</span>
+              <div id="node-config" class="fx-stack" style="gap:.75rem">
+                <p class="fx-text-sm fx-muted" style="margin:0">Select a node on the canvas to edit its configuration.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Run history</div>
+          <div class="fx-card-desc">Per-step status dots — <b>click a run</b> to inspect its trigger payload.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="runs" class="fx-runs"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const ICONS = {
+    zap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>',
+    user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>',
+    branch: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
+    flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>',
+  };
+  const NODES = [
+    { id: "trigger", x: 0,   y: 130, title: "Webhook trigger", sub: "order.created", icon: ICONS.zap,
+      schema: { fields: [
+        { key: "event", label: "Event", type: "select", options: ["order.created", "order.updated", "order.refunded"] },
+        { key: "secret", label: "Signing secret", mono: true, default: "whsec_9f31…", desc: "Rotates every 90 days." },
+      ]}, config: { event: "order.created" } },
+    { id: "enrich", x: 290, y: 130, title: "Enrich customer", sub: "CRM lookup", icon: ICONS.user,
+      schema: { fields: [
+        { key: "source", label: "Data source", type: "select", options: ["CRM", "Warehouse", "Clearbit"] },
+        { key: "cache", label: "Cache results", type: "toggle", default: true, desc: "15 min TTL" },
+      ]}, config: { source: "CRM", cache: true } },
+    { id: "fraud", x: 580, y: 130, title: "Fraud check", sub: "risk-service v2", icon: ICONS.shield,
+      schema: { fields: [
+        { key: "threshold", label: "Risk threshold", type: "number", default: 75, desc: "0–100, higher = stricter" },
+        { key: "block", label: "Hard-block on fail", type: "toggle", default: false },
+      ]}, config: { threshold: 75 } },
+    { id: "branch", x: 870, y: 130, title: "Branch", sub: "risk < threshold?", icon: ICONS.branch,
+      schema: { fields: [{ key: "mode", label: "Evaluation", type: "select", options: ["First match", "All matches"] }] }, config: {} },
+    { id: "approve", x: 1160, y: 40, title: "Approve order", sub: "auto-capture payment", icon: ICONS.check,
+      schema: { fields: [{ key: "capture", label: "Capture immediately", type: "toggle", default: true }] }, config: { capture: true } },
+    { id: "review", x: 1160, y: 220, title: "Flag for review", sub: "queue: manual-risk", icon: ICONS.flag,
+      schema: { fields: [
+        { key: "queue", label: "Review queue", type: "select", options: ["manual-risk", "fraud-team", "vip-desk"] },
+        { key: "note", label: "Note template", type: "textarea", default: "Auto-flagged: risk score above threshold." },
+      ]}, config: { queue: "manual-risk" } },
+    { id: "notify", x: 1450, y: 40, title: "Send confirmation", sub: "email + webhook", icon: ICONS.mail,
+      schema: { fields: [
+        { key: "template", label: "Email template", type: "select", options: ["order-confirmed", "order-confirmed-vip"] },
+        { key: "webhook", label: "Fire webhook", type: "toggle", default: true },
+      ]}, config: { template: "order-confirmed" } },
+  ];
+  const EDGES = [
+    { from: "trigger", to: "enrich" },
+    { from: "enrich", to: "fraud" },
+    { from: "fraud", to: "branch" },
+    { from: "branch", to: "approve" },
+    { from: "branch", to: "review" },
+    { from: "approve", to: "notify" },
+  ];
+
+  const configEl = document.getElementById("node-config");
+  const canvas = fxCanvas(document.getElementById("canvas"), {
+    nodes: NODES,
+    edges: EDGES,
+    onSelect: (n) => {
+      configEl.innerHTML = `<div class="fx-row" style="gap:.5rem"><b class="fx-text-sm">${n.title}</b><span class="fx-badge fx-badge--outline">${n.id}</span></div><div class="fx-stack" style="gap:.75rem" id="sf"></div>`;
+      fxSchemaForm(configEl.querySelector("#sf"), n.schema, n.config, () =>
+        finix.toast({ title: "Step updated", description: n.title + " configuration saved." }));
+    },
+  });
+
+  /* ---- run simulation ---- */
+  const ORDER = ["trigger", "enrich", "fraud", "branch", "approve", "notify"];
+  let running = false;
+  document.getElementById("run-wf").addEventListener("click", async () => {
+    if (running) return;
+    running = true;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const wait = (ms) => new Promise((r) => setTimeout(r, reduced ? 40 : ms));
+    NODES.forEach((n) => canvas.setStatus(n.id, "idle"));
+    EDGES.forEach((e) => canvas.setEdgeStatus(e.from, e.to, null));
+    for (let i = 0; i < ORDER.length; i++) {
+      const id = ORDER[i];
+      canvas.setStatus(id, "running");
+      const inEdge = EDGES.find((e) => e.to === id);
+      if (inEdge) canvas.setEdgeStatus(inEdge.from, inEdge.to, "running");
+      await wait(850);
+      canvas.setStatus(id, "success");
+      if (inEdge) canvas.setEdgeStatus(inEdge.from, inEdge.to, null);
+    }
+    canvas.setStatus("review", "idle");
+    running = false;
+    addRun("run_" + Math.floor(1000 + Math.random() * 9000), "just now", ["success","success","success","success","success","skipped","success"], "412 ms");
+    finix.toast({ title: "Workflow completed", description: "6 steps · review branch skipped.", variant: "success" });
+  });
+
+  /* ---- run history ---- */
+  const runsEl = document.getElementById("runs");
+  const PAYLOAD = { id: "evt_8Xa2b91c", type: "order.created", data: { order: "ord_4092", total: 23166, currency: "usd", customer: { id: "cus_MJ82", email: "priya@acme.com", risk: 12 } } };
+  function addRun(id, when, steps, dur, failed) {
+    const el = document.createElement("div");
+    el.className = "fx-run-item";
+    el.innerHTML = `
+      <button class="fx-run-row">
+        <span class="fx-run-id">${id}</span>
+        ${failed ? '<span class="fx-badge fx-badge--destructive">Failed</span>' : '<span class="fx-badge fx-badge--success fx-badge--dot">Success</span>'}
+        <span class="fx-run-steps">${steps.map((s) => `<span class="fx-run-step is-${s}"></span>`).join("")}</span>
+        <span class="fx-run-meta">${dur} · ${when}</span>
+      </button>
+      <div class="fx-run-detail"><div class="fx-run-json"></div></div>`;
+    el.querySelector(".fx-run-row").addEventListener("click", () => {
+      const open = el.classList.toggle("is-open");
+      const box = el.querySelector(".fx-run-json");
+      if (open && !box.dataset.done) { box.dataset.done = "1"; fxJsonTree(box, PAYLOAD); }
+    });
+    runsEl.prepend(el);
+  }
+  addRun("run_2214", "2h ago", ["success","success","success","success","success","skipped","success"], "398 ms");
+  addRun("run_2213", "5h ago", ["success","success","success","success","skipped","success","skipped"], "1.2 s");
+  addRun("run_2212", "Yesterday", ["success","success","failed","skipped","skipped","skipped","skipped"], "5.0 s", true);
+});
+</script>
+</body>
+</html>

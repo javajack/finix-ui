@@ -216,7 +216,7 @@ Composes T1 + T2. Zendesk/Intercom-grade split-pane:
 
 ## WAVE 5 — Big rocks
 
-### T16. Workflow node canvas → workflow.html (create page + NAV)
+### ✅ T16. Workflow node canvas → workflow.html (create page + NAV)
 The biggest structural gap; unlocks automation, journeys, lineage, service maps.
 - `fxCanvas(el, {nodes, edges})`: SVG edge layer + absolutely-positioned node
   cards; pan (pointer drag on bg) + zoom (wheel, 0.5–1.5, transform-origin

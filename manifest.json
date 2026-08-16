@@ -1564,6 +1564,46 @@
    ],
    "markup": "<div id=\"audit\"></div>",
    "js": "fxAuditLog(el, {entries:[{time,actor,action:create|update|delete|access,target,ip,before,after}]}) \u2014 mono trail rows with actor avatars and action badges; rows with before/after expand to an inline fxDiff of the JSON change (fxJsonTree fallback)."
+  },
+  {
+   "name": "node-canvas",
+   "category": "widget",
+   "classes": [
+    "fx-canvas",
+    "fx-canvas-viewport",
+    "fx-canvas-edges",
+    "fx-edge",
+    "fx-node",
+    "fx-node-head",
+    "fx-node-icon",
+    "fx-node-status",
+    "fx-canvas-minimap",
+    "fx-canvas-zoom"
+   ],
+   "markup": "<div id=\"canvas\" style=\"height:32rem\"></div>",
+   "js": "fxCanvas(el, {nodes:[{id,x,y,title,sub,icon,status,schema,config}], edges:[{from,to,status}], onSelect}) in js/finix-canvas.js \u2014 pan (bg drag), wheel zoom 0.5-1.5x around cursor, node drag (pointer events), bezier edges with animated dash-flow when running, fx-beam on running nodes, live minimap with viewport rect, zoom bar with fit. api: fit, select, setStatus(id,st), setEdgeStatus(from,to,st). v1 scope: read-and-arrange (no edge re-connection)."
+  },
+  {
+   "name": "schema-form",
+   "category": "form",
+   "classes": [],
+   "markup": "<div id=\"sf\"></div>",
+   "js": "fxSchemaForm(el, {fields:[{key,label,type:text|number|select|toggle|textarea,options,default,desc,mono}]}, values, onChange) \u2014 schema-driven config form used by node-canvas step panels."
+  },
+  {
+   "name": "run-history",
+   "category": "widget",
+   "classes": [
+    "fx-runs",
+    "fx-run-item",
+    "fx-run-row",
+    "fx-run-id",
+    "fx-run-steps",
+    "fx-run-step",
+    "fx-run-detail"
+   ],
+   "markup": "<div class=\"fx-runs\"></div>",
+   "js": "Run rows with per-step status dots (success/failed/skipped) + expandable fxJsonTree payload inspector (see workflow.html demo)."
   }
  ]
 }

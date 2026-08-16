@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business &amp; CRM · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-domains.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Business &amp; CRM</h1>
+          <p class="fx-page-sub">Finance, commerce and community components — ledgers, order books, billing, pipelines, comments.</p>
+        </div>
+      </div>
+
+      <!-- ticker tape -->
+      <div class="fx-tickertape" style="border-radius:var(--radius-lg);border:1px solid var(--border)">
+        <div class="fx-tickertape-track" id="tape"></div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:1fr 1.4fr">
+        <!-- order book -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Order book — BTC-USD</div>
+            <div class="fx-card-desc">Live depth ladder with proportional size bars. No free equivalent exists in the ecosystem.</div>
+            <div class="fx-card-action"><span class="fx-status fx-status--online fx-text-xs"><i></i>live</span></div>
+          </div>
+          <div class="fx-card-content"><div id="orderbook"></div></div>
+        </div>
+
+        <!-- transaction ledger -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Transactions</div>
+            <div class="fx-card-desc">Bank-grade ledger — grouped by day, categorized, signed amounts.</div>
+            <div class="fx-card-action"><button class="fx-btn fx-btn--outline fx-btn--sm">Export CSV</button></div>
+          </div>
+          <div class="fx-card-content"><div class="fx-ledger" id="ledger"></div></div>
+        </div>
+      </div>
+
+      <!-- pricing -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Plans &amp; billing</div>
+          <div class="fx-card-desc">Pricing set with a featured plan, usage meters and invoice history — Billing-SDK patterns.</div>
+        </div>
+        <div class="fx-card-content fx-stack" style="gap:1.5rem">
+          <div class="fx-pricing">
+            <div class="fx-plan">
+              <div class="fx-plan-name">Starter</div>
+              <div class="fx-plan-price">$0<small> /mo</small></div>
+              <div class="fx-plan-features">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>3 projects</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>1,000 build minutes</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Community support</span>
+              </div>
+              <button class="fx-btn fx-btn--outline" style="width:100%">Current plan</button>
+            </div>
+            <div class="fx-plan fx-plan--popular fx-shine-border">
+              <div class="fx-plan-name">Pro <span class="fx-badge">Popular</span></div>
+              <div class="fx-plan-price">$20<small> /user/mo</small></div>
+              <div class="fx-plan-features">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unlimited projects</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>10,000 build minutes</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>SSO &amp; audit log</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Priority support</span>
+              </div>
+              <button class="fx-btn" style="width:100%" data-fx-stateful data-loading-text="Upgrading…" data-success-text="Upgraded">Upgrade to Pro</button>
+            </div>
+            <div class="fx-plan">
+              <div class="fx-plan-name">Enterprise</div>
+              <div class="fx-plan-price">Custom</div>
+              <div class="fx-plan-features">
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dedicated infra &amp; SLA</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>SCIM provisioning</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom DPA</span>
+              </div>
+              <button class="fx-btn fx-btn--outline" style="width:100%">Contact sales</button>
+            </div>
+          </div>
+          <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:1.5rem">
+            <div class="fx-stack" style="gap:1rem">
+              <span class="fx-label">Usage this cycle</span>
+              <div class="fx-usage">
+                <div class="fx-usage-head"><b>Build minutes</b><span>8,704 / 10,000</span></div>
+                <div class="fx-progress"><div style="width:87%"></div></div>
+              </div>
+              <div class="fx-usage warn">
+                <div class="fx-usage-head"><b>Bandwidth</b><span>912 GB / 1 TB</span></div>
+                <div class="fx-progress"><div style="width:91%"></div></div>
+              </div>
+              <div class="fx-usage">
+                <div class="fx-usage-head"><b>Seats</b><span>14 / 25</span></div>
+                <div class="fx-progress"><div style="width:56%"></div></div>
+              </div>
+            </div>
+            <div class="fx-stack" style="gap:.5rem">
+              <span class="fx-label">Invoice history</span>
+              <div class="fx-table-wrap">
+                <table class="fx-table">
+                  <tbody>
+                    <tr><td>INV-2026-081</td><td class="fx-muted">Aug 1, 2026</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Paid</span></td><td style="text-align:right" class="fx-tabular">$280.00</td></tr>
+                    <tr><td>INV-2026-071</td><td class="fx-muted">Jul 1, 2026</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Paid</span></td><td style="text-align:right" class="fx-tabular">$280.00</td></tr>
+                    <tr><td>INV-2026-061</td><td class="fx-muted">Jun 1, 2026</td><td><span class="fx-badge fx-badge--warning fx-badge--dot">Refunded</span></td><td style="text-align:right" class="fx-tabular">$240.00</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:1fr 1fr 1fr">
+        <!-- quota -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Q3 attainment</div>
+            <div class="fx-card-desc">Team quota, 6 weeks remaining.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1rem;align-items:center">
+            <div id="quota-gauge"></div>
+            <div style="width:100%">
+              <div class="fx-catbar">
+                <span style="width:52%;background:var(--chart-1)"></span>
+                <span style="width:21%;background:var(--chart-2)"></span>
+                <span style="width:27%;background:var(--muted-foreground);opacity:.25"></span>
+              </div>
+              <div class="fx-catbar-legend">
+                <span><i style="background:var(--chart-1)"></i>Closed $624k</span>
+                <span><i style="background:var(--chart-2)"></i>Commit $252k</span>
+                <span><i style="background:var(--muted-foreground);opacity:.25"></i>Gap $324k</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- reviews -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Product reviews</div>
+            <div class="fx-card-desc">1,284 verified reviews.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1rem">
+            <div class="fx-review-summary">
+              <div class="fx-review-score">
+                <b>4.6</b>
+                <div class="fx-stars" id="stars-sum"></div>
+              </div>
+              <div class="fx-review-dist" id="review-dist"></div>
+            </div>
+            <hr class="fx-separator">
+            <div class="fx-stack" style="gap:.25rem">
+              <div class="fx-row" style="gap:.5rem"><div class="fx-stars" data-stars="5"></div><b class="fx-text-sm fx-medium">Replaced three internal tools</b></div>
+              <p class="fx-text-sm fx-muted">"The data grid alone paid for the migration. Our ops team lives in it now." — Priya S., Ops Lead</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- entity cards -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Profiles</div>
+            <div class="fx-card-desc">Entity cards with follow state.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.875rem">
+            <div class="fx-entity">
+              <div class="fx-entity-head">
+                <span class="fx-avatar">SD</span>
+                <div style="flex:1;min-width:0">
+                  <div class="fx-entity-name">Sofia Davis
+                    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.4 4.86 5.36.78-3.88 3.78.92 5.34L12 14.24l-4.8 2.52.92-5.34L4.24 7.64l5.36-.78z"/></svg>
+                  </div>
+                  <div class="fx-entity-sub">Enterprise AE · San Francisco</div>
+                </div>
+                <button class="fx-btn fx-btn--secondary fx-btn--sm" data-fx-follow aria-pressed="true">Following</button>
+              </div>
+              <div class="fx-entity-stats"><span><b>$1.2M</b> closed</span><span><b>34</b> deals</span><span><b>96%</b> retention</span></div>
+            </div>
+            <div class="fx-entity">
+              <div class="fx-entity-head">
+                <span class="fx-avatar">NG</span>
+                <div style="flex:1;min-width:0">
+                  <div class="fx-entity-name">Noah Garcia</div>
+                  <div class="fx-entity-sub">Solutions Engineer · Austin</div>
+                </div>
+                <button class="fx-btn fx-btn--outline fx-btn--sm" data-fx-follow aria-pressed="false">Follow</button>
+              </div>
+              <div class="fx-entity-stats"><span><b>128</b> demos</span><span><b>4.9</b> CSAT</span><span><b>17</b> POCs</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- pipeline -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Sales pipeline</div>
+          <div class="fx-card-desc">Deal cards with value and probability — drag between stages.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-kanban" id="pipeline"></div>
+        </div>
+      </div>
+
+      <!-- comments -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Deal discussion</div>
+          <div class="fx-card-desc">Nested comments with reactions and @mentions — type <code class="fx-inline-code">@</code> in the composer.</div>
+        </div>
+        <div class="fx-card-content" style="max-width:44rem">
+          <div id="comments"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  // ticker tape (content doubled for seamless loop)
+  const SYMS = [["NIFTY 50","24,812","+0.6%",1],["BTC-USD","64,251","+2.1%",1],["AAPL","232.4","-0.4%",0],["ETH-USD","3,412","+1.2%",1],["TSLA","248.1","-1.8%",0],["NVDA","131.7","+3.4%",1],["GOLD","2,488","+0.2%",1],["EUR/INR","91.44","-0.1%",0]];
+  const tape = SYMS.map(([s,p,c,up]) => `<span class="fx-tick"><b>${s}</b> ${p} <span class="${up?"up":"down"}">${c}</span></span>`).join("");
+  document.getElementById("tape").innerHTML = tape + tape;
+
+  // order book
+  fxOrderBook(document.getElementById("orderbook"), { mid: 64250 });
+
+  // ledger
+  const TX = [
+    ["Today", [["Stripe payout","Revenue · Settlement",+18420.5,"in"],["AWS","Infrastructure · Cloud",-2411.2],["Figma","Software · Design",-540]]],
+    ["Yesterday", [["Acme Corp","Revenue · Invoice INV-081",+8400,"in"],["Google Ads","Marketing · Paid",-1250.75],["WeWork","Facilities · Rent",-3200]]],
+    ["Aug 14", [["Gusto","Payroll · 14 employees",-48200],["Notion","Software · Productivity",-96],["Refund — order #3188","Revenue · Refund",-129,"","refund"]]],
+  ];
+  const ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>';
+  document.getElementById("ledger").innerHTML = TX.map(([day, rows]) =>
+    `<div class="fx-ledger-date">${day}</div>` + rows.map(([name, meta, amt, dir]) =>
+      `<div class="fx-ledger-row">
+         <span class="fx-ledger-icon">${ICON}</span>
+         <span class="fx-ledger-name">${name}</span>
+         <span class="fx-ledger-meta">${meta}</span>
+         <span class="fx-ledger-amt ${dir === "in" ? "in" : ""}">${amt > 0 ? "+" : "−"}$${Math.abs(amt).toLocaleString(undefined,{minimumFractionDigits:2})}<small>USD</small></span>
+       </div>`).join("")).join("");
+
+  // quota gauge
+  fxCharts.gauge(document.getElementById("quota-gauge"), { value: 52, label: "of $1.2M quota", size: 150 });
+
+  // review stars + distribution
+  const star = (on) => `<svg viewBox="0 0 24 24" class="${on ? "" : "off"}"><path d="M12 2l2.4 4.86 5.36.78-3.88 3.78.92 5.34L12 14.24l-4.8 2.52.92-5.34L4.24 7.64l5.36-.78z"/></svg>`;
+  document.getElementById("stars-sum").innerHTML = star(1)+star(1)+star(1)+star(1)+star(0);
+  document.querySelectorAll("[data-stars]").forEach((el) => {
+    const n = +el.dataset.stars;
+    el.innerHTML = Array.from({length:5}, (_,i) => star(i < n)).join("");
+  });
+  const DIST = [[5,72],[4,19],[3,5],[2,2],[1,2]];
+  document.getElementById("review-dist").innerHTML = DIST.map(([s,p]) =>
+    `<div class="fx-review-dist-row"><span>${s}★</span><div class="fx-progress"><div style="width:${p}%"></div></div><span>${p}%</span></div>`).join("");
+
+  // pipeline kanban with deal values
+  const STAGES = [
+    ["Qualified", [["Globex expansion","$48k",70,"OM"],["Initech pilot","$12k",40,"JL"]]],
+    ["Proposal", [["Stark platform","$96k",55,"SD"],["Wayne migration","$64k",35,"NG"]]],
+    ["Negotiation", [["Umbrella upsell","$120k",80,"IN"]]],
+    ["Closing", [["Acme renewal","$240k",95,"SD"]]],
+  ];
+  document.getElementById("pipeline").innerHTML = STAGES.map(([stage, deals]) =>
+    `<div class="fx-kanban-col">
+       <div class="fx-kanban-col-head">${stage}
+         <span class="fx-badge fx-badge--secondary">${deals.reduce((a,d)=>a+parseInt(d[1].slice(1)),0)}k</span>
+       </div>` +
+      deals.map(([name, val, prob, ini]) =>
+        `<div class="fx-kanban-card">
+           <div class="fx-kanban-card-title">${name}</div>
+           <div class="fx-usage" style="gap:.25rem">
+             <div class="fx-progress" style="height:.25rem"><div style="width:${prob}%"></div></div>
+           </div>
+           <div class="fx-kanban-card-meta">
+             <span class="fx-mono-val fx-text-sm">${val}</span>
+             <span class="fx-row" style="gap:.375rem"><span class="fx-text-xs fx-muted">${prob}%</span><span class="fx-avatar fx-avatar--sm">${ini}</span></span>
+           </div>
+         </div>`).join("") + `</div>`).join("");
+
+  // re-wire kanban DnD for injected board
+  document.querySelectorAll("#pipeline .fx-kanban-card").forEach((c) => (c.draggable = true));
+  const board = document.getElementById("pipeline");
+  let dragging = null;
+  board.addEventListener("dragstart", (e) => { dragging = e.target.closest(".fx-kanban-card"); if (dragging) dragging.classList.add("is-dragging"); });
+  board.addEventListener("dragend", () => { if (dragging) dragging.classList.remove("is-dragging"); dragging = null; });
+  board.addEventListener("dragover", (e) => {
+    const col = e.target.closest(".fx-kanban-col");
+    if (!col || !dragging) return;
+    e.preventDefault();
+    col.appendChild(dragging);
+  });
+
+  // comments
+  fxComments(document.getElementById("comments"), {
+    comments: [
+      { ini: "SD", name: "Sofia Davis", time: "2h ago",
+        html: 'Acme legal signed off on the DPA. <span class="fx-mention">@Noah</span> can you confirm the SSO scoping call for Thursday?',
+        reactions: [{ e: "👍", n: 4, on: true }, { e: "🎉", n: 2 }],
+        children: [
+          { ini: "NG", name: "Noah Garcia", time: "1h ago",
+            html: 'Confirmed — Thursday 10am PT. Adding the SCIM requirements doc before then.',
+            reactions: [{ e: "✅", n: 3 }] },
+          { ini: "OM", name: "Olivia Martin", time: "40m ago",
+            html: 'Heads up: their infra team asked about EU data residency. <span class="fx-mention">@Sofia</span> worth pre-empting in the proposal.',
+            reactions: [{ e: "💡", n: 1 }] },
+        ] },
+      { ini: "JL", name: "Jackson Lee", time: "25m ago",
+        html: 'Pricing approved at $240k ARR with the multi-year discount. Clean to close. 🚀',
+        reactions: [{ e: "🔥", n: 5 }] },
+    ],
+  });
+});
+</script>
+</body>
+</html>

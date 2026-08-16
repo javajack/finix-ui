@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scheduling · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-apps.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Scheduling</h1>
+          <p class="fx-page-sub">Event calendar with month/week views and a draggable Gantt timeline — ReUI/Kibo patterns, zero dependencies.</p>
+        </div>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Team calendar</div>
+          <div class="fx-card-desc">Drag events between days in month view. Switch to Week for the time grid.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="evcal"></div>
+        </div>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Release plan — Gantt</div>
+          <div class="fx-card-desc">Drag bars horizontally to reschedule. Progress fill, weekend shading, today marker.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="gantt"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const y = 2026, m = "08";
+  fxEventCalendar(document.getElementById("evcal"), {
+    events: [
+      { title: "Design review",       date: `${y}-${m}-04`, time: "10:00", dur: 1,   color: 1 },
+      { title: "Sprint planning",     date: `${y}-${m}-05`, time: "09:30", dur: 1.5, color: 2 },
+      { title: "1:1 with Sofia",      date: `${y}-${m}-05`, time: "14:00", dur: 0.5, color: 4 },
+      { title: "Ship finix-ui 1.5",   date: `${y}-${m}-07`, time: "16:00", dur: 1,   color: 3 },
+      { title: "Customer call — Acme",date: `${y}-${m}-11`, time: "11:00", dur: 1,   color: 1 },
+      { title: "Board deck prep",     date: `${y}-${m}-12`, time: "15:00", dur: 2,   color: 5 },
+      { title: "Team offsite",        date: `${y}-${m}-14`, color: 2 },
+      { title: "Interview — SDE II",  date: `${y}-${m}-17`, time: "10:00", dur: 1,   color: 4 },
+      { title: "Pricing workshop",    date: `${y}-${m}-17`, time: "13:00", dur: 2,   color: 1 },
+      { title: "Marketing sync",      date: `${y}-${m}-17`, time: "16:00", dur: 0.5, color: 5 },
+      { title: "Bug triage",          date: `${y}-${m}-17`, time: "17:00", dur: 0.5, color: 3 },
+      { title: "Quarterly review",    date: `${y}-${m}-21`, time: "09:00", dur: 3,   color: 2 },
+      { title: "On-call handover",    date: `${y}-${m}-24`, time: "18:00", dur: 0.5, color: 3 },
+      { title: "Launch retro",        date: `${y}-${m}-26`, time: "11:00", dur: 1,   color: 1 },
+    ],
+  }).events;
+
+  fxGantt(document.getElementById("gantt"), {
+    tasks: [
+      { name: "Design system tokens",    start: "2026-08-03", end: "2026-08-07", progress: 100, color: 1 },
+      { name: "Data grid engine",        start: "2026-08-06", end: "2026-08-14", progress: 80,  color: 2 },
+      { name: "Filter builder",          start: "2026-08-12", end: "2026-08-18", progress: 55,  color: 2 },
+      { name: "Event calendar",          start: "2026-08-14", end: "2026-08-21", progress: 30,  color: 4 },
+      { name: "AI assistant panel",      start: "2026-08-18", end: "2026-08-26", progress: 10,  color: 5 },
+      { name: "Docs & agent manifest",   start: "2026-08-24", end: "2026-08-31", progress: 0,   color: 3 },
+      { name: "1.5 release hardening",   start: "2026-08-28", end: "2026-09-04", progress: 0,   color: 1 },
+    ],
+  });
+});
+</script>
+</body>
+</html>

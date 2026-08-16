@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feedback &amp; Status · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Feedback &amp; Status</h1>
+          <p class="fx-page-sub">Alerts, toasts, progress, skeletons, empty states and status indicators.</p>
+        </div>
+      </div>
+
+      <div class="fx-banner" id="demo-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <span><b>Finix UI 1.4</b> is out — new data grid, four brand presets, and a research page.</span>
+        <button class="fx-banner-close" aria-label="Dismiss" onclick="document.getElementById('demo-banner').remove()">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(23rem,1fr))">
+
+        <!-- alerts -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Alerts</div>
+            <div class="fx-card-desc">Inline callouts in four intents.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.75rem">
+            <div class="fx-alert">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              <div class="fx-alert-title">Heads up!</div>
+              <div class="fx-alert-desc">You can add components to your app using the manifest.</div>
+            </div>
+            <div class="fx-alert fx-alert--success">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              <div class="fx-alert-title">Payment successful</div>
+              <div class="fx-alert-desc">Your invoice #1204 has been paid in full.</div>
+            </div>
+            <div class="fx-alert fx-alert--warning">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              <div class="fx-alert-title">Approaching plan limit</div>
+              <div class="fx-alert-desc">You've used 87% of your monthly build minutes.</div>
+            </div>
+            <div class="fx-alert fx-alert--destructive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+              <div class="fx-alert-title">Unable to process payment</div>
+              <div class="fx-alert-desc">Your card was declined. Please verify your billing details and try again.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- toasts -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Toasts</div>
+            <div class="fx-card-desc">Sonner-style notifications, stacked bottom-right.</div>
+          </div>
+          <div class="fx-card-content fx-row">
+            <button class="fx-btn fx-btn--outline" onclick="finix.toast({title:'Event has been created',description:'Sunday, August 16 at 9:00 AM'})">Default</button>
+            <button class="fx-btn fx-btn--outline" onclick="finix.toast({title:'Deployment complete',description:'finix-ui@1.4.2 is live.',variant:'success'})">Success</button>
+            <button class="fx-btn fx-btn--outline" onclick="finix.toast({title:'Build failed',description:'Type error in charts.js:114',variant:'destructive'})">Error</button>
+            <button class="fx-btn fx-btn--outline" onclick="finix.toast({title:'Scheduled maintenance',description:'API will restart at 02:00 UTC.',variant:'warning'})">Warning</button>
+            <button class="fx-btn fx-btn--outline" onclick="finix.toast({title:'File deleted',description:'report-q3.pdf was moved to trash.',action:{label:'Undo',onClick:()=>finix.toast({title:'Restored',variant:'success'})}})">With action</button>
+          </div>
+        </div>
+
+        <!-- progress -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Progress</div>
+            <div class="fx-card-desc">Linear bars, circular gauge, segmented category bar.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div class="fx-stack" style="gap:.5rem">
+              <div class="fx-row" style="justify-content:space-between"><span class="fx-text-sm">Storage used</span><span class="fx-text-sm fx-muted">6.5 GB of 10 GB</span></div>
+              <div class="fx-progress"><div style="width:65%"></div></div>
+            </div>
+            <div class="fx-row" style="gap:1.5rem;align-items:center">
+              <div class="fx-progress-circle" data-value="72">
+                <svg width="88" height="88"><circle class="track" cx="44" cy="44" r="38" fill="none" stroke-width="8"/><circle class="fill" cx="44" cy="44" r="38" fill="none" stroke-width="8" stroke-linecap="round"/></svg>
+                <b>72%</b>
+              </div>
+              <div class="fx-stack" style="gap:.25rem">
+                <span class="fx-medium fx-text-sm">Sprint completion</span>
+                <span class="fx-text-sm fx-muted">18 of 25 issues closed. On track for Friday.</span>
+              </div>
+            </div>
+            <div>
+              <div class="fx-catbar">
+                <span style="width:44%;background:var(--chart-1)"></span>
+                <span style="width:27%;background:var(--chart-2)"></span>
+                <span style="width:18%;background:var(--chart-4)"></span>
+                <span style="width:11%;background:var(--muted-foreground);opacity:.4"></span>
+              </div>
+              <div class="fx-catbar-legend">
+                <span><i style="background:var(--chart-1)"></i>Documents 44%</span>
+                <span><i style="background:var(--chart-2)"></i>Media 27%</span>
+                <span><i style="background:var(--chart-4)"></i>Backups 18%</span>
+                <span><i style="background:var(--muted-foreground);opacity:.4"></i>Other 11%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- skeleton -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Skeletons &amp; Spinners</div>
+            <div class="fx-card-desc">Loading placeholders that mirror final layout.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div class="fx-row" style="flex-wrap:nowrap;gap:.75rem">
+              <div class="fx-skeleton" style="width:2.5rem;height:2.5rem;border-radius:999px;flex-shrink:0"></div>
+              <div class="fx-stack" style="flex:1;gap:.5rem">
+                <div class="fx-skeleton" style="height:.875rem;width:60%"></div>
+                <div class="fx-skeleton" style="height:.875rem;width:85%"></div>
+              </div>
+            </div>
+            <div class="fx-skeleton" style="height:7rem;border-radius:var(--radius-lg)"></div>
+            <div class="fx-row" style="gap:1.25rem">
+              <span class="fx-spinner"></span>
+              <span class="fx-spinner" style="width:1.5rem;height:1.5rem;color:var(--primary)"></span>
+              <button class="fx-btn fx-btn--outline" disabled><span class="fx-spinner"></span>Loading…</button>
+              <span class="fx-text-sm fx-shimmer">Generating response…</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- badges & status -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Badges &amp; Status</div>
+            <div class="fx-card-desc">Labels, counts, presence dots and keyboard hints.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1rem">
+            <div class="fx-row">
+              <span class="fx-badge">Badge</span>
+              <span class="fx-badge fx-badge--secondary">Secondary</span>
+              <span class="fx-badge fx-badge--outline">Outline</span>
+              <span class="fx-badge fx-badge--destructive">Destructive</span>
+              <span class="fx-badge fx-badge--success fx-badge--dot">Active</span>
+              <span class="fx-badge fx-badge--warning fx-badge--dot">Pending</span>
+              <span class="fx-badge fx-badge--outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Verified</span>
+              <span class="fx-badge fx-badge--secondary">99+</span>
+            </div>
+            <hr class="fx-separator">
+            <div class="fx-row" style="gap:1.25rem">
+              <span class="fx-status fx-status--online"><i></i>Operational</span>
+              <span class="fx-status fx-status--away"><i></i>Degraded</span>
+              <span class="fx-status fx-status--busy"><i></i>Outage</span>
+              <span class="fx-status"><i></i>Offline</span>
+            </div>
+            <hr class="fx-separator">
+            <div class="fx-row" style="gap:1rem">
+              <span class="fx-text-sm fx-muted">Save</span><span class="fx-kbd">⌘</span><span class="fx-kbd">S</span>
+              <span class="fx-text-sm fx-muted" style="margin-left:.75rem">Search</span><span class="fx-kbd">⌘</span><span class="fx-kbd">K</span>
+              <span class="fx-text-sm fx-muted" style="margin-left:.75rem">Escape</span><span class="fx-kbd" style="min-width:2rem">Esc</span>
+            </div>
+            <hr class="fx-separator">
+            <div class="fx-row">
+              <div class="fx-avatar-stack">
+                <span class="fx-avatar">OM</span><span class="fx-avatar">JL</span><span class="fx-avatar">IN</span><span class="fx-avatar">WK</span>
+                <span class="fx-avatar" style="background:var(--secondary);color:var(--secondary-foreground)">+4</span>
+              </div>
+              <span class="fx-text-sm fx-muted">8 collaborators online</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- empty state -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Empty state</div>
+            <div class="fx-card-desc">First-run and no-results moments, with a clear next action.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-empty">
+              <div class="fx-empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+              </div>
+              <div class="fx-empty-title">No projects yet</div>
+              <div class="fx-empty-desc">You haven't created any projects. Get started by creating your first project.</div>
+              <div class="fx-empty-actions">
+                <button class="fx-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                  New project
+                </button>
+                <button class="fx-btn fx-btn--outline">Import</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- surface hierarchy -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Surface hierarchy</div>
+            <div class="fx-card-desc">Depth is encoded by lightness — every layer has a named token. Wells sit below surfaces; overlays float above them.</div>
+          </div>
+          <div class="fx-card-content">
+            <div style="background:var(--background);border:1px dashed var(--border);border-radius:var(--radius-lg);padding:1rem">
+              <div class="fx-text-xs fx-muted" style="margin-bottom:.625rem"><code class="fx-inline-code">--background</code> · canvas (dot-grid ground)</div>
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1rem;box-shadow:var(--shadow-xs)">
+                <div class="fx-text-xs fx-muted" style="margin-bottom:.625rem"><code class="fx-inline-code">--card</code> · surface (cards, tables, panels)</div>
+                <div style="background:var(--well);border:1px solid var(--border-soft);border-radius:var(--radius-md);padding:.75rem;margin-bottom:.625rem">
+                  <div class="fx-text-xs fx-muted"><code class="fx-inline-code">--well</code> · inset (toolbars, column wells, code, headers)</div>
+                </div>
+                <div style="background:var(--popover);border:1px solid var(--border);border-radius:var(--radius-md);padding:.75rem;box-shadow:var(--shadow-md);width:fit-content">
+                  <div class="fx-text-xs fx-muted"><code class="fx-inline-code">--popover</code> · overlay (menus, dialogs — lighter than cards in dark)</div>
+                </div>
+              </div>
+            </div>
+            <p class="fx-text-xs fx-muted" style="margin-top:.625rem">Plus <code class="fx-inline-code">--hover</code> for every pointer-over fill and <code class="fx-inline-code">--border-soft</code> for internal dividers — structural container borders always use <code class="fx-inline-code">--border</code>.</p>
+          </div>
+        </div>
+
+        <!-- accordion -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Accordion</div>
+            <div class="fx-card-desc">Exclusive groups via native <code class="fx-inline-code">&lt;details name&gt;</code>, animated height.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-accordion">
+              <details name="faq" open>
+                <summary>Is it accessible?</summary>
+                <div class="fx-acc-body">Yes. It uses native disclosure elements, keeps keyboard and screen-reader semantics, and adheres to the WAI-ARIA design pattern.</div>
+              </details>
+              <details name="faq">
+                <summary>Is it styled?</summary>
+                <div class="fx-acc-body">Yes. It matches the other components' aesthetic out of the box and follows your theme tokens.</div>
+              </details>
+              <details name="faq">
+                <summary>Is it animated?</summary>
+                <div class="fx-acc-body">Yes. Height animates smoothly using <code class="fx-inline-code">interpolate-size</code> — pure CSS, no JavaScript.</div>
+              </details>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

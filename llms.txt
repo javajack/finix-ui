@@ -1,0 +1,69 @@
+# finix-ui
+
+> Plain HTML/CSS/JS admin component framework distilled from the best free shadcn-ecosystem patterns (shadcn/ui, ReUI, Kibo UI, Tremor, assistant-ui, Shadcn Studio, Animate UI, and more). Pixel-faithful to the shadcn v4 visual language via a verbatim OKLCH token port; behavior rebuilt on native platform features (<dialog>, Popover API, <details name>) — no React, no build step. Works in any server-rendered stack (Rails, Django, Laravel, Go, PHP, JSP) or static HTML.
+
+## Quick start
+
+Include in <head>:
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/finix.css">
+  <link rel="stylesheet" href="css/finix-widgets.css">   (only for app-shell/stat/kanban/chat widgets)
+  <script defer src="js/finix.js"></script>
+
+Theming: set attributes on <html>:
+  data-theme="light" | "dark"
+  data-brand="finix" | "mono" | "ocean" | "forest" | "sunset"
+Identity (v0.5): the DEFAULT finix look is "warm sage" — warm bone-tinted neutrals (never pure white/gray), sage-pine primary, earthy chart palette, Geist type everywhere (display: tight-tracked 600; data: Geist Mono; NO serifs), subtle dot-grid ground, sidebar aurora, staggered page-entry motion, sliding tab indicators. Use data-brand="mono" for the classic zinc/shadcn look. Voice orb: <span class="fx-orb" data-state="listening|speaking|muted">.
+
+Motion set (add a class, done): fx-beam (AI-busy border light) · fx-shine-border (featured) · fx-spotlight (cursor highlight) · fx-fade-edges[-x] (scroll fades) · fx-anim-list (animated insertions) · [data-fx-stateful] buttons · fxVoiceBars(el).
+AI set: fx-reasoning + fx-cot steps · fx-ctx context ring (--used %) · fx-island (data-mode idle|working|voice).
+Domains (css/finix-domains.css + js/finix-domains.js): fx-tickertape · fxOrderBook · fx-ledger · fx-pricing/fx-plan/fx-usage · fx-entity + [data-fx-follow] · fxComments (@mentions, reactions) · fx-review-summary · fx-org (pure-CSS org chart) · fx-whosout · fxTimesheet (timer) · fx-matrix (self vs manager marks).
+JS API: finix.setTheme(mode), finix.setBrand(brand), finix.toast({title, description, variant, action}), finix.openDialog(sel).
+
+## Conventions
+
+- Components are semantic classes prefixed fx- (fx-btn, fx-card, fx-menu-item). Variants use -- modifiers (fx-btn--outline). No utility classes required.
+- Behaviors attach via data attributes and native attributes:
+  - dialogs: <button data-fx-open="#id"> … <dialog class="fx-dialog" id="id"> … <button data-fx-close>
+  - menus/popovers: <button popovertarget="id"> + <div class="fx-menu" popover id="id"> (auto-positioned)
+  - tooltips: data-fx-tip="text"
+  - table sort: <button class="fx-th-sort"> inside <th>; filter: <input data-fx-table-filter="#tableId">
+  - calendar: <div class="fx-cal" data-fx-calendar data-fx-cal-input="#input">
+  - number ticker: <div data-fx-ticker="$45,231.89">
+- Error state on inputs: aria-invalid="true".
+- All colors come from CSS custom properties (--primary, --background, --chart-1…5). Never hardcode colors; use var(--token).
+- SURFACE LADDER (depth = lightness, Google-style): --background (canvas) < --well (inset panels ON surfaces: toolbars, column wells, code blocks, grid headers) < --card (surfaces) < --popover (overlays; lighter than cards in dark mode). Hover fills always use --hover; internal dividers use --border-soft; structural container borders use --border. When building new components, pick the rung — never invent a new gray mix.
+
+## Tier 1 additions (v0.2)
+
+- Data grid: include css/finix-datagrid.css + js/finix-datagrid.js, then fxDataGrid(el, {columns, data, select, pageSize, pinned, maxHeight}). Sort, search, column resize/reorder/pin/hide, dblclick inline edit, selection, pagination. Pair with fxFilterBar(el, {fields, onChange}) → grid.setPredicate for Linear-style filter chips.
+- Date-range picker: <div data-fx-calendar-range data-fx-cal-input="#label"> — dual months + presets, fires fx:range.
+- Phone input: wrap input in .fx-input-group[data-fx-phone] (dial-code dropdown auto-injected). Mask: input[data-fx-mask="99/99"]. Number field: .fx-numberfield with [data-step] buttons. Password: [data-fx-password-toggle="#input"] + input[data-fx-strength="#meter"].
+- Multi-select: .fx-combobox[data-fx-multi] with checkbox fx-menu-items → chips in trigger.
+- Dropzone: .fx-dropzone with hidden file input; previews + progress auto-rendered into .fx-dropfiles.
+- Sortable list: .fx-sortable > .fx-sortable-item (drag-reorder).
+- Notification center: bell button.fx-bell-dot + .fx-notif-panel popover; [data-fx-notif-readall].
+- Stacked dialogs: [data-fx-open-stacked="#child"] inside a parent dialog. Confirm-typing: input[data-fx-confirm="name"] + [data-fx-confirm-btn].
+- Auth template: demo/auth.html (sign-in / sign-up / forgot / 2FA).
+
+## Tier 2/3 additions (v0.3)
+
+- Apps module (css/finix-apps.css + js/finix-apps.js): fxEventCalendar (month/week, drag events), fxGantt (draggable timeline bars), fxFilterBuilder (Notion-style AND/OR typed rules), fxLogTable (virtualized 50k rows, live tail).
+- Editor module (js/finix-editor.js): fxEditor (toolbar + bubble menu + '/' slash commands + markdown shortcuts, .getHTML()), fxCropper (crop box with aspect lock and canvas output).
+- Chart additions in demo/charts.js: hbars, combo (bars+line dual axis), scatter, gauge; line mode (fill:false), negative bars, click-to-toggle legends.
+- Command palette v2: fuzzy matching + Recent group (localStorage).
+- AI assistant page (demo/ai.html): fx-ai layout, fx-toolcall collapsible blocks, fx-approval cards, fx-branch picker, fx-prose markdown styles.
+
+## Files
+
+- manifest.json: machine-readable registry — every component with its classes, markup snippet, and JS hook.
+- css/tokens.css: OKLCH tokens; light/dark modes x 4 brand presets. Add a brand by overriding --primary/--ring/--chart-* under [data-brand="yourbrand"].
+- css/finix.css: primitives (buttons, forms, tables, tabs, menus, dialogs, toasts, steppers, trees, calendars…).
+- css/finix-widgets.css: composites (app shell/sidebar/topbar, stat cards, tracker, bar list, kanban, chat, chart chrome).
+- js/finix.js: all behaviors, delegated; safe on dynamic DOM for click-driven features.
+- demo/: full admin template — index (dashboard), forms, data, overlays, feedback, widgets, research (sources & credits).
+- demo/charts.js: optional dependency-free SVG charts — fxCharts.area/bars/donut/spark(el, opts); re-render on theme change.
+
+## Provenance
+
+Visual language: shadcn/ui v4 (MIT). Patterns adopted from free tiers of: ReUI (data tables, tree, kanban, timeline), Kibo UI (kanban, heatmap, choicebox, tags), Tremor (tracker, bar list, category bar, progress circle), shadcn Charts (chart look), assistant-ui (chat anatomy), Shadcn Studio (input groups, stepper, rating), Animate UI / Motion Primitives (animation specs), Kokonut (AI composer), Cult UI (popover form), tablecn/DiceUI (table UX). All MIT/Apache-2.0. See demo/research.html.

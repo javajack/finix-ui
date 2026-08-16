@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charts · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Charts</h1>
+          <p class="fx-page-sub">Dependency-free SVG, themed by chart tokens, interactive tooltips — click legend items to toggle series.</p>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:1fr 1fr">
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Stacked area</div>
+            <div class="fx-card-desc">Revenue composition by plan — legend toggles series.</div>
+          </div>
+          <div class="fx-card-content"><div id="c-area"></div></div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Line</div>
+            <div class="fx-card-desc">Same engine, fill disabled.</div>
+          </div>
+          <div class="fx-card-content"><div id="c-line"></div></div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Bars with negatives</div>
+            <div class="fx-card-desc">Monthly net cashflow — zero baseline, red for outflow months.</div>
+          </div>
+          <div class="fx-card-content"><div id="c-neg"></div></div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Combo — bars + line</div>
+            <div class="fx-card-desc">Revenue (bars, left axis) vs gross margin (line, right axis).</div>
+          </div>
+          <div class="fx-card-content"><div id="c-combo"></div></div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Horizontal bars</div>
+            <div class="fx-card-desc">Revenue by region with value labels.</div>
+          </div>
+          <div class="fx-card-content"><div id="c-hbars"></div></div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Scatter</div>
+            <div class="fx-card-desc">Ad spend vs conversions across campaigns.</div>
+          </div>
+          <div class="fx-card-content"><div id="c-scatter"></div></div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Gauges</div>
+            <div class="fx-card-desc">System metrics as radial gauges.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-grid" style="grid-template-columns:1fr 1fr 1fr;place-items:center">
+              <div id="c-g1"></div><div id="c-g2"></div><div id="c-g3"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Stacked bars</div>
+            <div class="fx-card-desc">Signups by channel per week.</div>
+          </div>
+          <div class="fx-card-content"><div id="c-stacked"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  fxCharts.area(document.getElementById("c-area"), {
+    labels: months, stacked: true, height: 240,
+    series: [
+      { name: "Enterprise", data: [1800,2000,2200,2600,2900,3100,3400,3800,4100,4400,4800,5200] },
+      { name: "Pro",        data: [2400,2600,2500,2900,3200,3400,3700,3900,4200,4400,4700,5000] },
+      { name: "Hobby",      data: [900,950,1000,1100,1200,1150,1300,1350,1400,1500,1550,1600] },
+    ],
+  });
+  fxCharts.area(document.getElementById("c-line"), {
+    labels: months, fill: false, height: 240,
+    series: [
+      { name: "This year", data: [320,410,380,520,610,590,720,810,780,920,1010,1100] },
+      { name: "Last year", data: [280,330,350,420,480,510,560,600,640,700,730,780] },
+    ],
+  });
+  fxCharts.bars(document.getElementById("c-neg"), {
+    labels: months, height: 240,
+    series: [{ name: "Net cashflow", data: [420,310,-180,520,610,-90,720,810,-260,920,1010,1100] }],
+  });
+  fxCharts.combo(document.getElementById("c-combo"), {
+    labels: months, height: 240,
+    bar:  { name: "Revenue", data: [4200,5100,4800,6100,7200,6800,8200,9100,8800,10400,11200,12100] },
+    line: { name: "Gross margin", data: [61,63,60,64,66,65,68,69,67,70,72,73] },
+  });
+  fxCharts.hbars(document.getElementById("c-hbars"), {
+    data: [
+      { label: "North America", value: 48200 },
+      { label: "Europe", value: 39400 },
+      { label: "India", value: 31800 },
+      { label: "SE Asia", value: 18700 },
+      { label: "LATAM", value: 12300 },
+      { label: "MEA", value: 8100 },
+    ],
+  });
+  fxCharts.scatter(document.getElementById("c-scatter"), {
+    height: 260, xLabel: "Spend ($)", yLabel: "Conversions",
+    series: [
+      { name: "Search",  points: [[1200,84],[1900,120],[2500,140],[3200,178],[4100,196],[5000,240],[6100,255]] },
+      { name: "Social",  points: [[800,32],[1500,58],[2200,66],[3000,95],[3800,102],[4600,118],[5600,131]] },
+    ],
+  });
+  fxCharts.gauge(document.getElementById("c-g1"), { value: 62, label: "CPU" });
+  fxCharts.gauge(document.getElementById("c-g2"), { value: 81, label: "Memory" });
+  fxCharts.gauge(document.getElementById("c-g3"), { value: 34, label: "Disk" });
+  fxCharts.bars(document.getElementById("c-stacked"), {
+    labels: ["W1","W2","W3","W4","W5","W6","W7","W8"], stacked: true, height: 240,
+    series: [
+      { name: "Organic",  data: [120,140,160,150,180,200,220,240] },
+      { name: "Paid",     data: [80,90,85,110,120,115,140,150] },
+      { name: "Referral", data: [40,45,50,48,60,66,70,80] },
+    ],
+  });
+});
+</script>
+</body>
+</html>

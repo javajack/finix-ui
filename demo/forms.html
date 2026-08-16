@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forms &amp; Inputs · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Forms &amp; Inputs</h1>
+          <p class="fx-page-sub">Traditional form controls with modern polish — every state, themed by tokens.</p>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(23rem,1fr))">
+
+        <!-- buttons -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Buttons</div>
+            <div class="fx-card-desc">Six variants, three sizes, icon &amp; loading states.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1rem">
+            <div class="fx-row">
+              <button class="fx-btn">Default</button>
+              <button class="fx-btn fx-btn--secondary">Secondary</button>
+              <button class="fx-btn fx-btn--outline">Outline</button>
+              <button class="fx-btn fx-btn--ghost">Ghost</button>
+              <button class="fx-btn fx-btn--destructive">Destructive</button>
+              <button class="fx-btn fx-btn--link">Link</button>
+            </div>
+            <div class="fx-row">
+              <button class="fx-btn fx-btn--sm">Small</button>
+              <button class="fx-btn">Default</button>
+              <button class="fx-btn fx-btn--lg">Large</button>
+              <button class="fx-btn fx-btn--outline fx-btn--icon" aria-label="Settings" data-fx-tip="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></button>
+              <button class="fx-btn" disabled><span class="fx-spinner"></span>Please wait</button>
+            </div>
+            <div class="fx-row">
+              <div class="fx-btn-group">
+                <button class="fx-btn fx-btn--outline">Day</button>
+                <button class="fx-btn fx-btn--outline">Week</button>
+                <button class="fx-btn fx-btn--outline">Month</button>
+              </div>
+              <div class="fx-toggle-group fx-toggle-group--outline" data-fx-single>
+                <button class="fx-toggle" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 12h12"/><path d="M6 20V4"/><path d="M18 20V4"/></svg></button>
+                <button class="fx-toggle" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg></button>
+                <button class="fx-toggle" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" x2="20" y1="20" y2="20"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- text inputs -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Text inputs</div>
+            <div class="fx-card-desc">States, icons and grouped addons.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1rem">
+            <div class="fx-field">
+              <label class="fx-label" for="f-email">Email</label>
+              <input class="fx-input" id="f-email" type="email" placeholder="you@company.com">
+            </div>
+            <div class="fx-field">
+              <label class="fx-label" for="f-search">With icon</label>
+              <div class="fx-input-group">
+                <span class="fx-input-addon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+                <input class="fx-input" id="f-search" placeholder="Search…">
+                <span class="fx-input-addon"><span class="fx-kbd">⌘K</span></span>
+              </div>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label" for="f-url">Website</label>
+              <div class="fx-input-group">
+                <span class="fx-input-addon fx-input-addon--boxed">https://</span>
+                <input class="fx-input" id="f-url" placeholder="finix-ui.dev">
+              </div>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label" for="f-user">Username</label>
+              <input class="fx-input" id="f-user" aria-invalid="true" value="ra kesh">
+              <span class="fx-field-error">Username cannot contain spaces.</span>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label" for="f-dis">Disabled</label>
+              <input class="fx-input" id="f-dis" disabled placeholder="Read only">
+            </div>
+            <div class="fx-field">
+              <label class="fx-label" for="f-file">Attachment</label>
+              <input class="fx-input" id="f-file" type="file">
+            </div>
+          </div>
+        </div>
+
+        <!-- selects -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Select &amp; Combobox</div>
+            <div class="fx-card-desc">Native select, custom listbox, searchable combobox.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1rem">
+            <div class="fx-field">
+              <label class="fx-label">Native select</label>
+              <select class="fx-select">
+                <option>Next.js</option><option>Astro</option><option>Rails</option><option>Laravel</option><option>Django</option>
+              </select>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Custom select</label>
+              <div class="fx-combobox">
+                <button class="fx-combo-trigger" popovertarget="sel-role" type="button">
+                  <span class="fx-combo-value" data-placeholder>Select a role…</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                </button>
+                <div class="fx-menu" popover id="sel-role">
+                  <div class="fx-combo-list">
+                    <button class="fx-menu-item" data-value="Owner">Owner</button>
+                    <button class="fx-menu-item" data-value="Admin">Admin</button>
+                    <button class="fx-menu-item" data-value="Editor">Editor</button>
+                    <button class="fx-menu-item" data-value="Viewer">Viewer</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Searchable combobox</label>
+              <div class="fx-combobox">
+                <button class="fx-combo-trigger" popovertarget="combo-fw" type="button">
+                  <span class="fx-combo-value" data-placeholder>Select framework…</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                </button>
+                <div class="fx-menu" popover id="combo-fw" style="padding:0">
+                  <div class="fx-combo-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input placeholder="Search framework…">
+                  </div>
+                  <div class="fx-combo-list">
+                    <button class="fx-menu-item" data-value="Next.js">Next.js</button>
+                    <button class="fx-menu-item" data-value="SvelteKit">SvelteKit</button>
+                    <button class="fx-menu-item" data-value="Nuxt">Nuxt</button>
+                    <button class="fx-menu-item" data-value="Remix">Remix</button>
+                    <button class="fx-menu-item" data-value="Astro">Astro</button>
+                    <button class="fx-menu-item" data-value="Rails">Ruby on Rails</button>
+                    <button class="fx-menu-item" data-value="Laravel">Laravel</button>
+                    <button class="fx-menu-item" data-value="Django">Django</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Multi-select</label>
+              <div class="fx-combobox" data-fx-multi>
+                <button class="fx-combo-trigger" popovertarget="ms-labels" type="button">
+                  <span class="fx-combo-value" data-placeholder>Select labels…</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                </button>
+                <div class="fx-menu" popover id="ms-labels">
+                  <label class="fx-menu-item" data-fx-keep-open data-value="Bug"><input type="checkbox" class="fx-checkbox"> Bug</label>
+                  <label class="fx-menu-item" data-fx-keep-open data-value="Feature"><input type="checkbox" class="fx-checkbox"> Feature</label>
+                  <label class="fx-menu-item" data-fx-keep-open data-value="Docs"><input type="checkbox" class="fx-checkbox"> Docs</label>
+                  <label class="fx-menu-item" data-fx-keep-open data-value="Design"><input type="checkbox" class="fx-checkbox"> Design</label>
+                  <label class="fx-menu-item" data-fx-keep-open data-value="Urgent"><input type="checkbox" class="fx-checkbox"> Urgent</label>
+                </div>
+              </div>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Date range</label>
+              <button class="fx-btn fx-btn--outline" popovertarget="range-pop" type="button" style="justify-content:flex-start;font-weight:400;width:100%">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                <span id="range-label" class="fx-muted">Pick a date range</span>
+              </button>
+              <div class="fx-popover" popover id="range-pop" style="padding:0;width:auto;max-width:none">
+                <div data-fx-calendar-range data-fx-cal-input="#range-label"></div>
+              </div>
+              <span class="fx-field-desc">Dual-month calendar with presets — Tremor/shadcn range pattern.</span>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label" for="f-date">Date picker</label>
+              <div class="fx-input-group" style="cursor:pointer" >
+                <span class="fx-input-addon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg></span>
+                <input class="fx-input" id="f-date" placeholder="Pick a date" readonly popovertarget="date-pop2" style="cursor:pointer" onclick="document.getElementById('date-pop2').togglePopover()">
+              </div>
+              <div class="fx-popover" popover id="date-pop2" style="padding:0;width:auto">
+                <div class="fx-cal" data-fx-calendar data-fx-cal-input="#f-date"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OTP + tags + rating -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Specialized inputs</div>
+            <div class="fx-card-desc">One-time codes, tag input, rating.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div class="fx-field">
+              <label class="fx-label">Verification code</label>
+              <div class="fx-otp">
+                <input aria-label="Digit 1"><input aria-label="Digit 2"><input aria-label="Digit 3">
+                <span class="fx-otp-sep">–</span>
+                <input aria-label="Digit 4"><input aria-label="Digit 5"><input aria-label="Digit 6">
+              </div>
+              <span class="fx-field-desc">Enter the 6-digit code sent to your phone. Paste works too.</span>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Tags</label>
+              <div class="fx-tags">
+                <span class="fx-tag">design-system<button type="button" aria-label="Remove"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+                <span class="fx-tag">tokens<button type="button" aria-label="Remove"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+                <input placeholder="Add tag…">
+              </div>
+              <span class="fx-field-desc">Press Enter to add, Backspace to remove.</span>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Rating</label>
+              <div class="fx-rating" data-value="3">
+                <button type="button" aria-label="1 star"><svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
+                <button type="button" aria-label="2 stars"><svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
+                <button type="button" aria-label="3 stars"><svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
+                <button type="button" aria-label="4 stars"><svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
+                <button type="button" aria-label="5 stars"><svg viewBox="0 0 24 24"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg></button>
+              </div>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Volume · <span class="fx-muted" id="vol-out">60%</span></label>
+              <input type="range" class="fx-slider" value="60" oninput="document.getElementById('vol-out').textContent=this.value+'%'">
+            </div>
+          </div>
+        </div>
+
+        <!-- advanced inputs -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Advanced inputs</div>
+            <div class="fx-card-desc">Phone, masked, stepper and password inputs.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div class="fx-field">
+              <label class="fx-label">Phone number</label>
+              <div class="fx-input-group" data-fx-phone>
+                <input class="fx-input" type="tel" placeholder="98765 43210" inputmode="tel">
+              </div>
+            </div>
+            <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:1rem">
+              <div class="fx-field">
+                <label class="fx-label">Expiry date</label>
+                <input class="fx-input" data-fx-mask="99/99" placeholder="MM/YY" inputmode="numeric">
+              </div>
+              <div class="fx-field">
+                <label class="fx-label">Card number</label>
+                <input class="fx-input" data-fx-mask="9999 9999 9999 9999" inputmode="numeric">
+              </div>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Seats</label>
+              <div class="fx-numberfield">
+                <button type="button" data-step="-1" aria-label="Decrease">−</button>
+                <input value="4" min="1" max="99" inputmode="numeric" aria-label="Seats">
+                <button type="button" data-step="1" aria-label="Increase">+</button>
+              </div>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label" for="f-pass">Password</label>
+              <div class="fx-input-group">
+                <input class="fx-input" type="password" id="f-pass" data-fx-strength="#pass-meter" placeholder="Create a password" autocomplete="new-password">
+                <span class="fx-input-addon" style="padding:0 .25rem">
+                  <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" type="button" data-fx-password-toggle="#f-pass" aria-label="Show password">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </span>
+              </div>
+              <div>
+                <div class="fx-strength" id="pass-meter"><span></span><span></span><span></span><span></span></div>
+                <span class="fx-strength-label" style="display:block;margin-top:.375rem">Use 8+ chars with mixed case, numbers &amp; symbols</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- file upload -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">File upload</div>
+            <div class="fx-card-desc">Dropzone with previews and progress — Kibo/ReUI pattern.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-dropzone">
+              <input type="file" multiple>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+              <b>Drop files here or click to upload</b>
+              <span>PNG, JPG or PDF, up to 10 MB each</span>
+            </div>
+            <div class="fx-dropfiles"></div>
+          </div>
+        </div>
+
+        <!-- choices -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Choices</div>
+            <div class="fx-card-desc">Checkboxes, radios, switches and card-style choice boxes.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div class="fx-stack" style="gap:.625rem">
+              <label class="fx-check-row"><input type="checkbox" class="fx-checkbox" checked><span class="fx-label">Accept terms and conditions</span></label>
+              <label class="fx-check-row"><input type="checkbox" class="fx-checkbox"><span class="fx-label">Subscribe to product updates</span></label>
+              <label class="fx-check-row"><input type="checkbox" class="fx-checkbox" disabled><span class="fx-label fx-muted">Disabled option</span></label>
+            </div>
+            <hr class="fx-separator">
+            <div class="fx-stack" style="gap:.625rem" role="radiogroup" aria-label="Plan">
+              <label class="fx-check-row"><input type="radio" name="plan" class="fx-radio" checked><span class="fx-label">Hobby — $0/mo</span></label>
+              <label class="fx-check-row"><input type="radio" name="plan" class="fx-radio"><span class="fx-label">Pro — $20/mo</span></label>
+              <label class="fx-check-row"><input type="radio" name="plan" class="fx-radio"><span class="fx-label">Enterprise — custom</span></label>
+            </div>
+            <hr class="fx-separator">
+            <div class="fx-row" style="justify-content:space-between">
+              <div><div class="fx-label">Marketing emails</div><div class="fx-field-desc">Receive emails about new products.</div></div>
+              <input type="checkbox" class="fx-switch" checked>
+            </div>
+            <div class="fx-row" style="justify-content:space-between">
+              <div><div class="fx-label">Security alerts</div><div class="fx-field-desc">Always on for your protection.</div></div>
+              <input type="checkbox" class="fx-switch" checked disabled>
+            </div>
+            <hr class="fx-separator">
+            <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:.625rem">
+              <label class="fx-choicebox"><input type="radio" name="db" class="fx-radio" checked style="margin-top:.125rem">
+                <span><span class="fx-label">PostgreSQL</span><br><span class="fx-field-desc">Relational, battle-tested</span></span></label>
+              <label class="fx-choicebox"><input type="radio" name="db" class="fx-radio" style="margin-top:.125rem">
+                <span><span class="fx-label">SQLite</span><br><span class="fx-field-desc">Embedded, zero-config</span></span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- full form -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Profile form</div>
+            <div class="fx-card-desc">A composed settings form with validation.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1rem">
+            <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:1rem">
+              <div class="fx-field"><label class="fx-label">First name</label><input class="fx-input" value="Rakesh"></div>
+              <div class="fx-field"><label class="fx-label">Last name</label><input class="fx-input" placeholder="Last name"></div>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Bio</label>
+              <textarea class="fx-textarea" rows="3" placeholder="Tell us a little about yourself"></textarea>
+              <span class="fx-field-desc">Markdown is supported. Max 240 characters.</span>
+            </div>
+            <div class="fx-field">
+              <label class="fx-label">Timezone</label>
+              <select class="fx-select"><option>Asia/Kolkata (GMT+5:30)</option><option>UTC</option><option>America/New_York</option></select>
+            </div>
+          </div>
+          <div class="fx-card-footer" style="justify-content:flex-end;gap:.5rem">
+            <button class="fx-btn fx-btn--ghost">Cancel</button>
+            <button class="fx-btn" onclick="finix.toast({title:'Profile updated',description:'Your changes have been saved.',variant:'success'})">Save changes</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

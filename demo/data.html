@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data &amp; Tables · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-datagrid.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="../js/finix-datagrid.js"></script>
+<script defer src="../js/finix-apps.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Data &amp; Tables</h1>
+          <p class="fx-page-sub">Sortable data tables, trees, activity heatmaps and timelines.</p>
+        </div>
+      </div>
+
+      <!-- data grid -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Product inventory — data grid</div>
+          <div class="fx-card-desc">Full grid: sort (header ↕ or column menu), <b>drag headers to reorder</b>, <b>drag edges to resize</b>, pin left/right, hide columns, <b>double-click cells to edit</b>, Linear-style filters, search, selection, pagination.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="grid-products"></div>
+        </div>
+      </div>
+
+      <!-- filter builder -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Advanced filter builder</div>
+          <div class="fx-card-desc">Notion/Airtable-style query builder — AND/OR groups with typed operators, applied live to the deals below.</div>
+        </div>
+        <div class="fx-card-content fx-stack" style="gap:1rem">
+          <div id="fb-deals"></div>
+          <div class="fx-table-wrap" style="border:1px solid var(--border);border-radius:var(--radius-lg)">
+            <table class="fx-table" id="deals-table">
+              <thead><tr><th>Deal</th><th>Stage</th><th>Owner</th><th style="text-align:right">Value</th><th>Close date</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <span class="fx-text-sm fx-muted" id="deals-count"></span>
+        </div>
+      </div>
+
+      <!-- log table -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Live logs — virtualized</div>
+          <div class="fx-card-desc">50,000 rows, fixed-height virtualization, level filters, search, live tail. Click a row for detail. OpenStatus pattern.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="logtable"></div>
+        </div>
+      </div>
+
+      <!-- data table -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Team members</div>
+          <div class="fx-card-desc">Sort by any column, filter by keyword, select rows.</div>
+          <div class="fx-card-action fx-row">
+            <input class="fx-input" style="width:13rem" placeholder="Filter members…" data-fx-table-filter="#members-table">
+            <button class="fx-btn fx-btn--outline fx-btn--sm" popovertarget="cols-menu">Columns
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="fx-menu" popover id="cols-menu">
+              <label class="fx-menu-item" data-fx-keep-open><input type="checkbox" class="fx-checkbox" checked> Name</label>
+              <label class="fx-menu-item" data-fx-keep-open><input type="checkbox" class="fx-checkbox" checked> Role</label>
+              <label class="fx-menu-item" data-fx-keep-open><input type="checkbox" class="fx-checkbox" checked> Status</label>
+              <label class="fx-menu-item" data-fx-keep-open><input type="checkbox" class="fx-checkbox" checked> Last active</label>
+            </div>
+            <button class="fx-btn fx-btn--sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              Invite
+            </button>
+          </div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-table-wrap">
+            <table class="fx-table" id="members-table">
+              <thead>
+                <tr>
+                  <th style="width:2rem"><input type="checkbox" class="fx-checkbox" data-fx-select-all aria-label="Select all"></th>
+                  <th><button class="fx-th-sort">Member</button></th>
+                  <th><button class="fx-th-sort">Role</button></th>
+                  <th>Status</th>
+                  <th><button class="fx-th-sort">Last active</button></th>
+                  <th style="text-align:right"><button class="fx-th-sort">Usage</button></th>
+                </tr>
+              </thead>
+              <tbody id="members-body"></tbody>
+            </table>
+          </div>
+          <div class="fx-row" style="justify-content:space-between;margin-top:1rem">
+            <span class="fx-text-sm fx-muted"><span id="sel-count">0</span> of 8 row(s) selected</span>
+            <div class="fx-row">
+              <span class="fx-text-sm fx-muted">Rows per page</span>
+              <select class="fx-select" style="width:4.5rem;height:2rem"><option>8</option><option>20</option><option>50</option></select>
+              <nav class="fx-pagination">
+                <button class="fx-page" disabled>‹</button>
+                <button class="fx-page" aria-current="page">1</button>
+                <button class="fx-page">2</button>
+                <button class="fx-page">3</button>
+                <button class="fx-page">›</button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(21rem,1fr))">
+
+        <!-- tree -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Tree view</div>
+            <div class="fx-card-desc">Native <code class="fx-inline-code">&lt;details&gt;</code>-powered file explorer.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-tree">
+              <details open>
+                <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>finix-ui</summary>
+                <details open>
+                  <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>css</summary>
+                  <div class="fx-tree-leaf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>tokens.css</div>
+                  <div class="fx-tree-leaf" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>finix.css</div>
+                  <div class="fx-tree-leaf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>finix-widgets.css</div>
+                </details>
+                <details>
+                  <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>js</summary>
+                  <div class="fx-tree-leaf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>finix.js</div>
+                </details>
+                <div class="fx-tree-leaf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>README.md</div>
+              </details>
+            </div>
+          </div>
+        </div>
+
+        <!-- heatmap -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Contribution activity</div>
+            <div class="fx-card-desc">642 contributions in the last 6 months</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.75rem">
+            <div class="fx-heatmap" id="heatmap"></div>
+            <div class="fx-row" style="gap:.375rem;justify-content:flex-end">
+              <span class="fx-text-xs fx-muted">Less</span>
+              <span style="width:.75rem;height:.75rem;border-radius:2px;background:var(--muted)"></span>
+              <span style="width:.75rem;height:.75rem;border-radius:2px;background:color-mix(in oklab,var(--chart-1) 30%,var(--muted))"></span>
+              <span style="width:.75rem;height:.75rem;border-radius:2px;background:color-mix(in oklab,var(--chart-1) 55%,var(--muted))"></span>
+              <span style="width:.75rem;height:.75rem;border-radius:2px;background:color-mix(in oklab,var(--chart-1) 80%,var(--muted))"></span>
+              <span style="width:.75rem;height:.75rem;border-radius:2px;background:var(--chart-1)"></span>
+              <span class="fx-text-xs fx-muted">More</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- timeline -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Activity timeline</div>
+            <div class="fx-card-desc">Recent events on this project.</div>
+          </div>
+          <div class="fx-card-content">
+            <ul class="fx-timeline">
+              <li>
+                <div class="fx-timeline-time">2 minutes ago</div>
+                <div class="fx-timeline-title">Deployment succeeded</div>
+                <div class="fx-timeline-body">finix-ui@1.4.2 deployed to production in 42s.</div>
+              </li>
+              <li>
+                <div class="fx-timeline-time">1 hour ago</div>
+                <div class="fx-timeline-title">Pull request merged</div>
+                <div class="fx-timeline-body">#482 “Add themeable data grid” by Sofia Davis.</div>
+              </li>
+              <li data-state="muted">
+                <div class="fx-timeline-time">Yesterday</div>
+                <div class="fx-timeline-title">New member joined</div>
+                <div class="fx-timeline-body">Jackson Lee accepted the workspace invite.</div>
+              </li>
+              <li data-state="muted">
+                <div class="fx-timeline-time">Aug 12</div>
+                <div class="fx-timeline-title">Billing updated</div>
+                <div class="fx-timeline-body">Plan upgraded to Pro (annual).</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- description list / simple table -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Invoice summary</div>
+            <div class="fx-card-desc">Plain table with footer totals.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-table-wrap">
+              <table class="fx-table">
+                <thead><tr><th>Item</th><th style="text-align:right">Qty</th><th style="text-align:right">Amount</th></tr></thead>
+                <tbody>
+                  <tr><td>Pro plan (annual)</td><td style="text-align:right">1</td><td style="text-align:right" class="fx-tabular">$240.00</td></tr>
+                  <tr><td>Additional seats</td><td style="text-align:right">4</td><td style="text-align:right" class="fx-tabular">$96.00</td></tr>
+                  <tr><td>Priority support</td><td style="text-align:right">1</td><td style="text-align:right" class="fx-tabular">$49.00</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><td>Total</td><td></td><td style="text-align:right" class="fx-tabular">$385.00</td></tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  // ---- product inventory data grid ----
+  const CATS = ["Electronics","Apparel","Home","Beauty","Sports"];
+  const STATUSES = ["In stock","Low stock","Out of stock"];
+  const NAMES = ["Aurora Desk Lamp","Nimbus Hoodie","Terra Ceramic Mug","Zephyr Running Shoes","Lumen Monitor 27\"","Sage Face Serum","Atlas Backpack","Pulse Smartwatch","Drift Yoga Mat","Ember Candle Set","Orbit Wireless Mouse","Willow Throw Blanket","Peak Water Bottle","Nova Mechanical Keyboard","Cloud Slippers","Stone Skincare Kit","Trail Jacket","Echo Earbuds","Haven Cushion","Bolt USB-C Hub","Fern Planter","Crest Tennis Racket","Mist Humidifier"];
+  const products = NAMES.map((name, i) => ({
+    name,
+    sku: "FX-" + String(1000 + i * 7),
+    category: CATS[i % CATS.length],
+    status: STATUSES[i % 7 === 0 ? 2 : i % 3 === 0 ? 1 : 0],
+    price: +(9.99 + (i * 13.7) % 240).toFixed(2),
+    stock: i % 7 === 0 ? 0 : (i * 17) % 340,
+    updated: "2026-0" + (1 + (i % 8)) + "-" + String(1 + (i * 3) % 27).padStart(2, "0"),
+  }));
+  const stBadge = (v) => v === "In stock" ? `<span class="fx-badge fx-badge--success fx-badge--dot">In stock</span>`
+    : v === "Low stock" ? `<span class="fx-badge fx-badge--warning fx-badge--dot">Low stock</span>`
+    : `<span class="fx-badge fx-badge--dot" style="background:color-mix(in oklab,var(--destructive) 12%,transparent);color:var(--destructive);border-color:color-mix(in oklab,var(--destructive) 25%,transparent)">Out of stock</span>`;
+  const grid = fxDataGrid(document.getElementById("grid-products"), {
+    select: true,
+    pageSize: 8,
+    maxHeight: 430,
+    pinned: { name: "left" },
+    columns: [
+      { key: "name", label: "Product", sortable: true, editable: true, width: 200 },
+      { key: "sku", label: "SKU", mono: true, width: 100 },
+      { key: "category", label: "Category", sortable: true, width: 130, render: (v) => `<span class="fx-badge fx-badge--outline">${v}</span>` },
+      { key: "status", label: "Status", width: 130, render: stBadge },
+      { key: "price", label: "Price", sortable: true, editable: true, type: "number", align: "right", width: 100, format: (v) => "$" + (+v).toFixed(2) },
+      { key: "stock", label: "Stock", sortable: true, editable: true, type: "number", align: "right", width: 90 },
+      { key: "updated", label: "Updated", sortable: true, width: 110 },
+    ],
+    data: products,
+  });
+  fxFilterBar(grid.filterSlot, {
+    fields: [
+      { key: "category", label: "Category", type: "enum", options: CATS.map((c) => ({ value: c, label: c })) },
+      { key: "status", label: "Status", type: "enum", options: STATUSES.map((s) => ({ value: s, label: s })) },
+      { key: "price", label: "Price", type: "number" },
+      { key: "stock", label: "Stock", type: "number" },
+    ],
+    onChange: (pred) => grid.setPredicate(pred),
+  });
+
+  // ---- filter builder + deals table ----
+  const OWNERS = ["Olivia","Jackson","Isabella","Sofia","Noah"];
+  const STAGES = ["Prospect","Qualified","Proposal","Negotiation","Won","Lost"];
+  const deals = Array.from({ length: 14 }, (_, i) => ({
+    name: ["Acme renewal","Globex expansion","Initech pilot","Umbrella upsell","Stark platform","Wayne migration","Hooli POC","Vandelay suite","Wonka annual","Cyberdyne SSO","Tyrell add-on","Oscorp starter","Dunder onboarding","Prestige upgrade"][i],
+    stage: STAGES[i % STAGES.length],
+    owner: OWNERS[i % OWNERS.length],
+    value: 4000 + i * 3750,
+    close: "2026-0" + (7 + (i % 3)) + "-" + String(3 + i * 2).padStart(2, "0"),
+  }));
+  function renderDeals(pred) {
+    const rows = pred ? deals.filter(pred) : deals;
+    document.querySelector("#deals-table tbody").innerHTML = rows.length ? rows.map((d) => `
+      <tr><td class="fx-medium">${d.name}</td>
+      <td><span class="fx-badge ${d.stage === "Won" ? "fx-badge--success fx-badge--dot" : d.stage === "Lost" ? "fx-badge--destructive" : "fx-badge--outline"}">${d.stage}</span></td>
+      <td>${d.owner}</td>
+      <td style="text-align:right" class="fx-tabular">$${d.value.toLocaleString()}</td>
+      <td class="fx-muted">${d.close}</td></tr>`).join("")
+      : `<tr><td colspan="5" class="fx-muted" style="text-align:center;padding:1.5rem">No deals match the current filters.</td></tr>`;
+    document.getElementById("deals-count").textContent = `${rows.length} of ${deals.length} deals shown`;
+  }
+  fxFilterBuilder(document.getElementById("fb-deals"), {
+    fields: [
+      { key: "name", label: "Deal name", type: "text" },
+      { key: "stage", label: "Stage", type: "enum", options: STAGES },
+      { key: "owner", label: "Owner", type: "enum", options: OWNERS },
+      { key: "value", label: "Value", type: "number" },
+      { key: "close", label: "Close date", type: "date" },
+    ],
+    onChange: (pred) => renderDeals(pred),
+  });
+  renderDeals(null);
+
+  // ---- virtualized log table ----
+  fxLogTable(document.getElementById("logtable"), { count: 50000 });
+
+  const members = [
+    ["Olivia Martin","OM","Owner","online","2 min ago","2026-08-16T10:00", 94],
+    ["Jackson Lee","JL","Admin","online","14 min ago","2026-08-16T09:48", 81],
+    ["Isabella Nguyen","IN","Editor","away","1 hour ago","2026-08-16T09:00", 67],
+    ["William Kim","WK","Editor","offline","3 hours ago","2026-08-16T07:00", 55],
+    ["Sofia Davis","SD","Viewer","online","5 min ago","2026-08-16T09:57", 48],
+    ["Ethan Patel","EP","Editor","busy","Yesterday","2026-08-15T16:20", 39],
+    ["Ava Thompson","AT","Viewer","offline","2 days ago","2026-08-14T11:05", 22],
+    ["Noah Garcia","NG","Admin","online","Just now","2026-08-16T10:02", 88],
+  ];
+  const statusMap = { online:["fx-status--online","Online"], away:["fx-status--away","Away"], busy:["fx-status--busy","Busy"], offline:["","Offline"] };
+  document.getElementById("members-body").innerHTML = members.map(([name,ini,role,st,active,sortT,usage]) => `
+    <tr>
+      <td><input type="checkbox" class="fx-checkbox" aria-label="Select row"></td>
+      <td><div class="fx-row" style="flex-wrap:nowrap"><span class="fx-avatar fx-avatar--sm">${ini}</span><span class="fx-medium">${name}</span></div></td>
+      <td><span class="fx-badge fx-badge--outline">${role}</span></td>
+      <td><span class="fx-status ${statusMap[st][0]}"><i></i>${statusMap[st][1]}</span></td>
+      <td data-sort="${sortT}" class="fx-muted">${active}</td>
+      <td style="text-align:right"><div class="fx-row" style="justify-content:flex-end;flex-wrap:nowrap"><div class="fx-progress" style="width:4rem"><div style="width:${usage}%"></div></div><span class="fx-tabular fx-text-xs fx-muted" style="width:2.25rem;text-align:right">${usage}%</span></div></td>
+    </tr>`).join("");
+
+  document.getElementById("members-table").addEventListener("change", () => {
+    const n = document.querySelectorAll("#members-body .fx-checkbox:checked").length;
+    document.getElementById("sel-count").textContent = n;
+  });
+
+  // heatmap: 26 weeks x 7 days
+  const hm = document.getElementById("heatmap");
+  let cells = "";
+  for (let i = 0; i < 26 * 7; i++) {
+    const r = Math.random();
+    const l = r > 0.88 ? 4 : r > 0.72 ? 3 : r > 0.5 ? 2 : r > 0.3 ? 1 : 0;
+    cells += `<span ${l ? `data-l="${l}"` : ""}></span>`;
+  }
+  hm.innerHTML = cells;
+});
+</script>
+</body>
+</html>

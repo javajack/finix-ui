@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion Lab · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Motion Lab</h1>
+          <p class="fx-page-sub">The finix motion vocabulary — subtle, purposeful, all pure CSS/vanilla JS, all respecting reduced-motion.</p>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(21rem,1fr))">
+
+        <!-- spotlight -->
+        <div class="fx-card fx-spotlight">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Spotlight card</div>
+            <div class="fx-card-desc">Move your cursor over this card — a soft radial highlight follows it. One CSS variable, one delegated listener.</div>
+          </div>
+          <div class="fx-card-content">
+            <code class="fx-inline-code">class="fx-card fx-spotlight"</code>
+          </div>
+        </div>
+
+        <!-- border beam -->
+        <div class="fx-card fx-beam">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Border beam</div>
+            <div class="fx-card-desc">A light traveling the border — the finix signal for "the AI is working on this". CSS <code class="fx-inline-code">@property</code> conic rotation.</div>
+          </div>
+          <div class="fx-card-content">
+            <code class="fx-inline-code">class="fx-card fx-beam"</code>
+          </div>
+        </div>
+
+        <!-- shine border -->
+        <div class="fx-card fx-shine-border">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Shine border</div>
+            <div class="fx-card-desc">Slow multicolor ring for featured or premium surfaces. Same mask trick, chart-token colors.</div>
+          </div>
+          <div class="fx-card-content">
+            <code class="fx-inline-code">class="fx-card fx-shine-border"</code>
+          </div>
+        </div>
+
+        <!-- sliding tabs -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Sliding tab indicator</div>
+            <div class="fx-card-desc">The active pill now glides between tabs instead of jumping — both variants.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div class="fx-tablist" role="tablist">
+              <button class="fx-tab" role="tab" aria-selected="true">Overview</button>
+              <button class="fx-tab" role="tab" aria-selected="false">Analytics</button>
+              <button class="fx-tab" role="tab" aria-selected="false">Reports</button>
+              <button class="fx-tab" role="tab" aria-selected="false">Settings</button>
+            </div>
+            <div class="fx-tablist fx-tablist--underline" role="tablist">
+              <button class="fx-tab" role="tab" aria-selected="true">General</button>
+              <button class="fx-tab" role="tab" aria-selected="false">Members</button>
+              <button class="fx-tab" role="tab" aria-selected="false">Billing</button>
+              <button class="fx-tab" role="tab" aria-selected="false">Integrations</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- stateful button -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Stateful button</div>
+            <div class="fx-card-desc">Click → loading spinner → success check → reset. Zero layout shift.</div>
+          </div>
+          <div class="fx-card-content fx-row">
+            <button class="fx-btn" data-fx-stateful data-loading-text="Saving…" data-success-text="Saved">Save changes</button>
+            <button class="fx-btn fx-btn--outline" data-fx-stateful data-loading-text="Deploying…" data-success-text="Deployed">Deploy</button>
+          </div>
+        </div>
+
+        <!-- voice bars -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Voice bars</div>
+            <div class="fx-card-desc">Web-Audio-ready visualizer (pass an AnalyserNode for a real mic) — demo mode animates synthetically.</div>
+          </div>
+          <div class="fx-card-content fx-row" style="gap:1.5rem;align-items:center">
+            <span class="fx-orb" style="--size:2rem" data-state="speaking"></span>
+            <div data-fx-voicebars style="flex:1;max-width:14rem"></div>
+            <span class="fx-text-xs fx-muted">agent speaking…</span>
+          </div>
+        </div>
+
+        <!-- animated list -->
+        <div class="fx-card" style="grid-row:span 2">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Animated list insertion</div>
+            <div class="fx-card-desc">New items slide in at the top — live event stream below.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-anim-list fx-stack" id="live-feed" style="gap:.5rem"></div>
+          </div>
+        </div>
+
+        <!-- fade edges -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Scroll-edge fades</div>
+            <div class="fx-card-desc">Content dissolves at the scroll boundaries — a quiet affordance that there's more.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-fade-edges" style="height:11rem;overflow-y:auto">
+              <div class="fx-stack" style="gap:.375rem" id="fade-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- press & entry recap -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Ambient motion</div>
+            <div class="fx-card-desc">Already active everywhere: staggered page entry, card hover response, button press scale, animated sidebar rail, number tickers, chart re-theming.</div>
+          </div>
+          <div class="fx-card-content fx-row">
+            <button class="fx-btn fx-btn--outline">Press me</button>
+            <span class="fx-text-sm fx-muted">…and feel the scale. Reload the page to see the stagger.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  // live feed inserts
+  const EVENTS = [
+    ["OM", "Olivia deployed", "finix-ui@1.6 to production"],
+    ["JL", "Jackson commented", "on “Data grid inline editing”"],
+    ["SD", "Sofia closed a deal", "Acme renewal · $24,000"],
+    ["NG", "Noah invited", "priya@acme.com to the workspace"],
+    ["IN", "Isabella uploaded", "q3-board-deck.pdf"],
+    ["WK", "William merged", "#512 “Motion vocabulary”"],
+  ];
+  const feed = document.getElementById("live-feed");
+  let i = 0;
+  function addEvent() {
+    const [ini, title, body] = EVENTS[i++ % EVENTS.length];
+    const el = document.createElement("div");
+    el.className = "fx-row";
+    el.style.cssText = "flex-wrap:nowrap;gap:.625rem;border:1px solid var(--border);border-radius:var(--radius-md);padding:.5rem .625rem;background:var(--card)";
+    el.innerHTML = `<span class="fx-avatar fx-avatar--sm">${ini}</span>
+      <span class="fx-text-sm" style="min-width:0"><b class="fx-medium">${title}</b> <span class="fx-muted">${body}</span></span>
+      <span class="fx-text-xs fx-muted" style="margin-left:auto;white-space:nowrap">now</span>`;
+    feed.prepend(el);
+    while (feed.children.length > 6) feed.lastChild.remove();
+  }
+  addEvent(); addEvent(); addEvent();
+  setInterval(addEvent, 2600);
+
+  // fade list content
+  document.getElementById("fade-list").innerHTML = Array.from({ length: 18 }, (_, k) =>
+    `<div class="fx-row fx-text-sm" style="justify-content:space-between;padding:.25rem .125rem"><span>Deploy #${240 - k}</span><span class="fx-muted fx-tabular">${(Math.random() * 40 + 20).toFixed(0)}s</span></div>`).join("");
+});
+</script>
+</body>
+</html>

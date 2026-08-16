@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research &amp; Credits · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<style>
+  .rc-link { color: var(--primary); text-decoration: none; font-weight: 500; }
+  .rc-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+</style>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Research &amp; Credits</h1>
+          <p class="fx-page-sub">Every library we surveyed across the shadcn ecosystem, and exactly what Finix UI distilled from each. Free / open-source tiers only.</p>
+        </div>
+      </div>
+
+      <div class="fx-alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <div class="fx-alert-title">Selection philosophy</div>
+        <div class="fx-alert-desc">Finix UI is a plain HTML/CSS/JS distillation — not a copy — of the best free UX patterns in the shadcn ecosystem. Visual fidelity comes from porting the shared OKLCH token system verbatim; behavior is rebuilt on modern platform primitives (<code class="fx-inline-code">&lt;dialog&gt;</code>, Popover API, <code class="fx-inline-code">&lt;details name&gt;</code>) instead of React/Radix. All sources are MIT or Apache-2.0 licensed.</div>
+      </div>
+
+      <!-- primary sources -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Primary sources — patterns adopted into Finix UI</div>
+          <div class="fx-card-desc">Libraries whose free components directly shaped a Finix component.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-table-wrap">
+            <table class="fx-table">
+              <thead><tr><th>Library</th><th>Focus</th><th>Free tier</th><th>What Finix adopted</th></tr></thead>
+              <tbody>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://ui.shadcn.com">shadcn/ui</a></td><td class="fx-muted">Core primitives</td><td><span class="fx-badge fx-badge--success">MIT, all free</span></td><td>The entire visual language: OKLCH tokens, button/input/card/table metrics, dialog &amp; menu chrome, sidebar, command palette, empty states, chart theming</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://shadcnstudio.com">Shadcn Studio</a></td><td class="fx-muted">Variant depth</td><td><span class="fx-badge fx-badge--success">Components free</span></td><td>Input-group addon patterns, stepper, rating, variant breadth for form controls (blocks are paid — excluded)</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://reui.io">ReUI</a></td><td class="fx-muted">Data-heavy apps</td><td><span class="fx-badge fx-badge--success">1,052 free examples</span></td><td>Data-table toolbar/filter/selection patterns, tree view, kanban, timeline, empty-state variants, filters concept</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://www.kibo-ui.com">Kibo UI</a></td><td class="fx-muted">Complex widgets</td><td><span class="fx-badge fx-badge--success">MIT, all free</span></td><td>Kanban board, contribution heatmap, choicebox, tag input, status dot, snippet-with-copy</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://tremor.so">Tremor</a></td><td class="fx-muted">Dashboards</td><td><span class="fx-badge fx-badge--success">Apache-2.0</span></td><td>Tracker (uptime ticks), bar list, category bar, progress circle, KPI stat-card composition, spark charts</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://ui.shadcn.com/charts">shadcn Charts</a></td><td class="fx-muted">Charts</td><td><span class="fx-badge fx-badge--success">MIT, 89 variants</span></td><td>Gradient area charts, rounded bars, donut-with-center-text, dashed grid, hover tooltip &amp; legend design — re-rendered as dependency-free SVG</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://www.assistant-ui.com">assistant-ui</a></td><td class="fx-muted">AI chat</td><td><span class="fx-badge fx-badge--success">MIT</span></td><td>Thread / message / composer / action-bar anatomy of the AI chat panel</td></tr>
+                <tr><td class="fx-motion fx-medium"><a class="rc-link" href="https://motion-primitives.com">Motion Primitives</a></td><td class="fx-muted">Micro-interaction</td><td><span class="fx-badge fx-badge--success">MIT</span></td><td>Animated number ticker, panel transition timing, shimmer "thinking" text</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://animate-ui.com">Animate UI</a></td><td class="fx-muted">Animated primitives</td><td><span class="fx-badge fx-badge--success">Free</span></td><td>Entry/exit animation specs for menus, dialogs, accordion height easing, counting numbers</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://kokonutui.com">Kokonut UI</a></td><td class="fx-muted">App components</td><td><span class="fx-badge fx-badge--success">100+ free</span></td><td>AI prompt composer layout (attach/voice/send bar), action search bar concept</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://www.cult-ui.com">Cult UI</a></td><td class="fx-muted">Agentic UI</td><td><span class="fx-badge fx-badge--success">Free registry MIT</span></td><td>Popover-form pattern, expandable toolbar idea, AI status affordances</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://github.com/sadmann7/shadcn-table">tablecn</a> / <a class="rc-link" href="https://diceui.com">DiceUI</a></td><td class="fx-muted">Data tables</td><td><span class="fx-badge fx-badge--success">MIT</span></td><td>Column-header sort affordance, toolbar filter, column-visibility menu, selection count footer</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- full survey -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Full survey — all libraries researched</div>
+          <div class="fx-card-desc">The complete shadcn-ecosystem landscape we mapped before selecting.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-table-wrap">
+            <table class="fx-table">
+              <thead><tr><th>Library</th><th>Category</th><th>Model</th><th>Verdict for Finix</th></tr></thead>
+              <tbody>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://ui.shadcn.com">shadcn/ui</a></td><td class="fx-muted">Core</td><td>MIT</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — foundation of everything</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://shadcnstudio.com">Shadcn Studio</a></td><td class="fx-muted">Blocks + variants</td><td>Freemium</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — free component variants only</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://reui.io">ReUI</a></td><td class="fx-muted">App primitives</td><td>Free + Pro</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — strongest single free source</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://www.kibo-ui.com">Kibo UI</a></td><td class="fx-muted">Complex widgets</td><td>MIT</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span></td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://tremor.so">Tremor</a></td><td class="fx-muted">Dashboards/charts</td><td>Apache-2.0</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — micro-viz ports almost 1:1</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://www.assistant-ui.com">assistant-ui</a></td><td class="fx-muted">AI chat</td><td>MIT</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — chat anatomy</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://motion-primitives.com">Motion Primitives</a></td><td class="fx-muted">Animation</td><td>MIT</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — timing &amp; number effects</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://animate-ui.com">Animate UI</a></td><td class="fx-muted">Animated primitives</td><td>Free</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — animation specs</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://kokonutui.com">Kokonut UI</a></td><td class="fx-muted">App components</td><td>Freemium</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — AI composer</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://www.cult-ui.com">Cult UI</a></td><td class="fx-muted">Agentic UI</td><td>Freemium</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — popover form</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://ui.shadcn.com/charts">shadcn Charts</a></td><td class="fx-muted">Charts</td><td>MIT</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — chart look, re-rendered in SVG</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://github.com/sadmann7/shadcn-table">tablecn</a></td><td class="fx-muted">Data tables</td><td>MIT</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — table UX patterns</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://diceui.com">DiceUI</a></td><td class="fx-muted">Data tables</td><td>MIT</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — filter/pin patterns</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://ui.bazza.dev">bazza/ui</a></td><td class="fx-muted">Table filters</td><td>MIT</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — Linear-style filter chips (data grid) + advanced builder</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://data-table.openstatus.dev">OpenStatus filters</a></td><td class="fx-muted">Log tables</td><td>MIT</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — virtualized live-tail log table on Data page</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://novel.sh">Novel</a></td><td class="fx-muted">Rich-text editor</td><td>Apache-2.0</td><td><span class="fx-badge fx-badge--success fx-badge--dot">Adopted</span> — slash-command editor UX, vanilla port on Editor page</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://coss.com/ui">Origin UI → coss ui</a></td><td class="fx-muted">Primitive variants</td><td>Free (acquired)</td><td><span class="fx-badge fx-badge--secondary">Referenced</span> — meter/number-field ideas; classic 484 set archived</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://shadcnspace.com">Shadcnspace</a></td><td class="fx-muted">Blocks</td><td>Freemium</td><td><span class="fx-badge fx-badge--secondary">Referenced</span> — topbar concept; blocks mostly paid</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://mynaui.com">MynaUI</a></td><td class="fx-muted">Design system</td><td>Free</td><td><span class="fx-badge fx-badge--secondary">Referenced</span> — standard coverage, no unique ports</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://21st.dev">21st.dev</a></td><td class="fx-muted">Community registry</td><td>Mixed</td><td><span class="fx-badge fx-badge--secondary">Referenced</span> — taxonomy informed category coverage</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://magicui.design">Magic UI</a></td><td class="fx-muted">Marketing effects</td><td>Freemium</td><td><span class="fx-badge fx-badge--outline">Skipped</span> — only ticker/file-tree relevant; covered elsewhere</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://ui.aceternity.com">Aceternity UI</a></td><td class="fx-muted">Marketing effects</td><td>Freemium</td><td><span class="fx-badge fx-badge--outline">Skipped</span> — landing-page cinematics, off-scope</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://skiper-ui.com">Skiper UI</a></td><td class="fx-muted">Scroll effects</td><td>Freemium</td><td><span class="fx-badge fx-badge--outline">Skipped</span> — near-zero admin value</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://shadcnblocks.com">Shadcnblocks</a></td><td class="fx-muted">Block marketplace</td><td>Mostly paid</td><td><span class="fx-badge fx-badge--outline">Skipped</span> — paid tier excluded by policy</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://tailark.com">Tailark</a></td><td class="fx-muted">Marketing blocks</td><td>Freemium</td><td><span class="fx-badge fx-badge--outline">Skipped</span> — marketing-page focus</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://www.8bitcn.com">8bitcn</a></td><td class="fx-muted">Retro aesthetic</td><td>MIT</td><td><span class="fx-badge fx-badge--outline">Skipped</span> — could become a 5th brand preset someday</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://www.neobrutalism.dev">Neobrutalism</a></td><td class="fx-muted">Brutalist aesthetic</td><td>MIT</td><td><span class="fx-badge fx-badge--outline">Skipped</span> — same: candidate brand preset</td></tr>
+                <tr><td class="fx-medium"><a class="rc-link" href="https://shadcnspace.com">Shadcnspace</a>-style animation packs</td><td class="fx-muted">Misc effects</td><td>Various</td><td><span class="fx-badge fx-badge--outline">Skipped</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- how theming works -->
+      <div class="fx-grid" style="grid-template-columns:1fr 1fr">
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Why the aesthetic survives the port</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.75rem">
+            <p class="fx-text-sm">The entire shadcn ecosystem is visually consistent because every library consumes the same CSS-variable token contract (<code class="fx-inline-code">--background</code>, <code class="fx-inline-code">--primary</code>, <code class="fx-inline-code">--radius</code>, <code class="fx-inline-code">--chart-1…5</code>, …). That token layer is already plain CSS — Finix ports it <b>verbatim, in OKLCH</b>, so every component here is pixel-faithful to the originals.</p>
+            <p class="fx-text-sm">Interactions are rebuilt on 2026-baseline platform features: <code class="fx-inline-code">&lt;dialog&gt;</code> gives focus-trapping for free, the Popover API gives top-layer menus, <code class="fx-inline-code">&lt;details name&gt;</code> gives exclusive accordions, and <code class="fx-inline-code">@starting-style</code> transitions reproduce the Radix entry/exit animations.</p>
+          </div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">For AI agents</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.75rem">
+            <p class="fx-text-sm">Finix UI is designed for machine consumption: semantic class names (<code class="fx-inline-code">fx-btn fx-btn--outline</code>) instead of utility soup, data-attribute behaviors (<code class="fx-inline-code">data-fx-open</code>, <code class="fx-inline-code">popovertarget</code>), and a machine-readable registry:</p>
+            <div class="fx-snippet"><span>finix-ui/manifest.json · finix-ui/llms.txt</span>
+              <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-copy="finix-ui/manifest.json" data-fx-tip="Copy path" aria-label="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+            </div>
+            <p class="fx-text-sm fx-muted">Every component maps to: markup snippet → CSS classes → optional JS hook. No build step, works in any server-rendered stack.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

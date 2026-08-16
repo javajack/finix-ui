@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>People &amp; HR · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-domains.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">People &amp; HR</h1>
+          <p class="fx-page-sub">Org charts, leave tracking, timesheets and performance — the patterns no free library ships.</p>
+        </div>
+        <button class="fx-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          Add employee
+        </button>
+      </div>
+
+      <!-- HR KPIs -->
+      <div class="fx-stats">
+        <div class="fx-card fx-stat"><div class="fx-card-content">
+          <div class="fx-stat-label">Headcount</div>
+          <div class="fx-stat-value" data-fx-ticker="148">0</div>
+          <div class="fx-stat-meta">+6 this quarter <div id="spark-hc" style="margin-left:auto"></div></div>
+        </div></div>
+        <div class="fx-card fx-stat"><div class="fx-card-content">
+          <div class="fx-stat-label">Attrition (12m)</div>
+          <div class="fx-stat-value" data-fx-ticker="7.4%">0%</div>
+          <div class="fx-stat-meta">Industry avg 12.8% <div id="spark-attr" style="margin-left:auto"></div></div>
+        </div></div>
+        <div class="fx-card fx-stat"><div class="fx-card-content">
+          <div class="fx-stat-label">Open roles</div>
+          <div class="fx-stat-value" data-fx-ticker="11">0</div>
+          <div class="fx-stat-meta">4 in final rounds <div id="spark-roles" style="margin-left:auto"></div></div>
+        </div></div>
+        <div class="fx-card fx-stat"><div class="fx-card-content">
+          <div class="fx-stat-label">Avg tenure</div>
+          <div class="fx-stat-value" data-fx-ticker="3.2">0</div>
+          <div class="fx-stat-meta">years · up from 2.8 <div id="spark-ten" style="margin-left:auto"></div></div>
+        </div></div>
+      </div>
+
+      <!-- org chart -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Organization</div>
+          <div class="fx-card-desc">Pure-CSS org chart — connectors, no layout engine, horizontally scrollable. Unserved by any free library.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-org">
+            <ul>
+              <li>
+                <div class="fx-org-node"><span class="fx-avatar fx-avatar--sm">AR</span><span><b>Ananya Rao</b><span>CEO</span></span></div>
+                <ul>
+                  <li>
+                    <div class="fx-org-node"><span class="fx-avatar fx-avatar--sm">OM</span><span><b>Olivia Martin</b><span>VP Engineering</span></span><span class="fx-badge fx-badge--secondary">42</span></div>
+                    <ul>
+                      <li><div class="fx-org-node"><span class="fx-avatar fx-avatar--sm">JL</span><span><b>Jackson Lee</b><span>Dir · Platform</span></span></div></li>
+                      <li><div class="fx-org-node"><span class="fx-avatar fx-avatar--sm">IN</span><span><b>Isabella Nguyen</b><span>Dir · Product Eng</span></span></div></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="fx-org-node"><span class="fx-avatar fx-avatar--sm">SD</span><span><b>Sofia Davis</b><span>VP Sales</span></span><span class="fx-badge fx-badge--secondary">28</span></div>
+                    <ul>
+                      <li><div class="fx-org-node"><span class="fx-avatar fx-avatar--sm">NG</span><span><b>Noah Garcia</b><span>Head · Solutions</span></span></div></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <div class="fx-org-node"><span class="fx-avatar fx-avatar--sm">WK</span><span><b>William Kim</b><span>VP People</span></span><span class="fx-badge fx-badge--secondary">9</span></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:1.5fr 1fr">
+        <!-- who's out -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Who's out — this week</div>
+            <div class="fx-card-desc">Leave overlay, BambooHR-style. Color = leave type.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-whosout" id="whosout"></div>
+            <div class="fx-leave-legend">
+              <span><i style="background:var(--chart-1)"></i>Vacation</span>
+              <span><i style="background:var(--chart-4)"></i>Sick</span>
+              <span><i style="background:var(--chart-2)"></i>Remote</span>
+              <span><i style="background:var(--chart-5)"></i>Parental</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- directory -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Directory</div>
+            <div class="fx-card-desc">Employee cards.</div>
+            <div class="fx-card-action"><input class="fx-input" placeholder="Search people…" style="width:10rem"></div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.625rem" id="directory"></div>
+        </div>
+      </div>
+
+      <!-- timesheet -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Timesheet — week 34</div>
+          <div class="fx-card-desc">Editable hours grid with live totals. The timer logs into today's first project on stop.</div>
+          <div class="fx-card-action">
+            <span class="fx-ts-timer">
+              <b id="timer-out">00:00:00</b>
+              <button class="fx-btn fx-btn--sm" id="timer-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Start timer
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-table-wrap"><div id="timesheet"></div></div>
+        </div>
+      </div>
+
+      <!-- review matrix -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Performance review — Isabella Nguyen</div>
+          <div class="fx-card-desc">Competency matrix, Lattice-style. <span class="fx-mark fx-mark--self" style="display:inline-block;vertical-align:-1px"></span> self &nbsp;·&nbsp; <span class="fx-mark fx-mark--mgr" style="display:inline-block;vertical-align:-1px"></span> manager</div>
+          <div class="fx-card-action"><span class="fx-badge fx-badge--success fx-badge--dot">Cycle H2 open</span></div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-matrix" id="matrix"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  // KPI sparks
+  fxCharts.spark(document.getElementById("spark-hc"),   { data: [128,131,135,138,140,142,148], width: 84, height: 26 });
+  fxCharts.spark(document.getElementById("spark-attr"), { data: [11,10.2,9.4,8.8,8.1,7.7,7.4], width: 84, height: 26 });
+  fxCharts.spark(document.getElementById("spark-roles"),{ data: [6,9,14,12,13,12,11], width: 84, height: 26 });
+  fxCharts.spark(document.getElementById("spark-ten"),  { data: [2.6,2.8,2.9,3.0,3.0,3.1,3.2], width: 84, height: 26 });
+
+  // who's out — current week
+  const now = new Date();
+  const monday = new Date(now); monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  const LEAVE = {
+    0: [["Jackson L.", 1], ["Priya S.", 2]],
+    1: [["Jackson L.", 1]],
+    2: [["Ava T.", 4], ["Marco B.", 3]],
+    3: [["Ava T.", 4], ["Ethan P.", 2], ["Lena K.", 3]],
+    4: [["Ava T.", 4]],
+    5: [], 6: [],
+  };
+  const C = { 1: "var(--chart-1)", 2: "var(--chart-4)", 3: "var(--chart-2)", 4: "var(--chart-5)" };
+  const DOW = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  document.getElementById("whosout").innerHTML = DOW.map((d, i) => {
+    const day = new Date(monday); day.setDate(monday.getDate() + i);
+    const isToday = day.toDateString() === now.toDateString();
+    return `<div class="fx-whosout-day ${isToday ? "is-today" : ""}">
+      <div class="fx-whosout-date">${d}<b>${day.getDate()}</b></div>
+      ${(LEAVE[i] || []).map(([name, t]) => `<div class="fx-whosout-p" style="--c:${C[t]}">${name}</div>`).join("")}
+    </div>`;
+  }).join("");
+
+  // directory
+  const PEOPLE = [
+    ["OM","Olivia Martin","VP Engineering","Bengaluru"],
+    ["SD","Sofia Davis","VP Sales","San Francisco"],
+    ["JL","Jackson Lee","Director, Platform","Remote · Seoul"],
+    ["IN","Isabella Nguyen","Director, Product Eng","Bengaluru"],
+  ];
+  document.getElementById("directory").innerHTML = PEOPLE.map(([ini,name,role,loc]) =>
+    `<div class="fx-row" style="flex-wrap:nowrap;gap:.625rem;border:1px solid var(--border);border-radius:var(--radius-md);padding:.5rem .625rem;background:var(--card)">
+       <span class="fx-avatar">${ini}</span>
+       <span style="min-width:0;flex:1"><span class="fx-text-sm fx-medium" style="display:block">${name}</span>
+       <span class="fx-text-xs fx-muted">${role} · ${loc}</span></span>
+       <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-tip="Message" aria-label="Message">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+       </button>
+     </div>`).join("");
+
+  // timesheet
+  fxTimesheet(document.getElementById("timesheet"), {
+    rows: [
+      { name: "finix-ui core", client: "Internal", hours: [3.5, 4, 2.5, 3, 0, 0, 0] },
+      { name: "Acme onboarding", client: "Acme Corp", hours: [2, 1.5, 3, 2.5, 4, 0, 0] },
+      { name: "Design reviews", client: "Internal", hours: [1, 0.5, 1, 0, 1.5, 0, 0] },
+    ],
+    timerBtn: "#timer-btn",
+    timerOut: "#timer-out",
+  });
+
+  // performance matrix
+  const COMPS = [
+    ["Technical craft", "Code quality, architecture", 4, 5],
+    ["Execution", "Delivery, predictability", 4, 4],
+    ["Communication", "Writing, presentations", 3, 4],
+    ["Leadership", "Mentoring, initiative", 3, 3],
+    ["Product sense", "User empathy, priorities", 2, 3],
+  ];
+  document.getElementById("matrix").innerHTML =
+    `<div class="fx-matrix-head">Competency</div>` +
+    ["1 · Developing","2","3 · Solid","4","5 · Exceptional"].map((h) => `<div class="fx-matrix-head">${h}</div>`).join("") +
+    COMPS.map(([name, sub, self, mgr]) =>
+      `<div class="fx-matrix-label">${name}<span>${sub}</span></div>` +
+      [1,2,3,4,5].map((col) =>
+        `<div class="fx-matrix-cell">${col === self ? '<span class="fx-mark fx-mark--self" data-fx-tip="Self: ' + self + '/5"></span>' : ""}${col === mgr ? '<span class="fx-mark fx-mark--mgr" data-fx-tip="Manager: ' + mgr + '/5"></span>' : ""}</div>`).join("")
+    ).join("");
+});
+</script>
+</body>
+</html>

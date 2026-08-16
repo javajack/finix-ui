@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Editor &amp; Media · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-editor.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Editor &amp; Media</h1>
+          <p class="fx-page-sub">Notion-style rich text editing (Novel/Tiptap UX, vanilla port) and an image cropper with aspect lock.</p>
+        </div>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Rich-text editor</div>
+          <div class="fx-card-desc">Toolbar, selection bubble menu, <b>slash commands</b> (type <code class="fx-inline-code">/</code> on a new line), markdown shortcuts (<code class="fx-inline-code"># ## - 1. &gt; ---</code>), live word count.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="editor"></div>
+        </div>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Image cropper</div>
+          <div class="fx-card-desc">Drag to move, corner handles to resize, aspect-ratio lock, live preview and canvas output.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-grid" style="grid-template-columns:auto 18rem;gap:1.5rem;align-items:start">
+            <div class="fx-stack" style="gap:.75rem">
+              <div id="cropper"></div>
+              <div class="fx-row">
+                <span class="fx-text-sm fx-muted">Aspect:</span>
+                <div class="fx-toggle-group fx-toggle-group--outline" data-fx-single id="aspect-group">
+                  <button class="fx-toggle" aria-pressed="true" data-aspect="">Free</button>
+                  <button class="fx-toggle" aria-pressed="false" data-aspect="1">1:1</button>
+                  <button class="fx-toggle" aria-pressed="false" data-aspect="1.7778">16:9</button>
+                  <button class="fx-toggle" aria-pressed="false" data-aspect="1.3333">4:3</button>
+                </div>
+              </div>
+            </div>
+            <div class="fx-stack" style="gap:.75rem">
+              <span class="fx-label">Preview</span>
+              <div class="fx-crop-preview" id="crop-preview"><canvas></canvas></div>
+              <button class="fx-btn" id="crop-apply" style="width:100%">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>
+                Apply crop
+              </button>
+              <span class="fx-text-xs fx-muted" id="crop-dims"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* ---- editor with starter content ---- */
+  fxEditor(document.getElementById("editor"), {
+    html: `<h1>Q3 planning notes</h1>
+<p>The <strong>finix-ui</strong> rollout continues — this document is fully editable. Select text for the <em>bubble menu</em>, or type <code>/</code> on an empty line for block commands.</p>
+<h2>Priorities</h2>
+<ul><li>Ship the data grid to the design-system consumers</li><li>Migrate the internal admin to finix tokens</li><li>Draft the <code>llms.txt</code> agent contract</li></ul>
+<blockquote>“The best design systems disappear — teams just build.” — someone, probably</blockquote>
+<p>Try the markdown shortcuts: type <code># </code> at the start of a line for a heading, or <code>--- </code> for a divider.</p>`,
+  });
+
+  /* ---- cropper with generated artwork (no external assets) ---- */
+  const cv = document.createElement("canvas");
+  cv.width = 840; cv.height = 520;
+  const ctx = cv.getContext("2d");
+  const g = ctx.createLinearGradient(0, 0, 840, 520);
+  g.addColorStop(0, "#0ea5e9"); g.addColorStop(.45, "#6366f1"); g.addColorStop(1, "#f43f5e");
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 840, 520);
+  for (let i = 0; i < 26; i++) {
+    ctx.beginPath();
+    ctx.arc(60 + (i * 137) % 780, 40 + (i * 89) % 460, 14 + (i * 7) % 46, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${0.05 + (i % 5) * 0.04})`;
+    ctx.fill();
+  }
+  ctx.fillStyle = "rgba(255,255,255,.92)";
+  ctx.font = "700 54px Inter, sans-serif";
+  ctx.fillText("finix-ui", 320, 270);
+  ctx.font = "500 20px Inter, sans-serif";
+  ctx.fillStyle = "rgba(255,255,255,.75)";
+  ctx.fillText("crop me — drag the box or handles", 270, 308);
+
+  const cropper = fxCropper(document.getElementById("cropper"), {
+    src: cv.toDataURL("image/png"),
+    previewEl: document.getElementById("crop-preview"),
+    onCrop: () => finix.toast({ title: "Crop applied", description: "Canvas output updated on the right.", variant: "success" }),
+  });
+  document.getElementById("aspect-group").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-aspect]");
+    if (b) cropper.setAspect(b.dataset.aspect ? +b.dataset.aspect : null);
+  });
+  document.getElementById("crop-apply").addEventListener("click", () => {
+    cropper.apply();
+    const c = cropper.crop;
+    document.getElementById("crop-dims").textContent = `Cropped region: ${Math.round(c.w)} × ${Math.round(c.h)} px (display) at (${Math.round(c.x)}, ${Math.round(c.y)})`;
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Assistant · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content" style="max-width:100rem">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">AI Assistant</h1>
+          <p class="fx-page-sub">assistant-ui anatomy in vanilla JS — threads, streaming markdown, tool calls, human-in-the-loop approvals, response branching.</p>
+        </div>
+      </div>
+
+      <div class="fx-ai">
+        <!-- thread list -->
+        <aside class="fx-ai-threads">
+          <div class="fx-ai-threads-head">
+            <button class="fx-btn fx-btn--outline fx-btn--sm" style="flex:1" onclick="finix.toast({title:'New thread started'})">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              New chat
+            </button>
+          </div>
+          <div style="overflow-y:auto">
+            <button class="fx-ai-thread is-active"><b>Q3 revenue analysis</b><span>The spike came from annual-plan…</span></button>
+            <button class="fx-ai-thread"><b>Churn cohort deep-dive</b><span>Cohorts after May show 2.1%…</span></button>
+            <button class="fx-ai-thread"><b>Refund policy draft</b><span>Here's a customer-friendly vers…</span></button>
+            <button class="fx-ai-thread"><b>SQL for weekly actives</b><span>SELECT date_trunc('week'…</span></button>
+            <button class="fx-ai-thread"><b>Pricing page copy</b><span>Three variants, benefit-led…</span></button>
+          </div>
+        </aside>
+
+        <!-- main -->
+        <div class="fx-ai-main">
+          <div class="fx-ai-head">
+            <span class="fx-orb" style="--size:1.5rem" id="ai-orb" data-fx-tip="Assistant is idle — click to toggle voice" role="button" tabindex="0" aria-label="Voice state"></span>
+            <b class="fx-text-sm">Q3 revenue analysis</b>
+            <span class="fx-status fx-status--online fx-text-xs"><i></i>connected</span>
+            <div style="flex:1"></div>
+            <span class="fx-ctx" data-fx-tip="Context window — 42k of 200k tokens used">
+              <span class="fx-ctx-ring" style="--used:21"></span>
+              <span><b>42k</b> / 200k</span>
+            </span>
+            <div class="fx-combobox" style="width:11rem">
+              <button class="fx-combo-trigger" popovertarget="model-menu" type="button" style="height:1.75rem">
+                <span class="fx-combo-value">claude-fable-5</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+              </button>
+              <div class="fx-menu" popover id="model-menu">
+                <div class="fx-combo-list">
+                  <button class="fx-menu-item" data-value="claude-fable-5">claude-fable-5<span class="fx-menu-shortcut">best</span></button>
+                  <button class="fx-menu-item" data-value="claude-opus-5">claude-opus-5</button>
+                  <button class="fx-menu-item" data-value="claude-sonnet-5">claude-sonnet-5</button>
+                  <button class="fx-menu-item" data-value="claude-haiku-4-5">claude-haiku-4-5<span class="fx-menu-shortcut">fast</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fx-island" id="island" data-mode="idle" data-fx-tip="Agent status — click to cycle states" role="button" tabindex="0">
+            <i class="fx-island-dot"></i>
+            <span id="island-label">Agent idle</span>
+            <span class="fx-island-extra fx-island-extra--working">
+              <span class="fx-island-bar"><i></i></span>
+              <span style="opacity:.75">cohort_analysis · step 3/5</span>
+            </span>
+            <span class="fx-island-extra fx-island-extra--voice">
+              <span id="island-bars"></span>
+              <span style="opacity:.75">listening…</span>
+            </span>
+          </div>
+
+          <div class="fx-ai-body" id="thread">
+            <div class="fx-msg fx-msg--user"><div class="fx-msg-bubble">Analyze Q3 revenue and flag anything unusual. Pull the numbers yourself.</div></div>
+
+            <div class="fx-msg fx-msg--ai" style="max-width:92%">
+              <span class="fx-avatar fx-avatar--sm" style="background:var(--primary);color:var(--primary-foreground);flex-shrink:0">AI</span>
+              <div style="min-width:0;flex:1">
+                <details class="fx-toolcall fx-reasoning">
+                  <summary>Reasoning · 6.2s<span class="fx-badge fx-badge--outline">4 steps</span></summary>
+                  <div class="fx-cot">
+                    <div class="fx-cot-step">Need Q3 monthly revenue first — calling <code class="fx-inline-code">get_revenue(quarter: "Q3")</code> rather than estimating.</div>
+                    <div class="fx-cot-step">Growth is +18.4% QoQ — unusually strong, so scan for daily anomalies before concluding.</div>
+                    <div class="fx-cot-step">Aug 14 spike has z-score 3.2 — correlating with the campaign calendar points to the annual-plan promo.</div>
+                    <div class="fx-cot-step" data-active>September dip of 3.3% matches last year's seasonality — no flag needed.</div>
+                  </div>
+                </details>
+                <details class="fx-toolcall" open>
+                  <summary>get_revenue({ quarter: "Q3", by: "month" })<span class="fx-badge fx-badge--success fx-badge--dot">done · 240ms</span></summary>
+                  <pre>{ "jul": 8200, "aug": 9100, "sep": 8800,
+  "growth_qoq": "+18.4%", "refund_rate": "0.9%" }</pre>
+                </details>
+                <details class="fx-toolcall">
+                  <summary>get_anomalies({ metric: "daily_revenue", quarter: "Q3" })<span class="fx-badge fx-badge--success fx-badge--dot">done · 512ms</span></summary>
+                  <pre>[ { "date": "2026-08-14", "z": 3.2, "cause_hint": "annual_plan_promo" } ]</pre>
+                </details>
+                <div class="fx-msg-bubble fx-prose" style="margin-top:.375rem">
+                  <p>Q3 came in at <strong>$26,100</strong>, up <strong>18.4% QoQ</strong>. Highlights:</p>
+                  <ul>
+                    <li><strong>August led</strong> at $9,100 — the Aug 14 spike (z-score 3.2) traces to the annual-plan promo, 34 upgrades in one day.</li>
+                    <li><strong>September dipped 3.3%</strong> vs August; entirely seasonal, matches last year's pattern.</li>
+                    <li>Refunds held at <code>0.9%</code> — healthy.</li>
+                  </ul>
+                  <p>Nothing alarming. Want a cohort breakdown of the promo upgraders?</p>
+                </div>
+                <div class="fx-row" style="margin-top:.375rem;gap:.125rem">
+                  <div class="fx-branch">
+                    <button aria-label="Previous version" id="br-prev">‹</button>
+                    <span id="br-num">2 / 3</span>
+                    <button aria-label="Next version" id="br-next">›</button>
+                  </div>
+                  <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-tip="Copy" aria-label="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+                  <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-tip="Good response" aria-label="Good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg></button>
+                  <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-tip="Regenerate" aria-label="Regenerate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="fx-msg fx-msg--user"><div class="fx-msg-bubble">Yes — and email the summary to the exec list.</div></div>
+
+            <div class="fx-msg fx-msg--ai" style="max-width:92%">
+              <span class="fx-avatar fx-avatar--sm" style="background:var(--primary);color:var(--primary-foreground);flex-shrink:0">AI</span>
+              <div style="min-width:0;flex:1">
+                <div class="fx-approval" id="approval">
+                  <div class="fx-approval-head">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    Approval required — send email
+                  </div>
+                  <div>The agent wants to run <code class="fx-inline-code">send_email(to: exec-team@acme.com, subject: "Q3 revenue summary")</code>. This action is external and irreversible.</div>
+                  <div class="fx-row">
+                    <button class="fx-btn fx-btn--sm" id="approve-btn">Approve &amp; send</button>
+                    <button class="fx-btn fx-btn--outline fx-btn--sm" id="deny-btn">Deny</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fx-ai-foot">
+            <div class="fx-composer">
+              <textarea id="ai-input" placeholder="Message the assistant… (Enter to send)" rows="1"></textarea>
+              <div class="fx-composer-bar">
+                <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-tip="Attach" aria-label="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+                <span class="fx-text-xs fx-muted" id="ai-status">Ready</span>
+                <div class="fx-topbar-spacer"></div>
+                <button class="fx-btn fx-btn--outline fx-btn--sm" id="ai-stop" hidden>Stop</button>
+                <button class="fx-btn fx-btn--icon fx-btn--sm" id="ai-send" data-fx-tip="Send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* mini markdown renderer */
+  function md(src) {
+    let out = src
+      .replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]))
+      .replace(/```(\w*)\n([\s\S]*?)```/g, (_, l, code) => `<pre><code>${code}</code></pre>`)
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*([^*]+)\*/g, "<em>$1</em>")
+      .replace(/^### (.*)$/gm, "<h3>$1</h3>")
+      .replace(/^## (.*)$/gm, "<h2>$1</h2>")
+      .replace(/^- (.*)$/gm, "<li>$1</li>")
+      .replace(/(<li>[\s\S]*?<\/li>)(?!\s*<li>)/g, "<ul>$1</ul>");
+    return out.split(/\n{2,}/).map((b) => /^<(h|u|p|c|<)/.test(b.trim()) || b.trim().startsWith("<") ? b : `<p>${b.trim()}</p>`).join("");
+  }
+
+  /* branch picker */
+  const branches = [
+    "Short answer: **Q3 = $26,100, +18.4% QoQ**. One anomaly (Aug 14, promo-driven) — benign. Refunds flat at 0.9%.",
+    null, /* index 1 = the rendered static message */
+    "## Q3 deep dive\n\nRevenue totaled **$26,100** across Jul ($8.2k), Aug ($9.1k), Sep ($8.8k).\n\n- Growth: **+18.4% QoQ**, +31% YoY\n- Anomaly: Aug 14 spike, z-score `3.2` — annual-plan promo\n- Risk: none flagged; refund rate stable\n\nRecommend repeating the promo in early Q4.",
+  ];
+  let br = 1;
+  const brBubble = document.querySelector(".fx-msg--ai .fx-prose");
+  const staticHTML = brBubble.innerHTML;
+  function paintBranch() {
+    document.getElementById("br-num").textContent = (br + 1) + " / 3";
+    brBubble.innerHTML = br === 1 ? staticHTML : md(branches[br]);
+  }
+  document.getElementById("br-prev").addEventListener("click", () => { br = (br + 2) % 3; paintBranch(); });
+  document.getElementById("br-next").addEventListener("click", () => { br = (br + 1) % 3; paintBranch(); });
+
+  /* approval card */
+  document.getElementById("approve-btn").addEventListener("click", () => {
+    const a = document.getElementById("approval");
+    a.innerHTML = `<div class="fx-approval-head" style="color:var(--success)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+      Approved — email sent to exec-team@acme.com</div>`;
+    a.style.borderColor = "color-mix(in oklab, var(--success) 40%, var(--border))";
+    a.style.background = "color-mix(in oklab, var(--success) 7%, transparent)";
+    finix.toast({ title: "Tool executed", description: "send_email completed in 340ms.", variant: "success" });
+  });
+  document.getElementById("deny-btn").addEventListener("click", () => {
+    const a = document.getElementById("approval");
+    a.innerHTML = `<div class="fx-approval-head" style="color:var(--muted-foreground)">Denied — the agent will continue without sending.</div>`;
+  });
+
+  /* model switcher label */
+  document.getElementById("model-menu").addEventListener("click", (e) => {
+    const item = e.target.closest("[data-value]");
+    if (item) finix.toast({ title: "Model switched", description: item.dataset.value });
+  });
+
+  /* streaming send */
+  const thread = document.getElementById("thread");
+  const input = document.getElementById("ai-input");
+  const stopBtn = document.getElementById("ai-stop");
+  const statusEl = document.getElementById("ai-status");
+  let streaming = null;
+  const RESPONSE = "Here's the cohort breakdown of the **34 promo upgraders**:\n\n- **Power users (61%)** — 90-day retention forecast `97%`, expansion candidates\n- **Dormant reactivations (24%)** — were inactive 30+ days; promo re-engaged them\n- **New signups (15%)** — converted straight to annual, unusually strong intent\n\nBlended LTV of the cohort is **2.3×** the Q3 average. The promo did not pull forward existing monthly upgrades — cannibalization is under 4%.";
+  function send() {
+    const text = input.value.trim();
+    if (!text || streaming) return;
+    input.value = "";
+    const um = document.createElement("div");
+    um.className = "fx-msg fx-msg--user";
+    um.innerHTML = '<div class="fx-msg-bubble"></div>';
+    um.firstChild.textContent = text;
+    thread.appendChild(um);
+
+    const am = document.createElement("div");
+    am.className = "fx-msg fx-msg--ai";
+    am.style.maxWidth = "92%";
+    am.innerHTML = `<span class="fx-avatar fx-avatar--sm" style="background:var(--primary);color:var(--primary-foreground);flex-shrink:0">AI</span>
+      <div style="min-width:0;flex:1"><div class="fx-msg-bubble fx-prose"><span class="fx-shimmer">Thinking…</span></div></div>`;
+    thread.appendChild(am);
+    thread.scrollTop = thread.scrollHeight;
+    const bubble = am.querySelector(".fx-prose");
+    statusEl.textContent = "Streaming…";
+    stopBtn.hidden = false;
+
+    const words = RESPONSE.split(" ");
+    let i = 0, buf = "";
+    streaming = setInterval(() => {
+      buf += (i ? " " : "") + words[i++];
+      bubble.innerHTML = md(buf) + '<span class="fx-shimmer">▍</span>';
+      thread.scrollTop = thread.scrollHeight;
+      if (i >= words.length) stop(true);
+    }, 45);
+    function stop(done) {
+      clearInterval(streaming); streaming = null;
+      bubble.innerHTML = md(buf) + (done ? "" : " <em>(stopped)</em>");
+      stopBtn.hidden = true;
+      statusEl.textContent = "Ready";
+    }
+    stopBtn.onclick = () => stop(false);
+  }
+  /* dynamic island state cycle */
+  const island = document.getElementById("island");
+  const islandLabel = document.getElementById("island-label");
+  const islandBars = fxVoiceBars(document.getElementById("island-bars"), { bars: 12, auto: false });
+  const islandModes = [
+    ["idle", "Agent idle"],
+    ["working", "Analyzing cohorts"],
+    ["voice", "Voice session"],
+  ];
+  let im = 0;
+  island.addEventListener("click", () => {
+    im = (im + 1) % islandModes.length;
+    const [mode, label] = islandModes[im];
+    island.dataset.mode = mode;
+    islandLabel.textContent = label;
+    if (mode === "voice") islandBars.start(); else islandBars.stop();
+  });
+
+  /* voice orb state cycle */
+  const orb = document.getElementById("ai-orb");
+  const orbStates = [null, "listening", "speaking", "muted"];
+  let orbI = 0;
+  orb.addEventListener("click", () => {
+    orbI = (orbI + 1) % orbStates.length;
+    if (orbStates[orbI]) orb.dataset.state = orbStates[orbI];
+    else delete orb.dataset.state;
+    orb.setAttribute("data-fx-tip", "Voice: " + (orbStates[orbI] || "idle"));
+  });
+
+  document.getElementById("ai-send").addEventListener("click", send);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } });
+});
+</script>
+</body>
+</html>

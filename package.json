@@ -1,0 +1,58 @@
+{
+  "name": "finixui",
+  "version": "0.6.0",
+  "description": "Plain HTML/CSS/JS admin + product UI kit distilled from the best free shadcn-ecosystem patterns. 218 components, framework-agnostic, zero runtime dependencies, agent-consumable via manifest.json/llms.txt.",
+  "license": "MIT",
+  "author": "Rakesh Kumar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javajack/finix-ui.git"
+  },
+  "homepage": "https://javajack.github.io/finix-ui/",
+  "bugs": "https://github.com/javajack/finix-ui/issues",
+  "keywords": [
+    "ui",
+    "components",
+    "css",
+    "html",
+    "vanilla-js",
+    "admin",
+    "dashboard",
+    "shadcn",
+    "design-system",
+    "no-build",
+    "server-rendered"
+  ],
+  "files": [
+    "css",
+    "js",
+    "dist",
+    "assets",
+    "manifest.json",
+    "llms.txt",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "style": "dist/finix-all.min.css",
+  "exports": {
+    ".": {
+      "style": "./dist/finix-all.min.css",
+      "default": "./dist/finix-all.min.js"
+    },
+    "./css/*": "./css/*",
+    "./js/*": "./js/*",
+    "./dist/*": "./dist/*",
+    "./manifest.json": "./manifest.json"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "docs": "node scripts/docs.mjs",
+    "serve": "python3 -m http.server 8613",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "esbuild": "^0.24.0"
+  }
+}

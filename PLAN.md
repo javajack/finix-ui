@@ -730,6 +730,67 @@ manifest ≥ ~215 components, all verified against real exports.
 
 ---
 
+## WAVE P — Production readiness (v0.6)
+
+Decisions locked by user: name stays **finixui**; license **MIT**. Same loop
+discipline; validation now includes automated checks where they exist.
+
+### P1. Legal & community scaffolding
+LICENSE (MIT) · CHANGELOG.md (backfilled v0.2–v0.5) · CONTRIBUTING.md ·
+SECURITY.md · .github/ISSUE_TEMPLATE (bug/feature) · package.json
+(name finixui, files: css/js/dist/manifest/llms, no runtime deps).
+
+### P2. XSS-safety sweep
+`fxEsc()` helper in finix.js core; escape option-provided text at every
+innerHTML render site across all modules (names, titles, bodies, labels,
+values). Fields that intentionally accept HTML stay documented as such.
+Contract documented in llms.txt + README. Verify with a script-injection
+smoke test on key components.
+
+### P3. Lifecycle & leak guards
+Every setInterval gains an `el.isConnected` self-clear guard; components
+holding timers expose destroy()/stop(); document delegated-singleton
+pattern for document-level listeners.
+
+### P4. Packaging & build
+Promote demo/charts.js → js/finix-charts.js (demo keeps a loader shim).
+scripts/build.mjs (esbuild, devDependency only) → dist/: per-module
+.min.css/.min.js + finix-all bundles + SRI hashes (dist/sri.json).
+README: npm + CDN usage.
+
+### P5. Self-hosted fonts
+assets/fonts/ (Geist + Geist Mono woff2, OFL) + css/fonts.css; all pages
+swap Google Fonts links for the local stylesheet.
+
+### P6. Accessibility pass
+axe-core runs on representative pages; fix violations. Keyboard move mode
+for fxPipeline (Enter pick up, arrows move, Esc cancel); Esc/arrow snaps
+for fxSheet; :focus-within reveal for swipe-row actions; toast container
+aria-live; price-flash cells aria-hidden. Contrast spot fixes.
+
+### P7. Tests & CI
+tests/smoke.spec.js (Playwright): every page → zero console errors, zero
+horizontal overflow + key interaction asserts via the window.__ handles.
+.github/workflows/ci.yml (lint+test) and pages.yml (auto-deploy main →
+gh-pages). Run locally once if browsers install.
+
+### P8. Generated component reference
+scripts/docs.mjs renders demo/reference.html from manifest.json (category
+nav, per-component classes/markup/JS, search). NAV: Reference group.
+
+### P9. Locale & robustness
+Money/date components accept {locale, currency}; fxWizard/cart expose
+label overrides; missing-root/opts guards warn + no-op; empty-state
+coverage check.
+
+### P10. Browser fallbacks + release v0.6.0
+@supports fallbacks (offset-path static dot, etc.); README support matrix
+verified (FF details-name ⇒ 130+); examples/ (single-file Flask app);
+CHANGELOG + manifest 0.6.0; tag; push; npm pack dry-run (publish left to
+user — needs their npm login).
+
+---
+
 ## Wave V/E sequencing & dependencies
 
 - Order: V1→V8, then E1→E8. Hard deps: **V3 before V5** (checkout wizard) and

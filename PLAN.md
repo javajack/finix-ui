@@ -440,7 +440,7 @@ New module `css/finix-crm.css` + `js/finix-crm.js`, namespace `fx-crm-*`.
 - Research (credit in research.html): Twenty CRM + ERPNext/Krayin (open source,
   distill freely) · Attio/Pipedrive/HubSpot (inspiration-only).
 
-### V2. Trading terminal → new page `trading.html` ("Trading", Industries group)
+### ✅ V2. Trading terminal → new page `trading.html` ("Trading", Industries group)
 New module `css/finix-trading.css` + `js/finix-trading.js`, namespace `fx-tr-*`.
 Dense, mono-heavy, dark-native — the showcase page. India-flavored data (NSE
 symbols, ₹, lots) since candles/order-book atoms already exist.

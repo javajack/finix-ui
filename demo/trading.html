@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trading · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
+<link rel="stylesheet" href="../css/finix-trading.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-trading.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Trading terminal</h1>
+          <p class="fx-page-sub">Broker-grade screens — live-ticking watchlist, candlestick chart, option chain with ITM shading, order ticket with margin math, positions P&amp;L, market depth and a filling blotter. All simulated client-side.</p>
+        </div>
+        <span class="fx-status fx-status--online" style="align-self:center"><i></i>Market open · NSE</span>
+      </div>
+
+      <!-- terminal -->
+      <div class="fx-tr-grid">
+        <!-- watchlist -->
+        <div class="fx-tr-panel">
+          <div class="fx-tr-panel-head">Watchlist <span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">live</span></div>
+          <div id="watchlist"></div>
+        </div>
+
+        <!-- center: chart + chain -->
+        <div style="display:flex;flex-direction:column;gap:.75rem;min-width:0">
+          <div class="fx-tr-panel">
+            <div class="fx-tr-panel-head">
+              <span id="chart-sym">NIFTY 50</span>
+              <b id="chart-ltp" style="font-family:var(--font-mono);font-weight:500">—</b>
+              <span id="chart-chg" class="fx-tr-chg up" style="font-size:.6875rem">—</span>
+              <span class="fx-badge fx-badge--outline" style="margin-left:auto;font-size:.5625rem">1D · 15m</span>
+            </div>
+            <div id="candle-chart" style="padding:.75rem .75rem .375rem"></div>
+          </div>
+          <div class="fx-tr-panel">
+            <div class="fx-tr-panel-head">
+              Option chain
+              <span class="fx-text-xs fx-muted" style="font-weight:400">spot</span>
+              <b id="chain-spot" style="font-family:var(--font-mono);font-weight:500">—</b>
+              <select class="fx-select" id="chain-exp" style="margin-left:auto;height:1.625rem;font-size:.6875rem;width:auto">
+                <option>21 Aug 2026</option><option>28 Aug 2026</option><option>25 Sep 2026</option>
+              </select>
+            </div>
+            <div id="option-chain"></div>
+          </div>
+        </div>
+
+        <!-- right: ticket + depth -->
+        <div style="display:flex;flex-direction:column;gap:.75rem;min-width:0">
+          <div class="fx-tr-panel">
+            <div id="order-ticket"></div>
+          </div>
+          <div class="fx-tr-panel">
+            <div class="fx-tr-panel-head">Market depth</div>
+            <div id="depth"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- positions / holdings -->
+      <div class="fx-card" style="margin-top:1.25rem">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Positions &amp; holdings</div>
+          <div class="fx-card-desc">P&amp;L reprices live off the watchlist ticks — <b>Exit</b> squares off a position. Holdings show invested vs current with returns.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-tabs">
+            <div class="fx-tablist" role="tablist">
+              <button class="fx-tab" role="tab" aria-selected="true" aria-controls="tab-pos">Positions</button>
+              <button class="fx-tab" role="tab" aria-selected="false" aria-controls="tab-hold">Holdings</button>
+            </div>
+            <div class="fx-tabpanel" id="tab-pos" role="tabpanel" style="padding-top:.75rem"><div id="positions"></div></div>
+            <div class="fx-tabpanel" id="tab-hold" role="tabpanel" hidden style="padding-top:.75rem">
+              <div class="fx-row" style="gap:2rem;flex-wrap:wrap;margin-bottom:.875rem">
+                <div class="fx-crm-kpi" style="display:flex;flex-direction:column;gap:.0625rem"><span class="fx-text-xs fx-muted">Invested</span><b style="font-family:var(--font-mono);font-size:.875rem" id="h-inv">—</b></div>
+                <div style="display:flex;flex-direction:column;gap:.0625rem"><span class="fx-text-xs fx-muted">Current</span><b style="font-family:var(--font-mono);font-size:.875rem" id="h-cur">—</b></div>
+                <div style="display:flex;flex-direction:column;gap:.0625rem"><span class="fx-text-xs fx-muted">Overall returns</span><b style="font-family:var(--font-mono);font-size:.875rem" id="h-ret">—</b></div>
+              </div>
+              <div id="holdings"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(26rem,1fr))">
+        <!-- blotter -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Order blotter</div>
+            <div class="fx-card-desc">Orders land here from the ticket — open orders fill after a moment (or can be cancelled first).</div>
+          </div>
+          <div class="fx-card-content"><div id="blotter"></div>
+            <div class="fx-empty" id="blotter-empty" style="padding:1.5rem 1rem">
+              <div class="fx-empty-title" style="font-size:.8125rem">No orders yet</div>
+              <div class="fx-empty-desc">Place one from the order ticket above.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GTT -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">GTT &amp; alerts</div>
+            <div class="fx-card-desc">Good-till-triggered orders and price alerts — add one below.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-tr-gtt" id="gtt-rows">
+              <div class="fx-tr-grow"><span>RELIANCE <span class="fx-tr-exch">NSE</span></span><span class="fx-text-xs fx-muted">crosses above</span><b>3,050.00</b><span class="fx-badge fx-badge--warning" style="font-size:.5625rem">SELL 50</span></div>
+              <div class="fx-tr-grow"><span>NIFTY 50 <span class="fx-tr-exch">NSE</span></span><span class="fx-text-xs fx-muted">drops below</span><b>24,500.00</b><span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">Alert</span></div>
+            </div>
+            <div class="fx-tr-gnew">
+              <select class="fx-select" id="gtt-sym" style="width:9rem"><option>RELIANCE</option><option>HDFCBANK</option><option>INFY</option><option>TCS</option><option>NIFTY 50</option></select>
+              <select class="fx-select" id="gtt-cond" style="width:9.5rem"><option value="above">crosses above</option><option value="below">drops below</option></select>
+              <input class="fx-input" id="gtt-price" type="number" placeholder="Price" style="width:6.5rem">
+              <button class="fx-btn fx-btn--outline fx-btn--sm" id="gtt-add" style="height:1.875rem">Add alert</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const SYMBOLS = [
+    { sym: "NIFTY 50", exch: "NSE", ltp: 24812.4, prev: 24688.1 },
+    { sym: "RELIANCE", exch: "NSE", ltp: 2986.55, prev: 3004.2 },
+    { sym: "HDFCBANK", exch: "NSE", ltp: 1712.3, prev: 1698.7 },
+    { sym: "INFY", exch: "NSE", ltp: 1868.9, prev: 1874.4 },
+    { sym: "TCS", exch: "NSE", ltp: 4311.15, prev: 4284.0 },
+    { sym: "SBIN", exch: "NSE", ltp: 816.45, prev: 809.9 },
+    { sym: "TATAMOTORS", exch: "NSE", ltp: 1104.8, prev: 1121.5 },
+  ];
+  let selected = SYMBOLS[0];
+
+  /* candles: deterministic walk seeded per symbol */
+  function renderChart(s) {
+    document.getElementById("chart-sym").textContent = s.sym;
+    const data = [];
+    let p = s.ltp * 0.985;
+    for (let i = 0; i < 26; i++) {
+      const drift = Math.sin(i * 0.9 + s.ltp) * s.ltp * 0.004 + (i % 6 === 0 ? -1 : 0.6) * s.ltp * 0.0015;
+      const o = p, c = o + drift;
+      data.push({ t: (9 + Math.floor(i / 4)) + ":" + ((i % 4) * 15 || "00"), o, h: Math.max(o, c) + s.ltp * 0.0018, l: Math.min(o, c) - s.ltp * 0.0016, c });
+      p = c;
+    }
+    data[data.length - 1].c = s.ltp;
+    document.getElementById("candle-chart").innerHTML = "";
+    fxCharts.candles(document.getElementById("candle-chart"), { data, height: 230 });
+  }
+  function paintHeader(s) {
+    const chg = ((s.ltp - s.prev) / s.prev) * 100;
+    document.getElementById("chart-ltp").textContent = s.ltp.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const chgEl = document.getElementById("chart-chg");
+    chgEl.textContent = (chg >= 0 ? "+" : "") + chg.toFixed(2) + "%";
+    chgEl.className = "fx-tr-chg " + (chg >= 0 ? "up" : "down");
+    document.getElementById("chain-spot").textContent = s.ltp.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  const stepFor = (v) => (v > 10000 ? 50 : v > 2000 ? 20 : v > 500 ? 10 : 5);
+  const chain = fxOptionChain(document.getElementById("option-chain"), { symbol: "NIFTY 50", spot: selected.ltp, step: stepFor(selected.ltp) });
+  const depth = fxDepth(document.getElementById("depth"), { ltp: selected.ltp });
+  const blotter = fxBlotter(document.getElementById("blotter"));
+  const ticket = fxOrderTicket(document.getElementById("order-ticket"), {
+    symbol: selected.sym, ltp: selected.ltp, qty: 25, available: 200000,
+    onOrder: (o) => {
+      blotter.add(o);
+      document.getElementById("blotter-empty").hidden = true;
+      finix.toast({ title: (o.side === "buy" ? "Buy" : "Sell") + " order placed", description: o.qty + " × " + o.sym + " @ " + (o.type === "MARKET" ? "market" : o.price.toFixed(2)), variant: "success" });
+    },
+  });
+  window.__ticket = ticket; window.__chain = chain; window.__blotter = blotter;
+
+  const positions = fxPositions(document.getElementById("positions"), {
+    mode: "positions",
+    rows: [
+      { sym: "RELIANCE", product: "MIS", qty: 50, avg: 2952.1, ltp: 2986.55 },
+      { sym: "INFY", product: "MIS", qty: -25, avg: 1901.0, ltp: 1868.9 },
+      { sym: "TATAMOTORS", product: "CNC", qty: 100, avg: 1088.4, ltp: 1104.8 },
+    ],
+    onExit: (r) => finix.toast({ title: "Position squared off", description: r.sym + " × " + r.qty, variant: "success" }),
+  });
+  window.__positions = positions;
+
+  const holdings = fxPositions(document.getElementById("holdings"), {
+    mode: "holdings",
+    rows: [
+      { sym: "TCS", qty: 12, avg: 3890.5, ltp: 4311.15 },
+      { sym: "HDFCBANK", qty: 40, avg: 1544.2, ltp: 1712.3 },
+      { sym: "SBIN", qty: 120, avg: 692.8, ltp: 816.45 },
+      { sym: "NIFTYBEES", qty: 300, avg: 231.4, ltp: 268.2 },
+    ],
+  });
+  const paintHoldKpis = () => {
+    let inv = 0, cur = 0;
+    holdings.rows.forEach((r) => { inv += r.avg * r.qty; cur += r.ltp * r.qty; });
+    const f = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+    document.getElementById("h-inv").textContent = f(inv);
+    document.getElementById("h-cur").textContent = f(cur);
+    const ret = ((cur - inv) / inv) * 100;
+    const el = document.getElementById("h-ret");
+    el.textContent = (ret >= 0 ? "+" : "") + ret.toFixed(2) + "% (" + f(cur - inv) + ")";
+    el.className = "up";
+  };
+  paintHoldKpis();
+
+  const watch = fxWatchlist(document.getElementById("watchlist"), {
+    symbols: SYMBOLS,
+    selected: "NIFTY 50",
+    onSelect: (s) => {
+      selected = s;
+      renderChart(s);
+      paintHeader(s);
+      chain.setSpot(s.ltp);
+      depth.tick(s.ltp);
+      ticket.setSymbol(s.sym, s.ltp);
+    },
+    onTick: (s) => {
+      if (s.sym === selected.sym) {
+        paintHeader(s);
+        depth.tick(s.ltp);
+        ticket.setLtp(s.ltp);
+        chain.setSpot(s.ltp);
+      }
+      positions.tick(s.sym, s.ltp);
+      holdings.tick(s.sym, s.ltp);
+      paintHoldKpis();
+    },
+  });
+  window.__watch = watch;
+
+  /* re-render chart on theme change */
+  new MutationObserver(() => renderChart(selected)).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  /* GTT */
+  document.getElementById("gtt-add").addEventListener("click", () => {
+    const price = +document.getElementById("gtt-price").value;
+    if (!price) return;
+    const sym = document.getElementById("gtt-sym").value;
+    const cond = document.getElementById("gtt-cond").value;
+    const row = document.createElement("div");
+    row.className = "fx-tr-grow";
+    row.innerHTML = `<span>${sym} <span class="fx-tr-exch">NSE</span></span><span class="fx-text-xs fx-muted">${cond === "above" ? "crosses above" : "drops below"}</span><b>${price.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</b><span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">Alert</span>`;
+    document.getElementById("gtt-rows").appendChild(row);
+    document.getElementById("gtt-price").value = "";
+    finix.toast({ title: "Alert created", description: sym + " " + cond + " " + price });
+  });
+});
+</script>
+</body>
+</html>

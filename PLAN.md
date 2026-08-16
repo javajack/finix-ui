@@ -357,7 +357,7 @@ H1 + billing toggle · 3 tiers · full feature-comparison table · ROI
 calculator (fx-sliders) · logos · testimonial band · objection FAQ · CTA ·
 footer. Full loop.
 
-### M5. Integration & release
+### ✅ M5. Integration & release
 Admin NAV group "Marketing site" → the three pages; manifest (category
 "marketing") + llms.txt; research.html credits from the free-sources sweep
 (Tailark, HyperUI, Magic UI, …); 3-page light+dark+console+overflow sweep;

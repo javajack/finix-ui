@@ -1,7 +1,7 @@
 {
  "$schema": "https://finix-ui.dev/schema/manifest-v1.json",
  "name": "finix-ui",
- "version": "0.2.0",
+ "version": "0.3.0",
  "description": "Plain HTML/CSS/JS admin component framework distilled from the best free shadcn-ecosystem patterns. Framework-agnostic, token-themed, agent-consumable.",
  "license": "MIT",
  "files": {
@@ -1702,6 +1702,260 @@
    ],
    "markup": "<div id=\"chart\"></div> + range input",
    "js": "fxCharts.area now takes opts.threshold {value,label} (dashed destructive rule line + label); fxCharts.refresh(el) re-renders a registered chart after mutating opts \u2014 wire to a slider for a live alert-rule builder."
+  },
+  {
+   "name": "announcement-bar",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-announce",
+    "fx-mk-announce-x"
+   ],
+   "markup": "<div class=\"fx-mk-announce\">news + <a>link</a> + dismiss button</div>",
+   "js": null
+  },
+  {
+   "name": "marketing-nav",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-nav",
+    "fx-mk-nav-inner",
+    "fx-mk-logo-lockup",
+    "fx-mk-links",
+    "fx-mk-nav-actions",
+    "fx-mk-burger",
+    "fx-mk-mobile"
+   ],
+   "markup": "<header class=\"fx-mk-nav\">(container > lockup + .fx-mk-links + actions + burger)</header> + .fx-mk-mobile panel",
+   "js": "Sticky; gains .is-scrolled (blur + border) past 8px. [data-mk-menu] toggles the mobile panel. [data-mk-theme] flips theme."
+  },
+  {
+   "name": "marketing-hero",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-hero",
+    "fx-mk-display",
+    "fx-mk-grad",
+    "fx-mk-lede",
+    "fx-mk-pill",
+    "fx-mk-cta-row",
+    "fx-mk-social-strip",
+    "fx-mk-stars",
+    "fx-mk-aurora",
+    "fx-mk-gridbg"
+   ],
+   "markup": "<section class=\"fx-mk-section fx-mk-section--hero\"><div class=fx-mk-aurora></div><div class=fx-mk-gridbg></div><div class=\"fx-mk-hero\">(pill badge, h1.fx-mk-display with .fx-mk-grad span, lede, CTA row, social strip)</div></section>",
+   "js": "Aurora + blueprint-grid backdrops; social-proof strip (avatar stack + stars + count) directly under the CTA pair."
+  },
+  {
+   "name": "browser-frame",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-browser",
+    "fx-mk-browser-bar",
+    "fx-mk-browser-url",
+    "fx-mk-browser-body",
+    "fx-mk-fade-bottom",
+    "fx-mk-blur",
+    "fx-mk-preview-tag"
+   ],
+   "markup": "<div class=fx-mk-browser>(bar: dots + url pill; body hosts LIVE finix components, .is-static disables pointer events; .fx-mk-fade-bottom mask; .fx-mk-blur + .fx-mk-preview-tag for launch teasers)</div>",
+   "js": null
+  },
+  {
+   "name": "logo-marquee",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-marquee",
+    "fx-mk-marquee-track",
+    "fx-mk-wordmark",
+    "fx-mk-logos-label"
+   ],
+   "markup": "<div class=fx-mk-marquee><div class=fx-mk-marquee-track>(wordmarks x2 for the loop)</div></div>",
+   "js": "Pure-CSS infinite marquee, pause on hover; reduced-motion renders a static wrapped row."
+  },
+  {
+   "name": "bento-grid",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-bento",
+    "fx-mk-cell",
+    "fx-mk-cell--6",
+    "fx-mk-cell--8",
+    "fx-mk-cell--12",
+    "fx-mk-cell-icon",
+    "fx-mk-cell-desc",
+    "fx-mk-cell-media"
+   ],
+   "markup": "<div class=fx-mk-bento><div class=\"fx-mk-cell fx-mk-cell--8\">(icon, h3, desc, .fx-mk-cell-media well hosting live components)</div>...</div>",
+   "js": "12-col asymmetric grid; hover lift + ring; media wells are pointer-events none."
+  },
+  {
+   "name": "zigzag-feature",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-zig",
+    "fx-mk-zig--flip",
+    "fx-mk-zig-copy",
+    "fx-mk-checklist",
+    "fx-mk-visual"
+   ],
+   "markup": "<div class=fx-mk-zig>(copy: eyebrow+h2+lede+checklist+cta | .fx-mk-visual well with live components)</div>; --flip alternates sides",
+   "js": null
+  },
+  {
+   "name": "steps-strip",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-steps",
+    "fx-mk-step"
+   ],
+   "markup": "<div class=fx-mk-steps>(3 .fx-mk-step cards; mono 01/02/03 auto-numbered via counters)</div>",
+   "js": null
+  },
+  {
+   "name": "stats-band",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-stats",
+    "fx-mk-stat"
+   ],
+   "markup": "<div class=fx-mk-stats><div class=fx-mk-stat><b data-mk-count=140 data-mk-suffix=\"+\">0</b><span>label</span></div>...</div>",
+   "js": "[data-mk-count] counts up (ease-out cubic, 1.3s) when scrolled into view; data-mk-prefix/suffix; reduced-motion instant."
+  },
+  {
+   "name": "testimonial-spotlight",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-quote",
+    "fx-mk-person",
+    "fx-mk-stars"
+   ],
+   "markup": "<div class=fx-mk-quote>(stars, big blockquote with <b> highlight, .fx-mk-person)</div>",
+   "js": null
+  },
+  {
+   "name": "testimonial-carousel",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-carousel",
+    "fx-mk-carousel-mask",
+    "fx-mk-carousel-track",
+    "fx-mk-tcard",
+    "fx-mk-carousel-nav",
+    "fx-mk-dots"
+   ],
+   "markup": "<div class=fx-mk-carousel data-mk-carousel>(mask > track > .fx-mk-tcard cards; nav: [data-mk-prev], .fx-mk-dots, [data-mk-next])</div>",
+   "js": "fxMkCarousel(el): responsive 3/2/1 per page, dots, auto-advance 5.5s, pause on hover, loop; auto-inits [data-mk-carousel]."
+  },
+  {
+   "name": "tweet-wall",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-wall",
+    "fx-mk-tweet",
+    "fx-mk-tweet-head",
+    "fx-mk-handle",
+    "fx-mk-verified",
+    "fx-mk-tweet-meta"
+   ],
+   "markup": "<div class=fx-mk-wall>(masonry columns of .fx-mk-tweet cards: avatar, name + verified badge, @handle, body, engagement meta)</div>",
+   "js": null
+  },
+  {
+   "name": "integrations-grid",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-ints",
+    "fx-mk-int"
+   ],
+   "markup": "<div class=fx-mk-ints><span class=fx-mk-int><i>Go</i>Go templ</span>...</div>",
+   "js": null
+  },
+  {
+   "name": "pricing-tiers",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-pricing",
+    "fx-mk-plan",
+    "fx-mk-plan-badge",
+    "fx-mk-price",
+    "fx-mk-billing",
+    "fx-mk-save-badge",
+    "fx-mk-fineprint"
+   ],
+   "markup": "<div class=fx-mk-billing data-mk-billing>(toggle-group with [data-mk-bill=monthly|annual] + savings badge)</div><div class=fx-mk-pricing>(3 .fx-mk-plan cards, middle .is-featured with badge; .fx-mk-price[data-price-monthly][data-price-annual])</div>",
+   "js": "Billing toggle swaps prices with a bump animation and updates [data-mk-period] labels; default annual."
+  },
+  {
+   "name": "comparison-table",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-compare-wrap",
+    "fx-mk-compare",
+    "fx-mk-compare-group",
+    "fx-mk-yes",
+    "fx-mk-no"
+   ],
+   "markup": "<div class=fx-mk-compare-wrap><table class=fx-mk-compare>(sticky first col, .is-featured-col tint, group rows, check/dash cells, per-column CTA row)</table></div>",
+   "js": null
+  },
+  {
+   "name": "roi-calculator",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-roi",
+    "fx-mk-roi-row",
+    "fx-mk-roi-result"
+   ],
+   "markup": "<div class=fx-mk-roi data-mk-roi>(rows: label + .fx-slider[data-roi-seats|hours|rate] + <output data-for>; .fx-mk-roi-result with [data-roi-out])</div>",
+   "js": "Live yearly savings = seats x hours x rate x 52; slider fills repainted; auto-inits [data-mk-roi]."
+  },
+  {
+   "name": "cta-band",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-band"
+   ],
+   "markup": "<div class=fx-mk-band>(h2 + lede + CTA row + click-trigger microcopy)</div> \u2014 radial primary glow, one per page",
+   "js": null
+  },
+  {
+   "name": "marketing-footer",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-footer",
+    "fx-mk-footer-grid",
+    "fx-mk-footer-col",
+    "fx-mk-footer-brand",
+    "fx-mk-newsletter",
+    "fx-mk-footer-bottom",
+    "fx-mk-socials"
+   ],
+   "markup": "<footer class=fx-mk-footer>(brand col w/ newsletter form[data-mk-waitlist], 4 link cols, bottom bar w/ legal + status dot + socials)</footer>",
+   "js": null
+  },
+  {
+   "name": "waitlist",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-waitlist",
+    "fx-mk-waitlist-form",
+    "fx-mk-waitlist-success",
+    "fx-mk-waitlist-social",
+    "fx-mk-error"
+   ],
+   "markup": "<div class=fx-mk-waitlist><form class=fx-mk-waitlist-form data-mk-waitlist>(email input + button)</form><p class=fx-mk-error>...</p><div class=fx-mk-waitlist-social>(avatar stack + <b data-mk-waitcount>4,213</b> counter + incentive)</div></div>",
+   "js": "Email-validated submit -> success state with queue position (#N from the counter), increments all [data-mk-waitcount], reveals [data-mk-after-join] referral elements."
+  },
+  {
+   "name": "countdown",
+   "category": "marketing",
+   "classes": [
+    "fx-mk-countdown",
+    "fx-mk-cd"
+   ],
+   "markup": "<div data-mk-countdown=\"2026-09-08T16:00:00Z\"></div>",
+   "js": "Auto-renders DD/HH/MM/SS cells, ticks every second with a bump on change; reduced-motion skips the bump."
   }
  ]
 }

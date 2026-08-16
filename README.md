@@ -2,6 +2,8 @@
 
 **A best-in-class admin framework in plain HTML/CSS/JS — the shadcn ecosystem's finest free patterns, distilled for every stack.**
 
+**Live demo:** [javajack.github.io/finix-ui](https://javajack.github.io/finix-ui/) — [marketing site](https://javajack.github.io/finix-ui/demo/site/home.html) · [admin demo](https://javajack.github.io/finix-ui/demo/index.html) · [storefront](https://javajack.github.io/finix-ui/demo/site/store.html) · [status page](https://javajack.github.io/finix-ui/demo/site/status.html)
+
 Finix UI ports the shadcn/ui v4 visual language (verbatim OKLCH token system) and the strongest free component patterns from across its ecosystem — ReUI, Kibo UI, Tremor, assistant-ui, Shadcn Studio, Animate UI, and more — into a dependency-free, framework-agnostic kit. No React. No build step. Works in Rails, Django, Laravel, Go templates, PHP, JSP, or a plain `.html` file.
 
 ## Why it doesn't look generic
@@ -56,6 +58,10 @@ Two orthogonal theme axes: **mode** (`light`/`dark`) × **brand** (`finix` warm-
 | `manifest.json` + `llms.txt` | Machine-readable registry for AI agents: component → classes → markup → JS hook |
 
 ## Run the demo
+
+Hosted: **[javajack.github.io/finix-ui](https://javajack.github.io/finix-ui/)** (GitHub Pages, served from the `gh-pages` branch).
+
+Locally:
 
 ```bash
 cd finix-ui && python3 -m http.server 8613

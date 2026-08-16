@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scheduled maintenance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/finix.css">
+<link rel="stylesheet" href="../../css/finix-widgets.css">
+<link rel="stylesheet" href="../../css/finix-marketing.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="../../js/finix.js"></script>
+<script defer src="../../js/finix-marketing.js"></script>
+<style>
+  body { min-height: 100vh; display: grid; place-items: center; padding: 2rem 1.25rem; }
+  .err { max-width: 28rem; width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.125rem; }
+</style>
+</head>
+<body class="fx-site">
+<div class="err">
+  <div class="fx-sidebar-logo" style="width:2.5rem;height:2.5rem;font-size:1.125rem;border-radius:.75rem">F</div>
+  <span style="font-size:2.5rem">🔧</span>
+  <div>
+    <h1 style="margin:0;font-size:1.25rem;font-weight:650;letter-spacing:-.015em">Down for scheduled maintenance</h1>
+    <p class="fx-text-sm fx-muted" style="margin:.375rem 0 0">We're migrating the primary database. Nothing is lost, nothing to do — we'll be back before the countdown hits zero.</p>
+  </div>
+  <div data-mk-countdown-rel="2400"></div>
+  <p class="fx-text-xs fx-muted" style="margin:0">Follow along on the <a href="../site/status.html" style="color:var(--primary);text-decoration:none;font-weight:500">status page</a> · window: 02:00–03:00 IST</p>
+</div>
+<script>
+/* relative countdown for the demo (N seconds from load) */
+window.addEventListener("DOMContentLoaded", () => {
+  const el = document.querySelector("[data-mk-countdown-rel]");
+  el.setAttribute("data-mk-countdown", new Date(Date.now() + (+el.dataset.mkCountdownRel) * 1000).toISOString());
+  /* finix-marketing.js already scanned; re-run its countdown wiring manually */
+  const target = new Date(el.dataset.mkCountdown).getTime();
+  el.classList.add("fx-mk-countdown");
+  const cells = {};
+  ["d","h","m","s"].forEach((k) => {
+    const label = { d: "Days", h: "Hours", m: "Min", s: "Sec" }[k];
+    const cell = document.createElement("div");
+    cell.className = "fx-mk-cd";
+    cell.innerHTML = `<b>00</b><span>${label}</span>`;
+    el.appendChild(cell);
+    cells[k] = cell.querySelector("b");
+  });
+  function tick() {
+    let diff = Math.max(0, target - Date.now());
+    const d = Math.floor(diff / 864e5); diff -= d * 864e5;
+    const h = Math.floor(diff / 36e5); diff -= h * 36e5;
+    const m = Math.floor(diff / 6e4); diff -= m * 6e4;
+    const s = Math.floor(diff / 1e3);
+    const vals = { d, h, m, s };
+    for (const k in vals) cells[k].textContent = String(vals[k]).padStart(2, "0");
+  }
+  tick();
+  setInterval(tick, 1000);
+});
+</script>
+</body>
+</html>

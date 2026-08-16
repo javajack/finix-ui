@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../css/tokens.css">
 <link rel="stylesheet" href="../css/finix.css">
 <link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
 <link rel="stylesheet" href="../css/finix-bank.css">
 <script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
 <script defer src="charts.js"></script>
@@ -162,6 +163,42 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- printable statement (v0.5) -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Monthly statement</div>
+          <div class="fx-card-desc">The fx-doc print frame again — File → Print isolates just the document.</div>
+        </div>
+        <div class="fx-card-content" style="display:grid;place-items:center">
+          <div class="fx-doc" style="max-width:38rem;width:100%">
+            <div class="fx-doc-head">
+              <div>
+                <div class="fx-doc-brand"><i>F</i>Finix Bank</div>
+                <div class="fx-text-xs fx-muted" style="margin-top:.5rem">Savings ****4021 · IFSC FNXB0000042<br>Rakesh Kumar · Indiranagar, Bengaluru</div>
+              </div>
+              <div class="fx-doc-title"><b>STATEMENT</b><span>Aug 1 – Aug 17, 2026</span></div>
+            </div>
+            <table class="fx-doc-table">
+              <thead><tr><th>Date</th><th>Description</th><th class="num">Debit</th><th class="num">Credit</th><th class="num">Balance</th></tr></thead>
+              <tbody>
+                <tr><td>Aug 14</td><td>Rent — August</td><td class="num">32,000.00</td><td class="num">—</td><td class="num">1,34,443</td></tr>
+                <tr><td>Aug 16</td><td>Salary — Finix Labs</td><td class="num">—</td><td class="num">1,20,000.00</td><td class="num">2,54,063</td></tr>
+                <tr><td>Aug 16</td><td>BESCOM electricity</td><td class="num">1,840.00</td><td class="num">—</td><td class="num">2,52,223</td></tr>
+                <tr><td>Aug 17</td><td>Amazon</td><td class="num">2,150.00</td><td class="num">—</td><td class="num">2,49,424</td></tr>
+                <tr><td>Aug 17</td><td>Swiggy</td><td class="num">420.00</td><td class="num">—</td><td class="num">2,48,764</td></tr>
+              </tbody>
+            </table>
+            <div class="fx-doc-totals">
+              <div class="fx-doc-total"><span>Opening balance</span><span>₹1,66,443</span></div>
+              <div class="fx-doc-total"><span>Total credits</span><span>₹1,21,299</span></div>
+              <div class="fx-doc-total"><span>Total debits</span><span>₹38,978</span></div>
+              <div class="fx-doc-total is-grand"><span>Closing balance</span><span>₹2,48,764</span></div>
+            </div>
+            <div class="fx-doc-foot"><span>Computer-generated — no signature required.</span><span>Page 1 of 1</span></div>
           </div>
         </div>
       </div>

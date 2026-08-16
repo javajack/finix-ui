@@ -709,7 +709,7 @@ No new module — primitives exist; this is composition + a few `fx-set-*` bits.
   SSO page (Google/GitHub/Okta buttons + org-discovery email input) · device
   sessions list (current-device badge, revoke w/ confirm).
 
-### E7. Edge surfaces & print → `demo/errors/` + print variants
+### ✅ E7. Edge surfaces & print → `demo/errors/` + print variants
 - Error pages (public, minimal shell): 404 (search + popular links), 500
   (trace-id mono + retry + status link), maintenance (countdown reuse),
   offline (auto-retry tick sim). Each light+dark, zero console.

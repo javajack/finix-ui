@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>500 — Something broke</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/finix.css">
+<link rel="stylesheet" href="../../css/finix-widgets.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="../../js/finix.js"></script>
+<style>
+  body { min-height: 100vh; display: grid; place-items: center; padding: 2rem 1.25rem; }
+  .err { max-width: 26rem; width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .err-code { font-family: var(--font-mono); font-size: 4.5rem; font-weight: 550; letter-spacing: -0.05em; line-height: 1; color: var(--destructive); opacity: .85; }
+</style>
+</head>
+<body>
+<div class="err">
+  <div class="fx-sidebar-logo" style="width:2.5rem;height:2.5rem;font-size:1.125rem;border-radius:.75rem">F</div>
+  <div class="err-code">500</div>
+  <div>
+    <h1 style="margin:0;font-size:1.125rem;font-weight:650;letter-spacing:-.01em">That one's on us.</h1>
+    <p class="fx-text-sm fx-muted" style="margin:.375rem 0 0">Something failed on our side. It's been reported automatically — quote the trace ID if you write in.</p>
+  </div>
+  <div class="fx-snippet" style="width:100%"><span>trace_8f3k2-9x41b-2296</span>
+    <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-copy="trace_8f3k2-9x41b-2296" data-fx-tip="Copy trace ID" aria-label="Copy trace ID"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+  </div>
+  <div class="fx-row" style="gap:.5rem;justify-content:center">
+    <button class="fx-btn" data-fx-stateful-manual data-loading-text="Retrying…" onclick="setTimeout(()=>finix.toast({title:'Still down',description:'We are on it — check status for updates.',variant:'warning'}),900)">Try again</button>
+    <a class="fx-btn fx-btn--outline" href="../site/status.html">Status page</a>
+  </div>
+</div>
+</body>
+</html>

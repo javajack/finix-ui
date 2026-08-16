@@ -348,6 +348,42 @@
           </div>
         </div>
 
+        <!-- empty-state gallery (v0.5) -->
+        <div class="fx-card" style="grid-column:1/-1">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Empty &amp; edge states — the full set</div>
+            <div class="fx-card-desc">First-run, no-results, permission-denied and error, side by side. Full-page variants live in <b style="font-family:var(--font-mono)">demo/errors/</b> (404 · 500 · maintenance · offline).</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.875rem">
+              <div class="fx-empty" style="border:1px dashed var(--border);border-radius:var(--radius-lg)">
+                <div class="fx-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg></div>
+                <div class="fx-empty-title">Start your first project</div>
+                <div class="fx-empty-desc">A template gets you to a working board in a minute.</div>
+                <div class="fx-empty-actions"><button class="fx-btn fx-btn--sm">New project</button></div>
+              </div>
+              <div class="fx-empty" style="border:1px dashed var(--border);border-radius:var(--radius-lg)">
+                <div class="fx-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+                <div class="fx-empty-title">No results for “qwrty”</div>
+                <div class="fx-empty-desc">Check the spelling or drop a filter — you have 3 active.</div>
+                <div class="fx-empty-actions"><button class="fx-btn fx-btn--outline fx-btn--sm">Clear filters</button></div>
+              </div>
+              <div class="fx-empty" style="border:1px dashed var(--border);border-radius:var(--radius-lg)">
+                <div class="fx-empty-icon" style="color:var(--warning)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                <div class="fx-empty-title">You need access</div>
+                <div class="fx-empty-desc">This board belongs to Platform. Ask the owner for a seat.</div>
+                <div class="fx-empty-actions"><button class="fx-btn fx-btn--outline fx-btn--sm">Request access</button></div>
+              </div>
+              <div class="fx-empty" style="border:1px dashed var(--border);border-radius:var(--radius-lg)">
+                <div class="fx-empty-icon" style="color:var(--destructive)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+                <div class="fx-empty-title">Couldn't load activity</div>
+                <div class="fx-empty-desc">The request timed out. Your data is fine — try again.</div>
+                <div class="fx-empty-actions"><button class="fx-btn fx-btn--outline fx-btn--sm">Retry</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

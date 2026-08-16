@@ -101,7 +101,7 @@ Powers support inbox, CRM records, reconciliation, comms later.
 - Demo: wire onto the existing products data grid.
 - Motion: panel slide-in 200ms; active row `--hover` persistent highlight.
 
-### T3. Diff viewer (`fxDiff`) → devtools.html (create page this task)
+### ✅ T3. Diff viewer (`fxDiff`) → devtools.html (create page this task)
 - Unified + split modes; line-level LCS diff (implement simple Myers/LCS in JS);
   add/remove line tints (success/destructive at 10–14% mixes), line numbers,
   collapsed unchanged regions with "expand 12 lines" affordances, mono font.

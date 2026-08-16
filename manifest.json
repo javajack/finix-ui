@@ -1130,6 +1130,24 @@
    ],
    "markup": "grid of competency rows \u00d7 5 rating columns with self/manager marks",
    "js": null
+  },
+  {
+   "name": "diff-viewer",
+   "category": "devtools",
+   "classes": [
+    "fx-diff",
+    "fx-diff-head",
+    "fx-diff-file",
+    "fx-diff-stats",
+    "fx-diff-body",
+    "fx-diff-num",
+    "fx-diff-add",
+    "fx-diff-del",
+    "fx-diff-expand",
+    "fx-diff-void"
+   ],
+   "markup": "<div id=\"diff\"></div>",
+   "js": "fxDiff(el, {before, after, file, mode:'unified'|'split', context:3}) -> {setMode, stats}. Line-level LCS diff: add/remove tints (success/destructive mixes), line numbers on --well gutters, mode toggle, collapsed unchanged regions with expand affordance. Include css/finix-devtools.css + js/finix-devtools.js."
   }
  ]
 }

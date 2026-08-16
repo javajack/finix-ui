@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dev &amp; API · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<link rel="stylesheet" href="../css/finix-devtools.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-devtools.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Dev &amp; API</h1>
+          <p class="fx-page-sub">Developer-platform surfaces — diff review, API credentials, environment config and delivery logs.</p>
+        </div>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Diff viewer</div>
+          <div class="fx-card-desc">Line-level LCS diff with unified and split modes, add/remove tints, line numbers and collapsed unchanged regions — click <b>Expand</b> to reveal them.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="diff-code"></div>
+        </div>
+      </div>
+
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Config change — split view</div>
+          <div class="fx-card-desc">The same component in side-by-side mode, reviewing an infrastructure config change.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="diff-config"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const codeBefore = [
+    'import { getSession } from "./session";',
+    'import { logger } from "./logger";',
+    '',
+    'const RETRY_LIMIT = 3;',
+    'const TIMEOUT_MS = 5000;',
+    '',
+    'export async function fetchInvoices(customerId) {',
+    '  const session = await getSession();',
+    '  const res = await fetch("/api/invoices?customer=" + customerId, {',
+    '    headers: { Authorization: "Bearer " + session.token },',
+    '  });',
+    '  if (!res.ok) throw new Error("Request failed");',
+    '  return res.json();',
+    '}',
+    '',
+    'export function formatAmount(cents, currency) {',
+    '  return new Intl.NumberFormat("en-US", {',
+    '    style: "currency",',
+    '    currency: currency || "USD",',
+    '  }).format(cents / 100);',
+    '}',
+    '',
+    'export function sortByDate(invoices) {',
+    '  return [...invoices].sort(',
+    '    (a, b) => new Date(b.issuedAt) - new Date(a.issuedAt)',
+    '  );',
+    '}',
+    '',
+    'export function totalOutstanding(invoices) {',
+    '  return invoices',
+    '    .filter((inv) => inv.status !== "paid")',
+    '    .reduce((sum, inv) => sum + inv.amountDue, 0);',
+    '}',
+  ].join("\n");
+
+  const codeAfter = [
+    'import { getSession } from "./session";',
+    'import { logger } from "./logger";',
+    'import { withRetry } from "./retry";',
+    '',
+    'const RETRY_LIMIT = 5;',
+    'const TIMEOUT_MS = 5000;',
+    '',
+    'export async function fetchInvoices(customerId, { signal } = {}) {',
+    '  const session = await getSession();',
+    '  return withRetry(RETRY_LIMIT, async () => {',
+    '    const res = await fetch("/api/invoices?customer=" + customerId, {',
+    '      headers: { Authorization: "Bearer " + session.token },',
+    '      signal,',
+    '    });',
+    '    if (!res.ok) {',
+    '      logger.warn("invoices.fetch_failed", { status: res.status });',
+    '      throw new Error("Request failed: " + res.status);',
+    '    }',
+    '    return res.json();',
+    '  });',
+    '}',
+    '',
+    'export function formatAmount(cents, currency) {',
+    '  return new Intl.NumberFormat("en-US", {',
+    '    style: "currency",',
+    '    currency: currency || "USD",',
+    '  }).format(cents / 100);',
+    '}',
+    '',
+    'export function sortByDate(invoices) {',
+    '  return [...invoices].sort(',
+    '    (a, b) => new Date(b.issuedAt) - new Date(a.issuedAt)',
+    '  );',
+    '}',
+    '',
+    'export function totalOutstanding(invoices) {',
+    '  return invoices',
+    '    .filter((inv) => inv.status !== "paid")',
+    '    .reduce((sum, inv) => sum + inv.amountDue, 0);',
+    '}',
+  ].join("\n");
+
+  fxDiff(document.getElementById("diff-code"), {
+    file: "src/lib/invoices.js",
+    before: codeBefore,
+    after: codeAfter,
+  });
+
+  const cfgBefore = [
+    'service: billing-api',
+    'replicas: 2',
+    'resources:',
+    '  cpu: 500m',
+    '  memory: 512Mi',
+    'env:',
+    '  LOG_LEVEL: info',
+    '  RATE_LIMIT: "100"',
+    'healthcheck:',
+    '  path: /healthz',
+    '  interval: 30s',
+  ].join("\n");
+
+  const cfgAfter = [
+    'service: billing-api',
+    'replicas: 4',
+    'resources:',
+    '  cpu: 1000m',
+    '  memory: 1Gi',
+    'env:',
+    '  LOG_LEVEL: warn',
+    '  RATE_LIMIT: "250"',
+    '  FEATURE_ASYNC_EXPORTS: "true"',
+    'healthcheck:',
+    '  path: /healthz',
+    '  interval: 15s',
+  ].join("\n");
+
+  fxDiff(document.getElementById("diff-config"), {
+    file: "deploy/billing-api.yaml",
+    before: cfgBefore,
+    after: cfgAfter,
+    mode: "split",
+  });
+});
+</script>
+</body>
+</html>

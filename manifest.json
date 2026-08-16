@@ -1463,6 +1463,34 @@
    ],
    "markup": "<div class=\"fx-doc\">(header + bill-to meta + items table + totals + footer)</div>",
    "js": "A4-styled document frame; @media print isolates .fx-doc (white, full page, chrome hidden) \u2014 trigger with window.print(). Reuse for receipts and packing labels."
+  },
+  {
+   "name": "sku-matrix",
+   "category": "finance",
+   "classes": [
+    "fx-sku-table",
+    "fx-sku-edit",
+    "fx-sku-mono",
+    "fx-sku-combo",
+    "fx-sku-count"
+   ],
+   "markup": "<div class=\"fx-tags\" id=\"opt-size\">(pre-rendered tags)</div> <div id=\"sku\"></div>",
+   "js": "fxSkuMatrix(el, {options:[{name,wrap:'#tags'}], prefix, defaults:{price,stock}}) \u2014 watches fx-tags wraps via MutationObserver, regenerates the cartesian variant table live (new rows flash), auto SKU codes, click-to-edit price/stock cells whose edits survive regeneration (keyed by combo)."
+  },
+  {
+   "name": "order-detail",
+   "category": "finance",
+   "classes": [
+    "fx-order-items",
+    "fx-order-item",
+    "fx-order-thumb",
+    "fx-order-item-main",
+    "fx-order-item-price",
+    "fx-order-totals",
+    "fx-order-total"
+   ],
+   "markup": "<div class=\"fx-order-items\">(items)</div><div class=\"fx-order-totals\">(totals)</div> + fx-stages fulfillment chain",
+   "js": null
   }
  ]
 }

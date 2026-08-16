@@ -194,7 +194,7 @@ Composes T1 + T2. Zendesk/Intercom-grade split-pane:
 - `fx-doc` printable invoice: A4-styled document card + `@media print`
   stylesheet (hide shell, white bg) + Print button. Serves receipts/labels too.
 
-### T13. Commerce ops → business.html
+### ✅ T13. Commerce ops → business.html
 - Variant/SKU matrix editor: option-value tag inputs (reuse fx-tags) auto-
   generate cartesian SKU table rows w/ price/stock inline edits.
 - Order detail card w/ fulfillment `fx-stages` (from T1) + items + totals.

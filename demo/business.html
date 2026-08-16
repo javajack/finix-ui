@@ -286,6 +286,84 @@
       </div>
 
 
+      <div class="fx-grid" style="grid-template-columns:1.3fr 1fr;align-items:start">
+        <!-- sku matrix -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Variant &amp; SKU matrix</div>
+            <div class="fx-card-desc">Type option values (Enter to add) — the cartesian SKU table regenerates live. Click a price or stock cell to edit; edits survive regeneration.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1rem">
+            <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:.75rem">
+              <div class="fx-field">
+                <label class="fx-label">Size</label>
+                <div class="fx-tags" id="opt-size">
+                  <span class="fx-tag">S<button type="button" aria-label="Remove"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+                  <span class="fx-tag">M<button type="button" aria-label="Remove"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+                  <span class="fx-tag">L<button type="button" aria-label="Remove"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+                  <input placeholder="Add size…">
+                </div>
+              </div>
+              <div class="fx-field">
+                <label class="fx-label">Color</label>
+                <div class="fx-tags" id="opt-color">
+                  <span class="fx-tag">Black<button type="button" aria-label="Remove"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+                  <span class="fx-tag">Sand<button type="button" aria-label="Remove"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span>
+                  <input placeholder="Add color…">
+                </div>
+              </div>
+            </div>
+            <div id="sku-matrix"></div>
+          </div>
+        </div>
+
+        <!-- order detail -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Order #4092</div>
+            <div class="fx-card-desc">Placed Aug 14 · Priya Sharma · priya@acme.com</div>
+            <div class="fx-card-action"><span class="fx-badge fx-badge--warning fx-badge--dot">Out for delivery</span></div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div style="overflow-x:auto;padding-bottom:.25rem">
+              <ol class="fx-stages" style="min-width:26rem">
+                <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Ordered</span><span class="fx-stage-time">Aug 14</span></li>
+                <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Packed</span><span class="fx-stage-time">Aug 14</span></li>
+                <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Shipped</span><span class="fx-stage-time">Aug 15</span></li>
+                <li data-state="active"><span class="fx-stage-dot"></span><span class="fx-stage-label">Delivery</span><span class="fx-stage-time">today</span></li>
+              </ol>
+            </div>
+            <div class="fx-order-items">
+              <div class="fx-order-item">
+                <span class="fx-order-thumb">NH</span>
+                <span class="fx-order-item-main"><b>Nimbus Hoodie</b><small>M / Black · FX-NH-M-BLA</small></span>
+                <span class="fx-order-item-price">2 × $68.00</span>
+              </div>
+              <div class="fx-order-item">
+                <span class="fx-order-thumb">CS</span>
+                <span class="fx-order-item-main"><b>Cloud Slippers</b><small>L / Sand · FX-CS-L-SAN</small></span>
+                <span class="fx-order-item-price">1 × $42.00</span>
+              </div>
+              <div class="fx-order-item">
+                <span class="fx-order-thumb">PW</span>
+                <span class="fx-order-item-main"><b>Peak Water Bottle</b><small>One size · FX-PW-OS</small></span>
+                <span class="fx-order-item-price">1 × $24.00</span>
+              </div>
+            </div>
+            <div class="fx-order-totals">
+              <div class="fx-order-total"><span class="fx-muted">Subtotal</span><span>$202.00</span></div>
+              <div class="fx-order-total"><span class="fx-muted">Shipping (2-day)</span><span>$12.00</span></div>
+              <div class="fx-order-total"><span class="fx-muted">Tax</span><span>$17.66</span></div>
+              <div class="fx-order-total is-grand"><span>Total</span><span>$231.66</span></div>
+            </div>
+            <div class="fx-row" style="gap:.5rem">
+              <button class="fx-btn fx-btn--outline fx-btn--sm" onclick="finix.toast({title:'Tracking copied',description:'1Z999AA10123456784'})">Copy tracking</button>
+              <button class="fx-btn fx-btn--outline fx-btn--sm" onclick="finix.toast({title:'Refund started',description:'Order #4092 — refund flow would open.',variant:'warning'})">Refund</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- printable invoice -->
       <div class="fx-card" style="background:var(--well);border-style:dashed">
         <div class="fx-card-header">
@@ -359,6 +437,16 @@ window.addEventListener("DOMContentLoaded", () => {
     data.forEach((d, i) => (d.t = i < 12 ? "Jul " + (i + 20) : "Aug " + (i - 11)));
     fxCharts.candles(document.getElementById("c-candles"), { data, height: 300 });
   })();
+
+  // ---- SKU matrix ----
+  fxSkuMatrix(document.getElementById("sku-matrix"), {
+    prefix: "FX-NH",
+    options: [
+      { name: "Size", wrap: "#opt-size" },
+      { name: "Color", wrap: "#opt-color" },
+    ],
+    defaults: { price: 68, stock: 24 },
+  });
 
   // ticker tape (content doubled for seamless loop)
   const SYMS = [["NIFTY 50","24,812","+0.6%",1],["BTC-USD","64,251","+2.1%",1],["AAPL","232.4","-0.4%",0],["ETH-USD","3,412","+1.2%",1],["TSLA","248.1","-1.8%",0],["NVDA","131.7","+3.4%",1],["GOLD","2,488","+0.2%",1],["EUR/INR","91.44","-0.1%",0]];

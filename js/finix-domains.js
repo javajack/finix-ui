@@ -745,4 +745,73 @@
       if (btn && window.finix?.buttonState) finix.buttonState(btn, "reset");
     }
   });
+
+  /* ================= SKU matrix ================= */
+  window.fxSkuMatrix = function (root, opts) {
+    const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const optionWraps = opts.options.map((o) => ({ name: o.name, wrap: typeof o.wrap === "string" ? document.querySelector(o.wrap) : o.wrap }));
+    const prefix = opts.prefix || "SKU";
+    const edits = {};
+    const abbr = (v) => v.replace(/[^a-z0-9]/gi, "").slice(0, 3).toUpperCase();
+    const values = (w) => [...w.wrap.querySelectorAll(".fx-tag")].map((t) => t.textContent.trim());
+    function combos() {
+      let out = [[]];
+      for (const w of optionWraps) {
+        const vals = values(w);
+        if (!vals.length) continue;
+        out = out.flatMap((c) => vals.map((v) => [...c, v]));
+      }
+      return out.filter((c) => c.length);
+    }
+    let prevKeys = new Set();
+    function render() {
+      const rows = combos();
+      const keys = new Set(rows.map((c) => c.join("/")));
+      root.innerHTML = `
+        <div class="fx-table-wrap" style="border:1px solid var(--border);border-radius:var(--radius-lg);max-height:20rem;overflow:auto">
+          <table class="fx-table fx-sku-table">
+            <thead><tr><th>Variant</th><th>SKU</th><th style="text-align:right">Price</th><th style="text-align:right">Stock</th></tr></thead>
+            <tbody>
+              ${rows.map((c) => {
+                const key = c.join("/");
+                const e = edits[key] || {};
+                const isNew = prevKeys.size && !prevKeys.has(key);
+                return `<tr data-key="${esc(key)}" class="${isNew ? "fx-sku-new" : ""}">
+                  <td><span class="fx-sku-combo">${c.map((v) => `<span class="fx-badge fx-badge--outline">${esc(v)}</span>`).join("")}</span></td>
+                  <td class="fx-sku-mono">${esc(prefix)}-${c.map(abbr).join("-")}</td>
+                  <td class="fx-sku-edit" data-field="price">$${(+((e.price ?? opts.defaults?.price) ?? 0)).toFixed(2)}</td>
+                  <td class="fx-sku-edit" data-field="stock">${e.stock ?? opts.defaults?.stock ?? 0}</td>
+                </tr>`;
+              }).join("") || `<tr><td colspan="4" class="fx-muted" style="text-align:center;padding:1.25rem">Add option values above to generate variants.</td></tr>`}
+            </tbody>
+          </table>
+        </div>
+        <p class="fx-sku-count" style="margin:.5rem 0 0">${rows.length} variant${rows.length === 1 ? "" : "s"} generated${optionWraps.map((w) => ` · ${w.name}: ${values(w).length}`).join("")}</p>`;
+      prevKeys = keys;
+    }
+    root.addEventListener("click", (e) => {
+      const td = e.target.closest(".fx-sku-edit");
+      if (!td || td.querySelector("input")) return;
+      const key = td.closest("tr").dataset.key, field = td.dataset.field;
+      const cur = td.textContent.replace(/[$,]/g, "");
+      td.innerHTML = `<input class="fx-input" value="${esc(cur)}" inputmode="decimal" style="height:1.75rem;font-size:.75rem;text-align:right;font-family:var(--font-mono)">`;
+      const inp = td.querySelector("input");
+      inp.focus(); inp.select();
+      let done = false;
+      const commit = () => {
+        if (done) return; done = true;
+        const v = parseFloat(inp.value);
+        if (!isNaN(v)) (edits[key] = edits[key] || {})[field] = field === "price" ? v : Math.round(v);
+        render();
+      };
+      inp.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") commit();
+        if (ev.key === "Escape") { done = true; render(); }
+      });
+      inp.addEventListener("blur", commit);
+    });
+    optionWraps.forEach((w) => new MutationObserver(() => render()).observe(w.wrap, { childList: true }));
+    render();
+    return { render, get edits() { return edits; } };
+  };
 })();

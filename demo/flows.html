@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wizards &amp; Flows · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
+<link rel="stylesheet" href="../css/finix-flows.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-domains.js"></script>
+<script defer src="../js/finix-flows.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Wizards &amp; Flows</h1>
+          <p class="fx-page-sub">One engine, three shapes — checkout with save-and-resume (reload mid-way, it remembers), KYC onboarding with branching paths, and a Typeform-style survey that runs on the keyboard.</p>
+        </div>
+      </div>
+
+      <!-- checkout -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Checkout wizard</div>
+          <div class="fx-card-desc">Address → shipping → payment → review → done. Progress persists to localStorage — <b>reload mid-flow and it resumes</b>. The review step assembles itself from your answers.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="wiz-checkout">
+            <section data-step="address" data-title="Address" data-desc="Where it ships">
+              <h3>Shipping address</h3>
+              <p>We only ship where the couriers dare.</p>
+              <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:.875rem;max-width:34rem">
+                <div class="fx-field"><label class="fx-label">Full name</label><input class="fx-input" name="name" required placeholder="Rakesh K."></div>
+                <div class="fx-field"><label class="fx-label">Email</label><input class="fx-input" name="email" type="email" required placeholder="you@company.com"></div>
+                <div class="fx-field" style="grid-column:1/-1"><label class="fx-label">Street address</label><input class="fx-input" name="street" required placeholder="42 Indiranagar 100ft Rd"></div>
+                <div class="fx-field"><label class="fx-label">City</label><input class="fx-input" name="city" required placeholder="Bengaluru"></div>
+                <div class="fx-field"><label class="fx-label">Country</label>
+                  <select class="fx-select" name="country"><option>India</option><option>United States</option><option>Germany</option><option>Singapore</option></select>
+                </div>
+              </div>
+            </section>
+
+            <section data-step="shipping" data-title="Shipping" data-desc="Speed vs price">
+              <h3>Delivery speed</h3>
+              <p>The order summary updates with your pick.</p>
+              <div class="fx-wiz-choices" style="max-width:30rem">
+                <label class="fx-wiz-choice"><input type="radio" name="ship" value="std" data-display="Standard — free" data-label="Delivery" checked><span class="fx-wiz-key">A</span><div><b>Standard</b><small>4–6 business days</small></div><span class="fx-wiz-price">Free</span></label>
+                <label class="fx-wiz-choice"><input type="radio" name="ship" value="exp" data-display="Express — $18"><span class="fx-wiz-key">B</span><div><b>Express</b><small>2 business days</small></div><span class="fx-wiz-price">$18</span></label>
+                <label class="fx-wiz-choice"><input type="radio" name="ship" value="pri" data-display="Priority — $32"><span class="fx-wiz-key">C</span><div><b>Priority</b><small>Next business day, signed</small></div><span class="fx-wiz-price">$32</span></label>
+              </div>
+            </section>
+
+            <section data-step="payment" data-title="Payment" data-desc="Card details">
+              <h3>Payment</h3>
+              <p>Card brand is detected as you type. Demo only — nothing is charged.</p>
+              <div class="fx-payment" style="max-width:26rem;border:none;padding:0">
+                <div class="fx-pay-form fx-stack" style="gap:.75rem">
+                  <div class="fx-field">
+                    <label class="fx-label">Card number</label>
+                    <div class="fx-input-group">
+                      <span class="fx-input-addon fx-pay-brand"><svg viewBox="0 0 28 18" fill="none"><rect x=".5" y=".5" width="27" height="17" rx="2.5" stroke="currentColor" opacity=".4"/><rect x="3" y="4" width="7" height="5" rx="1" fill="currentColor" opacity=".35"/></svg></span>
+                      <input class="fx-input" data-fx-mask="9999 9999 9999 9999" data-pay-number name="card" required placeholder="1234 1234 1234 1234" inputmode="numeric" autocomplete="off" data-label="Card">
+                    </div>
+                  </div>
+                  <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:.75rem">
+                    <div class="fx-field"><label class="fx-label">Expiry</label><input class="fx-input" data-fx-mask="99/99" name="exp" required placeholder="MM/YY" inputmode="numeric" autocomplete="off"></div>
+                    <div class="fx-field"><label class="fx-label">CVC</label><input class="fx-input" data-fx-mask="999" name="cvc" required placeholder="123" inputmode="numeric" autocomplete="off" data-secret></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section data-step="review" data-title="Review" data-desc="Check everything" data-next-label="Place order">
+              <h3>Review your order</h3>
+              <p>Edit any section — you'll come right back here.</p>
+              <div data-review></div>
+              <div class="fx-wiz-rgroup" style="margin-top:.875rem">
+                <div class="fx-wiz-rhead"><b>Order summary</b></div>
+                <div class="fx-wiz-rrow"><dt>Hardware kit × 2</dt><dd style="font-family:var(--font-mono)">$148.00</dd></div>
+                <div class="fx-wiz-rrow"><dt>Shipping</dt><dd style="font-family:var(--font-mono)" id="co-ship">—</dd></div>
+                <div class="fx-wiz-rrow"><dt>Tax (8%)</dt><dd style="font-family:var(--font-mono)" id="co-tax">—</dd></div>
+                <div class="fx-wiz-rrow" style="border-top:1px solid var(--border-soft);padding-top:.5rem;margin-top:.25rem"><dt style="color:var(--foreground);font-weight:600">Total</dt><dd style="font-family:var(--font-mono);font-weight:650" id="co-total">—</dd></div>
+              </div>
+            </section>
+
+            <section data-step="done" data-title="Done">
+              <div class="fx-wiz-done">
+                <span class="fx-wiz-done-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <h3 style="margin:0">Order placed</h3>
+                <p class="fx-text-sm fx-muted" style="margin:0">Order <b style="font-family:var(--font-mono)">#FNX-8412</b> — a confirmation is on its way to your inbox.</p>
+                <ol class="fx-stages" style="margin-top:.75rem">
+                  <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Placed</span><span class="fx-stage-time">now</span></li>
+                  <li data-state="active"><span class="fx-stage-dot"></span><span class="fx-stage-label">Packed</span><span class="fx-stage-time">today</span></li>
+                  <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Shipped</span></li>
+                  <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Delivered</span></li>
+                </ol>
+                <button class="fx-btn fx-btn--outline fx-btn--sm" id="co-reset" type="button">Start over</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- KYC -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">KYC onboarding — branching</div>
+          <div class="fx-card-desc">Pick <b>Individual</b> or <b>Business</b> — the path changes (the skipped branch dims in the rail). Uploads simulate progress → verified, and one arrives rejected.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="wiz-kyc">
+            <section data-step="type" data-title="Account type" data-desc="Who is onboarding">
+              <h3>Who's opening this account?</h3>
+              <p>Compliance paths differ for people and companies.</p>
+              <div class="fx-wiz-choices" style="max-width:30rem">
+                <label class="fx-wiz-choice"><input type="radio" name="acct" value="ind" data-display="Individual" checked><span class="fx-wiz-key">A</span><div><b>Individual</b><small>Personal trading &amp; investing</small></div></label>
+                <label class="fx-wiz-choice"><input type="radio" name="acct" value="biz" data-display="Business"><span class="fx-wiz-key">B</span><div><b>Business</b><small>Company treasury &amp; payouts</small></div></label>
+              </div>
+            </section>
+
+            <section data-step="iddocs" data-title="Identity" data-desc="PAN + address" data-alt>
+              <h3>Identity documents</h3>
+              <p>Click a card to simulate the upload. PAN is mandatory.</p>
+              <input type="hidden" name="pan" data-label="PAN card">
+              <input type="hidden" name="addr_proof" data-label="Address proof">
+              <div class="fx-wiz-files" style="max-width:30rem">
+                <div class="fx-wiz-file" data-fake-upload="pan" data-file="PAN_RKUMAR.pdf" role="button" tabindex="0">
+                  <span class="fx-wiz-file-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+                  <div class="fx-wiz-file-main"><b>PAN card</b><small data-file-note>Click to upload · PDF or photo</small><div class="fx-wiz-file-bar" hidden><i></i></div></div>
+                  <span data-file-badge></span>
+                </div>
+                <div class="fx-wiz-file is-rejected" data-fake-upload="addr_proof" data-file="aadhaar_scan2.jpg" role="button" tabindex="0">
+                  <span class="fx-wiz-file-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+                  <div class="fx-wiz-file-main"><b>Address proof</b><small data-file-note>Rejected — photo was blurry. Click to re-upload.</small><div class="fx-wiz-file-bar" hidden><i></i></div></div>
+                  <span data-file-badge><span class="fx-badge fx-badge--destructive" style="font-size:.5625rem">Rejected</span></span>
+                </div>
+              </div>
+            </section>
+
+            <section data-step="bizdocs" data-title="Company" data-desc="GST + incorporation" data-alt>
+              <h3>Company documents</h3>
+              <p>We verify against the MCA registry automatically.</p>
+              <input type="hidden" name="gst" data-label="GST certificate">
+              <div class="fx-grid" style="grid-template-columns:1fr 1fr;gap:.875rem;max-width:34rem">
+                <div class="fx-field"><label class="fx-label">Legal entity name</label><input class="fx-input" name="entity" required placeholder="Finix Labs Pvt Ltd"></div>
+                <div class="fx-field"><label class="fx-label">CIN</label><input class="fx-input" name="cin" required placeholder="U72900KA2024PTC123456" style="font-family:var(--font-mono)"></div>
+              </div>
+              <div class="fx-wiz-files" style="max-width:34rem;margin-top:.875rem">
+                <div class="fx-wiz-file" data-fake-upload="gst" data-file="GST_certificate.pdf" role="button" tabindex="0">
+                  <span class="fx-wiz-file-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+                  <div class="fx-wiz-file-main"><b>GST certificate</b><small data-file-note>Click to upload</small><div class="fx-wiz-file-bar" hidden><i></i></div></div>
+                  <span data-file-badge></span>
+                </div>
+              </div>
+            </section>
+
+            <section data-step="selfie" data-title="Liveness" data-desc="Quick selfie">
+              <h3>Liveness check</h3>
+              <p>Center your face in the frame — this demo just pretends.</p>
+              <input type="hidden" name="selfie" data-label="Liveness check">
+              <div class="fx-wiz-cam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></div>
+              <div style="text-align:center;margin-top:.875rem"><button class="fx-btn fx-btn--outline" id="kyc-capture" type="button">Capture selfie</button></div>
+            </section>
+
+            <section data-step="review" data-title="Review" data-desc="Submit for checks" data-next-label="Submit for verification">
+              <h3>Almost there</h3>
+              <p>We run checks in the background — most clear within a day.</p>
+              <div data-review></div>
+            </section>
+
+            <section data-step="done" data-title="Done">
+              <div class="fx-wiz-done">
+                <span class="fx-wiz-done-icon" style="background:color-mix(in oklab,var(--warning) 16%,transparent);color:var(--warning)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+                <h3 style="margin:0">Verification in progress</h3>
+                <p class="fx-text-sm fx-muted" style="margin:0;max-width:24rem">Documents submitted. We'll email you — usually well before the 24-hour mark.</p>
+                <ol class="fx-stages fx-stages--vertical" style="margin-top:.5rem">
+                  <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Submitted</span><span class="fx-stage-time">just now</span></li>
+                  <li data-state="active"><span class="fx-stage-dot"></span><span class="fx-stage-label">Under review</span><span class="fx-stage-time">≈ 4h</span></li>
+                  <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Account activated</span></li>
+                </ol>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <!-- survey -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Survey — focus mode</div>
+          <div class="fx-card-desc">One question per screen, Typeform-style. <b>Enter</b> advances, <b>A/B/C</b> answers choice questions, choices auto-advance.</div>
+        </div>
+        <div class="fx-card-content" style="padding-block:2rem">
+          <div id="wiz-survey">
+            <section data-step="role" data-title="Role">
+              <h3>What do you do most days?</h3>
+              <div class="fx-wiz-choices">
+                <label class="fx-wiz-choice"><input type="radio" name="role" value="design" data-display="Design"><span class="fx-wiz-key">A</span><div><b>Design</b></div></label>
+                <label class="fx-wiz-choice"><input type="radio" name="role" value="eng" data-display="Engineering"><span class="fx-wiz-key">B</span><div><b>Engineering</b></div></label>
+                <label class="fx-wiz-choice"><input type="radio" name="role" value="product" data-display="Product"><span class="fx-wiz-key">C</span><div><b>Product</b></div></label>
+                <label class="fx-wiz-choice"><input type="radio" name="role" value="other" data-display="Something else"><span class="fx-wiz-key">D</span><div><b>Something else</b></div></label>
+              </div>
+              <span class="fx-wiz-hint">Press <span class="fx-kbd">A</span>–<span class="fx-kbd">D</span> or click — it advances on its own</span>
+            </section>
+            <section data-step="likely" data-title="Recommend">
+              <h3>How likely are you to recommend finix?</h3>
+              <input type="range" class="fx-slider" name="nps" min="0" max="10" value="8" data-label="Likelihood (0–10)" list="npsmarks">
+              <div style="display:flex;justify-content:space-between" class="fx-text-xs fx-muted"><span>Not likely</span><b id="sv-nps" style="font-family:var(--font-mono);color:var(--foreground)">8</b><span>Extremely</span></div>
+              <span class="fx-wiz-hint">Drag, then press <span class="fx-kbd">Enter ↵</span></span>
+            </section>
+            <section data-step="missing" data-title="Missing">
+              <h3>What's the one thing we're missing?</h3>
+              <textarea class="fx-textarea" name="missing" rows="3" placeholder="Be brutal — we read every one." data-label="Missing"></textarea>
+              <span class="fx-wiz-hint">Press <span class="fx-kbd">Enter ↵</span> when you're done (Shift+Enter for a new line)</span>
+            </section>
+            <section data-step="done" data-title="Done">
+              <div class="fx-wiz-done">
+                <span class="fx-wiz-done-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <h3 style="margin:0">Thanks — that helps more than you think</h3>
+                <p class="fx-text-sm fx-muted" style="margin:0" id="sv-summary"></p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* ---- checkout ---- */
+  const SHIP = { std: 0, exp: 18, pri: 32 };
+  const checkout = fxWizard(document.getElementById("wiz-checkout"), {
+    storageKey: "fx-demo-checkout",
+    onShow: (id, api) => {
+      if (id !== "review") return;
+      const v = api.values();
+      const sub = 148, ship = SHIP[v.ship] || 0, tax = (sub + ship) * 0.08;
+      document.getElementById("co-ship").textContent = ship ? "$" + ship.toFixed(2) : "Free";
+      document.getElementById("co-tax").textContent = "$" + tax.toFixed(2);
+      document.getElementById("co-total").textContent = "$" + (sub + ship + tax).toFixed(2);
+    },
+    onResume: () => finix.toast({ title: "Welcome back", description: "We saved your checkout right where you left it." }),
+    onFinish: () => finix.toast({ title: "Order placed", description: "#FNX-8412 confirmed.", variant: "success" }),
+  });
+  window.__checkout = checkout;
+  document.getElementById("co-reset").addEventListener("click", () => location.reload());
+
+  /* ---- KYC ---- */
+  const kyc = fxWizard(document.getElementById("wiz-kyc"), {
+    next: { type: (v) => (v.acct === "biz" ? "bizdocs" : "iddocs") },
+    validate: {
+      iddocs: (v) => (v.pan ? null : "Upload the PAN card to continue."),
+      bizdocs: (v) => (v.gst ? null : "Upload the GST certificate to continue."),
+      selfie: (v) => (v.selfie ? null : "Capture the selfie first — it takes a second."),
+    },
+    onFinish: () => finix.toast({ title: "KYC submitted", description: "Verification usually clears within a day.", variant: "success" }),
+  });
+  window.__kyc = kyc;
+
+  /* fake uploads */
+  document.getElementById("wiz-kyc").addEventListener("click", (e) => {
+    const card = e.target.closest("[data-fake-upload]");
+    if (!card || card.dataset.busy) return;
+    card.dataset.busy = "1";
+    card.classList.remove("is-rejected");
+    const bar = card.querySelector(".fx-wiz-file-bar");
+    const note = card.querySelector("[data-file-note]");
+    const badge = card.querySelector("[data-file-badge]");
+    badge.innerHTML = "";
+    bar.hidden = false;
+    note.textContent = "Uploading " + card.dataset.file + "…";
+    let p = 0;
+    const iv = setInterval(() => {
+      p = Math.min(100, p + 18 + Math.random() * 14);
+      bar.querySelector("i").style.width = p + "%";
+      if (p >= 100) {
+        clearInterval(iv);
+        setTimeout(() => {
+          bar.hidden = true;
+          note.textContent = card.dataset.file + " · verified just now";
+          badge.innerHTML = '<span class="fx-badge fx-badge--success" style="font-size:.5625rem">Verified</span>';
+          const input = document.querySelector(`#wiz-kyc [name="${card.dataset.fakeUpload}"]`);
+          if (input) { input.value = card.dataset.file; input.dispatchEvent(new Event("input", { bubbles: true })); }
+          delete card.dataset.busy;
+        }, 260);
+      }
+    }, 130);
+  });
+  document.getElementById("kyc-capture").addEventListener("click", (e) => {
+    document.querySelector('#wiz-kyc [name="selfie"]').value = "captured";
+    e.target.textContent = "Captured ✓";
+    e.target.disabled = true;
+    finix.toast({ title: "Looking sharp", description: "Liveness check passed.", variant: "success" });
+  });
+
+  /* ---- survey ---- */
+  const survey = fxWizard(document.getElementById("wiz-survey"), {
+    focus: true,
+    onFinish: (v) => {
+      document.getElementById("sv-summary").textContent =
+        `${v.role ? { design: "Design", eng: "Engineering", product: "Product", other: "Something else" }[v.role] : "—"} · would recommend ${v.nps}/10` + (v.missing ? ` · "${v.missing}"` : "");
+    },
+  });
+  window.__survey = survey;
+  document.querySelector('#wiz-survey [name="nps"]').addEventListener("input", (e) => {
+    document.getElementById("sv-nps").textContent = e.target.value;
+  });
+});
+</script>
+</body>
+</html>

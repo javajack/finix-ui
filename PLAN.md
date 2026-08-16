@@ -471,7 +471,7 @@ symbols, ₹, lots) since candles/order-book atoms already exist.
 - Research: OpenBB/Ghostfolio (AGPL ⇒ inspiration-only, no code) · Kite/Groww/
   TradingView (inspiration-only). All markup original.
 
-### V3. Wizard & flow pack → new page `flows.html` ("Wizards & Flows", Apps group)
+### ✅ V3. Wizard & flow pack → new page `flows.html` ("Wizards & Flows", Apps group)
 New module `css/finix-flows.css` + `js/finix-flows.js`, namespace `fx-wiz-*`.
 Orthogonal primitive — later tasks (V5 checkout, E2 intake) depend on it.
 - `fxWizard(el, {steps, onFinish, storageKey})` — shell: left vertical progress

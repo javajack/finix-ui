@@ -167,7 +167,7 @@ Composes T1 + T2. Zendesk/Intercom-grade split-pane:
 - Right: customer context rail (entity card + fxActivity + attributes well).
 - CSAT widget card (emoji scale + comment) on same page.
 
-### T10. Channel messages + presence → collab.html (create page + NAV)
+### ✅ T10. Channel messages + presence → collab.html (create page + NAV)
 - `fx-messages`: day dividers, consecutive-message grouping (avatar only on
   first), hover action bar (react/reply/pin), thread-reply indicator rows,
   unread divider line.

@@ -1351,6 +1351,56 @@
    ],
    "markup": "<div data-fx-csat=\"How was your support experience?\"></div>",
    "js": "Auto-rendered emoji CSAT: 5 grayscale faces that colorize on hover/selection, optional comment, thanks state."
+  },
+  {
+   "name": "channel-messages",
+   "category": "social",
+   "classes": [
+    "fx-messages",
+    "fx-msgday",
+    "fx-msgunread",
+    "fx-msgrow",
+    "fx-msg-author",
+    "fx-msg-actions",
+    "fx-msg-reactions",
+    "fx-reaction",
+    "fx-msg-thread",
+    "fx-msg-composer"
+   ],
+   "markup": "<div id=\"channel\" style=\"height:28rem\"></div>",
+   "js": "fxMessages(el, {messages:[{author,day,time,body,reactions,thread,unreadBefore}], channel, me}) \u2014 Slack-style: day dividers, consecutive-author grouping (hover timestamp gutter), unread 'New' line, hover action bar (react via fxEmoji / thread / pin), toggleable reaction chips (is-mine), composer with Enter-to-send."
+  },
+  {
+   "name": "emoji-picker",
+   "category": "social",
+   "classes": [
+    "fx-emoji-pop",
+    "fx-emoji-grid",
+    "fx-emoji-cat",
+    "fx-emoji-btn"
+   ],
+   "markup": "(singleton, created on demand)",
+   "js": "fxEmoji.open(anchorEl, (emoji)=>{}) \u2014 searchable categorized picker (~60 curated emoji), viewport-clamped, Esc/outside-click close."
+  },
+  {
+   "name": "facepile",
+   "category": "social",
+   "classes": [
+    "fx-facepile",
+    "fx-facepile-more"
+   ],
+   "markup": "<div class=\"fx-facepile\"><span class=\"fx-avatar\" data-presence=\"online\">OM</span><span class=\"fx-avatar\" data-presence=\"away\">JL</span><span class=\"fx-avatar fx-facepile-more\">+7</span></div>",
+   "js": null
+  },
+  {
+   "name": "toc",
+   "category": "navigation",
+   "classes": [
+    "fx-toc",
+    "fx-toc-title"
+   ],
+   "markup": "<nav id=\"toc\"></nav>",
+   "js": "fxToc(el, {target:'#article', scroller:'#article', title}) \u2014 builds links from h2/h3, IntersectionObserver scroll-spy highlights the active section, click smooth-scrolls."
   }
  ]
 }

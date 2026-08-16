@@ -445,4 +445,179 @@
       }
     });
   });
+
+  /* ================= emoji picker (singleton) ================= */
+  const EMOJI = {
+    Smileys: [["\u{1F600}","grinning"],["\u{1F602}","joy laugh"],["\u{1F642}","smile"],["\u{1F609}","wink"],["\u{1F60D}","heart eyes love"],["\u{1F929}","star struck"],["\u{1F914}","thinking"],["\u{1F610}","neutral"],["\u{1F634}","sleep"],["\u{1F62E}","wow surprised"],["\u{1F622}","sad cry"],["\u{1F62D}","sob"],["\u{1F624}","angry frustrated"],["\u{1F971}","yawn tired"],["\u{1F605}","sweat relief"],["\u{1F60E}","cool sunglasses"]],
+    Gestures: [["\u{1F44D}","thumbs up yes"],["\u{1F44E}","thumbs down no"],["\u{1F44F}","clap"],["\u{1F64C}","raised hands celebrate"],["\u{1F44B}","wave hello"],["\u{1F91D}","handshake deal"],["✌️","peace victory"],["\u{1F91E}","fingers crossed luck"],["\u{1F4AA}","muscle strong"],["\u{1F64F}","pray thanks"]],
+    Hearts: [["❤️","red heart love"],["\u{1F9E1}","orange heart"],["\u{1F49B}","yellow heart"],["\u{1F49A}","green heart"],["\u{1F499}","blue heart"],["\u{1F49C}","purple heart"],["\u{1F5A4}","black heart"],["\u{1F496}","sparkling heart"],["\u{1F4AF}","hundred 100"]],
+    Objects: [["\u{1F389}","party tada celebrate"],["\u{1F680}","rocket ship launch"],["\u{1F525}","fire hot lit"],["⭐","star"],["✅","check done yes"],["❌","cross no x"],["⚡","zap lightning"],["\u{1F4A1}","idea bulb"],["\u{1F4CC}","pin"],["\u{1F41B}","bug"],["\u{1F440}","eyes looking"],["\u{1F9E0}","brain smart"]],
+  };
+  let emojiPop = null, emojiCb = null;
+  function buildEmojiPop() {
+    emojiPop = document.createElement("div");
+    emojiPop.className = "fx-emoji-pop";
+    emojiPop.innerHTML =
+      `<input class="fx-input" placeholder="Search emoji…" data-emoji-search style="height:1.75rem;font-size:.8125rem;margin-bottom:.375rem">
+       <div class="fx-emoji-grid">${Object.entries(EMOJI).map(([cat, list]) =>
+         `<div class="fx-emoji-cat" data-cat>${cat}</div>` +
+         list.map(([e, name]) => `<button class="fx-emoji-btn" data-emoji="${e}" data-name="${name}" title="${name}">${e}</button>`).join("")).join("")}
+       </div>`;
+    document.body.appendChild(emojiPop);
+    emojiPop.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-emoji]");
+      if (b) { emojiCb?.(b.dataset.emoji); fxEmoji.close(); }
+    });
+    emojiPop.addEventListener("input", (e) => {
+      if (!e.target.matches("[data-emoji-search]")) return;
+      const q = e.target.value.toLowerCase();
+      emojiPop.querySelectorAll("[data-emoji]").forEach((b) => (b.hidden = q && !b.dataset.name.includes(q)));
+      emojiPop.querySelectorAll("[data-cat]").forEach((c) => (c.hidden = !!q));
+    });
+    document.addEventListener("pointerdown", (e) => {
+      if (emojiPop.classList.contains("is-open") && !e.target.closest(".fx-emoji-pop")) fxEmoji.close();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") fxEmoji.close(); });
+  }
+  window.fxEmoji = {
+    open(anchor, cb) {
+      if (!emojiPop) buildEmojiPop();
+      emojiCb = cb;
+      const r = anchor.getBoundingClientRect();
+      emojiPop.classList.add("is-open");
+      const w = emojiPop.offsetWidth, h = emojiPop.offsetHeight;
+      let left = Math.min(Math.max(8, r.left), innerWidth - w - 8);
+      let top = r.bottom + 6;
+      if (top + h > innerHeight - 8) top = Math.max(8, r.top - h - 6);
+      emojiPop.style.left = left + "px"; emojiPop.style.top = top + "px";
+      const inp = emojiPop.querySelector("[data-emoji-search]");
+      inp.value = ""; inp.dispatchEvent(new Event("input", { bubbles: true }));
+      setTimeout(() => inp.focus(), 50);
+    },
+    close() { emojiPop?.classList.remove("is-open"); emojiCb = null; },
+  };
+
+  /* ================= channel messages ================= */
+  window.fxMessages = function (root, opts) {
+    const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const msgs = opts.messages || [];
+    const me = opts.me || "You";
+    const ini = (n) => n.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+    let uid = 0;
+    msgs.forEach((m) => (m._id = ++uid));
+
+    function reactionHtml(m) {
+      const entries = Object.entries(m.reactions || {});
+      if (!entries.length) return "";
+      return `<div class="fx-msg-reactions">${entries.map(([e, r]) =>
+        `<button class="fx-reaction ${r.mine ? "is-mine" : ""}" data-react="${e}" data-mid="${m._id}">${e}<small>${r.count}</small></button>`).join("")}</div>`;
+    }
+    function rowHtml(m, first, fresh) {
+      return `<div class="fx-msgrow ${first ? "is-first" : ""} ${fresh ? "fx-msg is-new" : ""}" data-mid="${m._id}">
+        ${first
+          ? `<span class="fx-avatar fx-avatar--sm">${ini(m.author)}</span>`
+          : `<span class="fx-msg-gutter"><span class="fx-msg-hovertime">${esc(m.time)}</span></span>`}
+        <div class="fx-msg-content">
+          ${first ? `<div class="fx-msg-author"><b>${esc(m.author)}</b><small>${esc(m.time)}</small></div>` : ""}
+          <div class="fx-msg-text">${esc(m.body)}</div>
+          ${reactionHtml(m)}
+          ${m.thread ? `<button class="fx-msg-thread"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20c0-3.87 3.13-7 7-7h11"/><path d="m15 7 6 6-6 6"/></svg>${m.thread} repl${m.thread === 1 ? "y" : "ies"}</button>` : ""}
+        </div>
+        <div class="fx-chmsg-actions">
+          <button data-mact="react" data-fx-tip="Add reaction" aria-label="Add reaction"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg></button>
+          <button data-mact="reply" data-fx-tip="Reply in thread" aria-label="Reply in thread"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20c0-3.87 3.13-7 7-7h11"/><path d="m15 7 6 6-6 6"/></svg></button>
+          <button data-mact="pin" data-fx-tip="Pin message" aria-label="Pin message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg></button>
+        </div>
+      </div>`;
+    }
+    function render() {
+      let html = "", prev = null;
+      for (const m of msgs) {
+        if (m.day !== prev?.day) html += `<div class="fx-msgday"><span>${esc(m.day)}</span></div>`;
+        if (m.unreadBefore) html += `<div class="fx-msgunread"><span>New</span></div>`;
+        const first = !prev || prev.day !== m.day || prev.author !== m.author || m.unreadBefore;
+        html += rowHtml(m, first);
+        prev = m;
+      }
+      root.classList.add("fx-messages");
+      root.innerHTML =
+        `<div class="fx-messages-scroll">${html}</div>
+         <div class="fx-msg-composer">
+           <input class="fx-input" placeholder="Message #${esc(opts.channel || "general")}" data-msg-input>
+           <button class="fx-btn" data-msg-send>Send</button>
+         </div>`;
+      const sc = root.querySelector(".fx-messages-scroll");
+      sc.scrollTop = sc.scrollHeight;
+    }
+    function findMsg(el) { return msgs.find((m) => m._id === +el.closest("[data-mid]").dataset.mid); }
+    root.addEventListener("click", (e) => {
+      const rx = e.target.closest("[data-react]");
+      if (rx) {
+        const m = findMsg(rx);
+        const r = m.reactions[rx.dataset.react];
+        if (r.mine) { r.count--; r.mine = false; if (!r.count) delete m.reactions[rx.dataset.react]; }
+        else { r.count++; r.mine = true; }
+        render();
+        return;
+      }
+      const act = e.target.closest("[data-mact]");
+      if (act) {
+        const m = findMsg(act);
+        if (act.dataset.mact === "react") {
+          fxEmoji.open(act, (emoji) => {
+            m.reactions = m.reactions || {};
+            if (m.reactions[emoji]) { if (!m.reactions[emoji].mine) { m.reactions[emoji].count++; m.reactions[emoji].mine = true; } }
+            else m.reactions[emoji] = { count: 1, mine: true };
+            render();
+          });
+        }
+        if (act.dataset.mact === "reply") { m.thread = (m.thread || 0) + 1; render(); }
+        if (act.dataset.mact === "pin" && window.finix) finix.toast({ title: "Pinned to #" + (opts.channel || "general"), description: m.body.slice(0, 60) });
+        return;
+      }
+      if (e.target.closest("[data-msg-send]")) send();
+    });
+    root.addEventListener("keydown", (e) => {
+      if (e.target.matches("[data-msg-input]") && e.key === "Enter") send();
+    });
+    function send() {
+      const inp = root.querySelector("[data-msg-input]");
+      if (!inp.value.trim()) return;
+      msgs.push({ _id: ++uid, author: me, day: msgs[msgs.length - 1]?.day || "Today", time: "now", body: inp.value.trim(), reactions: {} });
+      render();
+      root.querySelector("[data-msg-input]").focus();
+    }
+    render();
+    return { render, get messages() { return msgs; } };
+  };
+
+  /* ================= TOC scroll-spy ================= */
+  window.fxToc = function (root, opts) {
+    const target = typeof opts.target === "string" ? document.querySelector(opts.target) : opts.target;
+    const heads = [...target.querySelectorAll("h2, h3")];
+    heads.forEach((h, i) => { if (!h.id) h.id = "toc-" + i; });
+    root.classList.add("fx-toc");
+    root.innerHTML = `<div class="fx-toc-title">${opts.title || "On this page"}</div>` +
+      heads.map((h) => `<a href="#${h.id}" class="${h.tagName === "H3" ? "is-sub" : ""}" data-toc="${h.id}">${h.textContent}</a>`).join("");
+    const links = new Map(heads.map((h) => [h.id, root.querySelector(`[data-toc="${h.id}"]`)]));
+    const setActive = (id) => {
+      root.querySelectorAll("a").forEach((a) => a.classList.toggle("is-active", a.dataset.toc === id));
+    };
+    const scroller = opts.scroller ? (typeof opts.scroller === "string" ? document.querySelector(opts.scroller) : opts.scroller) : null;
+    const visible = new Set();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => (en.isIntersecting ? visible.add(en.target) : visible.delete(en.target)));
+      const first = heads.find((h) => visible.has(h));
+      if (first) setActive(first.id);
+    }, { root: scroller, rootMargin: "0px 0px -55% 0px" });
+    heads.forEach((h) => io.observe(h));
+    root.addEventListener("click", (e) => {
+      const a = e.target.closest("a[data-toc]");
+      if (!a) return;
+      e.preventDefault();
+      document.getElementById(a.dataset.toc)?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+      setActive(a.dataset.toc);
+    });
+    if (heads[0]) setActive(heads[0].id);
+  };
 })();

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collaboration · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-apps.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-domains.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Collaboration</h1>
+          <p class="fx-page-sub">Slack-style channel messages with reactions and threads, presence facepiles, and a docs workspace with scroll-spy TOC.</p>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:minmax(0,2fr) minmax(19rem,1fr)">
+        <!-- channel messages -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg"># design-systems</div>
+            <div class="fx-card-desc">Day dividers, consecutive-message grouping, unread line, hover actions (react / thread / pin), emoji reactions.</div>
+          </div>
+          <div class="fx-card-content" style="padding:0">
+            <div id="channel" style="height:29rem"></div>
+          </div>
+        </div>
+
+        <!-- presence -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Presence</div>
+            <div class="fx-card-desc">Facepiles with live status dots — hover to fan out.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div class="fx-stack" style="gap:.5rem">
+              <span class="fx-label">In this document</span>
+              <div class="fx-row">
+                <div class="fx-facepile">
+                  <span class="fx-avatar" data-presence="online">OM</span>
+                  <span class="fx-avatar" data-presence="online">JL</span>
+                  <span class="fx-avatar" data-presence="away">IN</span>
+                  <span class="fx-avatar" data-presence="busy">SD</span>
+                  <span class="fx-avatar" data-presence="online">WK</span>
+                </div>
+                <span class="fx-text-sm fx-muted">5 viewing now</span>
+              </div>
+            </div>
+            <hr class="fx-separator">
+            <div class="fx-stack" style="gap:.5rem">
+              <span class="fx-label">On the call</span>
+              <div class="fx-row">
+                <div class="fx-facepile">
+                  <span class="fx-avatar" data-presence="online">AP</span>
+                  <span class="fx-avatar" data-presence="online">LC</span>
+                  <span class="fx-avatar" data-presence="online">NG</span>
+                  <span class="fx-avatar fx-facepile-more">+7</span>
+                </div>
+                <span class="fx-badge fx-badge--success fx-badge--dot">Live</span>
+              </div>
+            </div>
+            <hr class="fx-separator">
+            <div class="fx-stack" style="gap:.5rem">
+              <span class="fx-label">Project team</span>
+              <div class="fx-facepile">
+                <span class="fx-avatar" data-presence="online">OM</span>
+                <span class="fx-avatar" data-presence="offline">TB</span>
+                <span class="fx-avatar" data-presence="away">AS</span>
+                <span class="fx-avatar" data-presence="online">MR</span>
+                <span class="fx-avatar" data-presence="offline">JW</span>
+                <span class="fx-avatar" data-presence="busy">EP</span>
+                <span class="fx-avatar fx-facepile-more">+12</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- docs workspace -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Docs workspace</div>
+          <div class="fx-card-desc">Draggable page tree (drag pages to reorder), article, and a scroll-spy table of contents that tracks the reading position.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-grid" style="grid-template-columns:13rem minmax(0,1fr) 11rem;gap:1.5rem;align-items:start">
+            <div class="fx-tree">
+              <details open>
+                <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>Handbook</summary>
+                <div class="fx-sortable">
+                  <div class="fx-tree-leaf fx-sortable-item" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>Design tokens</div>
+                  <div class="fx-tree-leaf fx-sortable-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>Contribution guide</div>
+                  <div class="fx-tree-leaf fx-sortable-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>Release process</div>
+                  <div class="fx-tree-leaf fx-sortable-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>Accessibility
+                  </div>
+                </div>
+              </details>
+              <details>
+                <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>Archive</summary>
+                <div class="fx-tree-leaf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>2024 guidelines</div>
+              </details>
+            </div>
+
+            <article class="fx-prose" id="doc-article" style="max-height:26rem;overflow-y:auto;padding-right:1rem">
+              <h2>Design tokens</h2>
+              <p>Every color, radius and shadow in finix resolves from a CSS custom property. Components never hardcode values — they reference the token contract, which is what makes whole-product re-theming a one-line change.</p>
+              <h3>Color system</h3>
+              <p>Colors are expressed in OKLCH so lightness is perceptually uniform across hues. The surface ladder gives depth: background sits lowest, wells inset into surfaces, cards float above, and popovers sit highest. Never invent a gray — pick a rung.</p>
+              <p>Brand palettes override a small set of accent tokens (<code>--primary</code>, <code>--ring</code>, <code>--chart-1…5</code>) while the neutral ladder stays shared, which keeps every brand equally readable in both themes.</p>
+              <h3>Typography</h3>
+              <p>Geist for UI text, Geist Mono for data. Sizes come from a compact scale tuned for density: 13px body in components, 12px metadata, 11px labels. Numbers in tables always use the mono face with tabular spacing.</p>
+              <h2>Spacing &amp; radius</h2>
+              <p>Controls are 2rem tall by default with 1.75rem and 2.25rem variants. Radius has three roles: medium for controls, large for inner containers, extra-large for cards. Mixing roles is the fastest way to make a screen feel off.</p>
+              <h3>Density</h3>
+              <p>The kit is deliberately compact — closer to Linear than to Bootstrap. Cards pad at 1.25rem, intra-component gaps run 0.375–0.625rem, and page sections breathe at 1.25rem.</p>
+              <h2>Motion</h2>
+              <p>Motion is quiet and purposeful: entry staggers, 150–250ms state transitions on an ease-out curve, and nothing that loops without meaning. Every animation is disabled under reduced-motion.</p>
+            </article>
+
+            <nav id="doc-toc"></nav>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  fxMessages(document.getElementById("channel"), {
+    channel: "design-systems",
+    me: "Rakesh",
+    messages: [
+      { author: "Olivia Martin", day: "Thursday", time: "14:02", body: "Shipped the surface-ladder refactor — every gray now resolves from a named token. Diff is huge but mechanical.", reactions: { "🚀": { count: 4, mine: false }, "🔥": { count: 2, mine: true } }, thread: 3 },
+      { author: "Olivia Martin", day: "Thursday", time: "14:03", body: "Docs page updated too, with a before/after screenshot pair." },
+      { author: "Jackson Lee", day: "Thursday", time: "14:21", body: "Beautiful. The dark-mode wells finally read as inset instead of just... darker." , reactions: { "💯": { count: 1, mine: false } } },
+      { author: "Sofia Davis", day: "Thursday", time: "16:45", body: "Heads up: brand review moved to Monday 10:00. Same doc, new date." },
+      { author: "Isabella Nguyen", day: "Today", time: "09:12", body: "Morning! Kicking off the cohort-grid work today. Draft API in the thread.", thread: 5 },
+      { author: "Isabella Nguyen", day: "Today", time: "09:12", body: "Main open question is whether week-0 should always render as 100% or show the raw activation rate." },
+      { author: "William Kim", day: "Today", time: "09:30", body: "Raw rate gets my vote — hiding week-0 churn always bites us later.", reactions: { "👍": { count: 3, mine: false } } },
+      { author: "Liam Chen", day: "Today", time: "10:05", body: "PR up for the funnel drop-off labels. Small one, two files.", unreadBefore: true },
+      { author: "Liam Chen", day: "Today", time: "10:06", body: "Bonus: hover tooltips now show conversion vs the previous step, not just vs the top." },
+    ],
+  });
+
+  fxToc(document.getElementById("doc-toc"), {
+    target: "#doc-article",
+    scroller: "#doc-article",
+    title: "On this page",
+  });
+});
+</script>
+</body>
+</html>

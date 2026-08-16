@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sales CRM · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
+<link rel="stylesheet" href="../css/finix-crm.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-domains.js"></script>
+<script defer src="../js/finix-crm.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Sales CRM</h1>
+          <p class="fx-page-sub">The selling motion — weighted pipeline board with drag, contact 360 with activity, lead scoring, CPQ quote builder with approval gates, and forecast vs quota.</p>
+        </div>
+      </div>
+
+      <!-- pipeline board -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Pipeline</div>
+          <div class="fx-card-desc"><b>Drag deals between stages</b> — stage sums, weighted values and the forecast footer recompute live. Stage probability × deal value = weighted forecast.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="pipeline"></div>
+        </div>
+      </div>
+
+      <!-- contact 360 -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Contact 360</div>
+          <div class="fx-card-desc">Everything about a person in one view — click a contact on the left; profile attributes are <b>inline-editable</b> (click a value). The score ring opens a factor breakdown.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-split fx-split--flush" data-fx-split id="split-360" style="--split:27%;--split-min-a:15rem;--split-min-b:24rem">
+            <div class="fx-split-pane">
+              <div class="fx-crm-contacts" id="contact-list"></div>
+            </div>
+            <div class="fx-split-divider" aria-label="Resize contact list"></div>
+            <div class="fx-split-pane" style="padding:1rem 0 0 1rem">
+              <div class="fx-crm-360">
+                <div style="min-width:0">
+                  <div class="fx-crm-360-head">
+                    <span class="fx-avatar fx-avatar--lg" id="c-avatar">SD</span>
+                    <div class="fx-crm-360-id">
+                      <h3 id="c-name">—</h3>
+                      <p id="c-title">—</p>
+                    </div>
+                    <button class="fx-crm-score" id="c-score" popovertarget="score-pop" style="margin-left:auto" data-fx-tip="Lead score — click for breakdown"></button>
+                  </div>
+                  <dl class="fx-crm-attrs" id="c-attrs"></dl>
+                  <div class="fx-tabs" style="margin-top:1rem">
+                    <div class="fx-tablist" role="tablist">
+                      <button class="fx-tab" role="tab" aria-selected="true" aria-controls="c-tab-activity">Activity</button>
+                      <button class="fx-tab" role="tab" aria-selected="false" aria-controls="c-tab-deals">Deals</button>
+                      <button class="fx-tab" role="tab" aria-selected="false" aria-controls="c-tab-notes">Notes</button>
+                    </div>
+                    <div class="fx-tabpanel" id="c-tab-activity" role="tabpanel" style="padding-top:.875rem">
+                      <div id="c-activity"></div>
+                    </div>
+                    <div class="fx-tabpanel" id="c-tab-deals" role="tabpanel" hidden style="padding-top:.875rem">
+                      <div class="fx-stack" style="gap:.5rem" id="c-deals"></div>
+                    </div>
+                    <div class="fx-tabpanel" id="c-tab-notes" role="tabpanel" hidden style="padding-top:.875rem">
+                      <textarea class="fx-textarea" rows="3" placeholder="Write an internal note…"></textarea>
+                      <div class="fx-text-xs fx-muted" style="margin-top:.5rem">Notes are internal — only your team sees them.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="fx-crm-rail">
+                  <div class="fx-crm-nba">
+                    <span class="fx-crm-nba-label">Next best action</span>
+                    <p id="c-nba">—</p>
+                    <button class="fx-btn fx-btn--sm" style="align-self:flex-start">Send follow-up</button>
+                  </div>
+                  <div class="fx-stack" style="gap:.5rem" id="c-open-deals"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fx-menu" popover id="score-pop"></div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(24rem,1fr))">
+        <!-- lead scoring -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Lead scoring</div>
+            <div class="fx-card-desc">Conic-ring score with cold / warm / hot ramps — the ring sweeps in on mount. The same ring, small size, lives in list rows.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-row" style="gap:2rem;align-items:flex-start;flex-wrap:wrap">
+              <div class="fx-stack" style="gap:.375rem;align-items:center"><div id="score-a"></div><span class="fx-text-xs fx-muted">Cold</span></div>
+              <div class="fx-stack" style="gap:.375rem;align-items:center"><div id="score-b"></div><span class="fx-text-xs fx-muted">Warm</span></div>
+              <div class="fx-stack" style="gap:.375rem;align-items:center"><div id="score-c"></div><span class="fx-text-xs fx-muted">Hot</span></div>
+              <div class="fx-text-sm fx-muted" style="max-width:16rem;line-height:1.55">Scores blend fit (industry, size, role) with intent (visits, feature usage, replies). Above 70 routes to a rep instantly.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- forecast -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Forecast vs quota</div>
+            <div class="fx-card-desc">Closed + commit (weighted) + best case, stacked by month, beside quarter attainment.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-row" style="gap:1.5rem;align-items:center;flex-wrap:wrap">
+              <div id="quota-gauge"></div>
+              <div class="fx-stack" style="gap:.125rem">
+                <span class="fx-text-xs fx-muted">Q3 closed</span>
+                <b style="font-family:var(--font-mono);font-size:1.0625rem">$486k</b>
+                <span class="fx-text-xs fx-muted" style="margin-top:.5rem">Quota</span>
+                <b style="font-family:var(--font-mono);font-size:1.0625rem">$720k</b>
+              </div>
+              <div id="forecast-chart" style="flex:1;min-width:15rem"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- quote builder -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Quote builder (CPQ)</div>
+          <div class="fx-card-desc">Line items with live totals and margin. Push any line's discount past <b>15%</b> — the quote flags for approval and the chain appears. <b>Preview quote</b> renders the printable document.</div>
+        </div>
+        <div class="fx-card-content fx-stack" style="gap:1rem">
+          <div id="quote"></div>
+          <div id="quote-approvals" hidden>
+            <div class="fx-text-sm" style="font-weight:550;margin-bottom:.625rem">Discount approval chain</div>
+            <div id="quote-chain"></div>
+          </div>
+          <div class="fx-row" style="gap:.625rem">
+            <button class="fx-btn" id="quote-preview-btn">Preview quote</button>
+            <span class="fx-text-xs fx-muted">Generates the printable fx-doc from current lines.</span>
+          </div>
+          <div class="fx-doc" id="quote-doc" hidden>
+            <div class="fx-doc-head">
+              <div>
+                <div class="fx-doc-brand"><i>F</i>Finix Labs Inc.</div>
+                <div class="fx-text-xs fx-muted" style="margin-top:.5rem">548 Market St, San Francisco CA<br>billing@finix.dev</div>
+              </div>
+              <div class="fx-doc-title">
+                <b>QUOTE</b>
+                <span id="qd-num">Q-2026-0148</span>
+              </div>
+            </div>
+            <div class="fx-doc-meta">
+              <div><h4>Prepared for</h4><p>ACME Corp<br>Sofia Davis, VP Engineering</p></div>
+              <div><h4>Valid until</h4><p>Sep 16, 2026</p></div>
+              <div><h4>Payment terms</h4><p>Net 30 · Annual billing</p></div>
+            </div>
+            <table class="fx-doc-table" id="qd-table"></table>
+            <div class="fx-doc-totals" id="qd-totals"></div>
+            <div class="fx-doc-foot">
+              <span>Questions? Reply to this quote or write to sales@finix.dev.</span>
+              <span>Page 1 of 1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* ---- pipeline ---- */
+  const pipeline = fxPipeline(document.getElementById("pipeline"), {
+    winRate: 34,
+    stages: [
+      { id: "disc", name: "Discovery", prob: 0.1 },
+      { id: "qual", name: "Qualified", prob: 0.25 },
+      { id: "prop", name: "Proposal", prob: 0.5 },
+      { id: "nego", name: "Negotiation", prob: 0.75 },
+      { id: "won", name: "Closed won", prob: 1 },
+    ],
+    deals: [
+      { id: "d1", name: "Platform migration", company: "ACME Corp", value: 84000, stage: "nego", closes: "Sep 12", owner: "SD" },
+      { id: "d2", name: "Design system rollout", company: "Globex", value: 42000, stage: "prop", closes: "Sep 30", owner: "JL" },
+      { id: "d3", name: "Enterprise seats ×120", company: "Initech", value: 138000, stage: "prop", closes: "Oct 08", owner: "SD" },
+      { id: "d4", name: "Theme studio pilot", company: "Vandelay", value: 18000, stage: "qual", closes: "Aug 29", owner: "AP", late: true },
+      { id: "d5", name: "Marketing site rebuild", company: "Stark Industries", value: 56000, stage: "disc", closes: "Oct 20", owner: "JL" },
+      { id: "d6", name: "Component audit", company: "Wayne Ent.", value: 12500, stage: "disc", closes: "Sep 18", owner: "AP" },
+      { id: "d7", name: "Multi-brand licensing", company: "Umbrella", value: 96000, stage: "qual", closes: "Oct 02", owner: "SD" },
+      { id: "d8", name: "Renewal + expansion", company: "Hooli", value: 64000, stage: "nego", closes: "Sep 05", owner: "WK" },
+      { id: "d9", name: "Design tokens sync", company: "Pied Piper", value: 22000, stage: "won", closes: "Aug 14", owner: "WK" },
+      { id: "d10", name: "Admin console kit", company: "Massive Dyn.", value: 47000, stage: "prop", closes: "Sep 26", owner: "AP" },
+      { id: "d11", name: "Onboarding package", company: "Soylent", value: 9800, stage: "disc", closes: "Sep 09", owner: "JL" },
+      { id: "d12", name: "White-label deal", company: "Tyrell Corp", value: 71000, stage: "qual", closes: "Nov 01", owner: "SD" },
+    ],
+    onMove: (deal, from, to) => {
+      const names = { disc: "Discovery", qual: "Qualified", prop: "Proposal", nego: "Negotiation", won: "Closed won" };
+      finix.toast({ title: deal.name, description: "Moved to " + (names[to] || to) + " — forecast updated.", variant: "success" });
+    },
+  });
+  window.__pipeline = pipeline;
+
+  /* ---- contact 360 ---- */
+  const MIN = 6e4, HR = 36e5, DAY = 864e5, now = Date.now();
+  const CONTACTS = [
+    { ini: "SD", name: "Sofia Davis", title: "VP Engineering · ACME Corp", company: "ACME Corp", score: 86,
+      attrs: { Email: "sofia@acme.com", Phone: "+1 415 555 0132", Company: "ACME Corp", Owner: "Rakesh K.", Source: "Warm intro", "Last touch": "2 days ago" },
+      nba: "Proposal viewed 3× yesterday but no reply in 4 days — send the pricing follow-up while it's warm.",
+      deals: [["Platform migration", "$84,000 · Negotiation"], ["Support add-on", "$12,000 · Qualified"]],
+      factors: [
+        { label: "Pricing page visits", delta: 18 }, { label: "Replied to sequence", delta: 18 },
+        { label: "Company size fit", delta: 15 }, { label: "Role seniority", delta: 12 },
+        { label: "Invited teammates", delta: 14 }, { label: "Competitor installed", delta: -9 },
+      ],
+      events: [
+        { type: "comment", actor: "Sofia Davis", action: "replied to", target: "Proposal v2", body: "The component coverage looks right. Can we talk multi-year pricing on Thursday?", time: now - 4 * HR },
+        { type: "status", actor: "Rakesh K.", action: "moved", target: "Platform migration", icon: "flag", tone: "primary", from: "Proposal", to: { label: "Negotiation", tone: "success" }, time: now - DAY },
+        { type: "system", actor: "Sequence", action: "sent step 3 of", target: "Enterprise nurture", time: now - 2 * DAY },
+        { type: "comment", actor: "Jackson Lee", action: "logged a call with", target: "Sofia Davis", body: "30 min technical deep-dive. Security review passed. Procurement wants net-60.", time: now - 3 * DAY },
+      ] },
+    { ini: "MR", name: "Marco Ruiz", title: "Head of Design · Globex", company: "Globex", score: 58,
+      attrs: { Email: "marco@globex.io", Phone: "+34 91 555 210", Company: "Globex", Owner: "Jackson Lee", Source: "Webinar", "Last touch": "6 days ago" },
+      nba: "Went quiet after the demo — share the design-system rollout case study to restart the thread.",
+      deals: [["Design system rollout", "$42,000 · Proposal"]],
+      factors: [
+        { label: "Attended webinar", delta: 12 }, { label: "Docs sessions", delta: 10 },
+        { label: "Company size fit", delta: 12 }, { label: "No reply 6 days", delta: -8 },
+        { label: "Champion identified", delta: 14 }, { label: "Budget unconfirmed", delta: -6 },
+      ],
+      events: [
+        { type: "system", actor: "Marketing", action: "tagged from", target: "Webinar: Tokens at scale", time: now - 6 * DAY },
+        { type: "comment", actor: "Jackson Lee", action: "emailed", target: "Marco Ruiz", body: "Sent the demo recording + the Globex-specific bento mockup.", time: now - 6 * DAY + 2 * HR },
+        { type: "status", actor: "Jackson Lee", action: "moved", target: "Design system rollout", icon: "flag", tone: "primary", from: "Qualified", to: { label: "Proposal", tone: "success" }, time: now - 5 * DAY },
+      ] },
+    { ini: "AN", name: "Ava Nakamura", title: "CTO · Initech", company: "Initech", score: 91,
+      attrs: { Email: "ava@initech.com", Phone: "+81 3 555 0198", Company: "Initech", Owner: "Rakesh K.", Source: "Inbound demo", "Last touch": "3 hours ago" },
+      nba: "Legal returned the MSA with two redlines — route to counsel today to keep the Oct 8 close date.",
+      deals: [["Enterprise seats ×120", "$138,000 · Proposal"]],
+      factors: [
+        { label: "Requested security docs", delta: 16 }, { label: "120-seat intent", delta: 20 },
+        { label: "Exec sponsor", delta: 15 }, { label: "Active POC", delta: 16 },
+        { label: "Timeline pressure", delta: 8 }, { label: "Legal redlines", delta: -4 },
+      ],
+      events: [
+        { type: "comment", actor: "Ava Nakamura", action: "replied on", target: "MSA thread", body: "Two redlines from legal — liability cap and data residency. Otherwise ready to sign.", time: now - 3 * HR },
+        { type: "system", actor: "Docs bot", action: "shared", target: "SOC2 report + DPA", time: now - DAY - 3 * HR },
+        { type: "status", actor: "Rakesh K.", action: "escalated", target: "Enterprise seats ×120", icon: "alert", tone: "warning", from: "Standard", to: { label: "Exec review", tone: "warning" }, time: now - 2 * DAY },
+      ] },
+    { ini: "TB", name: "Tom Baker", title: "Founder · Vandelay", company: "Vandelay", score: 31,
+      attrs: { Email: "tom@vandelay.co", Phone: "—", Company: "Vandelay", Owner: "Ava Patel", Source: "Cold list", "Last touch": "3 weeks ago" },
+      nba: "Score dropped below 40 — move to the quarterly nurture list and free the rep's time.",
+      deals: [["Theme studio pilot", "$18,000 · Qualified"]],
+      factors: [
+        { label: "Opened 1 of 5 emails", delta: -10 }, { label: "Small team", delta: -6 },
+        { label: "Trial signup", delta: 12 }, { label: "No site visits 21d", delta: -12 },
+        { label: "Pilot interest (old)", delta: 8 },
+      ],
+      events: [
+        { type: "system", actor: "Sequence", action: "completed", target: "Cold outreach ×5 — no reply", time: now - 21 * DAY },
+        { type: "comment", actor: "Ava Patel", action: "noted on", target: "Tom Baker", body: "Trial expired without activation. Parking this one.", time: now - 20 * DAY },
+      ] },
+  ];
+
+  const list = document.getElementById("contact-list");
+  CONTACTS.forEach((c, i) => {
+    const row = document.createElement("div");
+    row.className = "fx-crm-contact";
+    row.tabIndex = 0;
+    row.dataset.i = i;
+    row.innerHTML = `<span class="fx-avatar fx-avatar--sm">${c.ini}</span>
+      <span class="fx-crm-contact-main"><span class="fx-crm-contact-name">${c.name}</span><span class="fx-crm-contact-sub">${c.title}</span></span>
+      <span class="fx-crm-score fx-crm-score--sm" data-ring></span>`;
+    list.appendChild(row);
+    fxScore(row.querySelector("[data-ring]"), { score: c.score, size: "sm" });
+  });
+
+  let activity = null;
+  function selectContact(i) {
+    const c = CONTACTS[i];
+    [...list.children].forEach((r, j) => r.setAttribute("aria-current", j === i));
+    document.getElementById("c-avatar").textContent = c.ini;
+    document.getElementById("c-name").textContent = c.name;
+    document.getElementById("c-title").textContent = c.title;
+    document.getElementById("c-nba").textContent = c.nba;
+    const scoreBtn = document.getElementById("c-score");
+    scoreBtn.className = "fx-crm-score";
+    fxScore(scoreBtn, { score: c.score, factors: c.factors, popover: "#score-pop" });
+    const attrs = document.getElementById("c-attrs");
+    attrs.innerHTML = Object.entries(c.attrs)
+      .map(([k, v]) => `<div class="fx-crm-attr"><dt>${k}</dt><dd data-editable tabindex="0">${v}</dd></div>`).join("");
+    document.getElementById("c-activity").innerHTML = "";
+    activity = fxActivity(document.getElementById("c-activity"), { events: c.events });
+    document.getElementById("c-deals").innerHTML = c.deals
+      .map(([n, m]) => `<div class="fx-crm-mini-deal"><span>${n}</span><b>${m}</b></div>`).join("");
+    document.getElementById("c-open-deals").innerHTML =
+      `<div class="fx-text-xs fx-muted" style="font-weight:550;text-transform:uppercase;letter-spacing:.06em">Open deals</div>` +
+      c.deals.map(([n, m]) => `<div class="fx-crm-mini-deal"><span>${n}</span><b>${m.split("·")[0].trim()}</b></div>`).join("");
+  }
+  list.addEventListener("click", (e) => {
+    const row = e.target.closest(".fx-crm-contact");
+    if (row) selectContact(+row.dataset.i);
+  });
+  selectContact(0);
+
+  /* inline attribute editing */
+  document.getElementById("c-attrs").addEventListener("click", (e) => {
+    const dd = e.target.closest("dd[data-editable]");
+    if (!dd || dd.querySelector("input")) return;
+    const old = dd.textContent;
+    dd.innerHTML = `<input value="${old.replace(/"/g, "&quot;")}">`;
+    const input = dd.querySelector("input");
+    input.focus();
+    input.select();
+    const commit = () => { dd.textContent = input.value.trim() || old; };
+    input.addEventListener("blur", commit);
+    input.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") input.blur();
+      if (ev.key === "Escape") { input.value = old; input.blur(); }
+    });
+  });
+
+  /* ---- lead score demos ---- */
+  fxScore(document.getElementById("score-a"), { score: 32 });
+  fxScore(document.getElementById("score-b"), { score: 58 });
+  fxScore(document.getElementById("score-c"), { score: 86 });
+
+  /* ---- forecast ---- */
+  fxCharts.gauge(document.getElementById("quota-gauge"), { value: 68, label: "attainment", size: 150 });
+  fxCharts.bars(document.getElementById("forecast-chart"), {
+    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep"], stacked: true, height: 190,
+    series: [
+      { name: "Closed", data: [96, 118, 141, 128, 152, 86] },
+      { name: "Commit", data: [40, 52, 38, 61, 66, 118] },
+      { name: "Best case", data: [22, 18, 30, 26, 41, 74] },
+    ],
+  });
+
+  /* ---- quote builder ---- */
+  let chainBuilt = false;
+  const quote = fxQuote(document.getElementById("quote"), {
+    taxRate: 0.18,
+    approvalThreshold: 15,
+    products: [
+      { id: "pro", name: "Pro seats (annual, per seat)", price: 240, cost: 60 },
+      { id: "studio", name: "Theme studio", price: 1900, cost: 480 },
+      { id: "reg", name: "Private registry", price: 1200, cost: 260 },
+      { id: "onb", name: "Onboarding package", price: 2400, cost: 1450 },
+    ],
+    lines: [
+      { product: "pro", qty: 40, price: 240, disc: 10 },
+      { product: "studio", qty: 1, price: 1900, disc: 0 },
+      { product: "onb", qty: 1, price: 2400, disc: 0 },
+    ],
+    onApproval: (needs) => {
+      const box = document.getElementById("quote-approvals");
+      box.hidden = !needs;
+      if (needs && !chainBuilt) {
+        chainBuilt = true;
+        fxApprovals(document.getElementById("quote-chain"), {
+          stages: [
+            { name: "Jackson Lee", role: "Sales manager", state: "current" },
+            { name: "Olivia Martin", role: "VP Sales (>20%)", state: "pending" },
+            { name: "Rakesh K.", role: "CFO (>30%)", state: "pending" },
+          ],
+        });
+      }
+    },
+  });
+  window.__quote = quote;
+
+  /* quote → printable doc */
+  document.getElementById("quote-preview-btn").addEventListener("click", () => {
+    const doc = document.getElementById("quote-doc");
+    if (!doc.hidden) { doc.hidden = true; return; }
+    const t = quote.totals();
+    const money = (n) => "$" + Math.round(n).toLocaleString("en-US");
+    document.getElementById("qd-table").innerHTML =
+      `<thead><tr><th>Item</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Disc</th><th class="num">Amount</th></tr></thead><tbody>` +
+      quote.lines.map((l) => {
+        const p = ["pro", "studio", "reg", "onb"].includes(l.product)
+          ? { pro: "Pro seats (annual, per seat)", studio: "Theme studio", reg: "Private registry", onb: "Onboarding package" }[l.product] : l.product;
+        return `<tr><td>${p}</td><td class="num">${l.qty}</td><td class="num">${money(l.price)}</td><td class="num">${l.disc}%</td><td class="num">${money(l.qty * l.price * (1 - l.disc / 100))}</td></tr>`;
+      }).join("") + `</tbody>`;
+    document.getElementById("qd-totals").innerHTML =
+      `<div class="fx-doc-total"><span>Subtotal</span><span>${money(t.sub)}</span></div>
+       <div class="fx-doc-total"><span>Discount</span><span>−${money(t.discount)}</span></div>
+       <div class="fx-doc-total"><span>Tax (18%)</span><span>${money(t.tax)}</span></div>
+       <div class="fx-doc-total is-grand"><span>Total</span><span>${money(t.total)}</span></div>`;
+    doc.hidden = false;
+    doc.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+});
+</script>
+</body>
+</html>

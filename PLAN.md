@@ -411,7 +411,7 @@ in `research.html`; restricted kits (Aceternity, Preline, shadcnblocks, paid
 templates) and proprietary products (Kite, Attio, TradingView…) are
 **inspiration-only, never port code**. No serifs, ever.
 
-### V1. Sales CRM deep → new page `crm.html` ("Sales CRM", Industries group)
+### ✅ V1. Sales CRM deep → new page `crm.html` ("Sales CRM", Industries group)
 New module `css/finix-crm.css` + `js/finix-crm.js`, namespace `fx-crm-*`.
 - `fxPipeline(el, {stages, deals, onMove})` — pipeline board (kanban DNA, denser):
   stage columns w/ header = name + deal count + **stage value + weighted value**

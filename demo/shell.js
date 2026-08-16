@@ -36,6 +36,7 @@
     globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>',
     rocket: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
     tagprice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>',
+    funnel: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>',
   };
 
   const NAV = [
@@ -55,14 +56,20 @@
         { href: "charts.html", icon: "chart", label: "Charts" },
         { href: "scheduling.html", icon: "calendar", label: "Projects" },
         { href: "ai.html", icon: "sparkles", label: "AI Assistant" },
-        { href: "support.html", icon: "lifebuoy", label: "Support" },
-        { href: "business.html", icon: "briefcase", label: "Business & CRM" },
-        { href: "devtools.html", icon: "terminal", label: "Dev & API" },
         { href: "workflow.html", icon: "workflow", label: "Workflows" },
-        { href: "people.html", icon: "users", label: "People & HR" },
-        { href: "collab.html", icon: "messages", label: "Collaboration" },
         { href: "editor.html", icon: "pen", label: "Editor & Media" },
         { href: "motion.html", icon: "wand", label: "Motion Lab" },
+      ],
+    },
+    {
+      group: "Industries",
+      items: [
+        { href: "crm.html", icon: "funnel", label: "Sales CRM" },
+        { href: "support.html", icon: "lifebuoy", label: "Support" },
+        { href: "business.html", icon: "briefcase", label: "Business Ops" },
+        { href: "devtools.html", icon: "terminal", label: "Dev & API" },
+        { href: "people.html", icon: "users", label: "People & HR" },
+        { href: "collab.html", icon: "messages", label: "Collaboration" },
       ],
     },
     {

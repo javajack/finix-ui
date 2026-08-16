@@ -609,7 +609,7 @@ Same contract: §1 loop per task, one commit per task, free sources only,
 namespace per module. Detail below is build-ready; refine data/copy at
 execution time, never the quality bar.
 
-### E1. Travel & booking → new page `travel.html` ("Travel", Industries)
+### ✅ E1. Travel & booking → new page `travel.html` ("Travel", Industries)
 Module `css/finix-travel.css` + `js/finix-travel.js`, `fx-tv-*`.
 - Search widget: origin/destination comboboxes + swap button (rotate anim),
   date-range picker reuse, travellers/class popover (steppers per type);

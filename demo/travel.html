@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Travel · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-travel.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-travel.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Travel &amp; booking</h1>
+          <p class="fx-page-sub">OTA-grade screens — search with a fare calendar, live-filtered flight results, a seat map that totals as you pick, itinerary with a short-connection warning, and a boarding pass.</p>
+        </div>
+      </div>
+
+      <!-- search + fare calendar -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Find a flight</div>
+          <div class="fx-card-desc">The calendar shows each day's lowest fare — the three cheapest days are tinted. Pick one.</div>
+        </div>
+        <div class="fx-card-content fx-stack" style="gap:1.25rem">
+          <div class="fx-tv-search">
+            <div class="fx-field"><label class="fx-label">From</label><input class="fx-input" id="tv-from" value="Bengaluru (BLR)"></div>
+            <button class="fx-tv-swap" id="tv-swap" aria-label="Swap origin and destination"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg></button>
+            <div class="fx-field"><label class="fx-label">To</label><input class="fx-input" id="tv-to" value="Mumbai (BOM)"></div>
+            <div class="fx-field"><label class="fx-label">Travellers</label>
+              <button class="fx-btn fx-btn--outline" popovertarget="tv-pax" id="tv-pax-btn" style="min-width:9rem;justify-content:space-between">1 adult · Economy<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+            </div>
+            <div class="fx-field"><label class="fx-label">Trip</label>
+              <div class="fx-toggle-group fx-toggle-group--outline">
+                <button class="fx-toggle" aria-pressed="true">One way</button>
+                <button class="fx-toggle" aria-pressed="false">Round</button>
+              </div>
+            </div>
+            <button class="fx-btn" style="height:2rem;margin-bottom:1px" id="tv-go">Search</button>
+          </div>
+          <div class="fx-menu" popover id="tv-pax" style="min-width:14rem;padding:.75rem">
+            <div class="fx-row" style="justify-content:space-between;margin-bottom:.625rem"><span class="fx-text-sm">Adults</span>
+              <span style="display:inline-flex;gap:.375rem;align-items:center"><button class="fx-btn fx-btn--outline fx-btn--icon fx-btn--sm">−</button><b style="font-family:var(--font-mono);width:1.25rem;text-align:center">1</b><button class="fx-btn fx-btn--outline fx-btn--icon fx-btn--sm">+</button></span>
+            </div>
+            <div class="fx-row" style="justify-content:space-between"><span class="fx-text-sm">Children</span>
+              <span style="display:inline-flex;gap:.375rem;align-items:center"><button class="fx-btn fx-btn--outline fx-btn--icon fx-btn--sm">−</button><b style="font-family:var(--font-mono);width:1.25rem;text-align:center">0</b><button class="fx-btn fx-btn--outline fx-btn--icon fx-btn--sm">+</button></span>
+            </div>
+          </div>
+          <div>
+            <div class="fx-row" style="justify-content:space-between;margin-bottom:.625rem;flex-wrap:wrap;gap:.5rem">
+              <b class="fx-text-sm">September 2026 · lowest fare per day</b>
+              <span class="fx-text-xs fx-muted" id="tv-picked">Departing <b>Sep 12</b> · from ₹3,845</span>
+            </div>
+            <div id="fare-cal"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- results -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">BLR → BOM · Sep 12</div>
+          <div class="fx-card-desc">Filters apply live; sort by cheapest or fastest.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-tv-layout">
+            <aside class="fx-stack" style="gap:1.25rem" id="tv-rail">
+              <div class="fx-stack" style="gap:.5rem">
+                <b class="fx-text-sm">Stops</b>
+                <label class="fx-row" style="gap:.5rem;font-size:.8125rem;color:var(--muted-foreground)"><input type="checkbox" class="fx-checkbox" data-f-stops value="0" checked>Non-stop</label>
+                <label class="fx-row" style="gap:.5rem;font-size:.8125rem;color:var(--muted-foreground)"><input type="checkbox" class="fx-checkbox" data-f-stops value="1">1 stop</label>
+              </div>
+              <div class="fx-stack" style="gap:.5rem">
+                <b class="fx-text-sm">Departure</b>
+                <div class="fx-row" style="gap:.375rem;flex-wrap:wrap">
+                  <button class="fx-btn fx-btn--outline fx-btn--sm" data-f-win="morning" aria-pressed="false" style="height:1.625rem;font-size:.6875rem">🌅 6–12</button>
+                  <button class="fx-btn fx-btn--outline fx-btn--sm" data-f-win="afternoon" aria-pressed="false" style="height:1.625rem;font-size:.6875rem">☀️ 12–18</button>
+                  <button class="fx-btn fx-btn--outline fx-btn--sm" data-f-win="evening" aria-pressed="false" style="height:1.625rem;font-size:.6875rem">🌆 18–24</button>
+                </div>
+              </div>
+              <div class="fx-stack" style="gap:.5rem">
+                <b class="fx-text-sm">Airlines</b>
+                <label class="fx-row" style="gap:.5rem;font-size:.8125rem;color:var(--muted-foreground)"><input type="checkbox" class="fx-checkbox" data-f-air value="6E">IndiGo</label>
+                <label class="fx-row" style="gap:.5rem;font-size:.8125rem;color:var(--muted-foreground)"><input type="checkbox" class="fx-checkbox" data-f-air value="UK">Vistara</label>
+                <label class="fx-row" style="gap:.5rem;font-size:.8125rem;color:var(--muted-foreground)"><input type="checkbox" class="fx-checkbox" data-f-air value="AI">Air India</label>
+                <label class="fx-row" style="gap:.5rem;font-size:.8125rem;color:var(--muted-foreground)"><input type="checkbox" class="fx-checkbox" data-f-air value="QP">Akasa</label>
+              </div>
+              <div class="fx-stack" style="gap:.5rem">
+                <b class="fx-text-sm">Max price <output id="tv-max-out" style="float:right;font-family:var(--font-mono);font-weight:400;color:var(--muted-foreground)">₹9,000</output></b>
+                <input type="range" class="fx-slider" data-f-max min="3500" max="9000" step="100" value="9000">
+              </div>
+            </aside>
+            <div>
+              <div class="fx-row" style="justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.5rem">
+                <span class="fx-text-sm fx-muted" id="tv-count"></span>
+                <div class="fx-tablist" role="tablist" id="tv-sort" style="width:auto">
+                  <button class="fx-tab" role="tab" data-sort="cheap" aria-selected="true">Cheapest</button>
+                  <button class="fx-tab" role="tab" data-sort="fast" aria-selected="false">Fastest</button>
+                </div>
+              </div>
+              <div id="flights"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(24rem,1fr))">
+        <!-- seat map -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Pick your seats</div>
+            <div class="fx-card-desc">Rows 1 &amp; 12 are extra-legroom (₹899); standard seats ₹299. The total keeps up.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1rem">
+            <div class="fx-tv-legend">
+              <span><i></i>Available</span><span><i class="extra"></i>Extra legroom</span><span><i class="occ"></i>Taken</span><span><i class="sel"></i>Yours</span>
+            </div>
+            <div id="seatmap" style="overflow-x:auto"></div>
+            <div class="fx-row" style="justify-content:space-between;border-top:1px solid var(--border-soft);padding-top:.75rem">
+              <span class="fx-text-sm fx-muted" id="seat-list">No seats selected</span>
+              <b style="font-family:var(--font-mono)" id="seat-total">₹0</b>
+            </div>
+          </div>
+        </div>
+
+        <!-- itinerary + boarding pass -->
+        <div class="fx-stack" style="gap:1.25rem">
+          <div class="fx-card">
+            <div class="fx-card-header">
+              <div class="fx-card-title fx-card-title--lg">Itinerary</div>
+              <div class="fx-card-desc">Two segments via Delhi — the connection is tight, so we say so.</div>
+            </div>
+            <div class="fx-card-content">
+              <div class="fx-tv-itin">
+                <div class="fx-tv-seg">
+                  <div class="fx-tv-seg-rail"><i></i><span></span></div>
+                  <div class="fx-tv-seg-body">
+                    <b>BLR 06:15 → DEL 09:00</b>
+                    <div class="fx-text-xs fx-muted" style="margin-top:.125rem">IndiGo 6E-2043 · A321neo · 2h 45m · Terminal 1 → 3</div>
+                  </div>
+                </div>
+                <div class="fx-tv-layover is-short">⚠ 45m layover in Delhi — minimum connection is 50m. Consider the 10:10 instead.</div>
+                <div class="fx-tv-seg">
+                  <div class="fx-tv-seg-rail"><i></i></div>
+                  <div class="fx-tv-seg-body">
+                    <b>DEL 09:45 → BOM 11:55</b>
+                    <div class="fx-text-xs fx-muted" style="margin-top:.125rem">IndiGo 6E-508 · A320 · 2h 10m · lands Terminal 2</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="fx-card">
+            <div class="fx-card-header">
+              <div class="fx-card-title fx-card-title--lg">Boarding pass</div>
+              <div class="fx-card-desc">Perforated tear line, mono data, CSS barcode.</div>
+            </div>
+            <div class="fx-card-content" style="display:grid;place-items:center">
+              <div class="fx-tv-pass">
+                <div class="fx-tv-pass-head"><b>✈ IndiGo</b><span>Boarding pass</span></div>
+                <div class="fx-tv-pass-body">
+                  <div class="fx-tv-pass-cell"><span>Passenger</span><b>KUMAR / RAKESH</b></div>
+                  <div class="fx-tv-pass-cell"><span>Flight</span><b>6E-2043</b></div>
+                  <div class="fx-tv-pass-cell"><span>PNR</span><b>X4B7QZ</b></div>
+                  <div class="fx-tv-pass-cell"><span>From</span><b class="big">BLR</b></div>
+                  <div class="fx-tv-pass-cell"><span>To</span><b class="big">BOM</b></div>
+                  <div class="fx-tv-pass-cell"><span>Seat</span><b class="big" id="pass-seat">12A</b></div>
+                  <div class="fx-tv-pass-cell"><span>Date</span><b>12 SEP</b></div>
+                  <div class="fx-tv-pass-cell"><span>Boarding</span><b>05:35</b></div>
+                  <div class="fx-tv-pass-cell"><span>Gate</span><b>14B</b></div>
+                </div>
+                <div class="fx-tv-pass-tear"></div>
+                <div class="fx-tv-barcode"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- hotel -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">And a place to sleep</div>
+          <div class="fx-card-desc">Hotel card with amenity chips and per-rate rows — refundable vs saver.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-tv-hotel">
+            <div class="fx-tv-hotel-art">🏨</div>
+            <div class="fx-tv-hotel-body">
+              <div class="fx-row" style="gap:.5rem;align-items:baseline;flex-wrap:wrap">
+                <b style="font-size:.9375rem">The Bandra Courtyard</b>
+                <span style="color:var(--warning);font-size:.75rem;letter-spacing:.05em">★★★★☆</span>
+                <span class="fx-text-xs fx-muted">4.6 (1,208) · Bandra West, 2.1 km from BOM</span>
+              </div>
+              <div class="fx-tv-amen">
+                <span class="fx-badge fx-badge--outline" style="font-size:.5625rem">Free wifi</span>
+                <span class="fx-badge fx-badge--outline" style="font-size:.5625rem">Breakfast</span>
+                <span class="fx-badge fx-badge--outline" style="font-size:.5625rem">Pool</span>
+                <span class="fx-badge fx-badge--outline" style="font-size:.5625rem">Gym</span>
+                <span class="fx-badge fx-badge--outline" style="font-size:.5625rem">Airport pickup</span>
+              </div>
+              <div style="margin-top:.375rem">
+                <div class="fx-tv-rate"><span>Deluxe king · <span class="fx-text-xs" style="color:var(--success)">Free cancellation till Sep 10</span></span><b>₹7,400<span class="fx-text-xs fx-muted" style="font-family:var(--font-sans);font-weight:400">/night</span></b><button class="fx-btn fx-btn--sm">Reserve</button></div>
+                <div class="fx-tv-rate"><span>Deluxe king · <span class="fx-text-xs fx-muted">Saver — non-refundable</span></span><b>₹6,150<span class="fx-text-xs fx-muted" style="font-family:var(--font-sans);font-weight:400">/night</span></b><button class="fx-btn fx-btn--outline fx-btn--sm">Reserve</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* swap */
+  document.getElementById("tv-swap").addEventListener("click", (e) => {
+    const a = document.getElementById("tv-from"), b = document.getElementById("tv-to");
+    [a.value, b.value] = [b.value, a.value];
+    e.currentTarget.classList.toggle("is-spun");
+  });
+
+  /* fare calendar — Sep 2026 starts Tuesday (dow 2) */
+  const prices = {};
+  for (let d = 1; d <= 30; d++) prices[d] = 3800 + ((d * 617) % 2800) + (d % 7 === 0 ? 900 : 0);
+  prices[12] = 3845; prices[19] = 3790; prices[26] = 3760;
+  const cal = fxFareCal(document.getElementById("fare-cal"), {
+    month: "Sep", days: 30, startDow: 2, prices,
+    onSelect: (d, p) => {
+      document.getElementById("tv-picked").innerHTML = `Departing <b>Sep ${d}</b> · from ₹${p.toLocaleString("en-IN")}`;
+    },
+  });
+  cal.select(12);
+  window.__cal = cal;
+
+  /* flights */
+  const AIR = { "6E": ["IndiGo", "oklch(0.55 0.16 260)"], UK: ["Vistara", "oklch(0.5 0.13 300)"], AI: ["Air India", "oklch(0.55 0.15 25)"], QP: ["Akasa", "oklch(0.6 0.13 45)"] };
+  const F = (id, code, dep, arr, mins, stops, via, price) =>
+    ({ id, code, airline: AIR[code][0], color: AIR[code][1], from: "BLR", to: "BOM", dep, arr, mins, stops, via, price });
+  const flights = [
+    F(1, "6E", "06:10", "07:55", 105, 0, "", 4120),
+    F(2, "QP", "07:25", "09:05", 100, 0, "", 3845),
+    F(3, "AI", "09:40", "11:30", 110, 0, "", 4560),
+    F(4, "UK", "11:15", "13:05", 110, 0, "", 5240),
+    F(5, "6E", "13:50", "17:40", 230, 1, "HYD", 3980),
+    F(6, "AI", "16:05", "20:30", 265, 1, "DEL", 4210),
+    F(7, "UK", "18:30", "20:15", 105, 0, "", 6480),
+    F(8, "6E", "21:45", "23:30", 105, 0, "", 4890),
+  ];
+  window.__flights = fxFlights(document.getElementById("flights"), {
+    flights,
+    rail: document.getElementById("tv-rail"),
+    countEl: document.getElementById("tv-count"),
+    sortEl: document.getElementById("tv-sort"),
+  });
+  document.querySelector("[data-f-max]").addEventListener("input", (e) => {
+    document.getElementById("tv-max-out").textContent = "₹" + (+e.target.value).toLocaleString("en-IN");
+  });
+  document.getElementById("tv-go").addEventListener("click", () =>
+    finix.toast({ title: "Fares refreshed", description: "BLR → BOM · Sep 12 · live inventory.", variant: "success" }));
+
+  /* seat map */
+  window.__seats = fxSeatMap(document.getElementById("seatmap"), {
+    rows: 12,
+    extraRows: [1, 12],
+    occupied: ["1C", "2A", "2B", "3F", "4D", "5A", "5B", "5C", "7E", "8A", "9C", "9D", "10F", "11B"],
+    price: 299, priceExtra: 899,
+    onChange: (seats, total) => {
+      document.getElementById("seat-list").textContent = seats.length ? "Seats: " + seats.join(", ") : "No seats selected";
+      document.getElementById("seat-total").textContent = "₹" + total.toLocaleString("en-IN");
+      if (seats.length) document.getElementById("pass-seat").textContent = seats[0];
+    },
+  });
+});
+</script>
+</body>
+</html>

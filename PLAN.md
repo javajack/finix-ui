@@ -546,7 +546,7 @@ gradient/pattern tiles + glyphs (no external images ever).
 - Research: HyperUI ecommerce (MIT, distill) · Medusa/Saleor storefronts
   (open source, inspiration) · Preline (inspiration-only).
 
-### V6. Consumer banking → new page `banking.html` ("Banking", Industries group)
+### ✅ V6. Consumer banking → new page `banking.html` ("Banking", Industries group)
 New module `css/finix-bank.css` + `js/finix-bank.js`, namespace `fx-bank-*`.
 Desktop layout + one V4 phone frame showing the same components (dogfood the
 container-query story).

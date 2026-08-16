@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banking · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-bank.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-bank.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Banking</h1>
+          <p class="fx-page-sub">Consumer fintech screens — masked balance, day-grouped transactions with running balance, a virtual card you can freeze, a transfer flow that actually moves the money on this page, budgets and bills.</p>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)">
+        <!-- balance + accounts -->
+        <div class="fx-card">
+          <div class="fx-card-content" style="padding-top:1.25rem">
+            <div class="fx-bank-hero">
+              <div class="fx-bank-hero-top">
+                <span>Total balance · Savings ****4021</span>
+                <button class="fx-bank-eye" id="eye" aria-label="Toggle balance visibility">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+              <div class="fx-row" style="gap:1.25rem;align-items:center;flex-wrap:wrap">
+                <b class="fx-bank-balance" id="balance">—</b>
+                <span id="hero-spark"></span>
+              </div>
+              <div class="fx-bank-flows">
+                <span class="fx-bank-flow in">↓ In this month <b>+₹1,21,299</b></span>
+                <span class="fx-bank-flow out">↑ Out this month <b>−₹65,978</b></span>
+                <span class="fx-bank-flow">Safe to spend <b>₹41,200</b></span>
+              </div>
+              <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.75rem;margin-top:.625rem">
+                <div class="fx-bank-acct">
+                  <div class="fx-bank-acct-top">Savings <span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">Primary</span></div>
+                  <b id="acct-savings">—</b>
+                  <small>ICICI ****4021 · 6.5% APY on sweep</small>
+                </div>
+                <div class="fx-bank-acct">
+                  <div class="fx-bank-acct-top">Investments</div>
+                  <b>₹4,82,910</b>
+                  <small>Zerodha linked · +14.3% XIRR</small>
+                </div>
+                <div class="fx-bank-acct">
+                  <div class="fx-bank-acct-top">Credit card</div>
+                  <b>₹58,400 <span style="font-size:.6875rem;color:var(--muted-foreground);font-weight:400">/ ₹75,000</span></b>
+                  <div class="fx-bank-util is-warn" id="util"><i style="--_w:78%"></i></div>
+                  <small>78% utilised — statement in 6 days</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- card management -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Cards</div>
+            <div class="fx-card-desc"><b>Press &amp; hold CVV</b> to reveal it. Freezing frosts the card instantly.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.875rem">
+            <div id="vcard"></div>
+            <div>
+              <label class="fx-bank-ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="12" x="3" y="6" rx="2"/><path d="M3 10h18"/></svg>Freeze card<input type="checkbox" class="fx-switch" id="freeze"></label>
+              <label class="fx-bank-ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>International payments<input type="checkbox" class="fx-switch" id="intl"></label>
+              <label class="fx-bank-ctl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.09 13.28a3 3 0 0 1 5.82 0"/><path d="M3.2 10.4a7 7 0 0 1 11.6 0"/><path d="M12 21v-3"/><rect width="20" height="4" x="2" y="17" rx="1"/></svg>Contactless<input type="checkbox" class="fx-switch" checked></label>
+              <div class="fx-bank-limit"><span>Online limit</span><input type="range" class="fx-slider" min="5000" max="200000" step="5000" value="50000" id="lim-online"><output id="lim-online-out">₹50k</output></div>
+              <div class="fx-bank-limit"><span>ATM limit</span><input type="range" class="fx-slider" min="2000" max="50000" step="2000" value="20000" id="lim-atm"><output id="lim-atm-out">₹20k</output></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)">
+        <!-- transactions -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Transactions</div>
+            <div class="fx-card-desc">Day groups with net totals, category dots, pending states and a <b>running balance</b> column. Search or filter by category chip.</div>
+          </div>
+          <div class="fx-card-content"><div id="feed"></div></div>
+        </div>
+
+        <!-- transfer -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Send money</div>
+            <div class="fx-card-desc">Pick a person, punch the amount, review, send — the balance and the feed on this page update for real.</div>
+          </div>
+          <div class="fx-card-content"><div id="transfer"></div></div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(20rem,1fr))">
+        <!-- budgets -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Budgets — August</div>
+            <div class="fx-card-desc">Spend rings per category; over-budget flips the ring.</div>
+          </div>
+          <div class="fx-card-content"><div id="budgets"></div></div>
+        </div>
+
+        <!-- bills -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Upcoming bills</div>
+            <div class="fx-card-desc">Due-date urgency ramps; autopay stays hands-off.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-bank-bill"><span class="fx-bank-txn-ic" style="--_c:var(--chart-5)">⚡</span><span class="fx-bank-txn-main"><b>BESCOM electricity</b><small>₹2,140 · monthly</small></span><span style="display:flex;gap:.5rem;align-items:center"><span class="fx-bank-due is-soon">due in 2d</span><button class="fx-btn fx-btn--sm" data-fx-stateful-manual data-loading-text="Paying…" data-success-text="Paid ✓" data-pay-bill>Pay</button></span></div>
+            <div class="fx-bank-bill"><span class="fx-bank-txn-ic" style="--_c:var(--destructive)">💳</span><span class="fx-bank-txn-main"><b>Credit card statement</b><small>₹58,400 · min ₹2,920</small></span><span style="display:flex;gap:.5rem;align-items:center"><span class="fx-bank-due is-over">due today</span><button class="fx-btn fx-btn--sm" data-fx-stateful-manual data-loading-text="Paying…" data-success-text="Paid ✓" data-pay-bill>Pay</button></span></div>
+            <div class="fx-bank-bill"><span class="fx-bank-txn-ic" style="--_c:var(--chart-2)">📶</span><span class="fx-bank-txn-main"><b>Airtel Fiber</b><small>₹1,178 · autopay on 22nd</small></span><span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">Autopay</span></div>
+            <div class="fx-bank-bill"><span class="fx-bank-txn-ic" style="--_c:var(--chart-1)">🏠</span><span class="fx-bank-txn-main"><b>Rent</b><small>₹32,000 · 1st of month</small></span><span class="fx-bank-due">due in 15d</span></div>
+          </div>
+        </div>
+
+        <!-- UPI -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">UPI quick pay</div>
+            <div class="fx-card-desc">Scan-to-pay QR, VPA lookup with verify, recent payees.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-row" style="gap:1rem;align-items:flex-start">
+              <div class="fx-bank-qr" aria-label="UPI QR code"></div>
+              <div class="fx-stack" style="gap:.625rem;flex:1;min-width:11rem">
+                <div class="fx-field">
+                  <label class="fx-label">Pay to VPA</label>
+                  <div class="fx-input-group">
+                    <input class="fx-input" id="vpa" placeholder="name@upi" style="font-family:var(--font-mono);font-size:.75rem">
+                    <button class="fx-btn fx-btn--outline" id="vpa-check" style="border-top-left-radius:0;border-bottom-left-radius:0">Verify</button>
+                  </div>
+                  <span class="fx-field-desc" id="vpa-out" style="font-size:.6875rem"></span>
+                </div>
+                <div>
+                  <span class="fx-text-xs fx-muted" style="display:block;margin-bottom:.375rem">Recent payees</span>
+                  <div class="fx-row" style="gap:.375rem">
+                    <span class="fx-avatar" data-fx-tip="Sofia · sofia@okicici">SD</span>
+                    <span class="fx-avatar" data-fx-tip="Marco · marco@ybl">MR</span>
+                    <span class="fx-avatar" data-fx-tip="Amma · padma@oksbi">PA</span>
+                    <span class="fx-avatar" data-fx-tip="Toit · toit@paytm">TB</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+  let balance = 248764;
+  let masked = false;
+
+  const balEl = document.getElementById("balance");
+  const paintBal = () => {
+    balEl.textContent = masked ? "₹ • • • • • •" : inr(balance);
+    document.getElementById("acct-savings").textContent = masked ? "₹ ••••••" : inr(balance);
+  };
+  paintBal();
+  document.getElementById("eye").addEventListener("click", () => { masked = !masked; paintBal(); });
+
+  /* hero spark */
+  const hist = [231, 228, 236, 233, 241, 238, 246, 244, 249];
+  const min = Math.min(...hist), max = Math.max(...hist);
+  document.getElementById("hero-spark").innerHTML =
+    `<svg width="96" height="30" viewBox="0 0 96 30"><polyline fill="none" stroke="var(--success)" stroke-width="1.5" stroke-linejoin="round" points="${hist.map((v, i) => `${(i / (hist.length - 1)) * 96},${26 - ((v - min) / (max - min)) * 22}`).join(" ")}"/></svg>`;
+
+  /* feed */
+  const feed = fxBankFeed(document.getElementById("feed"), {
+    balance,
+    onBalance: (b) => { balance = b; paintBal(); },
+    txns: [
+      { name: "Swiggy", cat: "Food", glyph: "🍜", day: "Today", time: "1:20 PM", amount: -420 },
+      { name: "Uber", cat: "Transport", glyph: "🚕", day: "Today", time: "11:05 AM", amount: -240, pending: true },
+      { name: "Amazon", cat: "Shopping", glyph: "📦", day: "Today", time: "9:48 AM", amount: -2150 },
+      { name: "Netflix", cat: "Entertainment", glyph: "🎬", day: "Yesterday", time: "6:00 PM", amount: -649 },
+      { name: "BESCOM", cat: "Bills", glyph: "⚡", day: "Yesterday", time: "2:11 PM", amount: -1840 },
+      { name: "Salary — Finix Labs", cat: "Income", glyph: "💼", day: "Yesterday", time: "9:00 AM", amount: 120000 },
+      { name: "Blue Tokai", cat: "Food", glyph: "☕", day: "Yesterday", time: "8:42 AM", amount: -380 },
+      { name: "Rent — August", cat: "Bills", glyph: "🏠", day: "Aug 14", time: "10:00 AM", amount: -32000 },
+      { name: "Myntra", cat: "Shopping", glyph: "👟", day: "Aug 14", time: "9:12 PM", amount: -3299 },
+      { name: "Refund — Myntra", cat: "Shopping", glyph: "↩️", day: "Aug 14", time: "8:20 AM", amount: 1299 },
+    ],
+  });
+  window.__feed = feed;
+
+  /* virtual card */
+  const vcard = fxBankCard(document.getElementById("vcard"), { last4: "4021", holder: "RAKESH KUMAR", exp: "08/29", cvv: "213" });
+  document.getElementById("freeze").addEventListener("change", (e) => {
+    vcard.freeze(e.target.checked);
+    finix.toast(e.target.checked
+      ? { title: "Card frozen", description: "All payments will decline instantly.", variant: "warning" }
+      : { title: "Card unfrozen", description: "Back in business.", variant: "success" });
+  });
+  window.__vcard = vcard;
+
+  /* limit sliders */
+  const fmt = (v) => "₹" + (v >= 1000 ? Math.round(v / 1000) + "k" : v);
+  [["lim-online", "lim-online-out"], ["lim-atm", "lim-atm-out"]].forEach(([id, out]) => {
+    const s = document.getElementById(id);
+    s.addEventListener("input", () => (document.getElementById(out).textContent = fmt(+s.value)));
+  });
+
+  /* transfer */
+  window.__transfer = fxTransfer(document.getElementById("transfer"), {
+    max: 500000,
+    recipients: [
+      { ini: "SD", name: "Sofia Davis", vpa: "sofia@okicici" },
+      { ini: "PA", name: "Amma", vpa: "padma@oksbi" },
+      { ini: "JL", name: "Jackson Lee", vpa: "jackson@ybl" },
+      { ini: "RS", name: "R. Sharma (rent)", vpa: "rsharma@paytm" },
+    ],
+    onSend: ({ to, amount }) => {
+      feed.add({ name: "To " + to.name, cat: "Bills", glyph: "💸", day: "Today", time: "just now", amount: -amount });
+      finix.toast({ title: inr(amount) + " sent", description: to.name + " · " + to.vpa + " · IMPS", variant: "success" });
+    },
+  });
+
+  /* budgets */
+  window.__budgets = fxBankBudgets(document.getElementById("budgets"), {
+    cats: [
+      { name: "Food", glyph: "🍜", spent: 6420, limit: 9000 },
+      { name: "Transport", glyph: "🚕", spent: 2180, limit: 4000 },
+      { name: "Shopping", glyph: "🛍️", spent: 11450, limit: 8000 },
+      { name: "Entertainment", glyph: "🎬", spent: 1649, limit: 3000 },
+    ],
+  });
+
+  /* bills */
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-pay-bill]");
+    if (b) setTimeout(() => finix.toast({ title: "Bill paid", description: "Receipt saved to statements.", variant: "success" }), 900);
+  });
+
+  /* VPA verify */
+  document.getElementById("vpa-check").addEventListener("click", () => {
+    const v = document.getElementById("vpa").value.trim();
+    const out = document.getElementById("vpa-out");
+    if (/^[\w.\-]+@[\w]+$/.test(v)) {
+      out.textContent = "✓ " + v.split("@")[0].replace(/^\w/, (c) => c.toUpperCase()) + " · verified with NPCI";
+      out.style.color = "var(--success)";
+    } else {
+      out.textContent = "That VPA doesn't look right — name@bank format.";
+      out.style.color = "var(--destructive)";
+    }
+  });
+});
+</script>
+</body>
+</html>

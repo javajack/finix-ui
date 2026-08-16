@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
+<link rel="stylesheet" href="../css/finix-learn.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-learn.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Learning</h1>
+          <p class="fx-page-sub">LMS screens — course catalog with progress rings, a lesson player whose transcript follows playback, a curriculum tree with locked lessons, an instantly-graded quiz, streaks and a printable certificate.</p>
+        </div>
+      </div>
+
+      <!-- catalog -->
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(17rem,1fr))">
+        <div class="fx-lms-course">
+          <div class="fx-lms-art" style="--_h1:160;--_h2:210"><span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">In progress</span>🧩</div>
+          <div class="fx-lms-body">
+            <b>Design systems that survive contact with engineers</b>
+            <span class="fx-lms-meta">12 lessons · 3h 40m · <span style="color:var(--warning)">★ 4.8</span></span>
+            <div class="fx-lms-prog"><div class="fx-lms-progbar"><i style="--_w:62%"></i></div><span>62%</span></div>
+          </div>
+        </div>
+        <div class="fx-lms-course">
+          <div class="fx-lms-art" style="--_h1:40;--_h2:80"><span class="fx-badge" style="font-size:.5625rem">New</span>📐</div>
+          <div class="fx-lms-body">
+            <b>OKLCH color for people who fear color math</b>
+            <span class="fx-lms-meta">8 lessons · 2h 05m · <span style="color:var(--warning)">★ 4.9</span></span>
+            <div class="fx-lms-prog"><div class="fx-lms-progbar"><i style="--_w:0%"></i></div><span>Start</span></div>
+          </div>
+        </div>
+        <div class="fx-lms-course">
+          <div class="fx-lms-art" style="--_h1:260;--_h2:300"><span class="fx-badge fx-badge--success" style="font-size:.5625rem">Completed</span>🚢</div>
+          <div class="fx-lms-body">
+            <b>Shipping UI without a build step</b>
+            <span class="fx-lms-meta">15 lessons · 4h 30m · <span style="color:var(--warning)">★ 4.7</span></span>
+            <div class="fx-lms-prog"><div class="fx-lms-progbar"><i style="--_w:100%"></i></div><span>100%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- lesson player -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Lesson 5 · Surface ladders</div>
+          <div class="fx-card-desc">Press play — the transcript follows the playhead. The tree on the right routes lessons; locked ones stay locked.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-lms-player">
+            <div class="fx-stack" style="gap:.75rem">
+              <div class="fx-lms-video">
+                <button class="fx-lms-play" id="play" aria-label="Play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v14l11-7-11-7z"/></svg></button>
+                <div class="fx-lms-video-bar"><span id="v-time">00:00</span><div class="fx-lms-video-track"><i id="v-prog"></i></div><span>07:42</span></div>
+              </div>
+              <div class="fx-row" style="justify-content:space-between">
+                <button class="fx-btn fx-btn--outline fx-btn--sm">← Prev · Tokens 101</button>
+                <button class="fx-btn fx-btn--sm" id="complete-btn">Mark complete → next</button>
+              </div>
+              <div class="fx-field">
+                <label class="fx-label">Your notes</label>
+                <textarea class="fx-textarea" rows="2" placeholder="Depth = lightness. Never invent a gray…"></textarea>
+              </div>
+            </div>
+            <div class="fx-stack" style="gap:.75rem;min-width:0">
+              <div class="fx-lms-transcript" id="transcript">
+                <div class="fx-lms-line"><b>00:04</b><span>The trick nobody tells you: depth in an interface is just lightness, spent carefully.</span></div>
+                <div class="fx-lms-line"><b>00:31</b><span>We define four rungs — background, well, card, popover — and never mix our own grays.</span></div>
+                <div class="fx-lms-line"><b>01:02</b><span>Wells sit below the surface. Anything inset — code, empty states, summaries — lives there.</span></div>
+                <div class="fx-lms-line"><b>01:44</b><span>Cards are the working surface. If it's interactive and grouped, it's on a card.</span></div>
+                <div class="fx-lms-line"><b>02:18</b><span>Popovers float. In dark mode we lift them one extra step so they read as above.</span></div>
+                <div class="fx-lms-line"><b>02:55</b><span>The test: squint. If two surfaces blur together, you skipped a rung.</span></div>
+              </div>
+              <div id="curric"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- quiz -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Checkpoint quiz</div>
+          <div class="fx-card-desc">MCQs grade the instant you answer; drag the ladder into order before you submit. Pass mark 70%.</div>
+        </div>
+        <div class="fx-card-content"><div id="quiz"></div></div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(22rem,1fr))">
+        <!-- streak -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Learning streak</div>
+            <div class="fx-card-desc">Minutes studied — the timeheat chart moonlights as a streak calendar.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-row" style="gap:1.5rem;margin-bottom:.875rem">
+              <div style="display:flex;flex-direction:column;gap:.0625rem"><span class="fx-text-xs fx-muted">Current streak</span><b style="font-family:var(--font-mono);font-size:1.0625rem">🔥 14 days</b></div>
+              <div style="display:flex;flex-direction:column;gap:.0625rem"><span class="fx-text-xs fx-muted">Longest</span><b style="font-family:var(--font-mono);font-size:1.0625rem">31 days</b></div>
+              <div style="display:flex;flex-direction:column;gap:.0625rem"><span class="fx-text-xs fx-muted">This week</span><b style="font-family:var(--font-mono);font-size:1.0625rem">3h 20m</b></div>
+            </div>
+            <div id="streak"></div>
+          </div>
+        </div>
+
+        <!-- leaderboard -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Cohort leaderboard</div>
+            <div class="fx-card-desc">Weekly XP — deltas show movement since Monday.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-lms-rank"><span class="fx-lms-medal">🥇</span><span class="fx-avatar fx-avatar--sm">AN</span><span>Ava Nakamura</span><span style="display:flex;gap:.5rem;align-items:baseline"><span class="fx-lms-xp">2,840 XP</span><span class="fx-lms-delta up">▲2</span></span></div>
+            <div class="fx-lms-rank"><span class="fx-lms-medal">🥈</span><span class="fx-avatar fx-avatar--sm">JL</span><span>Jackson Lee</span><span style="display:flex;gap:.5rem;align-items:baseline"><span class="fx-lms-xp">2,615 XP</span><span class="fx-lms-delta down">▼1</span></span></div>
+            <div class="fx-lms-rank"><span class="fx-lms-medal">🥉</span><span class="fx-avatar fx-avatar--sm">MR</span><span>Marco Ruiz</span><span style="display:flex;gap:.5rem;align-items:baseline"><span class="fx-lms-xp">2,590 XP</span><span class="fx-lms-delta down">▼1</span></span></div>
+            <div class="fx-lms-rank is-you"><span class="num">4</span><span class="fx-avatar fx-avatar--sm">RK</span><span><b>You</b></span><span style="display:flex;gap:.5rem;align-items:baseline"><span class="fx-lms-xp">2,310 XP</span><span class="fx-lms-delta up">▲3</span></span></div>
+            <div class="fx-lms-rank"><span class="num">5</span><span class="fx-avatar fx-avatar--sm">SD</span><span>Sofia Davis</span><span style="display:flex;gap:.5rem;align-items:baseline"><span class="fx-lms-xp">2,180 XP</span><span class="fx-lms-delta up">▲1</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- certificate -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Certificate</div>
+          <div class="fx-card-desc">The fx-doc frame again — this one prints beautifully too.</div>
+        </div>
+        <div class="fx-card-content" style="display:grid;place-items:center">
+          <div class="fx-doc" style="max-width:34rem;text-align:center">
+            <div style="display:flex;justify-content:center;margin-bottom:1.25rem"><div class="fx-sidebar-logo" style="width:2.5rem;height:2.5rem;border-radius:.75rem">F</div></div>
+            <div style="font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:.75rem">Certificate of completion</div>
+            <div style="font-size:1.375rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.375rem">Rakesh Kumar</div>
+            <p class="fx-text-sm fx-muted" style="margin:0 0 1rem">has completed <b style="color:var(--foreground)">Shipping UI without a build step</b><br>15 lessons · final score 92%</p>
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid var(--border-soft);padding-top:1rem;font-size:.6875rem;color:var(--muted-foreground)">
+              <span>Aug 17, 2026</span>
+              <span style="font-family:var(--font-mono)">CERT-FNX-2216</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* transcript playback sim */
+  const lines = [...document.querySelectorAll("#transcript .fx-lms-line")];
+  const playBtn = document.getElementById("play");
+  let playing = false, li = -1, t = 0, timer = null;
+  playBtn.addEventListener("click", () => {
+    playing = !playing;
+    playBtn.innerHTML = playing
+      ? '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v14l11-7-11-7z"/></svg>';
+    clearInterval(timer);
+    if (playing) timer = setInterval(() => {
+      t += 1.4;
+      document.getElementById("v-prog").style.setProperty("--_w", Math.min(100, (t / 462) * 100 * 10) + "%");
+      document.getElementById("v-time").textContent = String(Math.floor(t / 60)).padStart(2, "0") + ":" + String(Math.floor(t % 60)).padStart(2, "0");
+      const next = Math.min(lines.length - 1, Math.floor(t / 5));
+      if (next !== li) {
+        li = next;
+        lines.forEach((l, i) => l.classList.toggle("is-active", i === li));
+        lines[li].scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }
+    }, 700);
+  });
+
+  /* curriculum */
+  const curric = fxCurriculum(document.getElementById("curric"), {
+    current: "l5",
+    onSelect: (l) => finix.toast({ title: "Loading lesson", description: l.name }),
+    modules: [
+      { name: "1 · Foundations", lessons: [
+        { id: "l1", name: "Why tokens", dur: "6:12", done: true },
+        { id: "l2", name: "OKLCH in five minutes", dur: "8:04", done: true },
+        { id: "l3", name: "Type scale", dur: "5:48", done: true },
+      ] },
+      { name: "2 · Surfaces", lessons: [
+        { id: "l4", name: "Tokens 101", dur: "7:15", done: true },
+        { id: "l5", name: "Surface ladders", dur: "7:42", done: false },
+        { id: "l6", name: "Dark mode without tears", dur: "9:10", done: false, locked: true },
+      ] },
+      { name: "3 · Motion", lessons: [
+        { id: "l7", name: "Easing vocabulary", dur: "6:30", done: false, locked: true },
+        { id: "l8", name: "Reduced motion", dur: "4:55", done: false, locked: true },
+      ] },
+    ],
+  });
+  window.__curric = curric;
+  document.getElementById("complete-btn").addEventListener("click", () => {
+    curric.complete("l5");
+    finix.toast({ title: "Lesson complete", description: "Progress " + curric.progress() + "% — Dark mode without tears is next.", variant: "success" });
+  });
+
+  /* quiz */
+  window.__quiz = fxQuiz(document.getElementById("quiz"), {
+    questions: [
+      { text: "Where does inset content (code blocks, empty states) live on the ladder?", options: ["On --background", "On --well", "On --popover", "Wherever it fits"], answer: 1 },
+      { text: "Why do dark themes lift popovers an extra step?", options: ["Shadows are invisible in dark", "So overlays still read as 'above' without strong shadows", "It's a Chrome bug workaround", "Tradition"], answer: 1 },
+      { type: "order", text: "Drag the ladder from deepest to highest:", items: ["card", "background", "popover", "well"], correct: ["background", "well", "card", "popover"] },
+    ],
+    onSubmit: (score, total) => finix.toast({ title: "Quiz graded", description: score + "/" + total + " correct.", variant: score / total >= 0.7 ? "success" : "warning" }),
+  });
+
+  /* streak heatmap */
+  fxCharts.timeheat(document.getElementById("streak"), {
+    label: "Week",
+    rows: ["W1", "W2", "W3", "W4"],
+    cols: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    values: [
+      [25, 40, 0, 35, 50, 10, 0],
+      [30, 45, 40, 20, 55, 25, 15],
+      [40, 35, 50, 45, 30, 20, 25],
+      [45, 50, 40, 55, 35, 30, 20],
+    ],
+  });
+});
+</script>
+</body>
+</html>

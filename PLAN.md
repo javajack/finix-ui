@@ -647,7 +647,7 @@ Module `css/finix-health.css` + `js/finix-health.js`, `fx-hc-*`.
 - Strict ladder discipline: clinical alerts use semantic tints only — no new
   colors.
 
-### E3. Learning / LMS → new page `learn.html` ("Learning", Industries)
+### ✅ E3. Learning / LMS → new page `learn.html` ("Learning", Industries)
 Module `css/finix-learn.css` + `js/finix-learn.js`, `fx-lms-*`.
 - Course catalog cards — art tile (CSS), level badge, progress ring, rating.
 - Curriculum tree — modules → lessons w/ done checks, duration mono, locked

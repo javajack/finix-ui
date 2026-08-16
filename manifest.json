@@ -1251,6 +1251,38 @@
    ],
    "markup": "<div id=\"c\"></div>",
    "js": "fxCharts.cohort(el, {rows:[{label,n,values:[pct...]}], colLabel}) \u2014 triangular retention matrix, sequential chart-1 ramp shading, hover shows absolute users. Re-renders on theme change."
+  },
+  {
+   "name": "feature-flags",
+   "category": "devtools",
+   "classes": [
+    "fx-flags",
+    "fx-flag",
+    "fx-flag-main",
+    "fx-flag-name",
+    "fx-flag-key",
+    "fx-flag-envs",
+    "fx-flag-env"
+   ],
+   "markup": "<div class=\"fx-flags\"><div class=\"fx-flag\"><div class=\"fx-flag-main\"><span class=\"fx-flag-name\">New checkout</span><code class=\"fx-flag-key\">checkout-v2</code></div><span class=\"fx-badge fx-badge--secondary\">25% rollout</span><div class=\"fx-flag-envs\"><label class=\"fx-flag-env\">Prod <input type=checkbox class=fx-switch data-fx-confirm-toggle=\"#dlg\" data-flag-name=\"New checkout\"></label></div></div></div>",
+   "js": "Env switches; [data-fx-confirm-toggle=\"#dialogId\"] guards a switch behind a confirm dialog (reverts until [data-fx-confirm-apply] clicked; fires fx:flagchange). Rollout groups: [data-fx-rollout] with .fx-rollout-row sliders auto-balance to 100% with % bump animation."
+  },
+  {
+   "name": "experiment-results",
+   "category": "devtools",
+   "classes": [
+    "fx-exp",
+    "fx-exp-row",
+    "fx-exp-name",
+    "fx-exp-conv",
+    "fx-ci",
+    "fx-ci-range",
+    "fx-ci-mid",
+    "fx-ci-zero",
+    "fx-exp-lift"
+   ],
+   "markup": "<div class=\"fx-exp\"><div class=\"fx-exp-row\"><span class=\"fx-exp-name\">Variant A<small>12,187 users</small></span><span class=\"fx-exp-conv\">4.87%</span><span class=\"fx-ci\"><span class=\"fx-ci-zero\" style=\"left:30%\"></span><span class=\"fx-ci-range\" style=\"left:38%;width:26%\"></span><span class=\"fx-ci-mid\" style=\"left:51%\"></span></span><span class=\"fx-exp-lift\"><span class=\"fx-badge fx-badge--success\">+15.7%</span></span></div></div>",
+   "js": null
   }
  ]
 }

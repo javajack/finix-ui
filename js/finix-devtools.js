@@ -305,4 +305,61 @@
     });
     return { deliveries };
   };
+
+  /* ---------- feature flags: guarded env toggle ---------- */
+  let pendingGuard = null;
+  document.addEventListener("change", (e) => {
+    const sw = e.target.closest("input[data-fx-confirm-toggle]");
+    if (sw) {
+      const dlg = document.querySelector(sw.dataset.fxConfirmToggle);
+      if (!dlg) return;
+      sw.checked = !sw.checked;               // revert until confirmed
+      pendingGuard = sw;
+      const nameEl = dlg.querySelector("[data-guard-flag]");
+      if (nameEl) nameEl.textContent = sw.dataset.flagName || "this flag";
+      const verbEl = dlg.querySelector("[data-guard-verb]");
+      if (verbEl) verbEl.textContent = sw.checked ? "Disable" : "Enable";
+      if (window.finix) finix.openDialog(sw.dataset.fxConfirmToggle);
+      else dlg.showModal();
+    }
+  });
+  document.addEventListener("click", (e) => {
+    const apply = e.target.closest("[data-fx-confirm-apply]");
+    if (apply && pendingGuard) {
+      pendingGuard.checked = !pendingGuard.checked;
+      pendingGuard.dispatchEvent(new CustomEvent("fx:flagchange", { bubbles: true }));
+      pendingGuard = null;
+    }
+  });
+
+  /* ---------- rollout slider group: auto-balance to 100 ---------- */
+  document.addEventListener("input", (e) => {
+    const slider = e.target.closest("[data-fx-rollout] .fx-slider");
+    if (!slider) return;
+    const box = slider.closest("[data-fx-rollout]");
+    const sliders = [...box.querySelectorAll(".fx-slider")];
+    const others = sliders.filter((s) => s !== slider);
+    let remainder = 100 - +slider.value;
+    const otherTotal = others.reduce((t, s) => t + +s.value, 0);
+    let acc = 0;
+    others.forEach((s, i) => {
+      let v;
+      if (i === others.length - 1) v = remainder - acc;
+      else {
+        v = otherTotal > 0 ? Math.round((+s.value / otherTotal) * remainder) : Math.round(remainder / others.length);
+        acc += v;
+      }
+      s.value = Math.max(0, v);
+      s.style.setProperty("--fx-fill", s.value + "%");
+    });
+    sliders.forEach((s) => {
+      const pct = s.closest(".fx-rollout-row")?.querySelector(".fx-rollout-pct");
+      if (pct && pct.textContent !== s.value + "%") {
+        pct.textContent = s.value + "%";
+        pct.classList.remove("is-bump");
+        void pct.offsetWidth;
+        pct.classList.add("is-bump");
+      }
+    });
+  });
 })();

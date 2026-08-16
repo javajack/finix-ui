@@ -15,6 +15,7 @@
 <script defer src="charts.js"></script>
 <script defer src="shell.js"></script>
 <script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-apps.js"></script>
 <script defer src="../js/finix-devtools.js"></script>
 </head>
 <body>
@@ -130,9 +131,140 @@
         </div>
       </div>
 
+      <!-- feature flags -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Feature flags</div>
+          <div class="fx-card-desc">Per-environment toggles — <b>Production is guarded</b> by a confirm dialog. Rollout badges show partial releases.</div>
+        </div>
+        <div class="fx-card-content">
+          <div class="fx-flags">
+            <div class="fx-flag">
+              <div class="fx-flag-main">
+                <span class="fx-flag-name">New checkout flow</span>
+                <code class="fx-flag-key">checkout-v2</code>
+              </div>
+              <span class="fx-badge fx-badge--secondary">25% rollout</span>
+              <div class="fx-flag-envs">
+                <label class="fx-flag-env">Dev <input type="checkbox" class="fx-switch" checked></label>
+                <label class="fx-flag-env">Staging <input type="checkbox" class="fx-switch" checked></label>
+                <label class="fx-flag-env">Prod <input type="checkbox" class="fx-switch" checked data-fx-confirm-toggle="#flag-confirm" data-flag-name="New checkout flow"></label>
+              </div>
+            </div>
+            <div class="fx-flag">
+              <div class="fx-flag-main">
+                <span class="fx-flag-name">AI reply suggestions</span>
+                <code class="fx-flag-key">ai-suggest</code>
+              </div>
+              <span class="fx-badge fx-badge--success fx-badge--dot">100%</span>
+              <div class="fx-flag-envs">
+                <label class="fx-flag-env">Dev <input type="checkbox" class="fx-switch" checked></label>
+                <label class="fx-flag-env">Staging <input type="checkbox" class="fx-switch" checked></label>
+                <label class="fx-flag-env">Prod <input type="checkbox" class="fx-switch" checked data-fx-confirm-toggle="#flag-confirm" data-flag-name="AI reply suggestions"></label>
+              </div>
+            </div>
+            <div class="fx-flag">
+              <div class="fx-flag-main">
+                <span class="fx-flag-name">Usage-based billing</span>
+                <code class="fx-flag-key">billing-metered</code>
+              </div>
+              <span class="fx-badge fx-badge--outline">Off</span>
+              <div class="fx-flag-envs">
+                <label class="fx-flag-env">Dev <input type="checkbox" class="fx-switch" checked></label>
+                <label class="fx-flag-env">Staging <input type="checkbox" class="fx-switch"></label>
+                <label class="fx-flag-env">Prod <input type="checkbox" class="fx-switch" data-fx-confirm-toggle="#flag-confirm" data-flag-name="Usage-based billing"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(26rem,1fr))">
+        <!-- targeting + rollout -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Targeting &amp; rollout</div>
+            <div class="fx-card-desc">Serve <code class="fx-inline-code">checkout-v2</code> when the rules match — variation split <b>auto-balances to 100%</b> as you drag.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:1.25rem">
+            <div class="fx-stack" style="gap:.5rem">
+              <span class="fx-label">If user matches</span>
+              <div id="flag-rules"></div>
+            </div>
+            <div class="fx-stack" style="gap:.625rem">
+              <span class="fx-label">Serve</span>
+              <div class="fx-rollout" data-fx-rollout>
+                <div class="fx-rollout-row">
+                  <span class="fx-rollout-name"><i style="background:var(--chart-1)"></i>Control</span>
+                  <input type="range" class="fx-slider" min="0" max="100" value="50" style="--fx-fill:50%" aria-label="Control rollout">
+                  <span class="fx-rollout-pct">50%</span>
+                </div>
+                <div class="fx-rollout-row">
+                  <span class="fx-rollout-name"><i style="background:var(--chart-2)"></i>Variant A</span>
+                  <input type="range" class="fx-slider" min="0" max="100" value="30" style="--fx-fill:30%" aria-label="Variant A rollout">
+                  <span class="fx-rollout-pct">30%</span>
+                </div>
+                <div class="fx-rollout-row">
+                  <span class="fx-rollout-name"><i style="background:var(--chart-4)"></i>Variant B</span>
+                  <input type="range" class="fx-slider" min="0" max="100" value="20" style="--fx-fill:20%" aria-label="Variant B rollout">
+                  <span class="fx-rollout-pct">20%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- experiment results -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Experiment results</div>
+            <div class="fx-card-desc">checkout-v2 · 14 days · primary metric: purchase conversion.</div>
+            <div class="fx-card-action"><span class="fx-badge fx-badge--success fx-badge--dot">98% significant</span></div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-exp">
+              <div class="fx-exp-row fx-text-xs fx-muted" style="padding-bottom:.25rem">
+                <span>Variant</span><span style="text-align:right">Conv.</span><span style="padding-left:.5rem">Lift vs control (95% CI)</span><span></span>
+              </div>
+              <div class="fx-exp-row">
+                <span class="fx-exp-name">Control<small>12,204 users</small></span>
+                <span class="fx-exp-conv">4.21%</span>
+                <span class="fx-ci"><span class="fx-ci-zero" style="left:30%"></span><span class="fx-ci-range" style="left:26%;width:8%"></span><span class="fx-ci-mid" style="left:30%"></span></span>
+                <span class="fx-exp-lift"><span class="fx-badge fx-badge--outline">baseline</span></span>
+              </div>
+              <div class="fx-exp-row">
+                <span class="fx-exp-name">Variant A<small>12,187 users</small></span>
+                <span class="fx-exp-conv">4.87%</span>
+                <span class="fx-ci"><span class="fx-ci-zero" style="left:30%"></span><span class="fx-ci-range" style="left:38%;width:26%"></span><span class="fx-ci-mid" style="left:51%"></span></span>
+                <span class="fx-exp-lift"><span class="fx-badge fx-badge--success">+15.7%</span></span>
+              </div>
+              <div class="fx-exp-row">
+                <span class="fx-exp-name">Variant B<small>12,344 users</small></span>
+                <span class="fx-exp-conv">4.02%</span>
+                <span class="fx-ci"><span class="fx-ci-zero" style="left:30%"></span><span class="fx-ci-range" style="left:12%;width:24%"></span><span class="fx-ci-mid" style="left:24%"></span></span>
+                <span class="fx-exp-lift"><span class="fx-badge fx-badge--destructive">−4.5%</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
+
+<dialog class="fx-dialog" id="flag-confirm" style="max-width:24rem">
+  <div class="fx-dialog-body">
+    <div class="fx-dialog-header">
+      <div class="fx-dialog-title"><span data-guard-verb>Enable</span> in production?</div>
+      <div class="fx-dialog-desc">You are changing <b data-guard-flag>this flag</b> for all production traffic. The change takes effect immediately.</div>
+    </div>
+    <div class="fx-dialog-footer">
+      <button class="fx-btn fx-btn--outline" data-fx-close>Cancel</button>
+      <button class="fx-btn" data-fx-confirm-apply data-fx-close onclick="finix.toast({title:'Production updated',description:'Flag change is live.',variant:'success'})">Confirm change</button>
+    </div>
+  </div>
+</dialog>
 
 <dialog class="fx-sheet" data-side="right" id="wh-sheet" style="width:26rem">
   <div class="fx-sheet-body">
@@ -315,6 +447,17 @@ window.addEventListener("DOMContentLoaded", () => {
       fxJsonTree(document.getElementById("wh-response"), d.response ?? { status: "pending", note: "delivery has not been attempted yet" });
       finix.openDialog("#wh-sheet");
     },
+  });
+
+  /* ---- flag targeting rules ---- */
+  fxFilterBuilder(document.getElementById("flag-rules"), {
+    fields: [
+      { key: "plan", label: "Plan", type: "enum", options: ["free", "pro", "scale"] },
+      { key: "country", label: "Country", type: "enum", options: ["US", "IN", "DE", "GB", "BR"] },
+      { key: "email", label: "Email", type: "text" },
+      { key: "signup", label: "Signup date", type: "date" },
+    ],
+    onChange: () => {},
   });
 });
 </script>

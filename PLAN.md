@@ -137,7 +137,7 @@ console clean, README component count updated.
   sequential sage ramp (color-mix chart-1), row = cohort week, hover shows n.
 - Register both in the theme re-render registry.
 
-### T7. Feature flags set → devtools.html
+### ✅ T7. Feature flags set → devtools.html
 - `fx-flags` list rows: flag name/key (mono), per-environment toggle switches
   (prod guarded by confirm dialog), rollout badge.
 - Targeting rule builder: reuse `fxFilterBuilder` for IF-conditions + new

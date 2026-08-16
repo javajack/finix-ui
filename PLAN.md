@@ -178,7 +178,7 @@ Composes T1 + T2. Zendesk/Intercom-grade split-pane:
 - TOC scroll-spy rail (`fx-toc`) + draggable page tree (compose fx-tree +
   sortable drag) for the docs half of the page.
 
-### T11. Call tile grid → collab.html
+### ✅ T11. Call tile grid → collab.html
 - `fx-calltiles`: responsive participant grid, speaking ring animation (reuse
   orb ping), mute/camera badges, screen-share hero tile layout, self-tile
   corner float. Demo simulates active-speaker rotation.

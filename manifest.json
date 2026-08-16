@@ -1401,6 +1401,25 @@
    ],
    "markup": "<nav id=\"toc\"></nav>",
    "js": "fxToc(el, {target:'#article', scroller:'#article', title}) \u2014 builds links from h2/h3, IntersectionObserver scroll-spy highlights the active section, click smooth-scrolls."
+  },
+  {
+   "name": "call-tiles",
+   "category": "social",
+   "classes": [
+    "fx-call",
+    "fx-call-grid",
+    "fx-call-tile",
+    "fx-call-avatar",
+    "fx-call-name",
+    "fx-call-badges",
+    "fx-call-badge",
+    "fx-call-share",
+    "fx-call-self",
+    "fx-call-bar",
+    "fx-call-strip"
+   ],
+   "markup": "<div id=\"call\"></div>",
+   "js": "fxCallTiles(el, {participants:[{name,muted,camera,speaking,self}], screenShare:{by,title}}) \u2014 responsive tile grid with rotating speaking ring (ping animation), mic/cam badges, screen-share hero + filmstrip layout, floating self-tile, mute/cam/present/leave control bar with rejoin."
   }
  ]
 }

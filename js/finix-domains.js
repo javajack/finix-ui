@@ -620,4 +620,77 @@
     });
     if (heads[0]) setActive(heads[0].id);
   };
+
+  /* ================= call tiles ================= */
+  window.fxCallTiles = function (root, opts = {}) {
+    const parts = opts.participants || [];
+    let share = opts.screenShare || null;
+    let rotate = null;
+    const ini = (n) => n.split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+    const MIC_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>';
+    const MIC_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="22" y1="2" y2="22"/><path d="M18.89 13.23A7.12 7.12 0 0 0 19 12v-2"/><path d="M5 10v2a7 7 0 0 0 12 5"/><path d="M15 9.34V5a3 3 0 0 0-5.68-1.33"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12"/><line x1="12" x2="12" y1="19" y2="22"/></svg>';
+    const CAM_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.66 6H14a2 2 0 0 1 2 2v2.5l5.248-3.062A.5.5 0 0 1 22 7.87v8.196"/><path d="M16 16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2"/><line x1="2" x2="22" y1="2" y2="22"/></svg>';
+    function tile(p, i, extra) {
+      return `<div class="fx-call-tile ${p.speaking ? "is-speaking" : ""} ${extra || ""}" data-ci="${i}"
+        style="background:linear-gradient(135deg, color-mix(in oklab, var(--chart-${(i % 5) + 1}) 22%, var(--well)), var(--well))">
+        <span class="fx-call-avatar">${ini(p.name)}</span>
+        <span class="fx-call-name">${p.name}${p.self ? " (you)" : ""}</span>
+        <span class="fx-call-badges">
+          <span class="fx-call-badge ${p.muted ? "is-off" : ""}">${p.muted ? MIC_OFF : MIC_ON}</span>
+          ${p.camera === false ? `<span class="fx-call-badge is-off">${CAM_OFF}</span>` : ""}
+        </span>
+      </div>`;
+    }
+    function render() {
+      root.classList.add("fx-call");
+      root.classList.toggle("has-share", !!share);
+      const others = parts.filter((p) => !p.self);
+      const self = parts.find((p) => p.self);
+      root.innerHTML =
+        `<div class="fx-call-grid">` +
+        (share
+          ? `<div class="fx-call-share"><div class="fx-call-share-inner">
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+               <b>${share.by === "You" ? "You are presenting" : share.by + " is presenting"}</b><span>${share.title || "Screen share"}</span>
+             </div></div>
+             <div class="fx-call-strip">${others.map((p, i) => tile(p, i)).join("")}</div>`
+          : others.map((p, i) => tile(p, i)).join("")) +
+        `</div>` +
+        (self ? tile(self, parts.indexOf(self), "fx-call-self") : "") +
+        `<div class="fx-call-bar">
+          <button class="fx-btn fx-btn--outline fx-btn--icon ${self?.muted ? "is-off" : ""}" data-call="mic" data-fx-tip="${self?.muted ? "Unmute" : "Mute"}" aria-label="Toggle microphone">${self?.muted ? MIC_OFF : MIC_ON}</button>
+          <button class="fx-btn fx-btn--outline fx-btn--icon ${self?.camera === false ? "is-off" : ""}" data-call="cam" data-fx-tip="Toggle camera" aria-label="Toggle camera"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></button>
+          <button class="fx-btn fx-btn--outline fx-btn--icon ${share ? "is-off" : ""}" data-call="share" data-fx-tip="${share ? "Stop presenting" : "Present screen"}" aria-label="Toggle screen share"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></button>
+          <button class="fx-btn fx-btn--destructive fx-btn--icon" data-call="leave" data-fx-tip="Leave call" aria-label="Leave call"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"/><line x1="22" x2="2" y1="2" y2="22"/></svg></button>
+        </div>`;
+    }
+    function startRotation() {
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      rotate = setInterval(() => {
+        const eligible = parts.filter((p) => !p.muted);
+        if (eligible.length < 2) return;
+        const cur = eligible.findIndex((p) => p.speaking);
+        parts.forEach((p) => (p.speaking = false));
+        eligible[(cur + 1) % eligible.length].speaking = true;
+        render();
+      }, 2600);
+    }
+    root.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-call]");
+      if (!b) return;
+      const self = parts.find((p) => p.self);
+      if (b.dataset.call === "mic" && self) { self.muted = !self.muted; if (self.muted) self.speaking = false; render(); }
+      if (b.dataset.call === "cam" && self) { self.camera = self.camera === false ? true : false; render(); }
+      if (b.dataset.call === "share") { share = share ? null : { by: "You", title: "Q3 metrics — dashboard" }; render(); }
+      if (b.dataset.call === "leave") {
+        clearInterval(rotate);
+        root.innerHTML = `<div class="fx-empty" style="min-height:14rem"><div class="fx-empty-title">You left the call</div><div class="fx-empty-desc">The meeting continues without you.</div><div class="fx-empty-actions"><button class="fx-btn" data-call="rejoin">Rejoin</button></div></div>`;
+        root.classList.remove("has-share");
+      }
+      if (b.dataset.call === "rejoin") { render(); startRotation(); }
+    });
+    render();
+    startRotation();
+    return { render, get participants() { return parts; } };
+  };
 })();

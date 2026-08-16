@@ -91,6 +91,17 @@
         </div>
       </div>
 
+      <!-- call tiles -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Video call</div>
+          <div class="fx-card-desc">Participant grid with rotating speaking ring, mute/camera badges, floating self-tile, and a control bar — hit the <b>present</b> button for the screen-share hero layout.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="call"></div>
+        </div>
+      </div>
+
       <!-- docs workspace -->
       <div class="fx-card">
         <div class="fx-card-header">
@@ -156,6 +167,18 @@ window.addEventListener("DOMContentLoaded", () => {
       { author: "William Kim", day: "Today", time: "09:30", body: "Raw rate gets my vote — hiding week-0 churn always bites us later.", reactions: { "👍": { count: 3, mine: false } } },
       { author: "Liam Chen", day: "Today", time: "10:05", body: "PR up for the funnel drop-off labels. Small one, two files.", unreadBefore: true },
       { author: "Liam Chen", day: "Today", time: "10:06", body: "Bonus: hover tooltips now show conversion vs the previous step, not just vs the top." },
+    ],
+  });
+
+  fxCallTiles(document.getElementById("call"), {
+    participants: [
+      { name: "Olivia Martin", speaking: true },
+      { name: "Jackson Lee" },
+      { name: "Isabella Nguyen", muted: true },
+      { name: "William Kim", camera: false },
+      { name: "Sofia Davis" },
+      { name: "Noah Garcia", muted: true, camera: false },
+      { name: "Rakesh K.", self: true },
     ],
   });
 

@@ -1210,6 +1210,24 @@
    ],
    "markup": "<div id=\"jt\"></div>",
    "js": "fxJsonTree(el, data, {open:2}) \u2014 collapsible JSON viewer: caret toggles, item/key counts when collapsed, type-colored values, indent guides on --border-soft."
+  },
+  {
+   "name": "csv-importer",
+   "category": "data",
+   "classes": [
+    "fx-importer",
+    "fx-imp-body",
+    "fx-imp-maps",
+    "fx-imp-map",
+    "fx-imp-src",
+    "fx-imp-target",
+    "fx-imp-preview",
+    "fx-imp-cell-err",
+    "fx-imp-done",
+    "fx-imp-check"
+   ],
+   "markup": "<div id=\"importer\"></div>",
+   "js": "fxImporter(el, {targets:[{key,label,required,validate(v)->msg|null}], sampleCsv, onComplete}) \u2014 4-step wizard on fx-stepper: CSV upload/drop (quoted-field parser), auto-matched column mapping (bigram name similarity, one source per target), validation preview with per-cell error highlights + click-to-fix inline editing + error-count chips, simulated import progress -> success state with counts. In js/finix-apps.js."
   }
  ]
 }

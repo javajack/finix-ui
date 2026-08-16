@@ -49,6 +49,17 @@
         </div>
       </div>
 
+      <!-- csv import wizard -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">CSV import wizard</div>
+          <div class="fx-card-desc">Flatfile-style importer: upload → auto-matched column mapping → validation with inline fixes → import. Try <b>Use sample data</b> — it ships with deliberate errors to fix.</div>
+        </div>
+        <div class="fx-card-content">
+          <div id="importer"></div>
+        </div>
+      </div>
+
       <!-- filter builder -->
       <div class="fx-card">
         <div class="fx-card-header">
@@ -268,6 +279,39 @@ window.addEventListener("DOMContentLoaded", () => {
     onChange: () => grid.refresh(),
     onClose: () => { split.collapse(); grid.setActiveRow(null); },
     onNav: (r) => grid.setActiveRow(r._i),
+  });
+
+  // ---- CSV import wizard ----
+  const SAMPLE_CSV = [
+    'Full Name,E-mail,Plan Tier,Seats,MRR (USD),Signed Up',
+    'Olivia Martin,olivia@acme.com,pro,24,1890,2026-01-14',
+    'Jackson Lee,jackson.lee@globex.io,scale,120,7400,2025-11-02',
+    '"Nguyen, Isabella",isabella@initech.dev,free,3,0,2026-03-21',
+    'Sofia Davis,sofia[at]umbrella.org,pro,12,940,2026-02-08',
+    'William Kim,will@stark.co,enterprise,64,5200,2025-09-30',
+    ',noah@wayne.inc,free,two,0,2026-04-17',
+    'Ava Thompson,ava@hooli.xyz,pro,18,1420,2026-05-05',
+    'Liam Chen,liam@vandelay.com,scale,88,6100,2025-12-12',
+  ].join('\n');
+  fxImporter(document.getElementById("importer"), {
+    sampleCsv: SAMPLE_CSV,
+    targets: [
+      { key: "name", label: "Name", required: true },
+      { key: "email", label: "Email", required: true,
+        validate: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : "Invalid email address" },
+      { key: "plan", label: "Plan", required: true,
+        validate: (v) => ["free", "pro", "scale"].includes(v.toLowerCase()) ? null : "Unknown plan (free/pro/scale)" },
+      { key: "seats", label: "Seats",
+        validate: (v) => /^\d+$/.test(v) ? null : "Must be a whole number" },
+      { key: "mrr", label: "MRR",
+        validate: (v) => /^\d+(\.\d+)?$/.test(v) ? null : "Must be a number" },
+      { key: "signup", label: "Signup date" },
+    ],
+    onComplete: ({ imported, skipped }) => finix.toast({
+      title: "Import finished",
+      description: `${imported} rows imported${skipped ? `, ${skipped} skipped` : ""}.`,
+      variant: "success",
+    }),
   });
 
   // ---- filter builder + deals table ----

@@ -51,7 +51,7 @@ Master-detail: .fx-split[data-fx-split] split-pane (pointer-drag divider, collap
 
 ## Tier 2/3 additions (v0.3)
 
-- Apps module (css/finix-apps.css + js/finix-apps.js): fxEventCalendar (month/week, drag events), fxGantt (draggable timeline bars), fxFilterBuilder (Notion-style AND/OR typed rules), fxLogTable (virtualized 50k rows, live tail).
+- Apps module (css/finix-apps.css + js/finix-apps.js): fxEventCalendar (month/week, drag events), fxGantt (draggable timeline bars), fxFilterBuilder (Notion-style AND/OR typed rules), fxLogTable (virtualized 50k rows, live tail), fxImporter (4-step CSV import wizard: upload/drop -> auto-matched mapping -> validate w/ inline fixes -> import).
 - Editor module (js/finix-editor.js): fxEditor (toolbar + bubble menu + '/' slash commands + markdown shortcuts, .getHTML()), fxCropper (crop box with aspect lock and canvas output).
 - Chart additions in demo/charts.js: hbars, combo (bars+line dual axis), scatter, gauge; line mode (fill:false), negative bars, click-to-toggle legends.
 - Command palette v2: fuzzy matching + Recent group (localStorage).

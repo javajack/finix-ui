@@ -476,4 +476,324 @@
     viewport.scrollTop = spacer.offsetHeight;
     return { refilter };
   };
+
+  /* ================= CSV import wizard (fxImporter) ================= */
+  window.fxImporter = function (root, opts = {}) {
+    const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const targets = opts.targets || [];
+    const STEPS = ["Upload", "Map columns", "Validate", "Import"];
+    let step = 0, csv = null, mapping = {}, fileName = "";
+
+    // ---- tiny CSV parser: quoted fields, "" escapes, CRLF ----
+    function parseCsv(text) {
+      const rows = [];
+      let row = [], field = "", inQ = false;
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        if (inQ) {
+          if (c === '"') {
+            if (text[i + 1] === '"') { field += '"'; i++; }
+            else inQ = false;
+          } else field += c;
+        } else if (c === '"') inQ = true;
+        else if (c === ",") { row.push(field); field = ""; }
+        else if (c === "\n" || c === "\r") {
+          if (c === "\r" && text[i + 1] === "\n") i++;
+          row.push(field); field = "";
+          if (row.length > 1 || row[0] !== "") rows.push(row);
+          row = [];
+        } else field += c;
+      }
+      if (field !== "" || row.length) { row.push(field); rows.push(row); }
+      if (!rows.length) return null;
+      return { headers: rows[0], rows: rows.slice(1) };
+    }
+
+    // ---- auto-match source headers to targets by name similarity ----
+    const norm = (x) => String(x).toLowerCase().replace(/[^a-z0-9]/g, "");
+    function similarity(a, b) {
+      a = norm(a); b = norm(b);
+      if (!a || !b) return 0;
+      if (a === b) return 1;
+      if (a.includes(b) || b.includes(a)) return 0.8;
+      const grams = (x) => { const g = new Set(); for (let i = 0; i < x.length - 1; i++) g.add(x.slice(i, i + 2)); return g; };
+      const ga = grams(a), gb = grams(b);
+      let hit = 0;
+      ga.forEach((g) => { if (gb.has(g)) hit++; });
+      return (2 * hit) / (ga.size + gb.size || 1);
+    }
+    function autoMatch() {
+      mapping = {};
+      const used = new Set();
+      targets.forEach((t) => {
+        let best = -1, bestScore = 0.45;
+        csv.headers.forEach((h, i) => {
+          if (used.has(i)) return;
+          const s = Math.max(similarity(h, t.key), similarity(h, t.label));
+          if (s > bestScore) { bestScore = s; best = i; }
+        });
+        if (best >= 0) { mapping[t.key] = best; used.add(best); }
+      });
+    }
+
+    // ---- validation ----
+    function mappedRows() {
+      return csv.rows.map((r) => {
+        const rec = {};
+        targets.forEach((t) => { const i = mapping[t.key]; rec[t.key] = i == null ? "" : (r[i] ?? "").trim(); });
+        return rec;
+      });
+    }
+    function validate(rows) {
+      const errs = [];
+      rows.forEach((rec, ri) => {
+        targets.forEach((t) => {
+          let e = null;
+          const v = rec[t.key];
+          if (t.required && !v) e = "Required";
+          else if (v && t.validate) e = t.validate(v) || null;
+          if (e) errs.push({ row: ri, key: t.key, msg: e });
+        });
+      });
+      return errs;
+    }
+
+    // ---- rendering ----
+    function stepper() {
+      return `<div class="fx-stepper">` + STEPS.map((label, i) => {
+        const st = i < step ? "done" : i === step ? "active" : "pending";
+        const dot = i < step
+          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+          : String(i + 1);
+        return `<div class="fx-step" data-state="${st}"><div class="fx-step-dot">${dot}</div><div><div class="fx-step-label">${label}</div></div></div>`;
+      }).join("") + `</div>`;
+    }
+
+    function bodyUpload() {
+      return `<div class="fx-imp-drop fx-dropzone">
+          <input type="file" accept=".csv,text/csv">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+          <b>Drop a CSV here or click to browse</b>
+          <span>Header row required · quoted fields supported</span>
+        </div>
+        <div class="fx-row" style="justify-content:center;margin-top:.75rem">
+          <span class="fx-text-sm fx-muted">or</span>
+          <button class="fx-btn fx-btn--outline fx-btn--sm" data-imp="sample">Use sample data</button>
+        </div>`;
+    }
+
+    function bodyMap() {
+      const usedIdx = new Map(Object.entries(mapping).map(([k, v]) => [v, k]));
+      return `<div class="fx-imp-maps">` + csv.headers.map((h, i) => {
+        const samples = csv.rows.slice(0, 2).map((r) => r[i]).filter(Boolean);
+        const mappedKey = usedIdx.get(i) || "";
+        return `<div class="fx-imp-map">
+          <div class="fx-imp-src">
+            <span class="fx-imp-src-name">${esc(h)}</span>
+            <span class="fx-imp-src-sample">${esc(samples.join(" · ") || "—")}</span>
+          </div>
+          <svg class="fx-imp-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <select class="fx-select fx-imp-target" data-src="${i}">
+            <option value="">Skip column</option>
+            ${targets.map((t) => `<option value="${t.key}" ${mappedKey === t.key ? "selected" : ""}>${esc(t.label)}${t.required ? " *" : ""}</option>`).join("")}
+          </select>
+          ${mappedKey ? '<span class="fx-badge fx-badge--secondary fx-imp-auto">auto</span>' : '<span class="fx-imp-auto"></span>'}
+        </div>`;
+      }).join("") + `</div>
+      <p class="fx-text-sm fx-muted" style="margin:.75rem 0 0" data-imp-mapnote></p>`;
+    }
+
+    function bodyValidate() {
+      const rows = mappedRows();
+      const errs = validate(rows);
+      const byKey = {};
+      errs.forEach((e) => (byKey[e.key] = (byKey[e.key] || 0) + 1));
+      const errAt = (ri, k) => errs.find((e) => e.row === ri && e.key === k);
+      const PREVIEW = 8;
+      return `<div class="fx-row" style="gap:.375rem;margin-bottom:.75rem" data-imp-chips>
+          ${errs.length
+            ? targets.filter((t) => byKey[t.key]).map((t) => `<span class="fx-badge fx-badge--destructive">${esc(t.label)} · ${byKey[t.key]}</span>`).join("") +
+              `<span class="fx-text-sm fx-muted" style="margin-left:.25rem">${errs.length} issue${errs.length === 1 ? "" : "s"} — click a highlighted cell to fix it</span>`
+            : '<span class="fx-badge fx-badge--success fx-badge--dot">All rows valid</span>'}
+        </div>
+        <div class="fx-table-wrap" style="border:1px solid var(--border);border-radius:var(--radius-lg);max-height:19rem;overflow:auto">
+          <table class="fx-table fx-imp-preview">
+            <thead><tr><th style="width:2.5rem">#</th>${targets.map((t) => `<th>${esc(t.label)}</th>`).join("")}</tr></thead>
+            <tbody>
+              ${rows.slice(0, PREVIEW).map((rec, ri) => `<tr>
+                <td class="fx-muted fx-tabular">${ri + 1}</td>
+                ${targets.map((t) => {
+                  const e = errAt(ri, t.key);
+                  return `<td class="${e ? "fx-imp-cell-err" : ""}" data-row="${ri}" data-key="${esc(t.key)}" ${e ? `data-fx-tip="${esc(e.msg)}"` : ""}>${esc(rec[t.key]) || '<span class="fx-muted">—</span>'}</td>`;
+                }).join("")}
+              </tr>`).join("")}
+            </tbody>
+          </table>
+        </div>
+        ${rows.length > PREVIEW ? `<p class="fx-text-xs fx-muted" style="margin:.5rem 0 0">Showing ${PREVIEW} of ${rows.length} rows — all rows are validated.</p>` : ""}`;
+    }
+
+    function bodyImport(done, imported, skipped) {
+      if (!done) return `<div class="fx-imp-run">
+          <div class="fx-stack" style="gap:.5rem;width:min(24rem,100%)">
+            <div class="fx-row" style="justify-content:space-between"><span class="fx-text-sm">Importing ${csv.rows.length} rows…</span><span class="fx-text-sm fx-muted fx-tabular" data-imp-pct>0%</span></div>
+            <div class="fx-progress"><div data-imp-bar style="width:0%"></div></div>
+          </div>
+        </div>`;
+      return `<div class="fx-imp-run">
+          <div class="fx-imp-done">
+            <span class="fx-imp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <div class="fx-imp-done-title">Import complete</div>
+            <div class="fx-text-sm fx-muted">${imported} row${imported === 1 ? "" : "s"} imported${skipped ? ` · ${skipped} skipped (invalid)` : ""}${fileName ? ` from <b>${esc(fileName)}</b>` : ""}</div>
+            <button class="fx-btn fx-btn--outline fx-btn--sm" data-imp="reset" style="margin-top:.5rem">Import another file</button>
+          </div>
+        </div>`;
+    }
+
+    function footer() {
+      if (step === 3) return "";
+      const errs = step === 2 ? validate(mappedRows()) : [];
+      const missing = step === 1 ? targets.filter((t) => t.required && mapping[t.key] == null) : [];
+      const next =
+        step === 0 ? "" :
+        step === 1 ? `<button class="fx-btn" data-imp="next" ${missing.length ? "disabled" : ""}>Continue</button>` :
+        `<button class="fx-btn" data-imp="import">${errs.length ? `Import ${csv.rows.length - new Set(errs.map((e) => e.row)).size} valid rows` : `Import ${csv.rows.length} rows`}</button>`;
+      return `<div class="fx-row" style="justify-content:space-between;margin-top:1.25rem">
+        ${step > 0 ? '<button class="fx-btn fx-btn--outline" data-imp="back">Back</button>' : "<span></span>"}
+        ${next}</div>`;
+    }
+
+    function render() {
+      root.classList.add("fx-importer");
+      root.innerHTML = stepper() +
+        `<div class="fx-imp-body is-in">` +
+        (step === 0 ? bodyUpload() : step === 1 ? bodyMap() : step === 2 ? bodyValidate() : bodyImport(false)) +
+        `</div>` + footer();
+      if (step === 1) updateMapNote();
+      if (step === 3) runImport();
+    }
+
+    function updateMapNote() {
+      const missing = targets.filter((t) => t.required && mapping[t.key] == null);
+      const note = root.querySelector("[data-imp-mapnote]");
+      if (note) note.innerHTML = missing.length
+        ? `Map the required column${missing.length === 1 ? "" : "s"}: <b>${missing.map((t) => esc(t.label)).join(", ")}</b>`
+        : `${Object.keys(mapping).length} of ${csv.headers.length} source columns mapped.`;
+      const nextBtn = root.querySelector('[data-imp="next"]');
+      if (nextBtn) nextBtn.disabled = !!missing.length;
+    }
+
+    function runImport() {
+      const bar = root.querySelector("[data-imp-bar]");
+      const pct = root.querySelector("[data-imp-pct]");
+      const errs = validate(mappedRows());
+      const skipped = new Set(errs.map((e) => e.row)).size;
+      const imported = csv.rows.length - skipped;
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let p = 0;
+      const tick = () => {
+        p = Math.min(100, p + 7 + Math.random() * 16);
+        if (bar) { bar.style.width = p + "%"; pct.textContent = Math.round(p) + "%"; }
+        if (p < 100 && !reduced) setTimeout(tick, 90);
+        else setTimeout(() => {
+          root.querySelector(".fx-imp-body").innerHTML = bodyImport(true, imported, skipped);
+          opts.onComplete?.({ imported, skipped });
+        }, reduced ? 0 : 250);
+      };
+      tick();
+    }
+
+    function loadCsv(text, name) {
+      const parsed = parseCsv(text);
+      if (!parsed || !parsed.headers.length || !parsed.rows.length) {
+        if (window.finix) finix.toast({ title: "Could not parse CSV", description: "Need a header row and at least one data row.", variant: "destructive" });
+        return;
+      }
+      csv = parsed; fileName = name || "";
+      autoMatch();
+      step = 1;
+      render();
+    }
+
+    // ---- events ----
+    root.addEventListener("click", (e) => {
+      const act = e.target.closest("[data-imp]");
+      if (act) {
+        const a = act.dataset.imp;
+        if (a === "sample" && opts.sampleCsv) loadCsv(opts.sampleCsv, "sample.csv");
+        if (a === "back") { step--; render(); }
+        if (a === "next") { step++; render(); }
+        if (a === "import") { step = 3; render(); }
+        if (a === "reset") { step = 0; csv = null; mapping = {}; fileName = ""; render(); }
+        return;
+      }
+      const cell = e.target.closest("td.fx-imp-cell-err");
+      if (cell && !cell.querySelector("input")) {
+        const ri = +cell.dataset.row, key = cell.dataset.key;
+        const src = mapping[key];
+        const orig = (csv.rows[ri][src] ?? "").trim();
+        cell.innerHTML = `<input class="fx-input" value="${esc(orig)}" style="height:1.75rem;font-size:.8125rem">`;
+        const inp = cell.querySelector("input");
+        inp.focus(); inp.select();
+        let done = false;
+        const commit = () => {
+          if (done) return; done = true;
+          if (src != null) csv.rows[ri][src] = inp.value;
+          const scroller = root.querySelector(".fx-table-wrap");
+          const keep = scroller ? scroller.scrollTop : 0;
+          render();
+          const s2 = root.querySelector(".fx-table-wrap");
+          if (s2) s2.scrollTop = keep;
+        };
+        inp.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter") commit();
+          if (ev.key === "Escape") { done = true; render(); }
+        });
+        inp.addEventListener("blur", commit);
+      }
+    });
+    root.addEventListener("change", (e) => {
+      if (e.target.matches(".fx-imp-drop input[type=file]")) {
+        const f = e.target.files[0];
+        if (f) f.text().then((t) => loadCsv(t, f.name));
+        return;
+      }
+      if (e.target.matches(".fx-imp-target")) {
+        const src = +e.target.dataset.src, key = e.target.value;
+        Object.keys(mapping).forEach((k) => { if (mapping[k] === src) delete mapping[k]; });
+        if (key) {
+          // a target can only be fed by one column
+          Object.keys(mapping).forEach((k) => { if (k === key) delete mapping[k]; });
+          mapping[key] = src;
+        }
+        // refresh selects so a stolen target deselects elsewhere
+        const keep = e.target;
+        root.querySelectorAll(".fx-imp-target").forEach((sel) => {
+          if (sel === keep) return;
+          const i = +sel.dataset.src;
+          const k = Object.keys(mapping).find((kk) => mapping[kk] === i) || "";
+          sel.value = k;
+        });
+        updateMapNote();
+      }
+    });
+    ["dragover", "dragleave", "drop"].forEach((ev) =>
+      root.addEventListener(ev, (e) => {
+        const dz = e.target.closest(".fx-imp-drop");
+        if (!dz) return;
+        e.preventDefault();
+        dz.classList.toggle("is-over", ev === "dragover");
+        if (ev === "drop") {
+          const f = e.dataTransfer?.files?.[0];
+          if (f) f.text().then((t) => loadCsv(t, f.name));
+        }
+      }));
+
+    render();
+    return {
+      get step() { return step; },
+      loadCsv,
+      reset() { step = 0; csv = null; mapping = {}; render(); },
+    };
+  };
 })();

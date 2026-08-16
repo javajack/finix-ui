@@ -116,7 +116,7 @@ Powers support inbox, CRM records, reconciliation, comms later.
   small `fxJsonTree` (collapsible JSON viewer, mono, type-colored values).
 - SLA of loop step 5: keys/values in `--font-mono`; wells for inspector.
 
-### T5. CSV import wizard (`fxImporter`) → data.html
+### ✅ T5. CSV import wizard (`fxImporter`) → data.html
 Near-zero free competition (Flatfile/OneSchema are paid).
 - 4 steps reusing fx-stepper: Upload (dropzone) → Map columns (source column
   cards + target select per column, auto-match by name similarity) → Validate

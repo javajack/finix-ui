@@ -323,3 +323,45 @@ input.fx-fb-ctl { min-width: 8rem; }
 .fx-onboard-title { font-size: 0.875rem; font-weight: 500; }
 .fx-onboard-desc { font-size: 0.75rem; color: var(--muted-foreground); }
 .fx-onboard-step .fx-btn { margin-left: auto; flex-shrink: 0; }
+
+/* ============ CSV import wizard (fxImporter) ============ */
+.fx-importer .fx-stepper { margin-bottom: 1.5rem; }
+.fx-imp-body { min-height: 15rem; }
+.fx-imp-body.is-in { animation: fx-imp-in .2s var(--ease-out); }
+@keyframes fx-imp-in { from { opacity: 0; transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) { .fx-imp-body.is-in { animation: none; } }
+.fx-imp-maps { display: flex; flex-direction: column; gap: 0.5rem; }
+.fx-imp-map {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(11rem, 14rem) 3rem;
+  gap: 0.75rem; align-items: center;
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 0.5rem 0.75rem; background: var(--card);
+  transition: border-color .12s;
+}
+.fx-imp-map:hover { border-color: color-mix(in oklab, var(--ring) 45%, var(--border)); }
+.fx-imp-src { display: flex; flex-direction: column; gap: 0.125rem; min-width: 0; }
+.fx-imp-src-name { font-size: 0.8125rem; font-weight: 500; font-family: var(--font-mono); }
+.fx-imp-src-sample { font-size: 0.75rem; color: var(--muted-foreground); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fx-imp-arrow { width: 0.875rem; height: 0.875rem; color: var(--muted-foreground); flex-shrink: 0; }
+.fx-imp-auto { justify-self: end; }
+.fx-imp-preview td { font-size: 0.8125rem; }
+.fx-imp-cell-err {
+  background: color-mix(in oklab, var(--destructive) 11%, var(--card));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--destructive) 35%, transparent);
+  cursor: text; position: relative;
+}
+.fx-imp-cell-err:hover { background: color-mix(in oklab, var(--destructive) 16%, var(--card)); }
+.fx-imp-run { display: flex; align-items: center; justify-content: center; min-height: 15rem; }
+.fx-imp-done { display: flex; flex-direction: column; align-items: center; gap: 0.375rem; text-align: center; }
+.fx-imp-done-title { font-weight: 600; font-size: 1rem; }
+.fx-imp-check {
+  width: 3rem; height: 3rem; border-radius: 999px; margin-bottom: 0.375rem;
+  display: flex; align-items: center; justify-content: center;
+  background: color-mix(in oklab, var(--success) 14%, var(--card));
+  border: 1px solid color-mix(in oklab, var(--success) 35%, var(--border));
+  color: var(--success);
+  animation: fx-imp-pop .3s var(--ease-out);
+}
+.fx-imp-check svg { width: 1.375rem; height: 1.375rem; }
+@keyframes fx-imp-pop { from { transform: scale(0.6); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .fx-imp-check { animation: none; } }

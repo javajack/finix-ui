@@ -134,6 +134,7 @@ a { color: inherit; }
   background: var(--card); color: var(--card-foreground);
   border: 1px solid var(--border); border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xs);
+  min-width: 0; /* containment: grid/flex children may never blow out their card */
 }
 .fx-card-header {
   display: grid; grid-template-columns: 1fr auto; align-items: start;
@@ -143,7 +144,7 @@ a { color: inherit; }
 .fx-card-title--lg { font-size: 1rem; }
 .fx-card-desc { grid-column: 1; font-size: 0.875rem; color: var(--muted-foreground); }
 .fx-card-action { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
-.fx-card-content { padding: 0 1.25rem; }
+.fx-card-content { padding: 0 1.25rem; min-width: 0; }
 .fx-card-footer { display: flex; align-items: center; gap: 0.5rem; padding: 0 1.25rem; }
 
 /* ============ inputs ============ */
@@ -422,7 +423,7 @@ a { color: inherit; }
 
 /* ============ accordion (native <details>) ============ */
 .fx-accordion { display: flex; flex-direction: column; }
-.fx-accordion details { border-bottom: 1px solid var(--border); }
+.fx-accordion details { border-bottom: 1px solid var(--border-soft); }
 .fx-accordion summary {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding: 1rem 0; font-size: 0.875rem; font-weight: 500;
@@ -458,7 +459,8 @@ a { color: inherit; }
   font-weight: 500; color: var(--muted-foreground); white-space: nowrap;
 }
 .fx-table td { padding: 0.5rem 0.625rem; vertical-align: middle; }
-.fx-table tbody tr, .fx-table thead tr { border-bottom: 1px solid var(--border); transition: background-color .1s; }
+.fx-table thead tr { border-bottom: 1px solid var(--border); }
+.fx-table tbody tr { border-bottom: 1px solid var(--border-soft); transition: background-color .1s; }
 .fx-table tbody tr:hover { background: var(--hover); }
 .fx-table tbody tr[data-selected], .fx-table tbody tr:has(.fx-checkbox:checked) { background: var(--muted); }
 .fx-table tfoot { background: var(--well); font-weight: 500; }
@@ -522,7 +524,7 @@ a { color: inherit; }
 }
 
 .fx-menu-label { padding: 0.375rem 0.5rem; font-size: 0.875rem; font-weight: 500; }
-.fx-menu-sep { height: 1px; background: var(--border); margin: 0.25rem -0.25rem; }
+.fx-menu-sep { height: 1px; background: var(--border-soft); margin: 0.25rem -0.25rem; }
 .fx-menu-item {
   display: flex; width: 100%; align-items: center; gap: 0.5rem;
   padding: 0.375rem 0.5rem; border: 0; border-radius: var(--radius-sm);
@@ -564,7 +566,7 @@ a { color: inherit; }
 /* ============ dialog / sheet / drawer ============ */
 dialog.fx-dialog, dialog.fx-sheet, dialog.fx-drawer {
   border: 1px solid var(--border);
-  background: var(--card); color: var(--card-foreground);
+  background: var(--popover); color: var(--popover-foreground);
   padding: 0; margin: auto;
   max-width: min(calc(100% - 2rem), 32rem);
   width: 100%;

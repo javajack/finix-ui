@@ -104,7 +104,7 @@
 }
 .fx-search-trigger:hover { border-color: var(--ring); }
 .fx-search-trigger svg { width: 0.875rem; height: 0.875rem; }
-.fx-search-trigger .fx-kbd { margin-left: auto; background: var(--background); }
+.fx-search-trigger .fx-kbd { margin-left: auto; background: var(--card); }
 
 /* ============ page header ============ */
 .fx-page-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
@@ -406,7 +406,7 @@
 .fx-tablist { position: relative; }
 .fx-tab-indicator {
   position: absolute; z-index: 0; border-radius: var(--radius-md);
-  background: var(--background); box-shadow: var(--shadow-sm);
+  background: var(--card); box-shadow: var(--shadow-sm);
   border: 1px solid transparent;
   transition: left .28s var(--ease-out), width .28s var(--ease-out),
               top .28s var(--ease-out), height .28s var(--ease-out);

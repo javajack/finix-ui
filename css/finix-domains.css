@@ -134,7 +134,7 @@
 .fx-review-dist-row .fx-progress > div { background: var(--warning); }
 
 /* ============ org chart (pure CSS tree) ============ */
-.fx-org { overflow-x: auto; padding: 0.5rem 0.25rem 1rem; }
+.fx-org { overflow-x: auto; padding: 1rem 0.5rem 1.25rem; background: var(--well); border-radius: var(--radius-lg); }
 .fx-org ul { display: flex; justify-content: center; position: relative; padding: 1.25rem 0 0; margin: 0; list-style: none; }
 .fx-org > ul { padding-top: 0; width: max-content; margin: 0 auto; }
 .fx-org li { position: relative; display: flex; flex-direction: column; align-items: center; padding: 1.25rem 0.5rem 0; }
@@ -172,7 +172,7 @@
 
 /* ============ who's out strip ============ */
 .fx-whosout { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
-.fx-whosout-day { border-right: 1px solid var(--border); padding: 0.5rem 0.5rem 0.625rem; min-height: 6.5rem; }
+.fx-whosout-day { border-right: 1px solid var(--border-soft); padding: 0.5rem 0.5rem 0.625rem; min-height: 6.5rem; }
 .fx-whosout-day:last-child { border-right: 0; }
 .fx-whosout-day.is-today { background: color-mix(in oklab, var(--primary) 5%, transparent); }
 .fx-whosout-date { font-size: 0.6875rem; color: var(--muted-foreground); margin-bottom: 0.4375rem; }
@@ -210,7 +210,7 @@
 .fx-ts-timer b { min-width: 4.25rem; text-align: right; font-weight: 500; }
 
 /* ============ performance review matrix ============ */
-.fx-matrix { display: grid; grid-template-columns: 11rem repeat(5, 1fr); font-size: 0.8125rem; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.fx-matrix { display: grid; grid-template-columns: 11rem repeat(5, 1fr); min-width: 38rem; font-size: 0.8125rem; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
 .fx-matrix > div { padding: 0.625rem 0.75rem; border-top: 1px solid var(--border-soft); display: flex; align-items: center; }
 .fx-matrix-head { background: var(--well); font-size: 0.6875rem; color: var(--muted-foreground); font-weight: 500; justify-content: center; border-top: 0 !important; }
 .fx-matrix-head:first-child { justify-content: flex-start; }

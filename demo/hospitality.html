@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hospitality · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-pos.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-pos.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Hospitality</h1>
+          <p class="fx-page-sub">Restaurant + hotel screens — a POS register with a live ticket and split bill, the dining-room floor plan, a kitchen display with ageing tickets, and a hotel front-desk room grid with housekeeping and editable rates.</p>
+        </div>
+      </div>
+
+      <!-- POS -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Register — Udupi Express</div>
+          <div class="fx-card-desc">Tap tiles to build the ticket (Gobi is 86'd). Totals stack service + GST live; <b>Split</b> divides the bill fairly.</div>
+        </div>
+        <div class="fx-card-content"><div id="pos"></div></div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(24rem,1fr))">
+        <!-- floor plan -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Dining room</div>
+            <div class="fx-card-desc">Green = open, sage = seated, amber = check dropped. <b>Click an open table</b> to seat a party.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-pos-floor" id="floor">
+              <svg viewBox="0 0 520 260">
+                <g class="fx-pos-table is-seated" data-t="1"><rect x="30" y="30" width="70" height="46" rx="10"/><text x="65" y="57">T1 · 4</text></g>
+                <g class="fx-pos-table" data-t="2"><rect x="130" y="30" width="70" height="46" rx="10"/><text x="165" y="57">T2 · 4</text></g>
+                <g class="fx-pos-table is-check" data-t="3"><circle cx="290" cy="53" r="27"/><text x="290" y="57">T3 · 2</text></g>
+                <g class="fx-pos-table" data-t="4"><circle cx="390" cy="53" r="27"/><text x="390" y="57">T4 · 2</text></g>
+                <g class="fx-pos-table is-seated" data-t="5"><rect x="30" y="120" width="100" height="50" rx="10"/><text x="80" y="149">T5 · 6</text></g>
+                <g class="fx-pos-table" data-t="6"><rect x="170" y="120" width="70" height="50" rx="10"/><text x="205" y="149">T6 · 4</text></g>
+                <g class="fx-pos-table is-seated" data-t="7"><rect x="280" y="120" width="70" height="50" rx="10"/><text x="315" y="149">T7 · 4</text></g>
+                <g class="fx-pos-table" data-t="8"><rect x="390" y="120" width="100" height="50" rx="10"/><text x="440" y="149">T8 · 8</text></g>
+                <g class="fx-pos-table" data-t="9"><circle cx="80" cy="222" r="26"/><text x="80" y="226">T9 · 2</text></g>
+                <g class="fx-pos-table is-seated" data-t="10"><circle cx="180" cy="222" r="26"/><text x="180" y="226">T10</text></g>
+                <g class="fx-pos-table" data-t="11"><rect x="280" y="198" width="70" height="48" rx="10"/><text x="315" y="226">T11 · 4</text></g>
+                <g class="fx-pos-table" data-t="12"><rect x="390" y="198" width="70" height="48" rx="10"/><text x="425" y="226">T12 · 4</text></g>
+              </svg>
+              <span class="fx-pos-timer" style="left:12.5%;top:8%">T1 · 48m</span>
+              <span class="fx-pos-timer" style="left:55.7%;top:8%">T3 · 1h 12m</span>
+              <span class="fx-pos-timer" style="left:15.4%;top:43%">T5 · 22m</span>
+              <span class="fx-pos-timer" style="left:60.5%;top:43%">T7 · 35m</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KDS -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Kitchen display</div>
+            <div class="fx-card-desc">Tickets age green → amber → red. <b>Bump</b> when plated.</div>
+          </div>
+          <div class="fx-card-content">
+            <div id="kds"></div>
+            <div class="fx-row" style="gap:1.25rem;margin-top:.875rem" class="fx-text-xs">
+              <span class="fx-text-xs fx-muted">All-day: <b style="color:var(--foreground)">Dosa 14</b></span>
+              <span class="fx-text-xs fx-muted"><b style="color:var(--foreground)">Idli 9</b></span>
+              <span class="fx-text-xs fx-muted"><b style="color:var(--foreground)">Filter coffee 21</b></span>
+              <span class="fx-text-xs fx-muted"><b style="color:var(--foreground)">Thali 6</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PMS -->
+      <div class="fx-card">
+        <div class="fx-card-header">
+          <div class="fx-card-title fx-card-title--lg">Front desk — week of Aug 17</div>
+          <div class="fx-card-desc">Stays span nights; housekeeping dots cycle on click (dirty → inspect → clean); the rate row is <b>click-to-edit</b>.</div>
+        </div>
+        <div class="fx-card-content"><div id="pms"></div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- split dialog -->
+<dialog class="fx-dialog" id="split-dlg" style="max-width:22rem">
+  <div class="fx-dialog-header">
+    <div class="fx-dialog-title">Split the bill</div>
+    <div class="fx-dialog-desc">Evenly, with the rounding paisa going to person 1.</div>
+  </div>
+  <div class="fx-dialog-body fx-stack" style="gap:.75rem">
+    <div class="fx-row" style="justify-content:space-between">
+      <span class="fx-text-sm">People</span>
+      <span style="display:inline-flex;gap:.375rem;align-items:center">
+        <button class="fx-btn fx-btn--outline fx-btn--icon fx-btn--sm" id="split-dec">−</button>
+        <b style="font-family:var(--font-mono);width:1.25rem;text-align:center" id="split-n">3</b>
+        <button class="fx-btn fx-btn--outline fx-btn--icon fx-btn--sm" id="split-inc">+</button>
+      </span>
+    </div>
+    <div id="split-rows"></div>
+  </div>
+  <div class="fx-dialog-footer">
+    <button class="fx-btn fx-btn--ghost" data-fx-close>Close</button>
+    <button class="fx-btn" data-fx-close>Send payment links</button>
+  </div>
+</dialog>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+
+  /* POS */
+  const pos = fxPos(document.getElementById("pos"), {
+    menu: [
+      { cat: "Tiffin", items: [
+        { name: "Masala dosa", price: 120, glyph: "🥞" },
+        { name: "Idli (2)", price: 80, glyph: "⚪" },
+        { name: "Medu vada", price: 70, glyph: "🍩" },
+        { name: "Rava kesari", price: 60, glyph: "🍮" },
+        { name: "Gobi manchurian", price: 140, glyph: "🥦", out: true },
+      ] },
+      { cat: "Meals", items: [
+        { name: "South thali", price: 220, glyph: "🍛" },
+        { name: "Curd rice", price: 90, glyph: "🍚" },
+        { name: "Bisi bele bath", price: 130, glyph: "🥘" },
+      ] },
+      { cat: "Drinks", items: [
+        { name: "Filter coffee", price: 60, glyph: "☕" },
+        { name: "Masala chai", price: 40, glyph: "🫖" },
+        { name: "Buttermilk", price: 35, glyph: "🥛" },
+      ] },
+    ],
+    lines: [
+      { name: "Masala dosa", price: 120, qty: 2, course: "Tiffin", mods: ["extra chutney", "one without onion"] },
+      { name: "Filter coffee", price: 60, qty: 2, course: "Drinks" },
+    ],
+    onSplit: (t) => openSplit(t.total),
+    onPay: (t) => finix.toast({ title: "Payment collected", description: inr(t.total) + " · UPI · table 12 closed.", variant: "success" }),
+  });
+  window.__pos = pos;
+
+  /* split dialog */
+  let people = 3, currentTotal = 0;
+  const dlg = document.getElementById("split-dlg");
+  function paintSplit() {
+    const per = Math.floor((currentTotal / people) * 100) / 100;
+    const first = Math.round((currentTotal - per * (people - 1)) * 100) / 100;
+    document.getElementById("split-n").textContent = people;
+    document.getElementById("split-rows").innerHTML =
+      Array.from({ length: people }, (_, i) =>
+        `<div class="fx-pos-split-row"><span>Person ${i + 1}${i === 0 ? " · rounding" : ""}</span><b>₹${(i === 0 ? first : per).toFixed(2)}</b></div>`).join("") +
+      `<div class="fx-pos-split-row" style="color:var(--muted-foreground)"><span>Check total</span><b>₹${currentTotal.toFixed(2)}</b></div>`;
+  }
+  function openSplit(total) { currentTotal = total; paintSplit(); dlg.showModal(); }
+  document.getElementById("split-dec").addEventListener("click", () => { people = Math.max(2, people - 1); paintSplit(); });
+  document.getElementById("split-inc").addEventListener("click", () => { people = Math.min(8, people + 1); paintSplit(); });
+  window.__split = { openSplit, get people() { return people; } };
+
+  /* floor plan */
+  document.getElementById("floor").addEventListener("click", (e) => {
+    const t = e.target.closest(".fx-pos-table");
+    if (!t) return;
+    if (t.classList.contains("is-seated") || t.classList.contains("is-check")) {
+      finix.toast({ title: "Table " + t.dataset.t, description: t.classList.contains("is-check") ? "Check dropped — awaiting payment." : "Seated — ticket open." });
+      return;
+    }
+    t.classList.add("is-seated");
+    finix.toast({ title: "Party seated", description: "Table " + t.dataset.t + " · 2 guests · menus dropped.", variant: "success" });
+  });
+
+  /* KDS */
+  const now = Date.now(), MIN = 6e4;
+  window.__kds = fxKds(document.getElementById("kds"), {
+    warn: 7, late: 12,
+    tickets: [
+      { num: 231, where: "T5", at: now - 2 * MIN, items: [{ qty: 2, name: "Masala dosa", mod: "one without onion" }, { qty: 1, name: "Filter coffee" }] },
+      { num: 229, where: "T7", at: now - 9 * MIN, items: [{ qty: 1, name: "South thali" }, { qty: 1, name: "Curd rice", mod: "less salt" }] },
+      { num: 226, where: "Takeaway", at: now - 14 * MIN, items: [{ qty: 3, name: "Idli (2)" }, { qty: 2, name: "Medu vada" }] },
+    ],
+    onBump: (t) => finix.toast({ title: "Ticket #" + t.num + " bumped", description: "Runner to " + t.where + ".", variant: "success" }),
+  });
+
+  /* PMS */
+  window.__pms = fxRoomGrid(document.getElementById("pms"), {
+    nights: ["Mon 17", "Tue 18", "Wed 19", "Thu 20", "Fri 21", "Sat 22", "Sun 23"],
+    rooms: [
+      { num: "101", type: "Deluxe", hk: "clean" },
+      { num: "102", type: "Deluxe", hk: "dirty" },
+      { num: "201", type: "Suite", hk: "inspect" },
+      { num: "202", type: "Suite", hk: "clean" },
+      { num: "301", type: "Twin", hk: "clean" },
+    ],
+    stays: [
+      { room: "101", from: 0, len: 3, guest: "Nair · 2A", color: "var(--chart-1)" },
+      { room: "101", from: 4, len: 2, guest: "Walk-in", color: "var(--chart-4)" },
+      { room: "102", from: 1, len: 4, guest: "Kapoor · 2A 1C", color: "var(--chart-2)" },
+      { room: "201", from: 0, len: 7, guest: "Finix offsite", color: "var(--chart-5)" },
+      { room: "301", from: 2, len: 2, guest: "Rao · 1A", color: "var(--chart-3)" },
+    ],
+    rates: [5400, 5400, 5400, 5900, 7200, 7900, 6400],
+    onRate: (i, v) => finix.toast({ title: "Rate updated", description: "Night " + (i + 1) + " → " + inr(v), variant: "success" }),
+  });
+});
+</script>
+</body>
+</html>

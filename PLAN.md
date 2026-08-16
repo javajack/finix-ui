@@ -677,7 +677,7 @@ Module `css/finix-logi.css` + `js/finix-logi.js`, `fx-lg-*`.
   evidence), capacity meter.
 - Exceptions queue — resolve/reroute actions w/ confirm.
 
-### E5. POS & hospitality → new page `hospitality.html` ("Hospitality", Industries)
+### ✅ E5. POS & hospitality → new page `hospitality.html` ("Hospitality", Industries)
 Module `css/finix-pos.css` + `js/finix-pos.js`, `fx-pos-*`.
 - POS register — category tabs + menu-item tile grid (price mono, 86'd/out
   state) | ticket rail (items, modifiers indented, course separators,

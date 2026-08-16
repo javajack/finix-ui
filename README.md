@@ -25,7 +25,7 @@ Two orthogonal theme axes: **mode** (`light`/`dark`) × **brand** (`finix` warm-
 
 ## What's inside
 
-**106 registered components** (see `manifest.json`), organized in composable layers:
+**140 registered components** (see `manifest.json`), organized in composable layers:
 
 | Layer | Contents |
 |---|---|
@@ -35,11 +35,12 @@ Two orthogonal theme axes: **mode** (`light`/`dark`) × **brand** (`finix` warm-
 | `js/finix.js` | All behaviors, data-attribute driven: `finix.toast()`, `finix.setTheme()`, positioning, ⌘K palette, kanban DnD, table sort/filter, number tickers |
 | `css/finix-datagrid.css` + `js/finix-datagrid.js` | Optional full data grid (`fxDataGrid`): sort, search, column resize/reorder/pin/hide, inline edit, selection, pagination + Linear-style `fxFilterBar` |
 | `css/finix-apps.css` + `js/finix-apps.js` | App components: event calendar (month/week, drag events), Gantt (draggable bars), Notion-style filter builder, virtualized log table (50k rows, live tail), `fxImporter` CSV import wizard |
-| `css/finix-domains.css` + `js/finix-domains.js` | Domain components: ticker tape, order book, ledger, pricing/usage/invoices, entity cards, comments w/ @mentions, reviews, org chart, timesheet, review matrix |
-| `css/finix-devtools.css` + `js/finix-devtools.js` | Developer platform: `fxDiff` unified/split diff viewer, API-key rows (hold-to-reveal), env-var editor, webhook delivery log, `fxJsonTree` |
+| `css/finix-domains.css` + `js/finix-domains.js` | Domain components: ticker tape, order book, ledger, pricing/usage/invoices, entity cards, comments w/ @mentions, reviews, org chart, timesheet, review matrix, `fxInbox` ticket inbox + SLA chips + CSAT, `fxMessages` channel + `fxEmoji` picker + facepiles, `fxCallTiles`, `fxApprovals`, `fxSkuMatrix` + order detail, `fx-payment`, `fx-doc` printable invoice, `fxRecon` reconciliation, `fxAccountsTree` |
+| `css/finix-devtools.css` + `js/finix-devtools.js` | Developer platform: `fxDiff` unified/split diff viewer, API-key rows (hold-to-reveal), env-var editor, webhook delivery log, `fxJsonTree`, feature flags + rollout balance + experiments, `fxPermMatrix`, `fxAuditLog`, `fxTraceWaterfall` |
+| `js/finix-canvas.js` | `fxCanvas` workflow node canvas: pan/zoom, drag-arrange, bezier edges w/ animated running dash, minimap + `fxSchemaForm` config forms |
 | `js/finix-editor.js` | `fxEditor` — Notion-style rich text (bubble menu, slash commands, md shortcuts) + `fxCropper` — image crop with aspect lock |
-| `demo/charts.js` | Dependency-free SVG charts: area/line, bars (incl. negative + stacked), hbars, combo, scatter, donut, gauge, spark — interactive legends & tooltips, re-render on theme change |
-| `demo/` | Full admin template, 15 pages: Dashboard, Forms, Data & Tables, Navigation & Overlays, Feedback & Status, Charts, Projects, AI Assistant, Business & CRM, Dev & API, People & HR, Editor & Media, Motion Lab, Auth, Research |
+| `demo/charts.js` | Dependency-free SVG charts: area/line (w/ alert thresholds), bars (incl. negative + stacked), hbars, combo, scatter, donut, gauge, spark, funnel, cohort grid, candlestick, time heatmap — interactive legends & tooltips, re-render on theme change |
+| `demo/` | Full admin template, 18 pages: Dashboard, Forms, Data & Tables, Navigation & Overlays, Feedback & Status, Charts, Projects, AI Assistant, Support, Business & CRM, Dev & API, Workflows, People & HR, Collaboration, Editor & Media, Motion Lab, Auth, Research |
 | `manifest.json` + `llms.txt` | Machine-readable registry for AI agents: component → classes → markup → JS hook |
 
 ## Run the demo

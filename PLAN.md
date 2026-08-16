@@ -250,7 +250,7 @@ The biggest structural gap; unlocks automation, journeys, lineage, service maps.
   sequential ramp + hover values.
 - Alert-rule builder mini: threshold input drawing a live line on an area chart.
 
-### T20. Final wave — polish & release
+### ✅ T20. Final wave — polish & release
 - Full 18-page sweep: light+dark screenshots, console clean, narrow-viewport
   containment, brand-switch spot check (ocean + mono).
 - Update README (component count, page list), manifest/llms completeness check

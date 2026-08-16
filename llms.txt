@@ -77,7 +77,7 @@ Master-detail: .fx-split[data-fx-split] split-pane (pointer-drag divider, collap
 - css/finix.css: primitives (buttons, forms, tables, tabs, menus, dialogs, toasts, steppers, trees, calendars…).
 - css/finix-widgets.css: composites (app shell/sidebar/topbar, stat cards, tracker, bar list, kanban, chat, chart chrome).
 - js/finix.js: all behaviors, delegated; safe on dynamic DOM for click-driven features.
-- demo/: full admin template — index (dashboard), forms, data, overlays, feedback, widgets, research (sources & credits).
+- demo/: full admin template, 18 pages — dashboard, forms, data, overlays, feedback, charts, projects, ai, support, business, devtools, workflow, people, collab, editor, motion, auth, research.
 - demo/charts.js: optional dependency-free SVG charts — fxCharts.area/bars/donut/spark(el, opts); re-render on theme change.
 
 ## Provenance

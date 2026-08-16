@@ -1078,6 +1078,113 @@
   };
   $$("[data-fx-voicebars]").forEach((el) => fxVoiceBars(el));
 
+  /* ---------- activity timeline v2 ---------- */
+  window.fxActivity = function (root, opts = {}) {
+    const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const I = {
+      commit: '<path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M12 3v6"/><path d="M12 15v6"/>',
+      deploy: '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>',
+      user: '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+      mail: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+      flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/>',
+      alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+      edit: '<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>',
+      check: '<path d="M20 6 9 17l-5-5"/>',
+      tag: '<path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/>',
+      card: '<rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>',
+      arrow: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+    };
+    const svg = (n) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${I[n] || I.commit}</svg>`;
+    const TYPE_LABELS = { comment: "Comments", status: "Status", system: "System" };
+    const DAY = 864e5;
+    let events = (opts.events || []).slice();
+    let active = "all";
+    const typeOrder = [];
+    const regTypes = () => events.forEach((e) => { if (e.type && !typeOrder.includes(e.type)) typeOrder.push(e.type); });
+    regTypes();
+    const rel = (t) => {
+      const d = (Date.now() - +new Date(t)) / 1e3;
+      if (d < 60) return "just now";
+      if (d < 3600) return Math.floor(d / 60) + "m ago";
+      if (d < 86400) return Math.floor(d / 3600) + "h ago";
+      return new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    };
+    const dayLabel = (t) => {
+      const now = new Date(), then = new Date(t);
+      const mid = (x) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+      const diff = Math.round((mid(now) - mid(then)) / DAY);
+      if (diff === 0) return "Today";
+      if (diff === 1) return "Yesterday";
+      return then.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    };
+    const badge = (b) => {
+      if (typeof b === "string") b = { label: b };
+      const tone = b.tone ? ` fx-badge--${b.tone}` : " fx-badge--outline";
+      const dot = b.tone ? " fx-badge--dot" : "";
+      return `<span class="fx-badge${tone}${dot}">${esc(b.label)}</span>`;
+    };
+    function marker(ev) {
+      if (ev.type === "comment") {
+        const ini = (ev.actor || "?").split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+        return `<span class="fx-activity-marker fx-avatar">${esc(ini)}</span>`;
+      }
+      if (ev.type === "system" && !ev.icon) return '<span class="fx-activity-marker fx-activity-marker--dot"></span>';
+      const tone = ev.tone ? ` data-tone="${esc(ev.tone)}"` : "";
+      return `<span class="fx-activity-marker"${tone}>${svg(ev.icon || (ev.type === "status" ? "flag" : "commit"))}</span>`;
+    }
+    function item(ev) {
+      let head = `<b>${esc(ev.actor || "System")}</b> <span class="fx-muted-part">${esc(ev.action || "")}</span>`;
+      if (ev.target) head += ` <b>${esc(ev.target)}</b>`;
+      head += `<span class="fx-activity-time">${rel(ev.time)}</span>`;
+      let extra = "";
+      if (ev.body) extra += `<div class="fx-activity-bubble">${esc(ev.body)}</div>`;
+      if (ev.from || ev.to) extra += `<div class="fx-activity-badges">${ev.from ? badge(ev.from) : ""}${ev.from && ev.to ? svg("arrow") : ""}${ev.to ? badge(ev.to) : ""}</div>`;
+      return `<div class="fx-activity-item" data-type="${esc(ev.type || "event")}">${marker(ev)}<div class="fx-activity-body"><div class="fx-activity-head">${head}</div>${extra}</div></div>`;
+    }
+    function render(animate) {
+      const list = events
+        .filter((e) => active === "all" || e.type === active)
+        .sort((a, b) => +new Date(b.time) - +new Date(a.time));
+      const types = typeOrder;
+      const chips = opts.filters === false ? "" :
+        `<div class="fx-activity-filters" role="group" aria-label="Filter activity">` +
+        [["all", "All"], ...types.map((t) => [t, TYPE_LABELS[t] || t[0].toUpperCase() + t.slice(1)])]
+          .map(([k, label]) => {
+            const n = k === "all" ? events.length : events.filter((e) => e.type === k).length;
+            return `<button class="fx-activity-chip" aria-pressed="${k === active}" data-filter="${esc(k)}">${esc(label)} <small>${n}</small></button>`;
+          }).join("") + `</div>`;
+      let html = chips, lastDay = null, group = [];
+      const flush = () => { if (group.length) { html += `<div class="fx-activity-group">${group.join("")}</div>`; group = []; } };
+      for (const ev of list) {
+        const d = dayLabel(ev.time);
+        if (d !== lastDay) { flush(); html += `<div class="fx-activity-day">${esc(d)}</div>`; lastDay = d; }
+        group.push(item(ev));
+      }
+      flush();
+      if (!list.length) html += `<p class="fx-text-sm fx-muted" style="padding:.5rem 0">No matching activity.</p>`;
+      root.innerHTML = html;
+      if (animate) {
+        root.classList.add("is-animating");
+        let i = 0;
+        $$(".fx-activity-item, .fx-activity-day", root).forEach((el) => (el.style.animationDelay = 22 * i++ + "ms"));
+        setTimeout(() => root.classList.remove("is-animating"), 250 + 22 * i);
+      }
+    }
+    root.classList.add("fx-activity");
+    root.addEventListener("click", (e) => {
+      const chip = e.target.closest("[data-filter]");
+      if (!chip || chip.dataset.filter === active) return;
+      active = chip.dataset.filter;
+      render(true);
+    });
+    render(false);
+    return {
+      add(ev) { events.unshift(ev); regTypes(); render(true); },
+      filter(t) { active = t; render(true); },
+      get events() { return events; },
+    };
+  };
+
   /* ---------- notification center ---------- */
   doc.addEventListener("click", (e) => {
     const mark = e.target.closest("[data-fx-notif-readall]");

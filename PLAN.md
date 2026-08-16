@@ -81,7 +81,7 @@ by importance (flagship pattern first).
 
 ## WAVE 1 — Universal primitives (highest cross-domain leverage)
 
-### T1. Universal activity timeline v2 (`fxActivity`) → feedback.html (replaces static timeline) + reused everywhere
+### ✅ T1. Universal activity timeline v2 (`fxActivity`) → feedback.html (replaces static timeline) + reused everywhere
 Serves CRM, support, PM, identity, fintech, e-sign, commerce, logistics (8+ domains).
 - `fxActivity(el, {events, filters})`: interleaved event types (status-change,
   comment w/ avatar, system) with day-group headers, type-filter chips, relative

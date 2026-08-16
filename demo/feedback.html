@@ -209,35 +209,22 @@
           </div>
         </div>
 
-        <!-- activity timeline -->
+        <!-- activity timeline v2 -->
         <div class="fx-card">
           <div class="fx-card-header">
             <div class="fx-card-title fx-card-title--lg">Activity timeline</div>
-            <div class="fx-card-desc">Recent events, newest first.</div>
+            <div class="fx-card-desc">Interleaved comments, status changes and system events — day groups, type filters, relative times.</div>
+            <div class="fx-card-action">
+              <button class="fx-btn fx-btn--outline fx-btn--sm" id="act-add">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                Simulate
+              </button>
+            </div>
           </div>
           <div class="fx-card-content">
-            <ul class="fx-timeline">
-              <li>
-                <div class="fx-timeline-time">2 minutes ago</div>
-                <div class="fx-timeline-title">Deployment succeeded</div>
-                <div class="fx-timeline-body">finix-ui@1.6.0 deployed to production in 42s.</div>
-              </li>
-              <li>
-                <div class="fx-timeline-time">1 hour ago</div>
-                <div class="fx-timeline-title">Pull request merged</div>
-                <div class="fx-timeline-body">#482 “Add themeable data grid” by Sofia Davis.</div>
-              </li>
-              <li data-state="muted">
-                <div class="fx-timeline-time">Yesterday</div>
-                <div class="fx-timeline-title">New member joined</div>
-                <div class="fx-timeline-body">Jackson Lee accepted the workspace invite.</div>
-              </li>
-              <li data-state="muted">
-                <div class="fx-timeline-time">Aug 12</div>
-                <div class="fx-timeline-title">Billing updated</div>
-                <div class="fx-timeline-body">Plan upgraded to Pro (annual).</div>
-              </li>
-            </ul>
+            <div class="fx-fade-edges" style="max-height:27rem;overflow-y:auto">
+              <div id="activity-demo"></div>
+            </div>
           </div>
         </div>
 
@@ -299,6 +286,53 @@
           </div>
         </div>
 
+        <!-- staged status -->
+        <div class="fx-card fx-card--stages-demo" style="grid-column:1/-1">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Staged status</div>
+            <div class="fx-card-desc">Checkpoint chains for fulfillment, disputes, signing orders and approval flows — horizontal and vertical, with done / active / pending / failed states.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:2rem;align-items:start">
+              <div class="fx-stack" style="gap:2rem;min-width:0">
+                <div class="fx-stack" style="gap:.75rem">
+                  <span class="fx-label">Order #4092 — fulfillment</span>
+                  <div style="overflow-x:auto;padding-bottom:.25rem">
+                    <ol class="fx-stages" style="min-width:34rem">
+                      <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Ordered</span><span class="fx-stage-time">Aug 14 · 09:12</span></li>
+                      <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Packed</span><span class="fx-stage-time">Aug 14 · 16:03</span></li>
+                      <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Shipped</span><span class="fx-stage-time">Aug 15 · 08:40</span></li>
+                      <li data-state="active"><span class="fx-stage-dot"></span><span class="fx-stage-label">Out for delivery</span><span class="fx-stage-time">since 07:15</span></li>
+                      <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Delivered</span><span class="fx-stage-time">est. today</span></li>
+                    </ol>
+                  </div>
+                </div>
+                <div class="fx-stack" style="gap:.75rem">
+                  <span class="fx-label">Dispute #771 — chargeback</span>
+                  <div style="overflow-x:auto;padding-bottom:.25rem">
+                    <ol class="fx-stages" style="min-width:34rem">
+                      <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Filed</span><span class="fx-stage-time">Jul 29</span></li>
+                      <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Evidence submitted</span><span class="fx-stage-time">Aug 02</span></li>
+                      <li data-state="failed"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span><span class="fx-stage-label">Lost</span><span class="fx-stage-time">Aug 11</span></li>
+                      <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Funds debited</span><span class="fx-stage-time">pending</span></li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+              <div class="fx-stack" style="gap:.75rem;min-width:0">
+                <span class="fx-label">Signature request — vertical</span>
+                <ol class="fx-stages fx-stages--vertical">
+                  <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div class="fx-stage-body"><span class="fx-stage-label">Sent to signers</span><span class="fx-stage-time">Aug 15 · 10:02</span></div></li>
+                  <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><div class="fx-stage-body"><span class="fx-stage-label">Viewed by Acme Legal</span><span class="fx-stage-time">Aug 15 · 11:47</span></div></li>
+                  <li data-state="active"><span class="fx-stage-dot"></span><div class="fx-stage-body"><span class="fx-stage-label">Awaiting signature</span><span class="fx-stage-desc">Sofia Davis — reminder scheduled for tomorrow.</span></div></li>
+                  <li data-state="pending"><span class="fx-stage-dot"></span><div class="fx-stage-body"><span class="fx-stage-label">Countersign</span><span class="fx-stage-desc">Auto-assigned to your legal team.</span></div></li>
+                  <li data-state="pending"><span class="fx-stage-dot"></span><div class="fx-stage-body"><span class="fx-stage-label">Completed</span><span class="fx-stage-desc">Everyone gets the final PDF.</span></div></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -306,6 +340,31 @@
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
+  /* ---- activity timeline v2 ---- */
+  const now = Date.now(), MIN = 6e4, HR = 36e5, DAY = 864e5;
+  const activity = fxActivity(document.getElementById("activity-demo"), {
+    events: [
+      { type: "status", actor: "Olivia Martin", action: "changed status of", target: "TKT-1042", icon: "flag", tone: "primary", from: "Open", to: { label: "Resolved", tone: "success" }, time: now - 4 * MIN },
+      { type: "comment", actor: "Jackson Lee", action: "commented on", target: "TKT-1042", body: "Confirmed with the customer — the webhook retries went through after the fix. Closing this out.", time: now - 26 * MIN },
+      { type: "system", actor: "Deploy bot", action: "deployed", target: "finix-api@2.4.1", time: now - 2 * HR },
+      { type: "status", actor: "Sofia Davis", action: "escalated", target: "TKT-1038", icon: "alert", tone: "warning", from: "Normal", to: { label: "Urgent", tone: "warning" }, time: now - 5 * HR },
+      { type: "comment", actor: "Isabella Nguyen", action: "left an internal note on", target: "ACME renewal", body: "Procurement wants net-60 this year. Flagging for finance before we send the order form.", time: now - DAY - 2 * HR },
+      { type: "system", actor: "Billing", action: "charged", target: "$1,890.00 · invoice #1204", time: now - DAY - 6 * HR },
+      { type: "status", actor: "William Kim", action: "moved", target: "PRJ-88 “Design refresh”", icon: "check", tone: "success", from: "In review", to: { label: "Done", tone: "success" }, time: now - DAY - 9 * HR },
+      { type: "system", actor: "Security", action: "rotated the signing key for", target: "webhooks/prod", time: now - 3 * DAY },
+      { type: "comment", actor: "Liam Chen", action: "commented on", target: "PRJ-91", body: "The cohort grid is ready for review — numbers match the warehouse export.", time: now - 3 * DAY - 3 * HR },
+    ],
+  });
+  const SIM = [
+    { type: "system", actor: "CI", action: "finished build", target: "#5124 in 41s" },
+    { type: "comment", actor: "Ava Patel", action: "commented on", target: "TKT-1042", body: "Following up — metrics look clean after the deploy." },
+    { type: "status", actor: "You", action: "changed status of", target: "TKT-1051", icon: "flag", tone: "primary", from: "Open", to: { label: "In progress", tone: "warning" } },
+  ];
+  let simI = 0;
+  document.getElementById("act-add").addEventListener("click", () => {
+    activity.add({ ...SIM[simI++ % SIM.length], time: Date.now() });
+  });
+
   document.getElementById("ob-list").addEventListener("click", (e) => {
     const btn = e.target.closest("[data-ob]");
     if (!btn) return;

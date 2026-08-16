@@ -156,7 +156,7 @@ console clean, README component count updated.
 
 ## WAVE 3 — Support & collaboration
 
-### T9. Ticket inbox → support.html (create page + NAV)
+### ✅ T9. Ticket inbox → support.html (create page + NAV)
 Composes T1 + T2. Zendesk/Intercom-grade split-pane:
 - Left: queue list (ticket rows: requester avatar, subject, snippet, channel
   badge, **SLA countdown chip** — new `fx-sla` with ok/warn/breach color states

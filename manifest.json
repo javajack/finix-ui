@@ -1310,6 +1310,47 @@
    ],
    "markup": "<div data-fx-nps data-question=\"How likely...\"></div>",
    "js": "Auto-rendered 0-10 NPS scale: detractor/passive/promoter color bands on hover+selection, follow-up textarea state, thanks state."
+  },
+  {
+   "name": "ticket-inbox",
+   "category": "support",
+   "classes": [
+    "fx-inbox",
+    "fx-inbox-queue",
+    "fx-ticket",
+    "fx-inbox-main",
+    "fx-inbox-thread",
+    "fx-msg",
+    "fx-msg--agent",
+    "fx-msg--note",
+    "fx-inbox-composer",
+    "fx-inbox-rail",
+    "fx-macro-pop"
+   ],
+   "markup": "<div id=\"inbox\"></div>",
+   "js": "fxInbox(el, {tickets, macros, agent}) in js/finix-domains.js \u2014 three-pane Zendesk-grade inbox: queue with Open/Mine/Snoozed chips + SLA countdown chips, conversation with customer/agent bubbles + amber internal notes, Reply/Internal-note composer toggle, searchable macro popover ({name} interpolation), snooze/resolve actions, customer context rail (attrs well + fxActivity)."
+  },
+  {
+   "name": "sla-chip",
+   "category": "support",
+   "classes": [
+    "fx-sla"
+   ],
+   "markup": "<span data-fx-sla=\"1755500000000\"></span>",
+   "js": "Auto-rendered live SLA countdown (30s tick, fxSlaTick() to force): ok >1h (success), warn <1h (warning), breach past-due (destructive + pulse)."
+  },
+  {
+   "name": "csat",
+   "category": "support",
+   "classes": [
+    "fx-csat",
+    "fx-csat-faces",
+    "fx-csat-face",
+    "fx-csat-follow",
+    "fx-csat-thanks"
+   ],
+   "markup": "<div data-fx-csat=\"How was your support experience?\"></div>",
+   "js": "Auto-rendered emoji CSAT: 5 grayscale faces that colorize on hover/selection, optional comment, thanks state."
   }
  ]
 }

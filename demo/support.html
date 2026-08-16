@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-domains.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Support</h1>
+          <p class="fx-page-sub">Zendesk-grade ticket inbox — queue with live SLA countdowns, conversation with internal notes and macros, customer context rail.</p>
+        </div>
+      </div>
+
+      <div id="inbox"></div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(23rem,1fr));margin-top:1.25rem">
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">CSAT survey</div>
+            <div class="fx-card-desc">Sent after a ticket resolves — emoji scale, optional comment, thanks state.</div>
+          </div>
+          <div class="fx-card-content">
+            <div data-fx-csat="How was your support experience?"></div>
+          </div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Queue health</div>
+            <div class="fx-card-desc">Live SLA chips — the same component that ticks in the inbox rows.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.75rem">
+            <div class="fx-row" style="justify-content:space-between"><span class="fx-text-sm">First response — TKT-1055</span><span id="sla-a"></span></div>
+            <div class="fx-row" style="justify-content:space-between"><span class="fx-text-sm">Resolution — TKT-1051</span><span id="sla-b"></span></div>
+            <div class="fx-row" style="justify-content:space-between"><span class="fx-text-sm">First response — TKT-1049</span><span id="sla-c"></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const now = Date.now(), MIN = 6e4, HR = 36e5;
+
+  document.getElementById("sla-a").setAttribute("data-fx-sla", now + 3 * HR);
+  document.getElementById("sla-b").setAttribute("data-fx-sla", now + 24 * MIN);
+  document.getElementById("sla-c").setAttribute("data-fx-sla", now - 42 * MIN);
+  fxSlaTick();
+
+  fxInbox(document.getElementById("inbox"), {
+    agent: "Rakesh",
+    macros: [
+      { name: "Greeting", body: "Hi {name}, thanks for reaching out! Let me look into this for you." },
+      { name: "Ask for logs", body: "Could you share the request ID or any logs from around the time this happened? That will help us trace it." },
+      { name: "Refund approved", body: "Good news — your refund has been approved and will land in 3–5 business days." },
+      { name: "Closing", body: "I'm closing this ticket for now — reply any time and it will reopen automatically." },
+    ],
+    tickets: [
+      {
+        id: "TKT-1055", requester: "Priya Sharma", company: "Acme Corp", channel: "email",
+        subject: "Webhooks failing since this morning", snippet: "We're seeing 500s on every delivery to our endpoint…",
+        status: "open", mine: true, due: now + 38 * MIN, time: "12m",
+        customer: { email: "priya@acme.com", attrs: { Plan: "Scale", MRR: "$7,400", Region: "US-East", "First seen": "2024-03-12", "Open tickets": "2" } },
+        activity: [
+          { type: "status", actor: "System", action: "escalated", target: "TKT-1055", tone: "warning", icon: "alert", time: now - 20 * MIN },
+          { type: "system", actor: "Billing", action: "charged", target: "invoice #2201", time: now - 26 * HR },
+          { type: "status", actor: "Priya Sharma", action: "opened", target: "TKT-1041", icon: "flag", time: now - 4 * 24 * HR },
+        ],
+        messages: [
+          { from: "customer", author: "Priya Sharma", time: "09:14", body: "Hi — since about 6am UTC every webhook delivery to our endpoint returns a 500 from your side. Our checkout depends on these. Can you check?" },
+          { from: "agent", author: "Rakesh", time: "09:21", body: "Thanks for flagging, Priya. I can see elevated failures on your endpoint config — digging into the delivery logs now." },
+          { from: "note", author: "Rakesh", time: "09:22", body: "Risk-service timeout is the likely culprit — see incident INC-88. Waiting on infra before confirming to the customer." },
+          { from: "customer", author: "Priya Sharma", time: "09:40", body: "Any update? We're holding a deploy on our side until this clears." },
+        ],
+      },
+      {
+        id: "TKT-1051", requester: "Marco Ruiz", company: "Globex", channel: "chat",
+        subject: "Refund for duplicate charge", snippet: "We were billed twice for the annual plan on Aug 12…",
+        status: "open", mine: false, due: now + 4 * HR, time: "1h",
+        customer: { email: "marco@globex.io", attrs: { Plan: "Pro", MRR: "$1,890", Region: "EU-West", "First seen": "2025-01-08", "Open tickets": "1" } },
+        activity: [
+          { type: "system", actor: "Billing", action: "flagged duplicate on", target: "invoice #2188", time: now - 3 * HR },
+          { type: "comment", actor: "Finance bot", action: "commented on", target: "TKT-1051", body: "Duplicate confirmed. Refund eligible.", time: now - 2 * HR },
+        ],
+        messages: [
+          { from: "customer", author: "Marco Ruiz", time: "08:02", body: "Hello — our card was charged twice for the annual renewal on Aug 12. Invoice #2188 and #2189. Can you refund one?" },
+          { from: "agent", author: "Sofia", time: "08:15", body: "Sorry about that, Marco — I can confirm the duplicate. Escalating to billing for the refund." },
+        ],
+      },
+      {
+        id: "TKT-1049", requester: "Jenny Wilson", company: "Initech", channel: "phone",
+        subject: "SSO login loop after IdP change", snippet: "Users bounce between our IdP and your login page…",
+        status: "open", mine: true, due: now - 25 * MIN, time: "3h",
+        customer: { email: "jenny@initech.dev", attrs: { Plan: "Scale", MRR: "$5,200", Region: "US-West", "First seen": "2023-11-02", "Open tickets": "1" } },
+        activity: [
+          { type: "status", actor: "SLA bot", action: "breached first-response on", target: "TKT-1049", tone: "destructive", icon: "alert", time: now - 25 * MIN },
+        ],
+        messages: [
+          { from: "customer", author: "Jenny Wilson", time: "06:47", body: "After we rotated our SAML cert, users get stuck in a redirect loop between Okta and your sign-in. 200+ users affected." },
+        ],
+      },
+      {
+        id: "TKT-1042", requester: "Tom Baker", company: "Hooli", channel: "email",
+        subject: "CSV export missing custom fields", snippet: "The export only includes default columns…",
+        status: "snoozed", mine: true, due: null, time: "2d",
+        customer: { email: "tom@hooli.xyz", attrs: { Plan: "Pro", MRR: "$940", Region: "US-East", "First seen": "2025-06-30", "Open tickets": "1" } },
+        activity: [],
+        messages: [
+          { from: "customer", author: "Tom Baker", time: "Aug 15", body: "Exports drop our custom fields. Is that expected?" },
+          { from: "agent", author: "Rakesh", time: "Aug 15", body: "Known limitation — fix ships next week. Snoozing until the release." },
+        ],
+      },
+      {
+        id: "TKT-1038", requester: "Ana Silva", company: "Vandelay", channel: "chat",
+        subject: "API rate limits for batch imports", snippet: "What are the burst limits on /v2/import…",
+        status: "open", mine: false, due: now + 7 * HR, time: "5h",
+        customer: { email: "ana@vandelay.com", attrs: { Plan: "Free", MRR: "$0", Region: "SA-East", "First seen": "2026-07-19", "Open tickets": "1" } },
+        activity: [],
+        messages: [
+          { from: "customer", author: "Ana Silva", time: "04:10", body: "Planning a 2M-row import — what are the rate limits on /v2/import, and do you support idempotency keys?" },
+        ],
+      },
+    ],
+  });
+});
+</script>
+</body>
+</html>

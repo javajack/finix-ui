@@ -34,10 +34,18 @@
       <div class="fx-card">
         <div class="fx-card-header">
           <div class="fx-card-title fx-card-title--lg">Product inventory — data grid</div>
-          <div class="fx-card-desc">Full grid: sort (header ↕ or column menu), <b>drag headers to reorder</b>, <b>drag edges to resize</b>, pin left/right, hide columns, <b>double-click cells to edit</b>, Linear-style filters, search, selection, pagination.</div>
+          <div class="fx-card-desc">Full grid: sort (header ↕ or column menu), <b>drag headers to reorder</b>, <b>drag edges to resize</b>, pin left/right, hide columns, <b>double-click cells to edit</b>, Linear-style filters, search, selection, pagination. <b>Click a row</b> to open the record peek panel — drag the divider to resize it.</div>
         </div>
         <div class="fx-card-content">
-          <div id="grid-products"></div>
+          <div class="fx-split fx-split--flush fx-split--peek" data-fx-split data-collapsed id="split-products" style="--split:63%;--split-min-b:19rem">
+            <div class="fx-split-pane">
+              <div id="grid-products"></div>
+            </div>
+            <div class="fx-split-divider" aria-label="Resize record panel"></div>
+            <div class="fx-split-pane">
+              <div id="peek-products"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -218,6 +226,11 @@ window.addEventListener("DOMContentLoaded", () => {
     pageSize: 8,
     maxHeight: 430,
     pinned: { name: "left" },
+    onRowClick: (row) => {
+      const view = grid.getViewRows();
+      peek.open(view, view.indexOf(row));
+      split.expand();
+    },
     columns: [
       { key: "name", label: "Product", sortable: true, editable: true, width: 200 },
       { key: "sku", label: "SKU", mono: true, width: 100 },
@@ -237,6 +250,24 @@ window.addEventListener("DOMContentLoaded", () => {
       { key: "stock", label: "Stock", type: "number" },
     ],
     onChange: (pred) => grid.setPredicate(pred),
+  });
+
+  // ---- record peek panel on the products grid ----
+  const split = fxSplit(document.getElementById("split-products"));
+  const peek = fxPeek(document.getElementById("peek-products"), {
+    title: (r) => r.name,
+    fields: [
+      { key: "name", label: "Product", editable: true },
+      { key: "sku", label: "SKU", mono: true },
+      { key: "category", label: "Category", render: (v) => `<span class="fx-badge fx-badge--outline">${v}</span>` },
+      { key: "status", label: "Status", render: stBadge },
+      { key: "price", label: "Price", editable: true, type: "number", format: (v) => "$" + (+v).toFixed(2) },
+      { key: "stock", label: "Stock", editable: true, type: "number" },
+      { key: "updated", label: "Updated", mono: true },
+    ],
+    onChange: () => grid.refresh(),
+    onClose: () => { split.collapse(); grid.setActiveRow(null); },
+    onNav: (r) => grid.setActiveRow(r._i),
   });
 
   // ---- filter builder + deals table ----

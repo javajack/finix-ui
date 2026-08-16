@@ -1185,6 +1185,130 @@
     };
   };
 
+  /* ---------- split pane ---------- */
+  window.fxSplit = function (el) {
+    if (el.__fxSplit) return el.__fxSplit;
+    const divider = el.querySelector(":scope > .fx-split-divider");
+    if (!divider) return null;
+    if (!divider.querySelector(".fx-split-grip")) {
+      divider.insertAdjacentHTML("beforeend",
+        `<span class="fx-split-grip"><svg viewBox="0 0 8 12" fill="currentColor"><circle cx="2" cy="2" r="1"/><circle cx="6" cy="2" r="1"/><circle cx="2" cy="6" r="1"/><circle cx="6" cy="6" r="1"/><circle cx="2" cy="10" r="1"/><circle cx="6" cy="10" r="1"/></svg></span>`);
+    }
+    if (!divider.hasAttribute("tabindex")) divider.setAttribute("tabindex", "0");
+    divider.setAttribute("role", "separator");
+    divider.setAttribute("aria-orientation", "vertical");
+    const initial = getComputedStyle(el).getPropertyValue("--split").trim() || "60%";
+    const setPct = (pct) => el.style.setProperty("--split", Math.min(88, Math.max(12, pct)) + "%");
+    const getPct = () => parseFloat(getComputedStyle(el).getPropertyValue("--split")) || 60;
+    divider.addEventListener("pointerdown", (e) => {
+      if (el.hasAttribute("data-collapsed")) return;
+      e.preventDefault();
+      el.classList.add("is-dragging");
+      try { divider.setPointerCapture(e.pointerId); } catch (_) {}
+      const rect = el.getBoundingClientRect();
+      const move = (ev) => setPct(((ev.clientX - rect.left) / rect.width) * 100);
+      const up = () => {
+        el.classList.remove("is-dragging");
+        divider.removeEventListener("pointermove", move);
+        divider.removeEventListener("pointerup", up);
+      };
+      divider.addEventListener("pointermove", move);
+      divider.addEventListener("pointerup", up);
+    });
+    divider.addEventListener("dblclick", () => { el.style.removeProperty("--split"); el.style.setProperty("--split", initial); });
+    divider.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { setPct(getPct() - 2); e.preventDefault(); }
+      if (e.key === "ArrowRight") { setPct(getPct() + 2); e.preventDefault(); }
+    });
+    const api = {
+      collapse() { el.setAttribute("data-collapsed", ""); },
+      expand() { el.setAttribute("data-animate", ""); el.removeAttribute("data-collapsed"); },
+      get collapsed() { return el.hasAttribute("data-collapsed"); },
+      el,
+    };
+    el.__fxSplit = api;
+    return api;
+  };
+  $$("[data-fx-split]").forEach((el) => fxSplit(el));
+
+  /* ---------- record peek panel ---------- */
+  window.fxPeek = function (root, opts = {}) {
+    const esc2 = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    root.classList.add("fx-peek");
+    let records = [], idx = -1;
+    const rec = () => records[idx];
+    function fieldRow(f) {
+      const r = rec(), v = r[f.key];
+      const body = f.render ? f.render(v, r) : esc2(f.format ? f.format(v) : v ?? "—");
+      return `<div class="fx-peek-field"><span class="fx-peek-label">${esc2(f.label)}</span>` +
+        `<span class="fx-peek-value${f.mono ? " fx-peek-mono" : ""}"${f.editable ? ` data-editable data-key="${esc2(f.key)}"` : ""}>${body}</span></div>`;
+    }
+    function render(fresh) {
+      const r = rec();
+      if (!r) {
+        root.innerHTML = `<div class="fx-peek-empty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+          <span>Select a row to inspect it here.</span></div>`;
+        return;
+      }
+      const title = opts.title ? opts.title(r) : r[opts.titleKey || "name"];
+      root.innerHTML =
+        `<div class="fx-peek-head">
+          <span class="fx-peek-title">${esc2(title)}</span>
+          <span class="fx-peek-count">${idx + 1}/${records.length}</span>
+          <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-peek="prev" aria-label="Previous record" ${idx === 0 ? "disabled" : ""}><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+          <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-peek="next" aria-label="Next record" ${idx >= records.length - 1 ? "disabled" : ""}><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-peek="close" aria-label="Close panel"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+        </div>
+        <div class="fx-peek-body${fresh ? " is-fresh" : ""}">${(opts.fields || []).map(fieldRow).join("")}</div>`;
+    }
+    root.addEventListener("click", (e) => {
+      const nav = e.target.closest("[data-peek]");
+      if (nav) {
+        const act = nav.dataset.peek;
+        if (act === "close") { opts.onClose?.(); return; }
+        if (act === "prev" && idx > 0) idx--;
+        if (act === "next" && idx < records.length - 1) idx++;
+        render(true);
+        opts.onNav?.(rec(), idx);
+        return;
+      }
+      const val = e.target.closest("[data-editable]");
+      if (val && !val.querySelector("input")) {
+        const key = val.dataset.key;
+        const f = (opts.fields || []).find((x) => x.key === key);
+        const orig = rec()[key];
+        val.innerHTML = `<input class="fx-input" value="${esc2(orig)}" ${f?.type === "number" ? 'inputmode="decimal"' : ""}>`;
+        const inp = val.querySelector("input");
+        inp.focus(); inp.select();
+        let done = false;
+        const commit = () => {
+          if (done) return; done = true;
+          let v = inp.value;
+          if (f?.type === "number") { v = parseFloat(v); if (isNaN(v)) v = orig; }
+          rec()[key] = v;
+          render(false);
+          if (v !== orig) opts.onChange?.(rec(), key, v);
+        };
+        inp.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter") commit();
+          if (ev.key === "Escape") { done = true; render(false); }
+        });
+        inp.addEventListener("blur", commit);
+      }
+    });
+    render(false);
+    return {
+      open(recs, i = 0) { records = recs; idx = i; render(true); },
+      close() { records = []; idx = -1; render(false); },
+      next() { if (idx < records.length - 1) { idx++; render(true); opts.onNav?.(rec(), idx); } },
+      prev() { if (idx > 0) { idx--; render(true); opts.onNav?.(rec(), idx); } },
+      refresh: () => render(false),
+      get record() { return rec(); },
+      get index() { return idx; },
+    };
+  };
+
   /* ---------- notification center ---------- */
   doc.addEventListener("click", (e) => {
     const mark = e.target.closest("[data-fx-notif-readall]");

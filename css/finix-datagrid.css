@@ -20,6 +20,9 @@
 .fx-dg-table tbody tr { border-bottom: 0; }
 .fx-dg-table tbody tr:hover td { background: color-mix(in oklab, var(--muted) 55%, var(--card)); }
 .fx-dg-table tbody tr[data-selected] td { background: color-mix(in oklab, var(--muted) 80%, var(--card)); }
+.fx-dg-table.fx-dg-clickable tbody tr { cursor: pointer; }
+.fx-dg-table tbody tr[data-active] td { background: color-mix(in oklab, var(--primary) 9%, var(--card)); }
+.fx-dg-table tbody tr[data-active] td:first-child { box-shadow: inset 2px 0 0 var(--primary); }
 
 .fx-dg-th { display: flex; align-items: center; gap: 0.25rem; min-height: 2rem; }
 .fx-dg-th-label { cursor: grab; user-select: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

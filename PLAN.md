@@ -91,7 +91,7 @@ Serves CRM, support, PM, identity, fintech, e-sign, commerce, logistics (8+ doma
   fulfillment, dispute, shipment, signing-order, approval chains later.
 - Loop steps 1–8. Extra: filter chips must use `--well`+card pattern like log levels.
 
-### T2. Master-detail split-pane + record peek (`fx-split`, `fxPeek`) → data.html
+### ✅ T2. Master-detail split-pane + record peek (`fx-split`, `fxPeek`) → data.html
 Powers support inbox, CRM records, reconciliation, comms later.
 - `fx-split`: CSS grid split-pane w/ draggable divider (pointer events →
   testable), collapse toggle, min sizes.

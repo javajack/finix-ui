@@ -321,6 +321,23 @@
    "js": "fxActivity(el, {events:[{type:'comment'|'status'|'system', actor, action, target, body, icon, tone, from, to, time}], filters}) -> {add(ev), filter(type)}. Day-group headers, type filter chips, relative times. Universal: CRM, support, audit, fintech, e-sign."
   },
   {
+   "name": "record-peek",
+   "category": "data",
+   "classes": [
+    "fx-peek",
+    "fx-peek-head",
+    "fx-peek-title",
+    "fx-peek-count",
+    "fx-peek-body",
+    "fx-peek-field",
+    "fx-peek-label",
+    "fx-peek-value",
+    "fx-peek-empty"
+   ],
+   "markup": "<div id=\"peek\"></div>",
+   "js": "fxPeek(el, {fields:[{key,label,editable,mono,type,format,render}], title, onChange, onClose, onNav}) -> {open(records,i), close, next, prev}. Master-detail record panel: field list, click-to-edit values, prev/next arrows, n/m counter. Pair with fx-split + fxDataGrid onRowClick/setActiveRow."
+  },
+  {
    "name": "tabs",
    "category": "navigation",
    "classes": [
@@ -588,6 +605,20 @@
    ],
    "markup": "see demo/shell.js",
    "js": "[data-fx-sidebar-toggle] collapses to icon rail"
+  },
+  {
+   "name": "split-pane",
+   "category": "layout",
+   "classes": [
+    "fx-split",
+    "fx-split--flush",
+    "fx-split--peek",
+    "fx-split-pane",
+    "fx-split-divider",
+    "fx-split-grip"
+   ],
+   "markup": "<div class=\"fx-split\" data-fx-split style=\"--split:60%\"><div class=\"fx-split-pane\">A</div><div class=\"fx-split-divider\" aria-label=\"Resize\"></div><div class=\"fx-split-pane\">B</div></div>",
+   "js": "fxSplit(el) auto-inits [data-fx-split]: pointer-drag divider (clamped 12-88%, respects --split-min-a/b), dblclick reset, arrow-key resize, api.collapse()/expand() (animated). --flush for embedding in cards; --peek turns pane B into a right sheet under 920px."
   },
   {
    "name": "stat-card",

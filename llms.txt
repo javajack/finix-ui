@@ -20,6 +20,7 @@ AI set: fx-reasoning + fx-cot steps · fx-ctx context ring (--used %) · fx-isla
 Domains (css/finix-domains.css + js/finix-domains.js): fx-tickertape · fxOrderBook · fx-ledger · fx-pricing/fx-plan/fx-usage · fx-entity + [data-fx-follow] · fxComments (@mentions, reactions) · fx-review-summary · fx-org (pure-CSS org chart) · fx-whosout · fxTimesheet (timer) · fx-matrix (self vs manager marks).
 JS API: finix.setTheme(mode), finix.setBrand(brand), finix.toast({title, description, variant, action}), finix.openDialog(sel).
 Activity timeline v2: fxActivity(el, {events}) — interleaved comment/status/system events, day-group headers, type filter chips, relative times; api.add(ev) animates new items in. Staged status: <ol class="fx-stages"> (+ --vertical) with li[data-state=done|active|pending|failed] — fulfillment, disputes, signing orders, approval chains.
+Master-detail: .fx-split[data-fx-split] split-pane (pointer-drag divider, collapse/expand, --flush for cards, --peek = right sheet on narrow) + fxPeek(el, {fields, onChange, onNav, onClose}) record panel with inline-editable fields and prev/next. fxDataGrid gained onRowClick, setActiveRow(i), getViewRows() for wiring.
 
 ## Conventions
 

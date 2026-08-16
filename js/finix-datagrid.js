@@ -34,6 +34,7 @@
       selection: new Set(),
       globalFilter: "",
       predicate: null,
+      activeRow: null,
     };
     const id = "dg" + (++uid);
     const colByKey = (k) => cols.find((c) => c.key === k);
@@ -143,7 +144,7 @@
         }).join("") + `</tr>`;
 
       tbody.innerHTML = pageRows.length
-        ? pageRows.map((r) => `<tr data-i="${r._i}" ${state.selection.has(r._i) ? "data-selected" : ""}>` +
+        ? pageRows.map((r) => `<tr data-i="${r._i}" ${state.selection.has(r._i) ? "data-selected" : ""} ${state.activeRow === r._i ? "data-active" : ""}>` +
             (opts.select ? `<td class="fx-dg-selcol"><input type="checkbox" class="fx-checkbox fx-dg-sel" ${state.selection.has(r._i) ? "checked" : ""} aria-label="Select row"></td>` : "") +
             ks.map((k) => cellHtml(colByKey(k), r)).join("") + `</tr>`).join("")
         : `<tr><td colspan="${ks.length + (opts.select ? 1 : 0)}"><div class="fx-empty" style="border:0;padding:2rem"><div class="fx-empty-title">No results</div><div class="fx-empty-desc">Try adjusting the filters or search.</div></div></td></tr>`;
@@ -316,6 +317,22 @@
       dragKey = null;
     });
 
+    // row click -> active row + callback
+    if (opts.onRowClick) {
+      q(".fx-dg-table").classList.add("fx-dg-clickable");
+      tbody.addEventListener("click", (e) => {
+        if (e.target.closest("input, button, a, .fx-dg-selcol")) return;
+        const tr = e.target.closest("tr[data-i]");
+        if (!tr) return;
+        const row = data.find((r) => r._i === +tr.dataset.i);
+        if (!row) return;
+        state.activeRow = row._i;
+        tbody.querySelectorAll("tr[data-active]").forEach((t) => t.removeAttribute("data-active"));
+        tr.setAttribute("data-active", "");
+        opts.onRowClick(row, tr);
+      });
+    }
+
     // inline edit
     tbody.addEventListener("dblclick", (e) => {
       const td = e.target.closest("td.fx-dg-editable");
@@ -353,6 +370,8 @@
       setGlobalFilter: (v) => { state.globalFilter = v; state.page = 0; render(); },
       setPredicate: (fn) => { state.predicate = fn; state.page = 0; render(); },
       getData: () => data,
+      getViewRows: () => filteredRows(),
+      setActiveRow: (i) => { state.activeRow = i; render(); },
       filterSlot: q(".fx-dg-filterslot"),
       el: root,
     };

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logistics · Finix UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/finix.css">
+<link rel="stylesheet" href="../css/finix-widgets.css">
+<link rel="stylesheet" href="../css/finix-domains.css">
+<link rel="stylesheet" href="../css/finix-logi.css">
+<script>try{var t=localStorage.getItem('fx-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var b=localStorage.getItem('fx-brand');if(b)document.documentElement.dataset.brand=b;}catch(e){}</script>
+<script defer src="charts.js"></script>
+<script defer src="shell.js"></script>
+<script defer src="../js/finix.js"></script>
+<script defer src="../js/finix-domains.js"></script>
+<script defer src="../js/finix-logi.js"></script>
+</head>
+<body>
+<div class="fx-shell">
+  <div class="fx-shell-main">
+    <div class="fx-shell-content">
+
+      <div class="fx-page-header">
+        <div>
+          <h1 class="fx-page-title">Logistics</h1>
+          <p class="fx-page-sub">Supply-chain screens — shipments with live route stages and SLA countdowns, a moving truck on a CSS-only map, scan history, warehouse bin heat, a scan-to-pick list and the driver's run sheet.</p>
+        </div>
+      </div>
+
+      <!-- shipments -->
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(20rem,1fr))">
+        <div class="fx-lg-ship">
+          <div class="fx-lg-ship-top"><span class="fx-lg-awb">AWB 7841-2296-01</span><span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">In transit</span></div>
+          <div class="fx-lg-route"><b>BLR</b> Bengaluru → <b>DEL</b> Delhi · 14 cartons · 212 kg</div>
+          <ol class="fx-stages">
+            <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Picked up</span></li>
+            <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Hub BLR</span></li>
+            <li data-state="active"><span class="fx-stage-dot"></span><span class="fx-stage-label">Linehaul</span></li>
+            <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Out for delivery</span></li>
+          </ol>
+          <div class="fx-row" style="gap:.5rem"><span class="fx-text-xs fx-muted">Delivery SLA</span><span id="sla-1"></span></div>
+        </div>
+        <div class="fx-lg-ship is-exception">
+          <div class="fx-lg-ship-top"><span class="fx-lg-awb">AWB 7841-2287-04</span><span class="fx-badge fx-badge--warning" style="font-size:.5625rem">Exception</span></div>
+          <div class="fx-lg-route"><b>BOM</b> Mumbai → <b>HYD</b> Hyderabad · 3 pallets · 480 kg</div>
+          <ol class="fx-stages">
+            <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Picked up</span></li>
+            <li data-state="failed"><span class="fx-stage-dot">!</span><span class="fx-stage-label">Held — customs doc</span></li>
+            <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Linehaul</span></li>
+            <li data-state="pending"><span class="fx-stage-dot"></span><span class="fx-stage-label">Delivery</span></li>
+          </ol>
+          <div class="fx-row" style="gap:.5rem"><span class="fx-text-xs fx-muted">SLA at risk</span><span id="sla-2"></span></div>
+        </div>
+        <div class="fx-lg-ship">
+          <div class="fx-lg-ship-top"><span class="fx-lg-awb">AWB 7841-2301-11</span><span class="fx-badge fx-badge--success" style="font-size:.5625rem">Delivered</span></div>
+          <div class="fx-lg-route"><b>MAA</b> Chennai → <b>BLR</b> Bengaluru · 2 cartons · 18 kg</div>
+          <ol class="fx-stages">
+            <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Picked up</span></li>
+            <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Linehaul</span></li>
+            <li data-state="done"><span class="fx-stage-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="fx-stage-label">Delivered · POD ✓</span></li>
+          </ol>
+          <div class="fx-text-xs fx-muted">Signed by R. Mehta · 11:42</div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)">
+        <!-- route map -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">AWB 7841-2296-01 — live route</div>
+            <div class="fx-card-desc">Pure CSS map: the truck rides an <code>offset-path</code> along the route. No tiles, no SDK.</div>
+          </div>
+          <div class="fx-card-content">
+            <div class="fx-lg-map">
+              <svg viewBox="0 0 700 240">
+                <path class="route-done" d="M 40 150 C 140 60, 260 210, 380 120"/>
+                <path class="route" d="M 380 120 S 560 100, 660 60"/>
+                <circle class="fx-lg-stop is-done" cx="40" cy="150" r="6"/>
+                <circle class="fx-lg-stop is-done" cx="380" cy="120" r="6"/>
+                <circle class="fx-lg-stop" cx="660" cy="60" r="6"/>
+                <g class="fx-lg-truckg"><circle class="halo" r="19"/><circle r="13"/><text y="4.5" text-anchor="middle" font-size="13">🚚</text></g>
+              </svg>
+              <span class="fx-lg-maplabel" style="left:2%;top:70%">BLR hub · dep 06:10</span>
+              <span class="fx-lg-maplabel" style="left:48%;top:60%">NGP sort · scanned 14:22</span>
+              <span class="fx-lg-maplabel" style="right:2%;top:14%">DEL hub · ETA 21:40</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- scan timeline -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Scan history</div>
+            <div class="fx-card-desc">Every checkpoint, facility-coded.</div>
+          </div>
+          <div class="fx-card-content"><div id="scans"></div></div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(24rem,1fr))">
+        <!-- bin grid -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Warehouse occupancy — Zone C</div>
+            <div class="fx-card-desc">Aisle × bay heat. <b>Click a bin</b> for its contents.</div>
+          </div>
+          <div class="fx-card-content"><div id="bins"></div></div>
+        </div>
+
+        <!-- pick list -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Pick list — wave 14</div>
+            <div class="fx-card-desc">Type a SKU (try <b style="font-family:var(--font-mono)">FNX-KB-01</b>) and hit Enter — or tap a row.</div>
+          </div>
+          <div class="fx-card-content"><div id="picklist"></div></div>
+        </div>
+      </div>
+
+      <div class="fx-grid" style="grid-template-columns:repeat(auto-fit,minmax(24rem,1fr))">
+        <!-- driver manifest -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Run sheet — Vehicle KA-01-F-8841</div>
+            <div class="fx-card-desc">Drag stops to resequence; the van's load meter rides along.</div>
+          </div>
+          <div class="fx-card-content fx-stack" style="gap:.875rem">
+            <div class="fx-lg-meter"><span>Load</span><div class="fx-lg-meter-bar"><i style="--_w:72%"></i></div><b>380 / 530 kg</b></div>
+            <div class="fx-sortable">
+              <div class="fx-sortable-item fx-lg-stoprow"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button><span class="fx-lg-seq">1</span><span>Koramangala 4th Block<small>2 cartons · code on arrival</small></span><span class="fx-lg-eta">10:00–10:30</span></div>
+              <div class="fx-sortable-item fx-lg-stoprow"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button><span class="fx-lg-seq">2</span><span>HSR Sector 2<small>1 pallet · dock B</small></span><span class="fx-lg-eta">10:45–11:15</span></div>
+              <div class="fx-sortable-item fx-lg-stoprow"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button><span class="fx-lg-seq">3</span><span>Indiranagar 100ft Rd<small>5 cartons · fragile</small></span><span class="fx-lg-eta">11:40–12:10</span></div>
+              <div class="fx-sortable-item fx-lg-stoprow"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button><span class="fx-lg-seq">4</span><span>Whitefield ITPL<small>6 cartons · gate pass FNX-88</small></span><span class="fx-lg-eta">13:00–13:45</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- exceptions -->
+        <div class="fx-card">
+          <div class="fx-card-header">
+            <div class="fx-card-title fx-card-title--lg">Exceptions queue</div>
+            <div class="fx-card-desc">Resolve or reroute — resolved rows settle down.</div>
+          </div>
+          <div class="fx-card-content" id="exceptions">
+            <div class="fx-lg-exc"><span class="fx-lg-exc-ic">📄</span><span><b style="font-weight:550">Customs doc missing</b><small style="display:block;color:var(--muted-foreground);font-size:.6875rem">AWB 7841-2287-04 · held at BOM · 2h</small></span><span style="display:flex;gap:.375rem"><button class="fx-btn fx-btn--sm" data-resolve>Resolve</button><button class="fx-btn fx-btn--outline fx-btn--sm">Reroute</button></span></div>
+            <div class="fx-lg-exc"><span class="fx-lg-exc-ic">🚪</span><span><b style="font-weight:550">Consignee unavailable</b><small style="display:block;color:var(--muted-foreground);font-size:.6875rem">AWB 7841-2290-02 · 2nd attempt tomorrow</small></span><span style="display:flex;gap:.375rem"><button class="fx-btn fx-btn--sm" data-resolve>Resolve</button><button class="fx-btn fx-btn--outline fx-btn--sm">Reroute</button></span></div>
+            <div class="fx-lg-exc"><span class="fx-lg-exc-ic">📦</span><span><b style="font-weight:550">Carton damaged at sort</b><small style="display:block;color:var(--muted-foreground);font-size:.6875rem">AWB 7841-2284-09 · claim opened</small></span><span style="display:flex;gap:.375rem"><button class="fx-btn fx-btn--sm" data-resolve>Resolve</button><button class="fx-btn fx-btn--outline fx-btn--sm">Reroute</button></span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  /* SLA chips (reuse fx-sla live countdown) */
+  const now = Date.now(), HR = 36e5, MIN = 6e4;
+  document.getElementById("sla-1").setAttribute("data-fx-sla", now + 7 * HR);
+  document.getElementById("sla-2").setAttribute("data-fx-sla", now + 38 * MIN);
+  window.fxSlaTick && fxSlaTick();
+
+  /* scan timeline */
+  fxActivity(document.getElementById("scans"), {
+    events: [
+      { type: "status", actor: "NGP.SORT.02", action: "linehaul departed", target: "AWB 7841-2296-01", icon: "check", tone: "primary", from: "At facility", to: { label: "In transit", tone: "success" }, time: now - 40 * MIN },
+      { type: "system", actor: "NGP.SORT.02", action: "inbound scan at", target: "Nagpur sort center", time: now - 3 * HR },
+      { type: "system", actor: "BLR.HUB.01", action: "linehaul departed from", target: "Bengaluru hub · bag 88 of 112", time: now - 9 * HR },
+      { type: "comment", actor: "Pickup — S. Reddy", action: "collected from", target: "Finix Labs, Indiranagar", body: "14 cartons, all sealed. Shipper label FNX-OUT-2296.", time: now - 12 * HR },
+    ],
+  });
+
+  /* bin grid */
+  const binData = {};
+  const aisles = ["A", "B", "C", "D"];
+  for (let a = 0; a < 4; a++) for (let b = 1; b <= 10; b++) {
+    const occ = Math.max(0, Math.min(100, Math.round(35 + Math.sin(a * 3 + b * 1.7) * 45 + (b % 3) * 12)));
+    if (occ > 8) binData[aisles[a] + b] = {
+      occ,
+      items: [
+        { name: "Aurora keyboards", sku: "FNX-KB-01", qty: Math.round(occ / 9) },
+        { name: "Desk mats XL", sku: "FNX-MAT-03", qty: Math.round(occ / 14) },
+      ],
+    };
+  }
+  window.__bins = fxBinGrid(document.getElementById("bins"), { aisles, bays: 10, data: binData });
+
+  /* pick list */
+  window.__pick = fxPickList(document.getElementById("picklist"), {
+    items: [
+      { name: "Aurora keyboard · graphite", sku: "FNX-KB-01", loc: "C4", qty: 2 },
+      { name: "Desk mat XL · sage", sku: "FNX-MAT-03", loc: "C6", qty: 1 },
+      { name: "Braided cable trio", sku: "FNX-CBL-11", loc: "A2", qty: 3 },
+      { name: "Monospace mug", sku: "FNX-MUG-02", loc: "B7", qty: 4 },
+      { name: "Grid notebook A5", sku: "FNX-NB-05", loc: "D3", qty: 6 },
+    ],
+    onDone: () => finix.toast({ title: "Wave 14 complete", description: "Tote to packing lane 2.", variant: "success" }),
+  });
+
+  /* exceptions */
+  document.getElementById("exceptions").addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-resolve]");
+    if (!btn) return;
+    const row = btn.closest(".fx-lg-exc");
+    row.classList.add("is-resolved");
+    btn.closest("span").innerHTML = '<span class="fx-badge fx-badge--success" style="font-size:.5625rem">Resolved</span>';
+    finix.toast({ title: "Exception resolved", description: "Shipment released back into flow.", variant: "success" });
+  });
+});
+</script>
+</body>
+</html>

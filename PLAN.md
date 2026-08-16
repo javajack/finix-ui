@@ -662,7 +662,7 @@ Module `css/finix-learn.css` + `js/finix-learn.js`, `fx-lms-*`.
 - Streak calendar (timeheat reuse) · leaderboard rows (rank medals, delta
   chips) · certificate = fx-doc variant (print-verified).
 
-### E4. Logistics & fleet → new page `logistics.html` ("Logistics", Industries)
+### ✅ E4. Logistics & fleet → new page `logistics.html` ("Logistics", Industries)
 Module `css/finix-logi.css` + `js/finix-logi.js`, `fx-lg-*`.
 - Shipment board — cards w/ fx-stages route progress, exception tint + reason
   chip, ETA countdown (fx-sla reuse).

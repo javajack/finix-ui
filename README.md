@@ -21,21 +21,25 @@ The entire shadcn ecosystem shares one CSS-variable token contract. Finix ports 
 <html data-theme="dark" data-brand="ocean">
 ```
 
-Two orthogonal theme axes: **mode** (`light`/`dark`) × **brand** (`finix`, `ocean`, `forest`, `slate-green`, `sunset`). Add your own brand by overriding `--primary`, `--ring`, `--chart-*` under `[data-brand="acme"]`.
+Two orthogonal theme axes: **mode** (`light`/`dark`) × **brand** (`finix` warm-sage default, `mono`, `ocean`, `forest`, `sunset`). Add your own brand by overriding `--primary`, `--ring`, `--chart-*` under `[data-brand="acme"]`.
 
 ## What's inside
+
+**106 registered components** (see `manifest.json`), organized in composable layers:
 
 | Layer | Contents |
 |---|---|
 | `css/tokens.css` | OKLCH design tokens, 2 modes × 4 brands, shadows, radii, easing |
-| `css/finix.css` | ~60 primitives: buttons, badges, cards, every form control (incl. OTP, tags, rating, combobox, multi-select, phone, masked, number field, password strength, date + date-range pickers, dropzone), tables w/ sort, tabs, accordion, menus, dialogs (incl. stacked + confirm-typing), command palette, toasts, stepper, timeline, tree, sortable, notification center, empty states |
+| `css/finix.css` | ~65 primitives: buttons, badges, cards, every form control (incl. OTP, tags, rating, combobox, multi-select, phone, masked, number field, password strength, date + date-range pickers, dropzone), tables w/ sort, tabs, accordion, menus, dialogs (incl. stacked + confirm-typing), command palette, toasts, stepper, timeline + `fxActivity` activity feed, `fx-stages` staged status, `fx-split` split-pane + `fxPeek` record panel, tree, sortable, notification center, empty states |
 | `css/finix-widgets.css` | App shell (sidebar/topbar), KPI stat cards, Tremor-style tracker/bar-list/category-bar, kanban, AI chat, chart chrome, heatmap |
 | `js/finix.js` | All behaviors, data-attribute driven: `finix.toast()`, `finix.setTheme()`, positioning, ⌘K palette, kanban DnD, table sort/filter, number tickers |
 | `css/finix-datagrid.css` + `js/finix-datagrid.js` | Optional full data grid (`fxDataGrid`): sort, search, column resize/reorder/pin/hide, inline edit, selection, pagination + Linear-style `fxFilterBar` |
-| `css/finix-apps.css` + `js/finix-apps.js` | App components: event calendar (month/week, drag events), Gantt (draggable bars), Notion-style filter builder, virtualized log table (50k rows, live tail) |
+| `css/finix-apps.css` + `js/finix-apps.js` | App components: event calendar (month/week, drag events), Gantt (draggable bars), Notion-style filter builder, virtualized log table (50k rows, live tail), `fxImporter` CSV import wizard |
+| `css/finix-domains.css` + `js/finix-domains.js` | Domain components: ticker tape, order book, ledger, pricing/usage/invoices, entity cards, comments w/ @mentions, reviews, org chart, timesheet, review matrix |
+| `css/finix-devtools.css` + `js/finix-devtools.js` | Developer platform: `fxDiff` unified/split diff viewer, API-key rows (hold-to-reveal), env-var editor, webhook delivery log, `fxJsonTree` |
 | `js/finix-editor.js` | `fxEditor` — Notion-style rich text (bubble menu, slash commands, md shortcuts) + `fxCropper` — image crop with aspect lock |
 | `demo/charts.js` | Dependency-free SVG charts: area/line, bars (incl. negative + stacked), hbars, combo, scatter, donut, gauge, spark — interactive legends & tooltips, re-render on theme change |
-| `demo/` | Full admin template: Dashboard, Forms, Data, Overlays, Feedback, Widgets, Research |
+| `demo/` | Full admin template, 15 pages: Dashboard, Forms, Data & Tables, Navigation & Overlays, Feedback & Status, Charts, Projects, AI Assistant, Business & CRM, Dev & API, People & HR, Editor & Media, Motion Lab, Auth, Research |
 | `manifest.json` + `llms.txt` | Machine-readable registry for AI agents: component → classes → markup → JS hook |
 
 ## Run the demo

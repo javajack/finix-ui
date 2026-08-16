@@ -84,6 +84,15 @@ All optional, all namespaced; include the module's css+js and go.
 - Banking (css/finix-bank.css + js/finix-bank.js, fx-bank-*): fxBankFeed (day groups, running balance, category chips, api.add), fxBankCard (freeze + hold-to-reveal CVV), fxTransfer (recipients + keypad + review + onSend), fxBankBudgets rings; balance hero, bill rows, CSS UPI QR. Page: demo/banking.html.
 - Ops (fx-ops-* in css/finix-devtools.css): incident queue rows + SEV chips, on-call rotation strip w/ now marker, escalation on fx-stages; public status page recipe (fx-ops-banner + fx-tracker uptime bars + computed %). Pages: demo/ops.html + demo/site/status.html.
 
+## Vertical depth II (v0.5)
+
+- Travel (css/finix-travel.css + js/finix-travel.js, fx-tv-*): fxFareCal (per-day min fares), fxFlights (live filter/sort results), fxSeatMap (cabin grid w/ pricing + running total); search-widget, itinerary w/ layover warnings, boarding pass, hotel-rate patterns. Page: demo/travel.html.
+- Healthcare (css/finix-health.css + js/finix-health.js, fx-hc-*): fxDayGrid (provider × 30-min click-to-book), fxRx (sig preview + interaction warnings); patient chart w/ allergy pills, vitals w/ fxCharts.area band:{from,to}, queue board. Intake = fxWizard + fxSignature. Page: demo/clinic.html.
+- Learning (css/finix-learn.css + js/finix-learn.js, fx-lms-*): fxCurriculum (rollups, locks, complete()), fxQuiz (instant MCQ + fx-sortable order question + gauge); course cards, transcript-synced player, leaderboard, fx-doc certificate. Page: demo/learn.html.
+- Logistics (css/finix-logi.css + js/finix-logi.js, fx-lg-*): fxBinGrid (occupancy heat + contents), fxPickList (scan-to-pick + meter); shipment cards w/ fx-stages + fx-sla, CSS route map (SVG offset-path truck — keep it inside the svg), sortable run sheet, exceptions. Page: demo/logistics.html.
+- POS/Hospitality (css/finix-pos.css + js/finix-pos.js, fx-pos-*): fxPos (register w/ live totals + 86'd tiles), fxKds (ageing kitchen tickets), fxRoomGrid (stays, housekeeping cycle, editable rates); floor plan + split-bill patterns. Page: demo/hospitality.html.
+- Settings & security: fx-set-* shell (hash-routed panes) in finix-widgets.css — demo/settings.html; account-security recipes on demo/auth.html; full-page edge states in demo/errors/ (404/500/maintenance/offline); print docs (statement, contract note, certificate) on the fx-doc frame.
+
 ## Files
 
 - manifest.json: machine-readable registry — every component with its classes, markup snippet, and JS hook.
@@ -91,7 +100,7 @@ All optional, all namespaced; include the module's css+js and go.
 - css/finix.css: primitives (buttons, forms, tables, tabs, menus, dialogs, toasts, steppers, trees, calendars…).
 - css/finix-widgets.css: composites (app shell/sidebar/topbar, stat cards, tracker, bar list, kanban, chat, chart chrome).
 - js/finix.js: all behaviors, delegated; safe on dynamic DOM for click-driven features.
-- demo/: full admin template, 24 pages — dashboard, forms, data, overlays, feedback, charts, projects, flows, ai, mobile, crm, trading, banking, support, business, devtools, workflow, people, collab, ops, editor, motion, auth, research — plus a 6-page public site (demo/site/: home, launch, pricing, store, product, status).
+- demo/: full admin template, 30 pages — dashboard, forms, data, overlays, feedback, charts, projects, flows, ai, mobile, settings, crm, trading, banking, travel, clinic, learn, logistics, hospitality, support, business, devtools, workflow, people, collab, ops, editor, motion, auth, research — plus a 6-page public site (demo/site/) and 4 edge pages (demo/errors/).
 - demo/charts.js: optional dependency-free SVG charts — fxCharts.area/bars/donut/spark(el, opts); re-render on theme change.
 
 ## Provenance

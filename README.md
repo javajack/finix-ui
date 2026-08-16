@@ -25,7 +25,7 @@ Two orthogonal theme axes: **mode** (`light`/`dark`) × **brand** (`finix` warm-
 
 ## What's inside
 
-**197 registered components** (see `manifest.json`), organized in composable layers:
+**218 registered components** (see `manifest.json`), organized in composable layers:
 
 | Layer | Contents |
 |---|---|
@@ -45,9 +45,14 @@ Two orthogonal theme axes: **mode** (`light`/`dark`) × **brand** (`finix` warm-
 | `css/finix-mobile.css` + `js/finix-mobile.js` | Mobile-first kit: CSS device frames w/ container-query screens, `fxSheet` snap bottom sheet, swipe rows, tab bar, FAB speed dial, large-title collapse, pull-to-refresh |
 | `css/finix-shop.css` + `js/finix-shop.js` | Storefront: PLP live filters + product cards (CSS gradient art), PDP variants/gallery, `fxShopCart` cross-page cart drawer w/ free-shipping meter |
 | `css/finix-bank.css` + `js/finix-bank.js` | Consumer banking: `fxBankFeed` running-balance feed, `fxBankCard` freeze + hold-to-reveal, `fxTransfer` keypad flow, `fxBankBudgets` rings, bills + UPI |
+| `css/finix-travel.css` + `js/finix-travel.js` | Travel: `fxFareCal` fare calendar, `fxFlights` live-filtered results, `fxSeatMap` w/ running total; itinerary, boarding pass, hotel rates |
+| `css/finix-health.css` + `js/finix-health.js` | Clinic: `fxDayGrid` click-to-book scheduler, `fxRx` composer w/ interaction warnings; patient chart, vitals band, queue board |
+| `css/finix-learn.css` + `js/finix-learn.js` | LMS: `fxCurriculum` tree w/ rollups + locks, `fxQuiz` (instant MCQ + drag-order + gauge); lesson player, leaderboard, certificate |
+| `css/finix-logi.css` + `js/finix-logi.js` | Logistics: `fxBinGrid` warehouse heat, `fxPickList` scan-to-pick; shipments w/ SLA, CSS route map w/ moving truck, run sheet |
+| `css/finix-pos.css` + `js/finix-pos.js` | POS & hotel: `fxPos` register w/ live totals + split bill, `fxKds` ageing kitchen tickets, `fxRoomGrid` front desk; floor plan |
 | `js/finix-editor.js` | `fxEditor` — Notion-style rich text (bubble menu, slash commands, md shortcuts) + `fxCropper` — image crop with aspect lock |
 | `demo/charts.js` | Dependency-free SVG charts: area/line (w/ alert thresholds), bars (incl. negative + stacked), hbars, combo, scatter, donut, gauge, spark, funnel, cohort grid, candlestick, time heatmap — interactive legends & tooltips, re-render on theme change |
-| `demo/` | Full admin template, 24 pages + a 6-page public site (`demo/site/`: home, launch, pricing, store, product, status): Dashboard, Forms, Data & Tables, Navigation & Overlays, Feedback & Status, Charts, Projects, Wizards & Flows, AI Assistant, Mobile, Sales CRM, Trading, Banking, Support, Business Ops, Dev & API, Workflows, People & HR, Collaboration, Incidents, Editor & Media, Motion Lab, Auth, Research |
+| `demo/` | Full admin template, 30 pages + a 6-page public site (`demo/site/`) + 4 edge pages (`demo/errors/`): Dashboard, Forms, Data & Tables, Navigation & Overlays, Feedback & Status, Charts, Projects, Wizards & Flows, AI Assistant, Mobile, Settings, Sales CRM, Trading, Banking, Travel, Clinic, Learning, Logistics, Hospitality, Support, Business Ops, Dev & API, Workflows, People & HR, Collaboration, Incidents, Editor & Media, Motion Lab, Auth, Research |
 | `manifest.json` + `llms.txt` | Machine-readable registry for AI agents: component → classes → markup → JS hook |
 
 ## Run the demo

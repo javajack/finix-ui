@@ -720,7 +720,7 @@ No new module — primitives exist; this is composition + a few `fx-set-*` bits.
   window.print() in the browser session — render check via emulated media in
   devtools protocol or visual inspection of print stylesheet rules).
 
-### E8. v0.5 integration & release
+### ✅ E8. v0.5 integration & release
 Same shape as V8: manifest/llms/README/research.html; full new-page sweep
 (light+dark, console, overflow, brand + reduced-motion spot checks, restore
 user theme/brand); memory + PLAN checkboxes; commit; tag `v0.5.0`.

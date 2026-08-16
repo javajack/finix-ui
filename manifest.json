@@ -1,7 +1,7 @@
 {
  "$schema": "https://finix-ui.dev/schema/manifest-v1.json",
  "name": "finix-ui",
- "version": "0.4.0",
+ "version": "0.5.0",
  "description": "Plain HTML/CSS/JS admin component framework distilled from the best free shadcn-ecosystem patterns. Framework-agnostic, token-themed, agent-consumable.",
  "license": "MIT",
  "files": {
@@ -44,6 +44,26 @@
   "bankOptional": [
    "css/finix-bank.css",
    "js/finix-bank.js"
+  ],
+  "travelOptional": [
+   "css/finix-travel.css",
+   "js/finix-travel.js"
+  ],
+  "healthOptional": [
+   "css/finix-health.css",
+   "js/finix-health.js"
+  ],
+  "learnOptional": [
+   "css/finix-learn.css",
+   "js/finix-learn.js"
+  ],
+  "logisticsOptional": [
+   "css/finix-logi.css",
+   "js/finix-logi.js"
+  ],
+  "posOptional": [
+   "css/finix-pos.css",
+   "js/finix-pos.js"
   ]
  },
  "theming": {
@@ -2451,6 +2471,271 @@
    ],
    "markup": "(banner + per-service fx-tracker uptime bars + uptime % + past incidents — see demo/site/status.html)",
    "js": "Public status recipe: fx-tracker spans w/ data-state=degraded|down + computed uptime %; subscribe reuses the fx-mk waitlist capture."
+  },
+  {
+   "name": "fare-calendar",
+   "category": "travel",
+   "classes": [
+    "fx-tv-cal",
+    "fx-tv-day"
+   ],
+   "markup": "<div id=\"cal\"></div>",
+   "js": "fxFareCal(el, {days, startDow, prices:{day:minPrice}, onSelect}) — per-day min fares, 3 cheapest tinted, selectable."
+  },
+  {
+   "name": "flight-results",
+   "category": "travel",
+   "classes": [
+    "fx-tv-layout",
+    "fx-tv-flight",
+    "fx-tv-airline",
+    "fx-tv-route",
+    "fx-tv-path"
+   ],
+   "markup": "<div id=\"flights\"></div> + a rail of [data-f-stops]/[data-f-win]/[data-f-air]/[data-f-max] controls",
+   "js": "fxFlights(el, {flights, rail, countEl, sortEl}) — live filters (stops, departure windows, airlines, max price) + cheapest/fastest sort."
+  },
+  {
+   "name": "seat-map",
+   "category": "travel",
+   "classes": [
+    "fx-tv-cabin",
+    "fx-tv-row",
+    "fx-tv-seat",
+    "fx-tv-legend"
+   ],
+   "markup": "<div id=\"seatmap\"></div>",
+   "js": "fxSeatMap(el, {rows, occupied:[\"1C\"], extraRows:[1,12], price, priceExtra, onChange}) — cabin grid w/ aisle, per-seat tooltip pricing, running total."
+  },
+  {
+   "name": "travel-extras",
+   "category": "travel",
+   "classes": [
+    "fx-tv-search",
+    "fx-tv-swap",
+    "fx-tv-itin",
+    "fx-tv-seg",
+    "fx-tv-layover",
+    "fx-tv-pass",
+    "fx-tv-pass-tear",
+    "fx-tv-barcode",
+    "fx-tv-hotel",
+    "fx-tv-rate"
+   ],
+   "markup": "(see demo/travel.html)",
+   "js": "Patterns: search widget w/ swap, itinerary segments w/ short-connection warning, boarding pass (CSS perforation + barcode), hotel card w/ rate rows."
+  },
+  {
+   "name": "provider-day-grid",
+   "category": "healthcare",
+   "classes": [
+    "fx-hc-grid",
+    "fx-hc-prov",
+    "fx-hc-slot",
+    "fx-hc-appt"
+   ],
+   "markup": "<div id=\"daygrid\"></div>",
+   "js": "fxDayGrid(el, {providers, start, end, appts:[{prov,slot,len,name,type,color}], onBook}) — 30-min slots, spanning blocks, click-to-book empty slots."
+  },
+  {
+   "name": "prescription-composer",
+   "category": "healthcare",
+   "classes": [
+    "fx-hc-rx",
+    "fx-hc-sig",
+    "fx-hc-interact"
+   ],
+   "markup": "<div id=\"rx\"></div>",
+   "js": "fxRx(el, {drugs:[{name,doses,interactsWith,note}], currentMeds, onAdd}) — live sig preview, interaction warnings vs current meds, adds rows."
+  },
+  {
+   "name": "patient-chart",
+   "category": "healthcare",
+   "classes": [
+    "fx-hc-patient",
+    "fx-hc-allergy",
+    "fx-hc-vitrow",
+    "fx-hc-vital",
+    "fx-hc-list",
+    "fx-hc-row",
+    "fx-hc-queue",
+    "fx-hc-qcol",
+    "fx-hc-qcard",
+    "fx-hc-wait"
+   ],
+   "markup": "(see demo/clinic.html)",
+   "js": "Patterns: chart header w/ always-visible allergy pills, vitals strip w/ flags, problem/med lists, waiting-room queue w/ wait-time urgency ramp. Vitals chart uses fxCharts.area band:{from,to,label}."
+  },
+  {
+   "name": "curriculum-tree",
+   "category": "learning",
+   "classes": [
+    "fx-lms-curric",
+    "fx-lms-mod",
+    "fx-lms-lesson",
+    "fx-lms-check",
+    "fx-lms-dur"
+   ],
+   "markup": "<div id=\"curric\"></div>",
+   "js": "fxCurriculum(el, {modules:[{name,lessons:[{id,name,dur,done,locked}]}], current, onSelect}) — rollups per module, locked lessons, api.complete(id)/progress()."
+  },
+  {
+   "name": "quiz",
+   "category": "learning",
+   "classes": [
+    "fx-lms-q",
+    "fx-lms-opt",
+    "fx-lms-order",
+    "fx-lms-result"
+   ],
+   "markup": "<div id=\"quiz\"></div>",
+   "js": "fxQuiz(el, {questions:[{text,options,answer} | {type:\"order\",items,correct}], onSubmit}) — MCQs grade instantly, order question uses fx-sortable, submit renders a score gauge."
+  },
+  {
+   "name": "learning-extras",
+   "category": "learning",
+   "classes": [
+    "fx-lms-course",
+    "fx-lms-art",
+    "fx-lms-player",
+    "fx-lms-video",
+    "fx-lms-transcript",
+    "fx-lms-line",
+    "fx-lms-rank",
+    "fx-lms-medal"
+   ],
+   "markup": "(see demo/learn.html)",
+   "js": "Patterns: course cards w/ progress, lesson player whose transcript follows playback, leaderboard w/ movement deltas, certificate on fx-doc."
+  },
+  {
+   "name": "bin-grid",
+   "category": "logistics",
+   "classes": [
+    "fx-lg-bins",
+    "fx-lg-bin",
+    "fx-lg-bin-detail"
+   ],
+   "markup": "<div id=\"bins\"></div>",
+   "js": "fxBinGrid(el, {aisles, bays, data:{A1:{occ,items}}, onSelect}) — occupancy heat, per-bin tooltip, click loads contents."
+  },
+  {
+   "name": "pick-list",
+   "category": "logistics",
+   "classes": [
+    "fx-lg-pick",
+    "fx-lg-pickbox",
+    "fx-lg-sku",
+    "fx-lg-loc",
+    "fx-lg-meter"
+   ],
+   "markup": "<div id=\"picklist\"></div>",
+   "js": "fxPickList(el, {items:[{name,sku,loc,qty}], onDone}) — scan/type SKU + Enter marks picked, progress meter, tap-to-toggle."
+  },
+  {
+   "name": "logistics-extras",
+   "category": "logistics",
+   "classes": [
+    "fx-lg-ship",
+    "fx-lg-map",
+    "fx-lg-truckg",
+    "fx-lg-stoprow",
+    "fx-lg-exc"
+   ],
+   "markup": "(see demo/logistics.html)",
+   "js": "Patterns: shipment cards w/ fx-stages + fx-sla, CSS route map (SVG offset-path truck — keep the rider INSIDE the svg so path coords match the viewBox), sortable run sheet, exceptions queue."
+  },
+  {
+   "name": "pos-register",
+   "category": "pos",
+   "classes": [
+    "fx-pos",
+    "fx-pos-menu",
+    "fx-pos-tile",
+    "fx-pos-ticket",
+    "fx-pos-line",
+    "fx-pos-mod",
+    "fx-pos-course",
+    "fx-pos-totals",
+    "fx-pos-tender"
+   ],
+   "markup": "<div id=\"pos\"></div>",
+   "js": "fxPos(el, {menu:[{cat,items:[{name,price,glyph,out}]}], lines, gst, service, onSplit, onPay}) — tiles build the ticket, course separators + modifiers, live totals, 86-d state."
+  },
+  {
+   "name": "kitchen-display",
+   "category": "pos",
+   "classes": [
+    "fx-pos-kds",
+    "fx-pos-kticket",
+    "fx-pos-kage"
+   ],
+   "markup": "<div id=\"kds\"></div>",
+   "js": "fxKds(el, {tickets:[{num,where,at,items}], warn, late, onBump}) — tickets age green→amber→red by minutes, bump removes."
+  },
+  {
+   "name": "room-grid",
+   "category": "pos",
+   "classes": [
+    "fx-pos-pms",
+    "fx-pos-stay",
+    "fx-pos-night",
+    "fx-pos-hk",
+    "fx-pos-rate"
+   ],
+   "markup": "<div id=\"pms\"></div>",
+   "js": "fxRoomGrid(el, {rooms:[{num,type,hk}], nights, stays:[{room,from,len,guest,color}], rates, onRate}) — spanning stay bars, click-to-cycle housekeeping, click-to-edit rate row."
+  },
+  {
+   "name": "pos-extras",
+   "category": "pos",
+   "classes": [
+    "fx-pos-floor",
+    "fx-pos-table",
+    "fx-pos-timer",
+    "fx-pos-split-row"
+   ],
+   "markup": "(see demo/hospitality.html)",
+   "js": "Patterns: SVG floor plan (open/seated/check states + occupied timers), split-bill dialog w/ per-person rounding."
+  },
+  {
+   "name": "settings-shell",
+   "category": "app",
+   "classes": [
+    "fx-set",
+    "fx-set-nav",
+    "fx-set-pane",
+    "fx-set-row",
+    "fx-set-member"
+   ],
+   "markup": "(see demo/settings.html)",
+   "js": "Hash-routed settings IA: nav rail + [data-pane] cards, label/control rows, member rows; notifications reuse fxPermMatrix as a channel × event matrix."
+  },
+  {
+   "name": "account-security",
+   "category": "app",
+   "classes": [
+    "(composed from primitives)"
+   ],
+   "markup": "(see demo/auth.html \"Account security\")",
+   "js": "Recipes: 2FA setup (CSS QR + copyable secret + fx-otp), backup-code grid w/ used strikethrough, passkey rows, SSO buttons, sessions list w/ revoke."
+  },
+  {
+   "name": "error-pages",
+   "category": "template",
+   "classes": [
+    "(standalone pages)"
+   ],
+   "markup": "demo/errors/404.html · 500.html · maintenance.html · offline.html",
+   "js": "Full-page edge states: 404 search+links, 500 trace ID + retry, maintenance countdown, offline auto-retry backoff. Themed, shell-free."
+  },
+  {
+   "name": "print-documents",
+   "category": "template",
+   "classes": [
+    "fx-doc"
+   ],
+   "markup": "(banking.html statement · trading.html contract note · learn.html certificate)",
+   "js": "fx-doc variants: bank statement, SEBI contract note, course certificate — all inherit the print isolation stylesheet."
   }
  ]
 }

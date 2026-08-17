@@ -154,6 +154,8 @@
   transition: transform 0.24s var(--ease-out); touch-action: pan-y; user-select: none;
 }
 .fx-m-swipe-row.is-dragging { transition: none; }
+/* keyboard path: tabbing onto the hidden action buttons slides the row open */
+.fx-m-swipe:has(.fx-m-swipe-act:focus-visible) .fx-m-swipe-row { transform: translateX(-8.5rem); }
 .fx-m-swipe.is-leaving { transition: all 0.28s var(--ease-out); max-height: 0 !important; opacity: 0; }
 
 /* ============ FAB + speed dial ============ */

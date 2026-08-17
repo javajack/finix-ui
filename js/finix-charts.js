@@ -64,7 +64,7 @@
     const x = (i) => PL + (i / (n - 1)) * iw;
     const y = (v) => PT + ih - (v / max) * ih;
 
-    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.label || opts.ariaLabel || "Chart" });
     // grid + y labels
     for (let g = 0; g <= 4; g++) {
       const gy = PT + (ih * g) / 4;
@@ -194,7 +194,7 @@
     const range = max - min;
     const y = (v) => PT + ih - ((v - min) / range) * ih;
 
-    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.label || opts.ariaLabel || "Chart" });
     for (let g = 0; g <= 4; g++) {
       const gy = PT + (ih * g) / 4;
       svg.appendChild(el("line", { x1: PL, x2: W - PR, y1: gy, y2: gy, class: "grid-line" }));
@@ -263,7 +263,7 @@
     container.classList.add("fx-chart");
     const R = size / 2, r = R - thickness / 2;
     const total = data.reduce((s, d) => s + d.value, 0);
-    const svg = el("svg", { viewBox: `0 0 ${size} ${size}`, role: "img", style: `max-width:${size}px;margin:0 auto` });
+    const svg = el("svg", { viewBox: `0 0 ${size} ${size}`, role: "img", "aria-label": opts.label || opts.ariaLabel || "Chart", style: `max-width:${size}px;margin:0 auto` });
     let angle = -90;
     const segs = data.map((d, i) => {
       const frac = d.value / total;
@@ -340,7 +340,7 @@
     const H = height || PT * 2 + data.length * rowH;
     const iw = W - PL - PR;
     const max = Math.max(...data.map((d) => d.value)) * 1.05;
-    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.label || opts.ariaLabel || "Chart" });
     for (let g = 0; g <= 4; g++) {
       const gx = PL + (iw * g) / 4;
       svg.appendChild(el("line", { x1: gx, x2: gx, y1: PT, y2: H - PT, class: "grid-line" }));
@@ -389,7 +389,7 @@
     const yB = (v) => PT + ih - (v / bMax) * ih;
     const yL = (v) => PT + ih - (v / lMax) * ih;
     const bc = bar.color || chartColor(0), lc = line.color || chartColor(1);
-    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.label || opts.ariaLabel || "Chart" });
     for (let g = 0; g <= 4; g++) {
       const gy = PT + (ih * g) / 4;
       svg.appendChild(el("line", { x1: PL, x2: W - PR, y1: gy, y2: gy, class: "grid-line" }));
@@ -446,7 +446,7 @@
     const xPad = (xMax - xMin) * 0.08 || 1, yPad = (yMax - yMin) * 0.12 || 1;
     const x = (v) => PL + ((v - xMin + xPad) / (xMax - xMin + xPad * 2)) * iw;
     const y = (v) => PT + ih - ((v - yMin + yPad) / (yMax - yMin + yPad * 2)) * ih;
-    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.label || opts.ariaLabel || "Chart" });
     for (let g = 0; g <= 4; g++) {
       const gy = PT + (ih * g) / 4;
       svg.appendChild(el("line", { x1: PL, x2: W - PR, y1: gy, y2: gy, class: "grid-line" }));
@@ -540,7 +540,7 @@
     const UP = cs.getPropertyValue("--success").trim() || "#22c55e";
     const DOWN = cs.getPropertyValue("--destructive").trim() || "#ef4444";
 
-    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.label || opts.ariaLabel || "Chart" });
     for (let g = 0; g <= 4; g++) {
       const gy = PT + (ih * g) / 4;
       svg.appendChild(el("line", { x1: PL, x2: W - PR, y1: gy, y2: gy, class: "grid-line" }));
@@ -605,7 +605,7 @@
     const max = steps[0].value || 1;
     const gap = 36;                                  // slope gap between bars
     const bw = (W - gap * (n - 1)) / n;
-    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.label || opts.ariaLabel || "Chart" });
     const c = chartColor(0);
     const barY = (v) => PT + ih - (v / max) * ih;
 

@@ -35,14 +35,14 @@
   window.fxShopCard = function (p) {
     const off = p.compareAt ? Math.round((1 - p.price / p.compareAt) * 100) : 0;
     return `<div class="fx-shop-card" data-id="${esc(p.id)}">
-      <div class="fx-shop-art" style="--_h1:${+p.h1};--_h2:${+p.h2}" role="button" tabindex="0" aria-label="${esc(p.name)}">
+      <div class="fx-shop-art" style="--_h1:${+p.h1};--_h2:${+p.h2}">
         ${p.badge ? `<span class="fx-badge ${p.badge === "Sale" ? "fx-badge--destructive" : ""} fx-shop-badge">${esc(p.badge)}</span>` : ""}
         <button class="fx-shop-heart" data-heart aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
         <span class="fx-shop-glyph">${esc(p.glyph)}</span>
         <button class="fx-shop-quick" data-quick>Add to cart — ${money(p.price)}</button>
       </div>
       <div class="fx-shop-meta">
-        <span class="fx-shop-name">${esc(p.name)}</span>
+        <a class="fx-shop-name" href="product.html?id=${encodeURIComponent(p.id)}" style="color:inherit;text-decoration:none">${esc(p.name)}</a>
         <span class="fx-shop-cat">${esc(p.cat)}</span>
         <span class="fx-shop-stars"><b>${stars(p.rating)}</b>${p.rating} (${p.reviews})</span>
         <span class="fx-shop-price">${money(p.price)}${p.compareAt ? `<s>${money(p.compareAt)}</s><span class="off">−${off}%</span>` : ""}</span>

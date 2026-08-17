@@ -46,9 +46,10 @@
   --accent-foreground: oklch(0.24 0.012 155);
   --destructive: oklch(0.577 0.225 29);
   --destructive-foreground: oklch(0.985 0 0);
-  --success: oklch(0.60 0.145 155);
+  --success: oklch(0.52 0.135 155); /* AA as text on light surfaces */
   --success-foreground: oklch(0.985 0 0);
   --warning: oklch(0.76 0.16 78);
+  --warning-text: oklch(0.51 0.115 70); /* use for warning TEXT on light surfaces */
   --warning-foreground: oklch(0.24 0.012 155);
   --border: oklch(0.905 0.009 115);
   --input: oklch(0.895 0.010 115);
@@ -103,6 +104,7 @@
   --success: oklch(0.72 0.17 155);
   --success-foreground: oklch(0.145 0 0);
   --warning: oklch(0.82 0.165 80);
+  --warning-text: oklch(0.82 0.165 80); /* dark mode: amber is fine as text */
   --warning-foreground: oklch(0.145 0 0);
   --border: oklch(0.96 0.02 150 / 11%);
   --input: oklch(0.96 0.02 150 / 15%);

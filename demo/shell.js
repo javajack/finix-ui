@@ -122,6 +122,7 @@
   const shell = document.querySelector(".fx-shell");
   const main = document.querySelector(".fx-shell-main");
   if (!shell || !main) return;
+  main.setAttribute("role", "main");
 
   /* ---- sidebar ---- */
   const sidebar = document.createElement("aside");
@@ -154,10 +155,10 @@
   shell.prepend(sidebar);
 
   /* ---- topbar ---- */
-  const topbar = document.createElement("header");
+  const topbar = document.createElement("div"); /* not <header>: banner landmark must be top-level */
   topbar.className = "fx-topbar";
   topbar.innerHTML =
-    `<button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-sidebar-toggle data-fx-tip="Toggle sidebar">${I.panel}</button>
+    `<button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-sidebar-toggle data-fx-tip="Toggle sidebar" aria-label="Toggle sidebar">${I.panel}</button>
      <div class="fx-separator fx-separator--v" style="height:1rem"></div>
      <ol class="fx-breadcrumb">
        <li><a href="index.html">Finix UI</a></li>
@@ -168,9 +169,9 @@
        ${I.search}<span>Search…</span><span class="fx-kbd">⌘K</span>
      </button>
      <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm fx-bell-dot" popovertarget="fx-notif-pop" data-fx-tip="Notifications" aria-label="Notifications">${I.feedback}</button>
-     <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" popovertarget="fx-brand-menu" data-fx-tip="Brand theme">${I.palette}</button>
-     <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-toggle-theme data-fx-tip="Light / dark">${I.sun}</button>
-     <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" popovertarget="fx-user-menu" style="border-radius:999px">
+     <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" popovertarget="fx-brand-menu" data-fx-tip="Brand theme" aria-label="Brand theme">${I.palette}</button>
+     <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-fx-toggle-theme data-fx-tip="Light / dark" aria-label="Toggle light or dark theme">${I.sun}</button>
+     <button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" popovertarget="fx-user-menu" style="border-radius:999px" aria-label="Account menu">
        <span class="fx-avatar fx-avatar--sm">RK</span>
      </button>`;
   main.prepend(topbar);

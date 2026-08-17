@@ -39,6 +39,7 @@
     </div>
   </div>
 </header>
+<main>
 
 <section class="fx-mk-section" style="padding-block:3rem 2rem">
   <div class="fx-mk-container">
@@ -54,7 +55,7 @@
   <div class="fx-mk-container">
     <div class="fx-shop-layout">
       <!-- filter rail -->
-      <aside class="fx-shop-rail" id="rail">
+      <div class="fx-shop-rail" role="search" aria-label="Product filters" id="rail">
         <div class="fx-shop-fgroup">
           <b>Category</b>
           <label class="fx-shop-check"><input type="checkbox" class="fx-checkbox" data-f-cat value="Desk"><span>Desk</span><span class="count">5</span></label>
@@ -76,14 +77,14 @@
           <label class="fx-shop-check"><input type="radio" class="fx-radio" name="frating" data-f-rating value="4"><span>4★ &amp; up</span></label>
           <label class="fx-shop-check"><input type="radio" class="fx-radio" name="frating" data-f-rating value="0" checked><span>Any</span></label>
         </div>
-      </aside>
+      </div>
 
       <!-- results -->
       <div>
         <div class="fx-shop-bar">
           <span class="fx-shop-count" id="count"></span>
           <div class="fx-shop-chips" id="chips"></div>
-          <select class="fx-select" id="sort" style="margin-left:auto;width:auto;height:2rem;font-size:.75rem">
+          <select class="fx-select" id="sort" aria-label="Sort products" style="margin-left:auto;width:auto;height:2rem;font-size:.75rem">
             <option value="featured">Featured</option>
             <option value="price-asc">Price: low → high</option>
             <option value="price-desc">Price: high → low</option>
@@ -96,6 +97,7 @@
   </div>
 </section>
 
+</main>
 <footer class="fx-mk-footer" style="margin-top:2rem">
   <div class="fx-mk-container">
     <div class="fx-mk-footer-bottom" style="margin-top:0;border-top:0">

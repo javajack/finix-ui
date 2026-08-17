@@ -469,7 +469,13 @@
   /* ================= toast ================= */
   function toaster() {
     let t = $(".fx-toaster");
-    if (!t) { t = doc.createElement("div"); t.className = "fx-toaster"; doc.body.appendChild(t); }
+    if (!t) {
+      t = doc.createElement("div");
+      t.className = "fx-toaster";
+      t.setAttribute("role", "status");
+      t.setAttribute("aria-live", "polite");
+      doc.body.appendChild(t);
+    }
     return t;
   }
   const TOAST_ICONS = {
@@ -1201,8 +1207,15 @@
     divider.setAttribute("role", "separator");
     divider.setAttribute("aria-orientation", "vertical");
     const initial = getComputedStyle(el).getPropertyValue("--split").trim() || "60%";
-    const setPct = (pct) => el.style.setProperty("--split", Math.min(88, Math.max(12, pct)) + "%");
+    const setPct = (pct) => {
+      pct = Math.min(88, Math.max(12, pct));
+      el.style.setProperty("--split", pct + "%");
+      divider.setAttribute("aria-valuenow", Math.round(pct));
+    };
     const getPct = () => parseFloat(getComputedStyle(el).getPropertyValue("--split")) || 60;
+    divider.setAttribute("aria-valuemin", "12");
+    divider.setAttribute("aria-valuemax", "88");
+    divider.setAttribute("aria-valuenow", Math.round(getPct()));
     divider.addEventListener("pointerdown", (e) => {
       if (el.hasAttribute("data-collapsed")) return;
       e.preventDefault();

@@ -61,6 +61,9 @@
       const el = document.createElement("div");
       el.className = "fx-crm-deal";
       el.dataset.deal = d.id;
+      el.tabIndex = 0;
+      el.setAttribute("role", "button");
+      el.setAttribute("aria-label", `${d.name}, ${d.company}. Arrow keys move between stages.`);
       el.innerHTML =
         `<div class="fx-crm-deal-top">
            <span class="fx-crm-deal-co">${esc(monogram(d.company))}</span>
@@ -171,6 +174,25 @@
     lanes.addEventListener("pointerup", () => finish(true));
     lanes.addEventListener("pointercancel", () => finish(false));
 
+    /* keyboard alternative to drag: ←/→ moves the focused deal a stage */
+    const live = document.createElement("div");
+    live.className = "fx-sr-only";
+    live.setAttribute("aria-live", "polite");
+    root.appendChild(live);
+    lanes.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      const card = e.target.closest(".fx-crm-deal");
+      if (!card) return;
+      e.preventDefault();
+      const deal = deals.find((d) => d.id === card.dataset.deal);
+      const i = stages.findIndex((s) => s.id === deal.stage) + (e.key === "ArrowRight" ? 1 : -1);
+      if (i < 0 || i >= stages.length) return;
+      stageEls[stages[i].id].querySelector(".fx-crm-stage-body").appendChild(card);
+      commitMove(deal, stages[i].id, card);
+      card.focus();
+      live.textContent = `${deal.name} moved to ${stages[i].name}.`;
+    });
+
     return {
       totals,
       deals,
@@ -232,7 +254,7 @@
     root.classList.add("fx-crm-quote");
     root.innerHTML =
       `<div class="fx-crm-quote-scroll"><table>
-         <thead><tr><th>Product</th><th style="width:4.75rem">Qty</th><th class="num" style="width:7rem">Unit price</th><th class="num" style="width:5.25rem">Disc %</th><th class="num" style="width:7rem">Amount</th><th style="width:2.25rem"></th></tr></thead>
+         <thead><tr><th>Product</th><th style="width:4.75rem">Qty</th><th class="num" style="width:7rem">Unit price</th><th class="num" style="width:5.25rem">Disc %</th><th class="num" style="width:7rem">Amount</th><th style="width:2.25rem"><span class="fx-sr-only">Actions</span></th></tr></thead>
          <tbody></tbody>
        </table></div>
        <div class="fx-crm-quote-foot">
@@ -257,10 +279,10 @@
       const tr = document.createElement("tr");
       tr.dataset.i = i;
       tr.innerHTML =
-        `<td><select class="fx-select" data-f="product">${productOptions(line.product)}</select></td>
-         <td><input class="fx-input fx-crm-qty" data-f="qty" type="number" min="1" value="${line.qty}"></td>
-         <td class="num"><input class="fx-input fx-crm-price" data-f="price" type="number" min="0" step="1" value="${line.price}"></td>
-         <td class="num"><input class="fx-input fx-crm-disc" data-f="disc" type="number" min="0" max="80" value="${line.disc}"></td>
+        `<td><select class="fx-select" data-f="product" aria-label="Product">${productOptions(line.product)}</select></td>
+         <td><input class="fx-input fx-crm-qty" data-f="qty" type="number" min="1" value="${+line.qty}" aria-label="Quantity"></td>
+         <td class="num"><input class="fx-input fx-crm-price" data-f="price" type="number" min="0" step="1" value="${+line.price}" aria-label="Unit price"></td>
+         <td class="num"><input class="fx-input fx-crm-disc" data-f="disc" type="number" min="0" max="80" value="${+line.disc}" aria-label="Discount percent"></td>
          <td class="num" data-amount></td>
          <td><button class="fx-btn fx-btn--ghost fx-btn--icon fx-btn--sm" data-remove type="button" aria-label="Remove line">✕</button></td>`;
       return tr;

@@ -126,7 +126,7 @@
 .fx-delta { display: inline-flex; align-items: center; gap: 0.125rem; font-size: 0.75rem; font-weight: 500; }
 .fx-delta svg { width: 0.75rem; height: 0.75rem; }
 .fx-delta--up { color: var(--success); }
-.fx-delta--down { color: var(--destructive); }
+.fx-delta--down { color: color-mix(in oklab, var(--destructive) 82%, var(--foreground)); }
 
 /* ============ tracker (Tremor-style uptime ticks) ============ */
 .fx-tracker { display: flex; gap: 2px; height: 2rem; }

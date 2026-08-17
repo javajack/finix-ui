@@ -26,6 +26,18 @@
     scrim?.addEventListener("click", close);
 
     const grab = sheet.querySelector(".fx-m-sheet-grab") || sheet;
+    grab.tabIndex = 0;
+    grab.setAttribute("role", "slider");
+    grab.setAttribute("aria-label", "Sheet position — arrow keys resize, Escape closes");
+    grab.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { close(); return; }
+      if (e.key === "ArrowUp") { e.preventDefault(); open(Math.min(snaps.length - 1, Math.max(0, snap + 1))); }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (snap <= 0) close();
+        else open(snap - 1);
+      }
+    });
     let drag = null;
     grab.addEventListener("pointerdown", (e) => {
       drag = { y0: e.clientY, start: snap === -1 ? H() : yFor(snaps[snap]) };

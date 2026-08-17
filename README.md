@@ -82,7 +82,12 @@ cd finix-ui && python3 -m http.server 8613
 
 ## Browser support
 
-Chrome/Edge 125+, Safari 17.4+, Firefox 129+ (Popover API + `@starting-style`). Accordion height animation enhances progressively via `interpolate-size`.
+Chrome/Edge 125+, Safari 17.4+, Firefox 130+. Load-bearing platform
+features: Popover API, `@starting-style`, native `<dialog>`,
+`<details name>` (the Firefox 130 floor), container queries, `:has()`.
+Progressive enhancements degrade gracefully: `interpolate-size`
+(accordion height animation, Chromium-only), `offset-path` (the logistics
+route rider hides behind `@supports`, the route itself stays).
 
 ## Provenance & license
 

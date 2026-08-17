@@ -1,7 +1,7 @@
 {
  "$schema": "https://finix-ui.dev/schema/manifest-v1.json",
  "name": "finix-ui",
- "version": "0.5.0",
+ "version": "0.6.0",
  "description": "Plain HTML/CSS/JS admin component framework distilled from the best free shadcn-ecosystem patterns. Framework-agnostic, token-themed, agent-consumable.",
  "license": "MIT",
  "files": {

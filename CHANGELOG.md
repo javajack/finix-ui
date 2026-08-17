@@ -3,15 +3,36 @@
 All notable changes to finixui. Format loosely follows
 [Keep a Changelog](https://keepachangelog.com); versions follow semver.
 
-## [Unreleased — 0.6.0]
+## [0.6.0] — 2026-08-17
 
-Production-readiness wave: MIT LICENSE file, XSS-safe rendering contract
-(`fxEsc`, all option text escaped), interval leak guards, npm packaging +
-`dist/` minified bundles with SRI, self-hosted Geist fonts, accessibility
-pass (keyboard move mode for the pipeline board, sheet keys, aria-live
-toasts), Playwright smoke suite + GitHub Actions CI + auto Pages deploy,
-generated component reference from manifest.json, locale/currency options,
-browser fallbacks, examples/.
+Production-readiness wave (P1–P10):
+
+- **Legal/community**: MIT LICENSE, CONTRIBUTING, SECURITY, issue
+  templates, npm packaging (zero runtime deps).
+- **Security**: `fxEsc` rendering contract — all option-provided text is
+  escaped at every innerHTML site; verified with live injection tests.
+- **Lifecycle**: every interval self-clears when its root leaves the DOM
+  (SPA/Turbo-safe); `fxKds.stop()`, `fxWatchlist.stop()`.
+- **Packaging**: `dist/` minified per-module + all-bundles with sha384
+  SRI (`dist/sri.json`), jsDelivr CDN paths; charts promoted to
+  `js/finix-charts.js`.
+- **Fonts**: self-hosted Geist/Geist Mono variable woff2 — zero
+  third-party requests.
+- **Accessibility**: axe-clean on audited pages; keyboard move mode for
+  the pipeline board (←/→ + live-region announce), sheet arrow/Esc keys,
+  focus-revealed swipe actions, aria-live toaster, labeled charts and
+  form controls, AA contrast fixes (light `--success` darkened, new
+  `--warning-text`, badge text mixes).
+- **Tests/CI**: Playwright smoke suite — 50 tests: every page console-
+  clean + overflow-free, plus math/logic asserts; GitHub Actions CI and
+  auto gh-pages deploy on push to main.
+- **Docs**: `demo/reference.html` generated from manifest.json (218
+  components, searchable).
+- **i18n/robustness**: `{locale, currency}` on money components, wizard
+  label overrides, missing-root guards on all factories.
+- **Compat**: Firefox floor documented at 130 (`<details name>`),
+  `@supports` fallback for `offset-path`; `examples/` (Flask app +
+  Rails/Django/Laravel snippets).
 
 ## [0.5.0] — 2026-08-17
 

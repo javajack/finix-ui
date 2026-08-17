@@ -6,6 +6,7 @@
 (() => {
   "use strict";
   const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   /* ============ fxFareCal ============ */
   window.fxFareCal = function (root, opts) {
@@ -58,16 +59,16 @@
     function render() {
       const list = visible();
       root.innerHTML = list.map((f) =>
-        `<div class="fx-tv-flight" data-id="${f.id}">
-           <div class="fx-tv-airline"><i style="--_c:${f.color}">${f.code}</i><small>${f.airline}</small></div>
+        `<div class="fx-tv-flight" data-id="${esc(f.id)}">
+           <div class="fx-tv-airline"><i style="--_c:${f.color}">${esc(f.code)}</i><small>${esc(f.airline)}</small></div>
            <div class="fx-tv-route">
-             <div class="fx-tv-time"><b>${f.dep}</b><span>${f.from}</span></div>
+             <div class="fx-tv-time"><b>${esc(f.dep)}</b><span>${esc(f.from)}</span></div>
              <div class="fx-tv-path">
                <small>${dur(f.mins)}</small>
                <div class="fx-tv-line${f.stops ? "" : " nonstop"}"><i></i></div>
-               <span class="fx-tv-stops${f.stops ? "" : " nonstop"}">${f.stops ? f.stops + " stop · " + f.via : "Non-stop"}</span>
+               <span class="fx-tv-stops${f.stops ? "" : " nonstop"}">${f.stops ? +f.stops + " stop · " + esc(f.via) : "Non-stop"}</span>
              </div>
-             <div class="fx-tv-time" style="text-align:right"><b>${f.arr}</b><span>${f.to}</span></div>
+             <div class="fx-tv-time" style="text-align:right"><b>${esc(f.arr)}</b><span>${esc(f.to)}</span></div>
            </div>
            <div class="fx-tv-buy"><span class="fx-tv-price">${inr(f.price)}</span><button class="fx-btn fx-btn--sm">Select</button></div>
          </div>`).join("") ||

@@ -6,6 +6,7 @@
 (() => {
   "use strict";
   const money = (n) => "$" + (Math.round(n * 100) / 100).toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0 });
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
   const FREE_SHIP = 150;
 
   const COLORS = {
@@ -33,16 +34,16 @@
 
   window.fxShopCard = function (p) {
     const off = p.compareAt ? Math.round((1 - p.price / p.compareAt) * 100) : 0;
-    return `<div class="fx-shop-card" data-id="${p.id}">
-      <div class="fx-shop-art" style="--_h1:${p.h1};--_h2:${p.h2}" role="button" tabindex="0" aria-label="${p.name}">
-        ${p.badge ? `<span class="fx-badge ${p.badge === "Sale" ? "fx-badge--destructive" : ""} fx-shop-badge">${p.badge}</span>` : ""}
+    return `<div class="fx-shop-card" data-id="${esc(p.id)}">
+      <div class="fx-shop-art" style="--_h1:${+p.h1};--_h2:${+p.h2}" role="button" tabindex="0" aria-label="${esc(p.name)}">
+        ${p.badge ? `<span class="fx-badge ${p.badge === "Sale" ? "fx-badge--destructive" : ""} fx-shop-badge">${esc(p.badge)}</span>` : ""}
         <button class="fx-shop-heart" data-heart aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
-        <span class="fx-shop-glyph">${p.glyph}</span>
+        <span class="fx-shop-glyph">${esc(p.glyph)}</span>
         <button class="fx-shop-quick" data-quick>Add to cart — ${money(p.price)}</button>
       </div>
       <div class="fx-shop-meta">
-        <span class="fx-shop-name">${p.name}</span>
-        <span class="fx-shop-cat">${p.cat}</span>
+        <span class="fx-shop-name">${esc(p.name)}</span>
+        <span class="fx-shop-cat">${esc(p.cat)}</span>
         <span class="fx-shop-stars"><b>${stars(p.rating)}</b>${p.rating} (${p.reviews})</span>
         <span class="fx-shop-price">${money(p.price)}${p.compareAt ? `<s>${money(p.compareAt)}</s><span class="off">−${off}%</span>` : ""}</span>
       </div>
@@ -84,8 +85,8 @@
       else body.innerHTML = items.map((it, i) => {
         const p = byId(it.id);
         return `<div class="fx-shop-item" data-i="${i}">
-          <span class="fx-shop-item-art" style="--_h1:${p.h1};--_h2:${p.h2}">${p.glyph}</span>
-          <div class="fx-shop-item-main"><b>${p.name}</b>${it.variant ? `<small>${it.variant}</small>` : ""}
+          <span class="fx-shop-item-art" style="--_h1:${+p.h1};--_h2:${+p.h2}">${esc(p.glyph)}</span>
+          <div class="fx-shop-item-main"><b>${esc(p.name)}</b>${it.variant ? `<small>${esc(it.variant)}</small>` : ""}
             <span class="fx-shop-qty"><button data-d-dec aria-label="Decrease">−</button><output>${it.qty}</output><button data-d-inc aria-label="Increase">+</button></span>
           </div>
           <div class="fx-shop-item-side"><span class="price">${money(p.price * it.qty)}</span><button class="fx-shop-remove" data-d-remove>Remove</button></div>
@@ -173,7 +174,7 @@
       state.colors.forEach((c) => parts.push({ k: "color", v: c, label: c }));
       if (state.minRating) parts.push({ k: "rating", v: state.minRating, label: state.minRating + "★ & up" });
       if (state.max != null && state.max < 200) parts.push({ k: "price", v: state.max, label: "≤ " + money(state.max) });
-      opts.chipsEl.innerHTML = parts.map((p) => `<button class="fx-shop-chip" data-k="${p.k}" data-v="${p.v}">${p.label}<i>✕</i></button>`).join("") +
+      opts.chipsEl.innerHTML = parts.map((p) => `<button class="fx-shop-chip" data-k="${esc(p.k)}" data-v="${esc(p.v)}">${esc(p.label)}<i>✕</i></button>`).join("") +
         (parts.length > 1 ? `<button class="fx-shop-chip" data-k="all">Clear all</button>` : "");
     }
     function paint() {

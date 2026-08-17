@@ -640,7 +640,10 @@
   });
 
   /* ================= public API ================= */
-  window.finix = { toast, setTheme, setBrand, openDialog, closeDialog, place };
+  /* shared HTML-escape — ALL option-provided text rendered via innerHTML
+     must pass through this (see SECURITY.md rendering contract) */
+  window.fxEsc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  window.finix = { toast, setTheme, setBrand, openDialog, closeDialog, place, esc: window.fxEsc };
 })();
 
 /* ====================================================================

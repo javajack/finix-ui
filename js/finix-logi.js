@@ -5,6 +5,7 @@
  */
 (() => {
   "use strict";
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   /* ============ fxBinGrid ============ */
   window.fxBinGrid = function (root, opts) {
@@ -31,8 +32,8 @@
       const d = data[id];
       const detail = root.querySelector("[data-bin-detail]");
       detail.hidden = false;
-      detail.innerHTML = `<b>Bin ${id}</b> — ${d ? d.occ + "% occupied" : "empty"}` +
-        (d ? d.items.map((it) => `<div class="fx-lg-bin-row"><span>${it.name}</span><span>${it.sku} × ${it.qty}</span></div>`).join("") : "");
+      detail.innerHTML = `<b>Bin ${esc(id)}</b> — ${d ? +d.occ + "% occupied" : "empty"}` +
+        (d ? d.items.map((it) => `<div class="fx-lg-bin-row"><span>${esc(it.name)}</span><span>${esc(it.sku)} × ${+it.qty}</span></div>`).join("") : "");
       opts.onSelect?.(id, d);
     });
     return { data };
@@ -55,9 +56,9 @@
       rowsEl.innerHTML = items.map((it, i) =>
         `<div class="fx-lg-pick${it.picked ? " is-picked" : ""}" data-i="${i}">
            <span class="fx-lg-pickbox">${it.picked ? check : ""}</span>
-           <span><span style="font-weight:550">${it.name}</span><span class="fx-lg-sku" style="display:block">${it.sku}</span></span>
-           <span class="fx-lg-loc">${it.loc}</span>
-           <span style="font-family:var(--font-mono);font-size:.75rem">× ${it.qty}</span>
+           <span><span style="font-weight:550">${esc(it.name)}</span><span class="fx-lg-sku" style="display:block">${esc(it.sku)}</span></span>
+           <span class="fx-lg-loc">${esc(it.loc)}</span>
+           <span style="font-family:var(--font-mono);font-size:.75rem">× ${+it.qty}</span>
          </div>`).join("");
       const done = items.filter((i) => i.picked).length;
       root.querySelector(".fx-lg-meter i").style.setProperty("--_w", (done / items.length) * 100 + "%");

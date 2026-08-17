@@ -49,6 +49,7 @@ Marketing kit (css/finix-marketing.css + js/finix-marketing.js, fx-mk-* namespac
   - calendar: <div class="fx-cal" data-fx-calendar data-fx-cal-input="#input">
   - number ticker: <div data-fx-ticker="$45,231.89">
 - Error state on inputs: aria-invalid="true".
+- SECURITY / rendering contract: all option-provided strings (names, titles, labels, bodies, values) are HTML-escaped via window.fxEsc before rendering — pass raw text, never pre-escaped. Only fields explicitly named `html` (e.g. fxComments) accept markup and must be pre-sanitized by you. Ids/keys used in selectors should be simple slugs.
 - All colors come from CSS custom properties (--primary, --background, --chart-1…5). Never hardcode colors; use var(--token).
 - SURFACE LADDER (depth = lightness, Google-style): --background (canvas) < --well (inset panels ON surfaces: toolbars, column wells, code blocks, grid headers) < --card (surfaces) < --popover (overlays; lighter than cards in dark mode). Hover fills always use --hover; internal dividers use --border-soft; structural container borders use --border. When building new components, pick the rung — never invent a new gray mix.
 

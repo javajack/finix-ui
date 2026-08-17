@@ -10,6 +10,7 @@
   const inr = (n, dec = 2) => "₹" + n.toLocaleString("en-IN", { minimumFractionDigits: dec, maximumFractionDigits: dec });
   const inr0 = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
   const pct = (n) => (n >= 0 ? "+" : "") + n.toFixed(2) + "%";
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   /* ============ fxWatchlist ============ */
   window.fxWatchlist = function (root, opts) {
@@ -31,7 +32,7 @@
     function rowHtml(s) {
       const chg = ((s.ltp - s.prev) / s.prev) * 100;
       return `<div style="display:flex;flex-direction:column;gap:.125rem;min-width:0">
-          <span class="fx-tr-sym"><span style="overflow:hidden;text-overflow:ellipsis">${s.sym}</span><span class="fx-tr-exch">${s.exch}</span></span>
+          <span class="fx-tr-sym"><span style="overflow:hidden;text-overflow:ellipsis">${esc(s.sym)}</span><span class="fx-tr-exch">${esc(s.exch)}</span></span>
           <span class="fx-tr-sub">${sparkSvg(s.hist)}</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:.125rem">
@@ -44,7 +45,7 @@
       symbols.forEach((s) => {
         const row = document.createElement("div");
         row.className = "fx-tr-wrow";
-        row.dataset.sym = s.sym;
+        row.dataset.sym = s.sym; /* dataset assignment is safe; selectors use CSS.escape */
         row.setAttribute("aria-current", current === s.sym);
         row.innerHTML = rowHtml(s);
         rowsEl.appendChild(row);
@@ -149,7 +150,7 @@
       $("[data-mav]").textContent = inr0(st.available);
       $("[data-mreq]").parentElement.classList.toggle("is-short", short);
       const btn = $("[data-submit]");
-      btn.textContent = (st.side === "buy" ? "BUY " : "SELL ") + st.sym;
+      btn.textContent = (st.side === "buy" ? "BUY " : "SELL ") + st.sym; /* textContent — safe */
       btn.disabled = short;
       if (short) btn.textContent = "Insufficient margin";
     }
@@ -207,11 +208,11 @@
         if (mode === "holdings") { totalInv += r.avg * r.qty; totalCur += r.ltp * r.qty; }
         const ret = ((r.ltp - r.avg) / r.avg) * 100 * (r.qty < 0 ? -1 : 1);
         return mode === "positions"
-          ? `<tr data-i="${i}"><td>${r.sym}<span class="fx-tr-prod">${r.product}</span></td>
+          ? `<tr data-i="${i}"><td>${esc(r.sym)}<span class="fx-tr-prod">${esc(r.product)}</span></td>
              <td class="${r.qty < 0 ? "down" : ""}">${r.qty}</td><td>${r.avg.toFixed(2)}</td><td>${r.ltp.toFixed(2)}</td>
              <td class="${pnl >= 0 ? "up" : "down"}">${(pnl >= 0 ? "+" : "−") + inr(Math.abs(pnl)).slice(1)}</td>
              <td><button class="fx-btn fx-btn--ghost fx-btn--sm" data-sq style="height:1.375rem;font-size:.625rem;padding-inline:.4375rem">Exit</button></td></tr>`
-          : `<tr><td>${r.sym}</td><td>${r.qty}</td><td>${r.avg.toFixed(2)}</td><td>${r.ltp.toFixed(2)}</td>
+          : `<tr><td>${esc(r.sym)}</td><td>${r.qty}</td><td>${r.avg.toFixed(2)}</td><td>${r.ltp.toFixed(2)}</td>
              <td>${inr0(r.avg * r.qty)}</td><td>${inr0(r.ltp * r.qty)}</td>
              <td class="${pnl >= 0 ? "up" : "down"}">${(pnl >= 0 ? "+" : "−") + inr(Math.abs(pnl)).slice(1)} <span style="opacity:.75">(${pct(ret)})</span></td></tr>`;
       }).join("");
@@ -331,9 +332,9 @@
       const time = new Date().toTimeString().slice(0, 8);
       tr.innerHTML =
         `<td style="text-align:left;font-family:var(--font-mono);font-size:.6875rem">${time}</td>
-         <td style="text-align:left;font-family:var(--font-sans);font-weight:550;font-size:.75rem">${o.sym}<span class="fx-tr-prod">${o.product}</span></td>
+         <td style="text-align:left;font-family:var(--font-sans);font-weight:550;font-size:.75rem">${esc(o.sym)}<span class="fx-tr-prod">${esc(o.product)}</span></td>
          <td><span class="fx-tr-bs ${o.side === "buy" ? "b" : "s"}">${o.side === "buy" ? "B" : "S"}</span></td>
-         <td>${o.type}</td><td>${o.qty}</td><td>${o.price.toFixed(2)}</td>
+         <td>${esc(o.type)}</td><td>${+o.qty}</td><td>${o.price.toFixed(2)}</td>
          <td data-status>${badge("open")}</td>
          <td><button class="fx-btn fx-btn--ghost fx-btn--sm" data-cancel style="height:1.375rem;font-size:.625rem;padding-inline:.4375rem">Cancel</button></td>`;
       tbody.prepend(tr);

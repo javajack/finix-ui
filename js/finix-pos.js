@@ -7,6 +7,7 @@
 (() => {
   "use strict";
   const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   /* ============ fxPos ============ */
   window.fxPos = function (root, opts) {
@@ -35,10 +36,10 @@
 
     function paintCats() {
       root.querySelector("[data-pos-cats]").innerHTML = menu.map((m) =>
-        `<button class="fx-btn ${m.cat === cat ? "" : "fx-btn--outline"} fx-btn--sm" data-cat="${m.cat}" style="height:1.75rem;font-size:.6875rem">${m.cat}</button>`).join("");
+        `<button class="fx-btn ${m.cat === cat ? "" : "fx-btn--outline"} fx-btn--sm" data-cat="${esc(m.cat)}" style="height:1.75rem;font-size:.6875rem">${esc(m.cat)}</button>`).join("");
       root.querySelector("[data-pos-menu]").innerHTML = menu.find((m) => m.cat === cat).items.map((it, i) =>
-        `<button class="fx-pos-tile" data-item="${it.name}" ${it.out ? "disabled" : ""}>
-           <span class="glyph">${it.glyph}</span><b>${it.name}</b>
+        `<button class="fx-pos-tile" data-item="${esc(it.name)}" ${it.out ? "disabled" : ""}>
+           <span class="glyph">${esc(it.glyph)}</span><b>${esc(it.name)}</b>
            ${it.out ? '<span class="out">86’d — out of stock</span>' : `<span class="price">${inr(it.price)}</span>`}
          </button>`).join("");
     }
@@ -51,9 +52,9 @@
       const el = root.querySelector("[data-pos-lines]");
       let html = "", lastCourse = null;
       lines.forEach((l, i) => {
-        if (l.course && l.course !== lastCourse) { html += `<div class="fx-pos-course">${l.course}</div>`; lastCourse = l.course; }
-        html += `<div class="fx-pos-line" data-i="${i}"><span class="qty">${l.qty}×</span><span>${l.name}</span><span class="amt">${inr(l.price * l.qty)}</span><button class="rm" aria-label="Remove">✕</button></div>`;
-        (l.mods || []).forEach((m) => (html += `<div class="fx-pos-mod">↳ ${m}</div>`));
+        if (l.course && l.course !== lastCourse) { html += `<div class="fx-pos-course">${esc(l.course)}</div>`; lastCourse = l.course; }
+        html += `<div class="fx-pos-line" data-i="${i}"><span class="qty">${+l.qty}×</span><span>${esc(l.name)}</span><span class="amt">${inr(l.price * l.qty)}</span><button class="rm" aria-label="Remove">✕</button></div>`;
+        (l.mods || []).forEach((m) => (html += `<div class="fx-pos-mod">↳ ${esc(m)}</div>`));
       });
       el.innerHTML = html || `<div class="fx-text-xs fx-muted" style="padding:1.25rem;text-align:center">Tap items to start the ticket.</div>`;
       const t = totals();
@@ -98,8 +99,8 @@
         const mins = Math.floor((Date.now() - t.at) / 6e4);
         const cls = mins >= (opts.late || 12) ? " is-late" : mins >= (opts.warn || 7) ? " is-warn" : "";
         return `<div class="fx-pos-kticket${cls}" data-i="${i}">
-          <div class="fx-pos-khead">#${t.num} · ${t.where}<span class="fx-pos-kage">${mins}m</span></div>
-          <div class="fx-pos-kbody">${t.items.map((it) => `<span>${it.qty}× ${it.name}</span>` + (it.mod ? `<span class="mod">↳ ${it.mod}</span>` : "")).join("")}</div>
+          <div class="fx-pos-khead">#${esc(t.num)} · ${esc(t.where)}<span class="fx-pos-kage">${mins}m</span></div>
+          <div class="fx-pos-kbody">${t.items.map((it) => `<span>${+it.qty}× ${esc(it.name)}</span>` + (it.mod ? `<span class="mod">↳ ${esc(it.mod)}</span>` : "")).join("")}</div>
           <div class="fx-pos-kfoot"><button class="fx-btn fx-btn--sm" data-bump style="width:100%">Bump</button></div>
         </div>`;
       }).join("") || `<div class="fx-text-sm fx-muted" style="padding:1.5rem">All caught up — the pass is clear. 🎉</div>`;
@@ -127,14 +128,14 @@
     root.classList.add("fx-pos-pms-wrap");
     function render() {
       let html = `<div class="fx-pos-pms"><span></span>` +
-        nights.map((n) => `<span class="fx-pos-pms-head">${n}</span>`).join("");
+        nights.map((n) => `<span class="fx-pos-pms-head">${esc(n)}</span>`).join("");
       rooms.forEach((r, ri) => {
-        html += `<div class="fx-pos-room">${r.num}<small>${r.type}</small><span class="fx-pos-hk ${r.hk}" data-hk="${ri}" style="margin-left:auto;cursor:pointer" title="Click to cycle">${hkLabel[r.hk]}</span></div>`;
+        html += `<div class="fx-pos-room">${esc(r.num)}<small>${esc(r.type)}</small><span class="fx-pos-hk ${hkLabel[r.hk] ? r.hk : "clean"}" data-hk="${ri}" style="margin-left:auto;cursor:pointer" title="Click to cycle">${hkLabel[r.hk] || hkLabel.clean}</span></div>`;
         let n = 0;
         while (n < 7) {
           const stay = stays.find((s) => s.room === r.num && s.from === n);
           if (stay) {
-            html += `<div class="fx-pos-stay" style="grid-column:span ${stay.len};--_c:${stay.color || "var(--primary)"}">${stay.guest}</div>`;
+            html += `<div class="fx-pos-stay" style="grid-column:span ${+stay.len};--_c:${stay.color || "var(--primary)"}">${esc(stay.guest)}</div>`;
             n += stay.len;
           } else if (!stays.find((s) => s.room === r.num && n > s.from && n < s.from + s.len)) {
             html += `<div class="fx-pos-night"></div>`;

@@ -8,6 +8,7 @@
   "use strict";
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const money = (n, cur = "$") => cur + Math.round(n).toLocaleString("en-US");
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
   const pulse = (el) => {
     if (reduced || !el) return;
     el.classList.remove("is-pulse");
@@ -45,7 +46,7 @@
       el.innerHTML =
         `<div class="fx-crm-stage-head">
            <div class="fx-crm-stage-top">
-             <span class="fx-crm-stage-name">${s.name}</span>
+             <span class="fx-crm-stage-name">${esc(s.name)}</span>
              <span class="fx-crm-stage-count">0</span>
              <span class="fx-crm-stage-prob">${Math.round(s.prob * 100)}%</span>
            </div>
@@ -62,13 +63,13 @@
       el.dataset.deal = d.id;
       el.innerHTML =
         `<div class="fx-crm-deal-top">
-           <span class="fx-crm-deal-co">${monogram(d.company)}</span>
-           <span class="fx-crm-deal-name" title="${d.company} — ${d.name}">${d.name}</span>
-           <span class="fx-crm-deal-own">${d.owner}</span>
+           <span class="fx-crm-deal-co">${esc(monogram(d.company))}</span>
+           <span class="fx-crm-deal-name" title="${esc(d.company)} — ${esc(d.name)}">${esc(d.name)}</span>
+           <span class="fx-crm-deal-own">${esc(d.owner)}</span>
          </div>
          <div class="fx-crm-deal-meta">
            <b class="fx-crm-deal-val">${money(d.value, cur)}</b>
-           <span class="fx-crm-deal-date${d.late ? " is-late" : ""}">${d.closes}</span>
+           <span class="fx-crm-deal-date${d.late ? " is-late" : ""}">${esc(d.closes)}</span>
            <span class="fx-crm-prob">${Math.round(stageOf(d.stage).prob * 100)}%</span>
          </div>`;
       return el;
@@ -213,7 +214,7 @@
            <div class="fx-crm-factors">` +
           opts.factors
             .map((f) =>
-              `<div class="fx-crm-factor"><span>${f.label}</span><i style="--_w:${Math.min(100, Math.abs(f.delta) * 4)}%"></i><b class="${f.delta >= 0 ? "up" : "down"}">${f.delta >= 0 ? "+" : ""}${f.delta}</b></div>`)
+              `<div class="fx-crm-factor"><span>${esc(f.label)}</span><i style="--_w:${Math.min(100, Math.abs(f.delta) * 4)}%"></i><b class="${f.delta >= 0 ? "up" : "down"}">${f.delta >= 0 ? "+" : ""}${+f.delta}</b></div>`)
             .join("") +
           `</div>`;
       }
@@ -250,7 +251,7 @@
     const tbody = root.querySelector("tbody");
 
     const productOptions = (sel) =>
-      products.map((p) => `<option value="${p.id}"${p.id === sel ? " selected" : ""}>${p.name}</option>`).join("");
+      products.map((p) => `<option value="${esc(p.id)}"${p.id === sel ? " selected" : ""}>${esc(p.name)}</option>`).join("");
 
     function rowEl(line, i) {
       const tr = document.createElement("tr");

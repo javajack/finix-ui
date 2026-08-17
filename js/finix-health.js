@@ -5,6 +5,7 @@
  */
 (() => {
   "use strict";
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   /* ============ fxDayGrid ============ */
   window.fxDayGrid = function (root, opts) {
@@ -21,14 +22,14 @@
     };
     function render() {
       root.innerHTML = "<span></span>" + providers.map((p) =>
-        `<div class="fx-hc-prov"><span class="fx-avatar fx-avatar--sm">${p.ini}</span>${p.name}<small>· ${p.role}</small></div>`).join("");
+        `<div class="fx-hc-prov"><span class="fx-avatar fx-avatar--sm">${esc(p.ini)}</span>${esc(p.name)}<small>· ${esc(p.role)}</small></div>`).join("");
       for (let i = 0; i < slots; i++) {
         root.insertAdjacentHTML("beforeend", `<span class="fx-hc-time">${i % 2 === 0 ? label(i) : ""}</span>`);
         providers.forEach((p, pi) => {
           const appt = appts.find((a) => a.prov === pi && a.slot === i);
           if (appt) {
             root.insertAdjacentHTML("beforeend",
-              `<div class="fx-hc-appt" style="--_c:${appt.color};grid-row:span ${appt.len || 1}"><b>${appt.name}</b><small>${appt.type} · ${label(i)}–${label(i + (appt.len || 1))}</small></div>`);
+              `<div class="fx-hc-appt" style="--_c:${appt.color};grid-row:span ${+(appt.len || 1)}"><b>${esc(appt.name)}</b><small>${esc(appt.type)} · ${label(i)}–${label(i + (appt.len || 1))}</small></div>`);
           } else if (!appts.find((a) => a.prov === pi && i > a.slot && i < a.slot + (a.len || 1))) {
             root.insertAdjacentHTML("beforeend",
               `<button class="fx-hc-slot" data-prov="${pi}" data-slot="${i}">+ ${label(i)}</button>`);
@@ -56,7 +57,7 @@
     root.innerHTML =
       `<div class="fx-hc-rx">
          <div class="fx-field"><label class="fx-label">Drug</label>
-           <select class="fx-select" data-rx="drug">${drugs.map((d) => `<option>${d.name}</option>`).join("")}</select></div>
+           <select class="fx-select" data-rx="drug">${drugs.map((d) => `<option>${esc(d.name)}</option>`).join("")}</select></div>
          <div class="fx-field"><label class="fx-label">Dose</label><select class="fx-select" data-rx="dose"></select></div>
          <div class="fx-field"><label class="fx-label">Frequency</label>
            <select class="fx-select" data-rx="freq"><option>OD (once daily)</option><option>BD (twice daily)</option><option>TDS (thrice daily)</option><option>SOS (as needed)</option></select></div>
@@ -72,14 +73,14 @@
 
     function doseOptions() {
       const d = drugs.find((x) => x.name === val("drug"));
-      $('[data-rx="dose"]').innerHTML = d.doses.map((x) => `<option>${x}</option>`).join("");
+      $('[data-rx="dose"]').innerHTML = d.doses.map((x) => `<option>${esc(x)}</option>`).join("");
     }
     function sig() {
-      $("[data-rx-sig]").innerHTML = `Sig: <b>${val("drug")} ${val("dose")}</b> — take ${val("freq").toLowerCase()}, ${val("dur")}${val("freq").startsWith("SOS") ? "" : ", after food"}.`;
+      $("[data-rx-sig]").innerHTML = `Sig: <b>${esc(val("drug"))} ${esc(val("dose"))}</b> — take ${esc(val("freq").toLowerCase())}, ${esc(val("dur"))}${val("freq").startsWith("SOS") ? "" : ", after food"}.`;
       const d = drugs.find((x) => x.name === val("drug"));
       const clash = d.interactsWith && current.find((m) => m.includes(d.interactsWith));
       $("[data-rx-warn]").innerHTML = clash
-        ? `<div class="fx-hc-interact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><span><b>Interaction:</b> ${d.name} + ${clash} — ${d.note || "monitor closely"}.</span></div>`
+        ? `<div class="fx-hc-interact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><span><b>Interaction:</b> ${esc(d.name)} + ${esc(clash)} — ${esc(d.note || "monitor closely")}.</span></div>`
         : "";
       return !clash;
     }
@@ -90,7 +91,7 @@
     root.addEventListener("click", (e) => {
       if (!e.target.closest("[data-rx-add]")) return;
       $("[data-rx-list]").insertAdjacentHTML("beforeend",
-        `<div class="fx-hc-row"><span><b style="font-weight:550">${val("drug")} ${val("dose")}</b><small>${val("freq")} · ${val("dur")}</small></span><span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">New</span><button class="fx-btn fx-btn--ghost fx-btn--sm" onclick="this.closest('.fx-hc-row').remove()" style="height:1.5rem;font-size:.625rem">Remove</button></div>`);
+        `<div class="fx-hc-row"><span><b style="font-weight:550">${esc(val("drug"))} ${esc(val("dose"))}</b><small>${esc(val("freq"))} · ${esc(val("dur"))}</small></span><span class="fx-badge fx-badge--secondary" style="font-size:.5625rem">New</span><button class="fx-btn fx-btn--ghost fx-btn--sm" onclick="this.closest('.fx-hc-row').remove()" style="height:1.5rem;font-size:.625rem">Remove</button></div>`);
       opts.onAdd?.(val("drug") + " " + val("dose"));
     });
     doseOptions();

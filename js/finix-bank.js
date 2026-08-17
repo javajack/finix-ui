@@ -7,6 +7,7 @@
 (() => {
   "use strict";
   const inr = (n) => "₹" + Math.round(Math.abs(n)).toLocaleString("en-IN");
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
   const CATS = {
     Food: "var(--chart-1)", Transport: "var(--chart-2)", Shopping: "var(--chart-4)",
     Bills: "var(--chart-5)", Entertainment: "var(--chart-3)", Income: "var(--success)",
@@ -49,11 +50,11 @@
         d.rows.push(t);
       });
       list.innerHTML = days.map((d) =>
-        `<div class="fx-bank-day"><span>${d.day}</span><b>${d.rows.length} txns · net ${(d.rows.reduce((a, r) => a + r.amount, 0) >= 0 ? "+" : "−") + inr(d.rows.reduce((a, r) => a + r.amount, 0))}</b></div>` +
+        `<div class="fx-bank-day"><span>${esc(d.day)}</span><b>${d.rows.length} txns · net ${(d.rows.reduce((a, r) => a + r.amount, 0) >= 0 ? "+" : "−") + inr(d.rows.reduce((a, r) => a + r.amount, 0))}</b></div>` +
         d.rows.map((t) =>
-          `<div class="fx-bank-txn${t.pending ? " is-pending" : ""}" style="--_c:${CATS[t.cat]}">
-             <span class="fx-bank-txn-ic">${t.glyph}</span>
-             <span class="fx-bank-txn-main"><b>${t.name}</b><small><span class="fx-bank-cat">${t.cat}</span>· ${t.time}${t.pending ? " · pending" : ""}</small></span>
+          `<div class="fx-bank-txn${t.pending ? " is-pending" : ""}" style="--_c:${CATS[t.cat] || "var(--muted-foreground)"}">
+             <span class="fx-bank-txn-ic">${esc(t.glyph)}</span>
+             <span class="fx-bank-txn-main"><b>${esc(t.name)}</b><small><span class="fx-bank-cat">${esc(t.cat)}</span>· ${esc(t.time)}${t.pending ? " · pending" : ""}</small></span>
              <span class="fx-bank-amt${t.amount > 0 ? " in" : ""}">${t.amount > 0 ? "+" : "−"}${inr(t.amount)}</span>
              <span class="fx-bank-run">${inr(t.run)}</span>
            </div>`).join("")).join("") ||
@@ -88,10 +89,10 @@
     root.classList.add("fx-bank-card");
     root.innerHTML =
       `<div class="fx-bank-card-top"><span class="fx-bank-chip"></span><span class="brand">VISA</span></div>
-       <div class="fx-bank-pan">•••• •••• •••• ${opts.last4 || "4021"}</div>
+       <div class="fx-bank-pan">•••• •••• •••• ${esc(opts.last4 || "4021")}</div>
        <div class="fx-bank-card-foot">
-         <div><span>Card holder</span>${opts.holder || "RAKESH KUMAR"}</div>
-         <div><span>Expires</span>${opts.exp || "08/29"}</div>
+         <div><span>Card holder</span>${esc(opts.holder || "RAKESH KUMAR")}</div>
+         <div><span>Expires</span>${esc(opts.exp || "08/29")}</div>
          <div class="fx-bank-cvv" data-fx-tip="Press & hold to reveal"><span>CVV</span><b data-cvv>•••</b></div>
        </div>
        <div class="fx-bank-frost">❄️</div>`;
@@ -119,7 +120,7 @@
     root.innerHTML =
       `<div class="fx-bank-recips" data-tr-recips>` +
       recips.map((r, i) =>
-        `<button class="fx-bank-recip" data-i="${i}" aria-pressed="false"><span class="fx-avatar">${r.ini}</span>${r.name.split(" ")[0]}</button>`).join("") +
+        `<button class="fx-bank-recip" data-i="${i}" aria-pressed="false"><span class="fx-avatar">${esc(r.ini)}</span>${esc(r.name.split(" ")[0])}</button>`).join("") +
       `</div>
        <div class="fx-bank-amount is-zero" data-tr-amt>₹0</div>
        <div class="fx-bank-quick">
@@ -171,7 +172,7 @@
         stage = "confirm";
         review.hidden = false;
         review.innerHTML =
-          `<div><span>To</span><b style="font-family:var(--font-sans)">${sel.name} · ${sel.vpa}</b></div>
+          `<div><span>To</span><b style="font-family:var(--font-sans)">${esc(sel.name)} · ${esc(sel.vpa)}</b></div>
            <div><span>Amount</span><b>${inr(v)}</b></div>
            <div><span>Fee</span><b>₹0</b></div>
            <div><span>Arrives</span><b style="font-family:var(--font-sans)">Instantly · IMPS</b></div>`;
@@ -201,8 +202,8 @@
     root.innerHTML = opts.cats.map((c) => {
       const pct = Math.round((c.spent / c.limit) * 100);
       return `<div class="fx-bank-budget${pct > 100 ? " is-over" : ""}">
-        <div class="fx-bank-ring" style="--_v:${Math.min(100, pct)};${pct <= 100 ? `--_c:${CATS[c.name] || "var(--primary)"}` : ""}"><span>${c.glyph}</span></div>
-        <b>${c.name}</b>
+        <div class="fx-bank-ring" style="--_v:${Math.min(100, pct)};${pct <= 100 ? `--_c:${CATS[c.name] || "var(--primary)"}` : ""}"><span>${esc(c.glyph)}</span></div>
+        <b>${esc(c.name)}</b>
         <small>${inr(c.spent)} / ${inr(c.limit)}${pct > 100 ? " · over" : ""}</small>
       </div>`;
     }).join("");

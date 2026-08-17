@@ -6,6 +6,7 @@
  */
 (() => {
   "use strict";
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   window.fxWizard = function (root, opts = {}) {
     const secs = [...root.querySelectorAll("[data-step]")];
@@ -113,7 +114,7 @@
         node.dataset.go = done ? id : "";
         node.innerHTML =
           `<span class="fx-wiz-dot">${done ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : i + 1}</span>
-           <span class="fx-wiz-meta"><b>${s.dataset.title || id}</b>${s.dataset.desc ? `<span>${s.dataset.desc}</span>` : ""}</span>`;
+           <span class="fx-wiz-meta"><b>${esc(s.dataset.title || id)}</b>${s.dataset.desc ? `<span>${esc(s.dataset.desc)}</span>` : ""}</span>`;
         rail.appendChild(node);
       });
     }
@@ -136,8 +137,8 @@
         const g = document.createElement("div");
         g.className = "fx-wiz-rgroup";
         g.innerHTML =
-          `<div class="fx-wiz-rhead"><b>${s.dataset.title || id}</b><button class="fx-btn fx-btn--ghost fx-btn--sm" data-edit="${id}" type="button">Edit</button></div>` +
-          rows.map((r) => `<div class="fx-wiz-rrow"><dt>${r.label}</dt><dd>${r.val}</dd></div>`).join("");
+          `<div class="fx-wiz-rhead"><b>${esc(s.dataset.title || id)}</b><button class="fx-btn fx-btn--ghost fx-btn--sm" data-edit="${esc(id)}" type="button">Edit</button></div>` +
+          rows.map((r) => `<div class="fx-wiz-rrow"><dt>${esc(r.label)}</dt><dd>${esc(r.val)}</dd></div>`).join("");
         box.appendChild(g);
       });
     }

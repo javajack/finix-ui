@@ -5,6 +5,7 @@
  */
 (() => {
   "use strict";
+  const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   /* ============ fxCurriculum ============ */
   window.fxCurriculum = function (root, opts) {
@@ -18,12 +19,12 @@
       root.innerHTML = modules.map((m, mi) => {
         const done = m.lessons.filter((l) => l.done).length;
         return `<details class="fx-lms-mod" ${m.lessons.some((l) => l.id === current) || mi === 0 ? "open" : ""}>
-          <summary>${m.name}<span class="fx-lms-count">${done}/${m.lessons.length}</span></summary>` +
+          <summary>${esc(m.name)}<span class="fx-lms-count">${done}/${m.lessons.length}</span></summary>` +
           m.lessons.map((l) =>
-            `<button class="fx-lms-lesson${l.done ? " is-done" : ""}" data-lesson="${l.id}" ${l.locked ? "disabled" : ""} aria-current="${l.id === current}">
+            `<button class="fx-lms-lesson${l.done ? " is-done" : ""}" data-lesson="${esc(l.id)}" ${l.locked ? "disabled" : ""} aria-current="${l.id === current}">
                <span class="fx-lms-check">${l.done ? check : ""}</span>
-               <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.name}</span>
-               ${l.locked ? lock : `<span class="fx-lms-dur">${l.dur}</span>`}
+               <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.name)}</span>
+               ${l.locked ? lock : `<span class="fx-lms-dur">${esc(l.dur)}</span>`}
              </button>`).join("") +
         `</details>`;
       }).join("");
@@ -57,14 +58,14 @@
     root.innerHTML = qs.map((q, qi) => {
       if (q.type === "order") {
         return `<div class="fx-lms-q" data-q="${qi}">
-          <div class="fx-lms-q-title"><span class="num">Q${qi + 1}</span>${q.text}</div>
+          <div class="fx-lms-q-title"><span class="num">Q${qi + 1}</span>${esc(q.text)}</div>
           <div class="fx-sortable fx-lms-order" data-order>` +
-          q.items.map((it) => `<div class="fx-sortable-item" data-val="${it}"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button>${it}</div>`).join("") +
+          q.items.map((it) => `<div class="fx-sortable-item" data-val="${esc(it)}"><button class="fx-sortable-handle" aria-label="Drag to reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg></button>${esc(it)}</div>`).join("") +
           `</div></div>`;
       }
       return `<div class="fx-lms-q" data-q="${qi}">
-        <div class="fx-lms-q-title"><span class="num">Q${qi + 1}</span>${q.text}</div>` +
-        q.options.map((o, oi) => `<button class="fx-lms-opt" data-opt="${oi}" type="button">${o}<i></i></button>`).join("") +
+        <div class="fx-lms-q-title"><span class="num">Q${qi + 1}</span>${esc(q.text)}</div>` +
+        q.options.map((o, oi) => `<button class="fx-lms-opt" data-opt="${oi}" type="button">${esc(o)}<i></i></button>`).join("") +
       `</div>`;
     }).join("") +
     `<div class="fx-row" style="margin-top:.875rem;gap:.75rem;align-items:center">

@@ -12,12 +12,24 @@ The entire shadcn ecosystem shares one CSS-variable token contract. Finix ports 
 
 ## Quick start
 
+Vendored / npm (`npm i finixui`) — pick the modules you need:
+
 ```html
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/finix.css">
 <link rel="stylesheet" href="css/finix-widgets.css"> <!-- app-shell & widgets -->
 <script defer src="js/finix.js"></script>
 ```
+
+Or everything at once from a CDN (integrity hashes in `dist/sri.json`):
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/javajack/finix-ui@v0.6.0/dist/finix-all.min.css">
+<script defer src="https://cdn.jsdelivr.net/gh/javajack/finix-ui@v0.6.0/dist/finix-all.min.js"></script>
+```
+
+`npm run build` regenerates `dist/` (esbuild, dev-only — consumers never
+need a build step).
 
 ```html
 <html data-theme="dark" data-brand="ocean">

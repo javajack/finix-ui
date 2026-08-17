@@ -113,8 +113,11 @@
       opts.onBump?.(t);
     });
     render();
-    setInterval(render, 30000);
-    return { tickets, render };
+    const kdsIv = setInterval(() => {
+      if (!root.isConnected) return clearInterval(kdsIv);
+      render();
+    }, 30000);
+    return { tickets, render, stop: () => clearInterval(kdsIv) };
   };
 
   /* ============ fxRoomGrid ============ */

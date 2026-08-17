@@ -85,6 +85,7 @@
 
     /* live tick sim */
     const timer = setInterval(() => {
+      if (!root.isConnected) return clearInterval(timer);
       const n = 1 + Math.floor(Math.random() * 3);
       for (let i = 0; i < n; i++) {
         const s = symbols[Math.floor(Math.random() * symbols.length)];

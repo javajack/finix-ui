@@ -463,8 +463,9 @@
       detail.textContent = JSON.stringify({ timestamp: r.t.toISOString(), level: r.level, service: r.svc, message: r.msg, trace_id: "tr_" + state.sel.toString(36), host: r.svc + "-" + (state.sel % 4) + ".internal" }, null, 2);
       paint();
     });
-    // live tail
-    setInterval(() => {
+    // live tail (self-clears when the table leaves the DOM)
+    const tailIv = setInterval(() => {
+      if (!root.isConnected) return clearInterval(tailIv);
       if (!state.live) return;
       const r = Math.random();
       rows.push({ t: new Date(), level: r > 0.95 ? "error" : r > 0.85 ? "warn" : "info", svc: SVCS[Math.floor(r * 6)], msg: MSGS[Math.floor(r * MSGS.length)].replace("{n}", Math.floor(r * 9000) + 100) });

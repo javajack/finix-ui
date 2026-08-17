@@ -101,7 +101,10 @@
     function auto() {
       if (reduced) return;
       clearInterval(timer);
-      timer = setInterval(() => go(page + 1), 5500);
+      timer = setInterval(() => {
+        if (!root.isConnected) return clearInterval(timer);
+        go(page + 1);
+      }, 5500);
     }
     root.addEventListener("click", (e) => {
       const prev = e.target.closest("[data-mk-prev]"), next = e.target.closest("[data-mk-next]"), dot = e.target.closest("[data-dot]");
@@ -166,7 +169,10 @@
       }
     }
     tick();
-    setInterval(tick, 1000);
+    const cdIv = setInterval(() => {
+      if (!box.isConnected) return clearInterval(cdIv);
+      tick();
+    }, 1000);
   });
 
   /* ---------- waitlist / newsletter capture ---------- */

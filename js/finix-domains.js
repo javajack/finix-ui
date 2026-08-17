@@ -37,7 +37,8 @@
     }
     root.classList.add("fx-orderbook");
     seed(); render();
-    setInterval(() => {
+    const obIv = setInterval(() => {
+      if (!root.isConnected) return clearInterval(obIv);
       const side = Math.random() > 0.5 ? "bid" : "ask";
       const arr = side === "bid" ? bids : asks;
       const i = Math.floor(Math.random() * arr.length);
@@ -186,6 +187,7 @@
           btn.innerHTML = btn.innerHTML.replace("Start timer", "Stop timer");
           btn.classList.add("fx-btn--destructive");
           iv = setInterval(() => {
+            if (!out.isConnected) return clearInterval(iv);
             const s = Math.floor((Date.now() - t0) / 1000);
             out.textContent = String(Math.floor(s / 3600)).padStart(2, "0") + ":" + String(Math.floor((s % 3600) / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
           }, 250);
@@ -667,6 +669,7 @@
     function startRotation() {
       if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       rotate = setInterval(() => {
+        if (!root.isConnected) return clearInterval(rotate);
         const eligible = parts.filter((p) => !p.muted);
         if (eligible.length < 2) return;
         const cur = eligible.findIndex((p) => p.speaking);

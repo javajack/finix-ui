@@ -109,6 +109,7 @@
     {
       group: "Reference",
       items: [
+        { href: "reference.html", icon: "research", label: "Component API" },
         { href: "auth.html", icon: "user", label: "Auth Pages" },
         { href: "errors/404.html", icon: "ghosty", label: "Edge Pages" },
         { href: "research.html", icon: "research", label: "Research & Credits" },

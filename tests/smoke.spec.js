@@ -11,7 +11,7 @@ const ADMIN = [
   "flows", "ai", "mobile", "settings", "crm", "trading", "banking", "travel",
   "clinic", "learn", "logistics", "hospitality", "support", "business",
   "devtools", "workflow", "people", "collab", "ops", "editor", "motion",
-  "auth", "research",
+  "auth", "research", "reference",
 ].map((p) => `/demo/${p}.html`);
 const SITE = ["home", "launch", "pricing", "store", "product", "status"].map((p) => `/demo/site/${p}.html`);
 const ERRORS = ["404", "500", "maintenance", "offline"].map((p) => `/demo/errors/${p}.html`);

@@ -5,11 +5,19 @@
  */
 (() => {
   "use strict";
+  /* locale-aware money: components accept {locale, currency} */
+  const makeMoney = (o = {}) => {
+    try {
+      const f = new Intl.NumberFormat(o.locale || "en-IN", { style: "currency", currency: o.currency || "INR", maximumFractionDigits: 0 });
+      return (n) => f.format(Math.round(n));
+    } catch (_) { return (n) => "₹" + Math.round(n).toLocaleString("en-IN"); }
+  };
   const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
   const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   /* ============ fxFareCal ============ */
   window.fxFareCal = function (root, opts) {
+    if (!root) { console.warn("finixui: fxFareCal called without a root element"); return null; }
     const { month, days, prices, startDow = 0 } = opts; /* prices: {day: minPrice} */
     const cheapest = Object.entries(prices).sort((a, b) => a[1] - b[1]).slice(0, 3).map(([d]) => +d);
     root.classList.add("fx-tv-cal");
@@ -33,6 +41,8 @@
 
   /* ============ fxFlights ============ */
   window.fxFlights = function (root, opts) {
+    if (!root) { console.warn("finixui: fxFlights called without a root element"); return null; }
+    const inr = makeMoney(opts);
     const flights = opts.flights;
     const rail = opts.rail;
     let sort = "cheap";
@@ -93,6 +103,8 @@
 
   /* ============ fxSeatMap ============ */
   window.fxSeatMap = function (root, opts) {
+    if (!root) { console.warn("finixui: fxSeatMap called without a root element"); return null; }
+    const inr = makeMoney(opts);
     const rows = opts.rows || 12;
     const cols = ["A", "B", "C", "D", "E", "F"];
     const occupied = new Set(opts.occupied || []);

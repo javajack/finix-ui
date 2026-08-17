@@ -9,6 +9,7 @@
 
   /* ============ fxDayGrid ============ */
   window.fxDayGrid = function (root, opts) {
+    if (!root) { console.warn("finixui: fxDayGrid called without a root element"); return null; }
     const providers = opts.providers;
     const start = opts.start || 9, end = opts.end || 17; /* hours */
     const slots = (end - start) * 2;
@@ -52,6 +53,7 @@
 
   /* ============ fxRx ============ */
   window.fxRx = function (root, opts) {
+    if (!root) { console.warn("finixui: fxRx called without a root element"); return null; }
     const drugs = opts.drugs; /* [{name, doses[], interactsWith?}] */
     const current = (opts.currentMeds || []).slice();
     root.innerHTML =

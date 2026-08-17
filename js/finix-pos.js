@@ -6,11 +6,20 @@
  */
 (() => {
   "use strict";
+  /* locale-aware money: components accept {locale, currency} */
+  const makeMoney = (o = {}) => {
+    try {
+      const f = new Intl.NumberFormat(o.locale || "en-IN", { style: "currency", currency: o.currency || "INR", maximumFractionDigits: 0 });
+      return (n) => f.format(Math.round(n));
+    } catch (_) { return (n) => "₹" + Math.round(n).toLocaleString("en-IN"); }
+  };
   const inr = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
   const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   /* ============ fxPos ============ */
   window.fxPos = function (root, opts) {
+    if (!root) { console.warn("finixui: fxPos called without a root element"); return null; }
+    const inr = makeMoney(opts);
     const menu = opts.menu; /* [{cat, items:[{name, price, glyph, out}]}] */
     const lines = (opts.lines || []).map((l) => ({ ...l }));
     const GST = opts.gst != null ? opts.gst : 0.05;
@@ -92,6 +101,7 @@
 
   /* ============ fxKds ============ */
   window.fxKds = function (root, opts) {
+    if (!root) { console.warn("finixui: fxKds called without a root element"); return null; }
     const tickets = opts.tickets.map((t) => ({ ...t }));
     root.classList.add("fx-pos-kds");
     function render() {
@@ -122,6 +132,8 @@
 
   /* ============ fxRoomGrid ============ */
   window.fxRoomGrid = function (root, opts) {
+    if (!root) { console.warn("finixui: fxRoomGrid called without a root element"); return null; }
+    const inr = makeMoney(opts);
     const rooms = opts.rooms; /* [{num, type, hk}] */
     const nights = opts.nights; /* ["Mon 17", …] length 7 */
     const stays = opts.stays; /* [{room, from, len, guest, color}] */

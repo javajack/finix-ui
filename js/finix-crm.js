@@ -19,6 +19,7 @@
 
   /* ============ fxPipeline ============ */
   window.fxPipeline = function (root, opts) {
+    if (!root) { console.warn("finixui: fxPipeline called without a root element"); return null; }
     const stages = opts.stages.map((s) => ({ ...s }));
     const deals = opts.deals.map((d) => ({ ...d }));
     const cur = opts.currency || "$";
@@ -209,6 +210,7 @@
 
   /* ============ fxScore ============ */
   window.fxScore = function (el, opts) {
+    if (!el) { console.warn("finixui: fxScore called without a root element"); return null; }
     const v = Math.max(0, Math.min(100, Math.round(opts.score)));
     el.classList.add("fx-crm-score");
     if (opts.size === "sm") el.classList.add("fx-crm-score--sm");
@@ -246,6 +248,7 @@
 
   /* ============ fxQuote ============ */
   window.fxQuote = function (root, opts) {
+    if (!root) { console.warn("finixui: fxQuote called without a root element"); return null; }
     const products = opts.products;
     const lines = (opts.lines || []).map((l) => ({ ...l }));
     const taxRate = opts.taxRate != null ? opts.taxRate : 0.18;

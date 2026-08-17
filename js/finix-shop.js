@@ -143,6 +143,7 @@
 
   /* ============ PLP grid + live filters ============ */
   window.fxShopGrid = function (root, opts) {
+    if (!root) { console.warn("finixui: fxShopGrid called without a root element"); return null; }
     const rail = opts.rail;
     const products = opts.products || FX_PRODUCTS;
     const state = { cats: new Set(), colors: new Set(), max: null, minRating: 0, sort: "featured" };

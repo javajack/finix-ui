@@ -9,6 +9,7 @@
 
   /* ============ fxBinGrid ============ */
   window.fxBinGrid = function (root, opts) {
+    if (!root) { console.warn("finixui: fxBinGrid called without a root element"); return null; }
     const aisles = opts.aisles; /* ["A","B",…] */
     const bays = opts.bays; /* number */
     const data = opts.data; /* { "A1": {occ: 0-100, items:[{sku,qty}]} } */
@@ -41,6 +42,7 @@
 
   /* ============ fxPickList ============ */
   window.fxPickList = function (root, opts) {
+    if (!root) { console.warn("finixui: fxPickList called without a root element"); return null; }
     const items = opts.items.map((i) => ({ ...i, picked: false }));
     const check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
     root.innerHTML =

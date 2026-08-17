@@ -6,6 +6,13 @@
  */
 (() => {
   "use strict";
+  /* locale-aware money: components accept {locale, currency} */
+  const makeMoney = (o = {}) => {
+    try {
+      const f = new Intl.NumberFormat(o.locale || "en-IN", { style: "currency", currency: o.currency || "INR", maximumFractionDigits: 0 });
+      return (n) => f.format(Math.round(n));
+    } catch (_) { return (n) => "₹" + Math.round(n).toLocaleString("en-IN"); }
+  };
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const inr = (n, dec = 2) => "₹" + n.toLocaleString("en-IN", { minimumFractionDigits: dec, maximumFractionDigits: dec });
   const inr0 = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
@@ -14,6 +21,7 @@
 
   /* ============ fxWatchlist ============ */
   window.fxWatchlist = function (root, opts) {
+    if (!root) { console.warn("finixui: fxWatchlist called without a root element"); return null; }
     const symbols = opts.symbols.map((s) => ({ ...s, hist: [] }));
     symbols.forEach((s) => { let p = s.ltp; for (let i = 0; i < 24; i++) { s.hist.push(p); p *= 1 + (Math.sin(i * 2.7 + s.ltp) * 0.004); } s.hist.push(s.ltp); });
     root.classList.add("fx-tr-watch");
@@ -105,6 +113,8 @@
 
   /* ============ fxOrderTicket ============ */
   window.fxOrderTicket = function (root, opts) {
+    if (!root) { console.warn("finixui: fxOrderTicket called without a root element"); return null; }
+    const inr = makeMoney(opts);
     const st = { sym: opts.symbol, ltp: opts.ltp, side: "buy", type: "MARKET", product: "MIS", qty: opts.qty || 10, price: opts.ltp, trigger: 0, available: opts.available != null ? opts.available : 200000 };
     root.classList.add("fx-tr-ticket");
     root.innerHTML =
@@ -198,6 +208,8 @@
 
   /* ============ fxPositions ============ */
   window.fxPositions = function (root, opts) {
+    if (!root) { console.warn("finixui: fxPositions called without a root element"); return null; }
+    const inr = makeMoney(opts);
     const mode = opts.mode || "positions";
     const rows = opts.rows.map((r) => ({ ...r }));
     root.classList.add("fx-tr-table-wrap");
@@ -243,6 +255,7 @@
 
   /* ============ fxOptionChain ============ */
   window.fxOptionChain = function (root, opts) {
+    if (!root) { console.warn("finixui: fxOptionChain called without a root element"); return null; }
     let spot = opts.spot;
     const step = opts.step || 50;
     root.classList.add("fx-tr-chain-wrap");
@@ -293,6 +306,7 @@
 
   /* ============ fxDepth ============ */
   window.fxDepth = function (root, opts) {
+    if (!root) { console.warn("finixui: fxDepth called without a root element"); return null; }
     let ltp = opts.ltp;
     root.classList.add("fx-tr-depth");
     function render() {
@@ -317,6 +331,7 @@
 
   /* ============ fxBlotter ============ */
   window.fxBlotter = function (root) {
+    if (!root) { console.warn("finixui: fxBlotter called without a root element"); return null; }
     root.classList.add("fx-tr-table-wrap");
     root.innerHTML =
       `<table class="fx-tr-table" style="min-width:34rem"><thead><tr><th>Time</th><th>Instrument</th><th>Side</th><th>Type</th><th>Qty</th><th>Price</th><th>Status</th><th></th></tr></thead><tbody></tbody></table>`;

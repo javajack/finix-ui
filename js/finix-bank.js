@@ -6,6 +6,13 @@
  */
 (() => {
   "use strict";
+  /* locale-aware money: components accept {locale, currency} */
+  const makeMoney = (o = {}) => {
+    try {
+      const f = new Intl.NumberFormat(o.locale || "en-IN", { style: "currency", currency: o.currency || "INR", maximumFractionDigits: 0 });
+      return (n) => f.format(Math.round(n));
+    } catch (_) { return (n) => "₹" + Math.round(n).toLocaleString("en-IN"); }
+  };
   const inr = (n) => "₹" + Math.round(Math.abs(n)).toLocaleString("en-IN");
   const esc = (s) => (window.fxEsc || String)(s ?? "");
   const CATS = {
@@ -15,6 +22,8 @@
 
   /* ============ fxBankFeed ============ */
   window.fxBankFeed = function (root, opts) {
+    if (!root) { console.warn("finixui: fxBankFeed called without a root element"); return null; }
+    const inr = makeMoney(opts);
     const txns = opts.txns.map((t) => ({ ...t }));
     let closing = opts.balance;
     const state = { q: "", cat: null };
@@ -86,6 +95,7 @@
 
   /* ============ fxBankCard ============ */
   window.fxBankCard = function (root, opts) {
+    if (!root) { console.warn("finixui: fxBankCard called without a root element"); return null; }
     root.classList.add("fx-bank-card");
     root.innerHTML =
       `<div class="fx-bank-card-top"><span class="fx-bank-chip"></span><span class="brand">VISA</span></div>
@@ -115,6 +125,8 @@
 
   /* ============ fxTransfer ============ */
   window.fxTransfer = function (root, opts) {
+    if (!root) { console.warn("finixui: fxTransfer called without a root element"); return null; }
+    const inr = makeMoney(opts);
     const recips = opts.recipients;
     let sel = null, amt = "";
     root.innerHTML =
@@ -198,6 +210,8 @@
 
   /* ============ fxBankBudgets ============ */
   window.fxBankBudgets = function (root, opts) {
+    if (!root) { console.warn("finixui: fxBankBudgets called without a root element"); return null; }
+    const inr = makeMoney(opts);
     root.classList.add("fx-bank-budgets");
     root.innerHTML = opts.cats.map((c) => {
       const pct = Math.round((c.spent / c.limit) * 100);

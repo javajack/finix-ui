@@ -9,6 +9,7 @@
 
   /* ============ fxCurriculum ============ */
   window.fxCurriculum = function (root, opts) {
+    if (!root) { console.warn("finixui: fxCurriculum called without a root element"); return null; }
     const modules = opts.modules;
     let current = opts.current;
     root.classList.add("fx-lms-curric");
@@ -53,6 +54,7 @@
 
   /* ============ fxQuiz ============ */
   window.fxQuiz = function (root, opts) {
+    if (!root) { console.warn("finixui: fxQuiz called without a root element"); return null; }
     const qs = opts.questions;
     const answered = {};
     root.innerHTML = qs.map((q, qi) => {

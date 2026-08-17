@@ -10,6 +10,7 @@
 
   /* ============ fxSheet ============ */
   window.fxSheet = function (sheet, opts = {}) {
+    if (!sheet) { console.warn("finixui: fxSheet called without a root element"); return null; }
     const snaps = (opts.snaps || [0.45, 0.88]).slice().sort((a, b) => a - b);
     const container = sheet.offsetParent || sheet.parentElement;
     const scrim = opts.scrim ? (typeof opts.scrim === "string" ? container.querySelector(opts.scrim) : opts.scrim) : null;

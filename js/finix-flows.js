@@ -9,6 +9,7 @@
   const esc = (s) => (window.fxEsc || String)(s ?? "");
 
   window.fxWizard = function (root, opts = {}) {
+    if (!root) { console.warn("finixui: fxWizard called without a root element"); return null; }
     const secs = [...root.querySelectorAll("[data-step]")];
     const byId = {};
     secs.forEach((s) => { s.classList.add("fx-wiz-sec"); byId[s.dataset.step] = s; });
@@ -31,9 +32,10 @@
 
     const foot = document.createElement("div");
     foot.className = "fx-wiz-foot";
+    const L = { back: "Back", next: "Continue", invalid: "Please fill the highlighted fields.", step: (i, n) => `Step ${i} of ${n}`, ...(opts.labels || {}) };
     foot.innerHTML =
-      `<button class="fx-btn fx-btn--ghost" data-wz-back type="button">Back</button>
-       <button class="fx-btn" data-wz-next type="button">Continue</button>
+      `<button class="fx-btn fx-btn--ghost" data-wz-back type="button">${esc(L.back)}</button>
+       <button class="fx-btn" data-wz-next type="button">${esc(L.next)}</button>
        <span class="fx-wiz-generr" data-wz-err hidden></span>
        <span class="fx-wiz-count" data-wz-count></span>`;
     panel.appendChild(foot);
@@ -166,7 +168,7 @@
         }
       });
       if (firstBad) {
-        err.textContent = "Please fill the highlighted fields.";
+        err.textContent = L.invalid;
         err.hidden = false;
         firstBad.focus();
         return false;
@@ -195,9 +197,9 @@
       /* footer state */
       foot.hidden = id === "done";
       foot.querySelector("[data-wz-back]").style.visibility = history.length ? "visible" : "hidden";
-      foot.querySelector("[data-wz-next]").textContent = s.dataset.nextLabel || "Continue";
+      foot.querySelector("[data-wz-next]").textContent = s.dataset.nextLabel || L.next;
       const idx = railSecs.findIndex((x) => x.dataset.step === id);
-      foot.querySelector("[data-wz-count]").textContent = id === "done" ? "" : `Step ${idx + 1} of ${railSecs.length}`;
+      foot.querySelector("[data-wz-count]").textContent = id === "done" ? "" : L.step(idx + 1, railSecs.length);
       foot.querySelector("[data-wz-err]").hidden = true;
       paintRail();
       opts.onShow?.(id, api);
